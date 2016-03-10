@@ -15,5 +15,6 @@ public class PlayerController : MonoBehaviour
 	void Update ()
 	{
 		transform.position += transform.up * Time.deltaTime * mySpeed;
-	}
+    }
+    
 }
