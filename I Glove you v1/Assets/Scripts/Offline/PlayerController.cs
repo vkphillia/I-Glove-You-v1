@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
 
 	void Update ()
 	{
-		if (OfflineManager.Instance.FirstTouch) {
-			transform.position += transform.up * Time.deltaTime * mySpeed;
-		}
+		transform.position += transform.up * Time.deltaTime * mySpeed;
 	}
 }

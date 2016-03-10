@@ -19,27 +19,19 @@ public class TouchController : MonoBehaviour
 			Touch touch = Input.GetTouch (i);
 
 			if (touch.position.x < Screen.width / 2 && touch.position.y < Screen.height / 2) {
-				if (!OfflineManager.Instance.FirstTouch) {
-					OfflineManager.Instance.FirstTouch = true;
-				}
+				
 				MoveClockWise (OfflineManager.Instance.Player1);
 			}
 			if (touch.position.x > Screen.width / 2 && touch.position.y < Screen.height / 2) {
-				if (!OfflineManager.Instance.FirstTouch) {
-					OfflineManager.Instance.FirstTouch = true;
-				}
+				
 				MoveAntiClockWise (OfflineManager.Instance.Player1);
 			}
 			if (touch.position.x < Screen.width / 2 && touch.position.y > Screen.height / 2) {
-				if (!OfflineManager.Instance.FirstTouch) {
-					OfflineManager.Instance.FirstTouch = true;
-				}
+				
 				MoveAntiClockWise (OfflineManager.Instance.Player2);
 			}
 			if (touch.position.x > Screen.width / 2 && touch.position.y > Screen.height / 2) {
-				if (!OfflineManager.Instance.FirstTouch) {
-					OfflineManager.Instance.FirstTouch = true;
-				}
+				
 				MoveClockWise (OfflineManager.Instance.Player2);
 			}
 		}

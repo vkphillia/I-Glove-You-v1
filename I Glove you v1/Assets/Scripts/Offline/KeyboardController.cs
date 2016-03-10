@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class KeyboardController : MonoBehaviour
 {
+
 	private bool ZDown;
 	private bool XDown;
 	private bool NDown;
@@ -30,17 +32,13 @@ public class KeyboardController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			ZDown = true;
 			XDown = false;
-			if (!OfflineManager.Instance.FirstTouch) {
-				OfflineManager.Instance.FirstTouch = true;
-			}
+			
 			
 
 		} else if (Input.GetKeyDown (KeyCode.X)) {
 			XDown = true;	
 			ZDown = false;	
-			if (!OfflineManager.Instance.FirstTouch) {
-				OfflineManager.Instance.FirstTouch = true;
-			}
+			
 			
 		} else if (Input.GetKeyUp (KeyCode.X)) {
 			XDown = false;
@@ -52,17 +50,13 @@ public class KeyboardController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.N)) {
 			NDown = true;
 			MDown = false;
-			if (!OfflineManager.Instance.FirstTouch) {
-				OfflineManager.Instance.FirstTouch = true;
-			}
+			
 			
 
 		} else if (Input.GetKeyDown (KeyCode.M)) {
 			MDown = true;	
 			NDown = false;	
-			if (!OfflineManager.Instance.FirstTouch) {
-				OfflineManager.Instance.FirstTouch = true;
-			}
+			
 			
 		} else if (Input.GetKeyUp (KeyCode.N)) {
 			NDown = false;

@@ -21,7 +21,6 @@ public class OfflineManager : MonoBehaviour
 	public Transform Foreground;
 	public Vector3 Player1Pos;
 	public Vector3 Player2Pos;
-	public bool FirstTouch;
 
 	[HideInInspector]
 	public Transform Player1;
