@@ -5,16 +5,14 @@ public class PlayerHolderController : MonoBehaviour
 {
 	[HideInInspector]	
 	public bool hit;
+	public bool gloved;
+	public Animator myAnim;
 
 	private float mySpeed;
-	//public Animator myAnim;
 	private Vector3 force;
 
-	void Awake ()
-	{
-		//myAnim = GetComponentInChildren<Animator> ();
-	}
 
+	
 	void Start ()
 	{
 		mySpeed = 5f;
@@ -31,38 +29,39 @@ public class PlayerHolderController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
+		
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) { // this = player1, other= player2
 			Debug.Log ("Player 1 gets punched");
-			//hit = true;
-			//StartCoroutine (MakeHitFalse ());
+			hit = true;
+			StartCoroutine (MakeHitFalse ());
 			force = transform.position - other.transform.position;
 			force.Normalize ();
-			gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 3000 * Time.deltaTime);
+			gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 1000);
 			
-			//	myAnim.Play ("player_hit");
+			myAnim.Play ("player_hit");
 			//transform.Rotate (0, 0, 15);
 			//other.GetComponentInParent<Rigidbody2D> ().AddForce (force * 1000);
 			//other.GetComponentInParent<Rigidbody2D> ().transform.Rotate (0, 0, 15);
 		} 
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9) {
 			Debug.Log ("Player 2 gets punched");
-			//hit = true;
-			//StartCoroutine (MakeHitFalse ());
+			hit = true;
+			StartCoroutine (MakeHitFalse ());
 			force = transform.position - other.transform.position;
 			force.Normalize ();
-			gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 3000 * Time.deltaTime);
+			gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 1000);
 
-			//myAnim.Play ("player_hit");
+			myAnim.Play ("player_hit");
 			//transform.Rotate (0, 0, 15);
 			//other.GetComponentInParent<Rigidbody2D> ().AddForce (force * 1000);
 			//other.GetComponentInParent<Rigidbody2D> ().transform.Rotate (0, 0, 15);
-		}
+		}	
 	}
 
 	public IEnumerator MakeHitFalse ()
 	{
 		yield return new WaitForSeconds (.3f);
-		//myAnim.Play ("player_idle");
+		myAnim.Play ("player_idle");
 		hit = false;
 	}
 }

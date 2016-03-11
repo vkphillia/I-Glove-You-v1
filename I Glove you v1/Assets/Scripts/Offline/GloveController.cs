@@ -3,10 +3,35 @@ using System.Collections;
 
 public class GloveController : MonoBehaviour
 {
-	void Update ()
+	
+	public GameObject P1Trigger;
+	public GameObject P2Trigger;
+
+	void OnEnable ()
 	{
-		
-		transform.position += transform.up * Time.deltaTime * 10;
-		
+		GetComponent<SpriteRenderer> ().enabled = true;
+		GetComponent<BoxCollider2D> ().enabled = true;
+
+	}
+
+	void OnCollisionEnter2D (Collision2D other)
+	{
+		if (other.gameObject.layer == 8) {
+			OfflineManager.Instance.glovePicked = true;
+			P1Trigger.SetActive (true);
+			P2Trigger.SetActive (false);
+			OfflineManager.Instance.glove.SetActive (false);
+		} else if (other.gameObject.layer == 10) {
+			OfflineManager.Instance.glovePicked = true;
+			P2Trigger.SetActive (true);
+			P1Trigger.SetActive (false);
+			OfflineManager.Instance.glove.SetActive (false);
+		}
+	}
+
+	void OnDisable ()
+	{
+		GetComponent<SpriteRenderer> ().enabled = false;
+		GetComponent<BoxCollider2D> ().enabled = false;
 	}
 }
