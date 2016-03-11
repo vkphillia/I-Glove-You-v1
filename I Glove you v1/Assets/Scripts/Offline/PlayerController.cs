@@ -1,20 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerController : MonoBehaviour
 {
+	
 
 	public Sprite[] mySprites;
-	private float mySpeed;
+	public Transform Glove;
 
-	void Start ()
-	{
-		mySpeed = 4f;
-	}
+	
+	
 
+
+<<<<<<< Updated upstream
 	void Update ()
 	{
 		transform.position += transform.up * Time.deltaTime * mySpeed;
     }
     
 }
+=======
+	
+}
+>>>>>>> Stashed changes

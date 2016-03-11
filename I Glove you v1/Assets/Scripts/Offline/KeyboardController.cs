@@ -14,14 +14,14 @@ public class KeyboardController : MonoBehaviour
 	{
 		KeyboardControls ();
 		if (ZDown) {
-			MoveClockWise (OfflineManager.Instance.Player1);
+			MoveClockWise (OfflineManager.Instance.PlayerHolder1);
 		} else if (XDown) {
-			MoveAntiClockWise (OfflineManager.Instance.Player1);
+			MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1);
 		}
 		if (NDown) {
-			MoveClockWise (OfflineManager.Instance.Player2);
+			MoveClockWise (OfflineManager.Instance.PlayerHolder2);
 		} else if (MDown) {
-			MoveAntiClockWise (OfflineManager.Instance.Player2);
+			MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2);
 		}
 	}
 
