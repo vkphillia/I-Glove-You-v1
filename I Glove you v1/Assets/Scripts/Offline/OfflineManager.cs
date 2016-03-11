@@ -49,7 +49,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		glovePicked = false;
 		Debug.Log ("Spawned");
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (10f);
 		glove.SetActive (true);
 		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-4f, 4f), 0);
 		
