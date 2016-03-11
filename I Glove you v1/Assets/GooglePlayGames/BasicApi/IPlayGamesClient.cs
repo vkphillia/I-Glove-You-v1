@@ -13,7 +13,6 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
 
 namespace GooglePlayGames.BasicApi
 {
@@ -368,4 +367,3 @@ namespace GooglePlayGames.BasicApi
   /// to see if they wish to accept or decline the invitation.</param>
     public delegate void InvitationReceivedDelegate(Invitation invitation, bool shouldAutoAccept);
 }
-#endif

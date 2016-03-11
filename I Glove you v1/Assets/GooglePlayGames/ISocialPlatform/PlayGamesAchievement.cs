@@ -13,7 +13,6 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
 
 namespace GooglePlayGames
 {
@@ -32,10 +31,7 @@ namespace GooglePlayGames
     {
         private readonly ReportProgress mProgressCallback;
         private string mId = string.Empty;
-        private bool mIsIncremental = false;
-        private int mCurrentSteps = 0;
-        private int mTotalSteps = 0;
-        private double mPercentComplete = 0.0;
+        private double mPercentComplete = 0.0f;
         private bool mCompleted = false;
         private bool mHidden = false;
         private DateTime mLastModifiedTime = new DateTime (1970, 1, 1, 0, 0, 0, 0);
@@ -60,25 +56,7 @@ namespace GooglePlayGames
         internal PlayGamesAchievement(Achievement ach) : this()
         {
             this.mId = ach.Id;
-            this.mIsIncremental = ach.IsIncremental;
-            this.mCurrentSteps = ach.CurrentSteps;
-            this.mTotalSteps = ach.TotalSteps;
-            if (ach.IsIncremental)
-            {
-                if (ach.TotalSteps > 0)
-                {
-                    this.mPercentComplete =
-                        ((double)ach.CurrentSteps / (double)ach.TotalSteps) * 100.0;
-                }
-                else
-                {
-                    this.mPercentComplete = 0.0;
-                }
-            }
-            else
-            {
-                this.mPercentComplete = ach.IsUnlocked ? 100.0 : 0.0;
-            }
+            this.mPercentComplete = (double)ach.CurrentSteps / (double) ach.TotalSteps;
             this.mCompleted = ach.IsUnlocked;
             this.mHidden = !ach.IsRevealed;
             this.mLastModifiedTime = ach.LastModifiedTime;
@@ -91,14 +69,10 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Reveals, unlocks or increment achievement.
-        /// </summary>
-        /// <remarks>
-        /// Call after setting <see cref="id" />, <see cref="completed" />,
-        /// as well as <see cref="currentSteps" /> and <see cref="totalSteps" />
-        /// for incremental achievements. Equivalent to calling
+        /// Reveals, unlocks or increment achievement. Call after setting
+        /// <see cref="id" /> and <see cref="percentCompleted" />. Equivalent to calling
         /// <see cref="PlayGamesPlatform.ReportProgress" />.
-        /// </remarks>
+        /// </summary>
         public void ReportProgress(Action<bool> callback)
         {
             mProgressCallback.Invoke(mId, mPercentComplete, callback);
@@ -166,55 +140,6 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Gets a value indicating whether this achievement is incremental.
-        /// </summary>
-        /// <remarks>
-        /// This value is only set by PlayGamesPlatform.LoadAchievements
-        /// </remarks>
-        /// <returns><c>true</c> if incremental; otherwise, <c>false</c>.</returns>
-        public bool isIncremental
-        {
-            get
-            {
-                return mIsIncremental;
-            }
-        }
-
-        /// <summary>
-        /// Gets the current steps completed of this achievement.
-        /// </summary>
-        /// <remarks>
-        /// Undefined for standard (i.e. non-incremental) achievements.
-        /// This value is only set by PlayGamesPlatform.LoadAchievements, changing the
-        /// percentComplete will not affect this.
-        /// </remarks>
-        /// <returns>The current steps.</returns>
-        public int currentSteps
-        {
-            get
-            {
-                return mCurrentSteps;
-            }
-        }
-
-        /// <summary>
-        /// Gets the total steps of this achievement.
-        /// </summary>
-        /// <remarks>
-        /// Undefined for standard (i.e. non-incremental) achievements.
-        /// This value is only set by PlayGamesPlatform.LoadAchievements, changing the
-        /// percentComplete will not affect this.
-        /// </remarks>
-        /// <returns>The total steps.</returns>
-        public int totalSteps
-        {
-            get
-            {
-                return mTotalSteps;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the percent completed.
         /// </summary>
         /// <returns>
@@ -233,14 +158,6 @@ namespace GooglePlayGames
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this achievement is completed.
-        /// </summary>
-        /// <remarks>
-        /// This value is only set by PlayGamesPlatform.LoadAchievements, changing the
-        /// percentComplete will not affect this.
-        /// </remarks>
-        /// <returns><c>true</c> if completed; otherwise, <c>false</c>.</returns>
         public bool completed
         {
             get
@@ -250,9 +167,8 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Gets a value indicating whether this achievement is hidden.
+        /// Not implemented. Always returns false.
         /// </summary>
-        /// <value><c>true</c> if hidden; otherwise, <c>false</c>.</value>
         public bool hidden
         {
             get
@@ -310,4 +226,3 @@ namespace GooglePlayGames
 
     }
 }
-#endif

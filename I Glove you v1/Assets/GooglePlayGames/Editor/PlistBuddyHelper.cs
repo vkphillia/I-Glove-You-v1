@@ -13,9 +13,8 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#if UNITY_IOS && !NO_GPGS
 
-namespace GooglePlayGames.Editor
+namespace GooglePlayGames.Editor.Util
 {
     using System;
     using System.IO;
@@ -127,4 +126,3 @@ namespace GooglePlayGames.Editor
         }
     }
 }
-#endif

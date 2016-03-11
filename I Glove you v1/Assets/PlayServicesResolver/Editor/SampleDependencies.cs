@@ -29,8 +29,6 @@ public static class SampleDependencies
     /// The name of your plugin.  This is used to create a settings file
     /// which contains the dependencies specific to your plugin.
     /// </summary>
-
-/*
     private static readonly string PluginName = "your_plugin_name";
 
     /// <summary>
@@ -38,7 +36,7 @@ public static class SampleDependencies
     /// </summary>
     static SampleDependencies()
     {
-
+/*
         PlayServicesSupport svcSupport = PlayServicesSupport.CreateInstance(
                                              PluginName,
                                              EditorPrefs.GetString("AndroidSdkRoot"),
@@ -47,6 +45,7 @@ public static class SampleDependencies
         // add your dependencies here
 
         // svcSupport.DependOn("com.google.android.gms", "play-services-base", "8.1+");
-    }
+
 */
+    }
 }

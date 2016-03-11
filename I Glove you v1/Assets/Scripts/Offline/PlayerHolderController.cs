@@ -7,7 +7,7 @@ public class PlayerHolderController : MonoBehaviour
 	public bool hit;
 
 	private float mySpeed;
-	public Animator myAnim;
+	//public Animator myAnim;
 	private Vector3 force;
 
 	void Awake ()
@@ -24,14 +24,9 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.62f, 2.62f), Mathf.Clamp (transform.position.y, -4.5f, 4.5f), 0);
 
+		GetComponent<Rigidbody2D> ().velocity = transform.up * mySpeed;
 
-		if (!hit) {
-			GetComponent<Rigidbody2D> ().velocity = transform.up * mySpeed;
-
-		} else {
-			//gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 3000 * Time.deltaTime);
-		}
-	
+		
 	}
 
 	void OnTriggerEnter2D (Collider2D other)
@@ -40,10 +35,11 @@ public class PlayerHolderController : MonoBehaviour
 			Debug.Log ("Player 1 gets punched");
 			//hit = true;
 			//StartCoroutine (MakeHitFalse ());
-			//force = transform.position - other.transform.position;
-			//	force.Normalize ();
+			force = transform.position - other.transform.position;
+			force.Normalize ();
+			gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 3000 * Time.deltaTime);
 			
-			myAnim.Play ("player_hit");
+			//	myAnim.Play ("player_hit");
 			//transform.Rotate (0, 0, 15);
 			//other.GetComponentInParent<Rigidbody2D> ().AddForce (force * 1000);
 			//other.GetComponentInParent<Rigidbody2D> ().transform.Rotate (0, 0, 15);
@@ -52,8 +48,9 @@ public class PlayerHolderController : MonoBehaviour
 			Debug.Log ("Player 2 gets punched");
 			//hit = true;
 			//StartCoroutine (MakeHitFalse ());
-			//force = transform.position - other.transform.position;
-			//force.Normalize ();
+			force = transform.position - other.transform.position;
+			force.Normalize ();
+			gameObject.GetComponent<Rigidbody2D> ().AddForce (force * 3000 * Time.deltaTime);
 
 			//myAnim.Play ("player_hit");
 			//transform.Rotate (0, 0, 15);
@@ -65,7 +62,7 @@ public class PlayerHolderController : MonoBehaviour
 	public IEnumerator MakeHitFalse ()
 	{
 		yield return new WaitForSeconds (.3f);
-		myAnim.Play ("player_idle");
+		//myAnim.Play ("player_idle");
 		hit = false;
 	}
 }

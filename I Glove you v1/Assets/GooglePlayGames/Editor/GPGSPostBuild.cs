@@ -14,16 +14,13 @@
 //    limitations under the License.
 // </copyright>
 
-// Keep this file if NO_GPGS so we can clean up the xcode project
-#if (UNITY_ANDROID || UNITY_IPHONE )
-
 namespace GooglePlayGames.Editor
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using UnityEditor.Callbacks;
     using UnityEditor;
-    using UnityEngine;
 
     // Use the included xcode support for unity 5+,
     // otherwise use the backported code.
@@ -34,6 +31,9 @@ namespace GooglePlayGames.Editor
         using GooglePlayGames.xcode;
     #endif
 #endif
+    using GooglePlayGames;
+    using GooglePlayGames.Editor.Util;
+    using UnityEngine;
 
     public static class GPGSPostBuild
     {
@@ -58,7 +58,7 @@ namespace GooglePlayGames.Editor
                 return;
             }
 #else
-            if (target != BuildTarget.iOS)
+            if (target != BuildTarget.iPhone)
             {
                 return;
             }
@@ -123,7 +123,7 @@ namespace GooglePlayGames.Editor
                 true,
                 "Building for IOS",
                 true);
-            w.minSize = new UnityEngine.Vector2(400, 300);
+            w.minSize = new Vector2(400, 300);
             w.UsingCocoaPod = CocoaPodHelper.Update(pathToBuiltProject);
 
             UnityEngine.Debug.Log("Adding URL Types for authentication using PlistBuddy.");
@@ -135,7 +135,6 @@ namespace GooglePlayGames.Editor
 #endif
         }
 
-#if UNITY_IPHONE && !NO_GPGS
         /// <summary>
         /// Updates the new project's Info.plist file to include an entry for the Url scheme mandated
         /// by the Google+ login. This means that the plist file needs to have an entry in the for
@@ -201,7 +200,7 @@ namespace GooglePlayGames.Editor
             buddy.AddString (PlistBuddyHelper.ToEntryName (UrlTypes, index, UrlScheme, 0),
                 value);
         }
-#endif
+
 
         private static string GetBundleId()
         {
@@ -271,4 +270,4 @@ namespace GooglePlayGames.Editor
 #endif
     }
 }
-#endif
+

@@ -14,8 +14,11 @@
 //    limitations under the License.
 // </copyright>
 
+using UnityEngine;
+
 // Android only feature
 #if (UNITY_ANDROID)
+
 
 namespace GooglePlayGames.Native.PInvoke
 {
@@ -26,7 +29,6 @@ namespace GooglePlayGames.Native.PInvoke
     using C = GooglePlayGames.Native.Cwrapper.NearbyConnections;
     using N = GooglePlayGames.Native.Cwrapper.NearbyConnectionTypes;
     using Types = GooglePlayGames.Native.Cwrapper.Types;
-    using UnityEngine;
 
     internal class NearbyConnectionsManager : BaseReferenceHolder
     {

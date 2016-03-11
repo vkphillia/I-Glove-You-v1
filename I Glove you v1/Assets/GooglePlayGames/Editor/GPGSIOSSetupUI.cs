@@ -13,7 +13,6 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#if UNITY_IPHONE && !NO_GPGS
 
 namespace GooglePlayGames.Editor
 {
@@ -70,22 +69,8 @@ namespace GooglePlayGames.Editor
             string webClientId,
             bool requiresGooglePlus)
         {
-            if (clientId != null)
-            {
-                clientId = clientId.Trim();
-            }
             GPGSProjectSettings.Instance.Set(GPGSUtil.IOSCLIENTIDKEY, clientId);
-
-            if (bundleId != null)
-            {
-                bundleId = bundleId.Trim();
-            }
             GPGSProjectSettings.Instance.Set(GPGSUtil.IOSBUNDLEIDKEY, bundleId);
-
-            if (webClientId != null)
-            {
-                webClientId = webClientId.Trim();
-            }
             GPGSProjectSettings.Instance.Set(GPGSUtil.WEBCLIENTIDKEY, webClientId);
             GPGSProjectSettings.Instance.Set(GPGSUtil.REQUIREGOOGLEPLUSKEY, requiresGooglePlus);
             GPGSProjectSettings.Instance.Save();
@@ -373,4 +358,3 @@ namespace GooglePlayGames.Editor
         }
     }
 }
-#endif

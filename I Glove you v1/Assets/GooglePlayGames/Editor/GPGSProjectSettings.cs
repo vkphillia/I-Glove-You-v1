@@ -14,9 +14,6 @@
 //    limitations under the License.
 // </copyright>
 
-// Keep this file even if NO_GPGS is defined, so the xcode project can be cleaned up.
-#if (UNITY_ANDROID || UNITY_IPHONE)
-
 namespace GooglePlayGames.Editor
 {
     using System.Collections.Generic;
@@ -176,4 +173,3 @@ namespace GooglePlayGames.Editor
         }
     }
 }
-#endif
