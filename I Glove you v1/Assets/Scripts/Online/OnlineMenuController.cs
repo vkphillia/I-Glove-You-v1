@@ -7,6 +7,7 @@ public class OnlineMenuController : MonoBehaviour, MPLobbyListener
 {
     public static string userName;
     public Text playerName;
+    public Text connectionStatus;
 
     private bool _showLobbyDialog;
     private string _lobbyMessage;
@@ -15,6 +16,14 @@ public class OnlineMenuController : MonoBehaviour, MPLobbyListener
     void Start()
     {
         playerName.text = userName;
+    }
+
+    void Update()
+    {
+        if(_showLobbyDialog)
+        {
+             connectionStatus.text = _lobbyMessage;
+        }
     }
 
 	public void Fight ()
