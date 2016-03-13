@@ -20,19 +20,19 @@ public class TouchController : MonoBehaviour
 
 			if (touch.position.x < Screen.width / 2 && touch.position.y < Screen.height / 2) {
 				
-				MoveClockWise (OfflineManager.Instance.Player1);
+				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
 			}
 			if (touch.position.x > Screen.width / 2 && touch.position.y < Screen.height / 2) {
 				
-				MoveAntiClockWise (OfflineManager.Instance.Player1);
+				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
 			}
 			if (touch.position.x < Screen.width / 2 && touch.position.y > Screen.height / 2) {
 				
-				MoveAntiClockWise (OfflineManager.Instance.Player2);
+				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
 			}
 			if (touch.position.x > Screen.width / 2 && touch.position.y > Screen.height / 2) {
 				
-				MoveClockWise (OfflineManager.Instance.Player2);
+				MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
 			}
 		}
 	}
