@@ -2,11 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public delegate void RoundOverEvent ();
 public delegate void TriggerEvent ();
 public class PlayerHolderController : MonoBehaviour
 {
-	public static event RoundOverEvent OnRoundOver;
+	
 	public static event TriggerEvent OnTrigger;
 
 	[HideInInspector]	
@@ -15,26 +14,16 @@ public class PlayerHolderController : MonoBehaviour
 	public bool hitter;
 	[HideInInspector]
 	public int myHealth;
-	//[HideInInspector]
+	[HideInInspector]
 	public int roundWins;
 	public SpriteRenderer HitEffectSprite;
 	public GameObject myTrigger;
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
-	
 	private Quaternion myStartRot;
 	private float mySpeed;
 	private Vector3 force;
-
-	
-	private Rigidbody2D myRB;
-
-	void Awake ()
-	{
-		myRB = GetComponent<Rigidbody2D> ();
-		
-	}
 
 	void Start ()
 	{
@@ -51,9 +40,9 @@ public class PlayerHolderController : MonoBehaviour
 		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.62f, 2.62f), Mathf.Clamp (transform.position.y, -4.5f, 4.5f), 0);
 
 		if (OfflineManager.Instance.currentState == GameState.Playing) {
+			
 			if (!hit && !hitter) {
 				transform.position += transform.up * Time.deltaTime * mySpeed;
-				//myRB.velocity = transform.up * mySpeed;	
 			} else if (hit) {
 				transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
 
@@ -70,13 +59,10 @@ public class PlayerHolderController : MonoBehaviour
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) {   // this = player1, other= player2
 			Debug.Log ("Player 1 gets punched");
 			StartCoroutine (HitEffect (other.GetComponentInParent<Rigidbody2D> ()));
-			
-			
 		} 
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9) {
 			Debug.Log ("Player 2 gets punched");
 			StartCoroutine (HitEffect (other.GetComponentInParent<Rigidbody2D> ()));
-			
 		}	
 	}
 
@@ -97,7 +83,6 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth--;
 		myHealthText_HUD.text = " Health: " + myHealth;
 		if (myHealth <= 0) {
-			
 			r.GetComponent<PlayerHolderController> ().roundWins++;
 			if (r.GetComponent<PlayerHolderController> ().roundWins < 2) {
 				OfflineManager.Instance.currentState = GameState.RoundOver;
@@ -109,7 +94,6 @@ public class PlayerHolderController : MonoBehaviour
 		}
 	}
 
-	
 	public IEnumerator MakeHitFalse (Rigidbody2D r)
 	{
 		yield return new WaitForSeconds (.3f);
@@ -127,7 +111,6 @@ public class PlayerHolderController : MonoBehaviour
 		myHealthText_HUD.text = " Health: " + myHealth;
 		myTrigger.SetActive (false);
 		HitEffectSprite.enabled = false;
-		
 	}
 
 	

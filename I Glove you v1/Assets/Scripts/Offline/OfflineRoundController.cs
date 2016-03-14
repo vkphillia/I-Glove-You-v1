@@ -8,6 +8,7 @@ public class OfflineRoundController : MonoBehaviour
 {
 	public Text myRoundText;
 
+
 	public IEnumerator HideRoundStartText ()
 	{
 		OfflineManager.Instance.StartNewRound ();

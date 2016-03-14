@@ -39,9 +39,11 @@ public class OfflineManager : MonoBehaviour
 	public int roundNumber;
 	public GameState currentState;
 	public int MaxHealth;
-	public Text roundHUDText;
+	public Text roundText_HUD;
+	public float MaxRoundTimer;
+	public Text timerText_HUD;
 	
-
+	private float roundTimer;
 	private Vector3 P1StartPos;
 	private Vector3 P2StartPos;
 
@@ -51,11 +53,8 @@ public class OfflineManager : MonoBehaviour
 		currentState = GameState.RoundStart;
 		Player1.GetComponent<SpriteRenderer> ().sprite = Player1.GetComponent<OfflinePlayerController> ().mySprites [0];
 		Player2.GetComponent<SpriteRenderer> ().sprite = Player2.GetComponent<OfflinePlayerController> ().mySprites [1];
-		
 
 	}
-
-	
 
 	void Start ()
 	{
@@ -68,6 +67,32 @@ public class OfflineManager : MonoBehaviour
 
 	void Update ()
 	{
+		if (currentState == GameState.Playing) {
+			//reduce timer
+			roundTimer -= Time.deltaTime;
+			timerText_HUD.text = "Time: " + roundTimer.ToString ("N0");
+			if (roundTimer <= 0) {
+				//Times up and round is over
+				if (PlayerHolder1.myHealth > PlayerHolder2.myHealth) {
+					PlayerHolder1.roundWins++;
+					if (PlayerHolder1.roundWins == 2) {
+						currentState = GameState.MatchOver;
+					} else {
+						currentState = GameState.RoundOver;
+					}
+				} else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth) {
+					PlayerHolder2.roundWins++;
+					if (PlayerHolder2.roundWins == 2) {
+						currentState = GameState.MatchOver;
+					} else {
+						currentState = GameState.RoundOver;
+					}
+				} else {
+					currentState = GameState.RoundOver;
+				}
+				ShowRoundPanel ();
+			}
+		}
 		if (glovePicked && currentState == GameState.Playing) {
 			StartCoroutine (SpawnGloveCoroutine ());
 		} else if (currentState != GameState.Playing) {
@@ -91,13 +116,14 @@ public class OfflineManager : MonoBehaviour
 
 	public void StartNewRound ()
 	{
+		roundTimer = MaxRoundTimer;
 		roundNumber++;
 		PlayerHolder1.ResetPlayer ();
 		PlayerHolder2.ResetPlayer ();
 		PlayerHolder1.transform.position = P1StartPos;
 		PlayerHolder2.transform.position = P2StartPos;
 		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
-		roundHUDText.text = "Round: " + OfflineManager.Instance.roundNumber;
+		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 		//spawn first glove
 		SpawnGlove ();
 		glovePicked = false;
