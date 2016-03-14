@@ -11,16 +11,18 @@ public class PlayerHolderController : MonoBehaviour
 
 	[HideInInspector]	
 	public bool hit;
+	[HideInInspector]	
+	public bool hitter;
 	[HideInInspector]
 	public int myHealth;
-	[HideInInspector]
+	//[HideInInspector]
 	public int roundWins;
-	public Animator myPunchAnim;
 	public SpriteRenderer HitEffectSprite;
-	public Text myHealthText;
 	public GameObject myTrigger;
+	public Text myWinText_HUD;
+	public Text myHealthText_HUD;
 
-	private Vector3 myStartPos;
+	
 	private Quaternion myStartRot;
 	private float mySpeed;
 	private Vector3 force;
@@ -36,12 +38,12 @@ public class PlayerHolderController : MonoBehaviour
 
 	void Start ()
 	{
-		myStartPos = transform.position;
+		
 		myStartRot = transform.rotation;
 
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = 5f;
-		myHealthText.text = " Health: " + myHealth;
+		myHealthText_HUD.text = " Health: " + myHealth;
 	}
 
 	void Update ()
@@ -49,13 +51,15 @@ public class PlayerHolderController : MonoBehaviour
 		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.62f, 2.62f), Mathf.Clamp (transform.position.y, -4.5f, 4.5f), 0);
 
 		if (OfflineManager.Instance.currentState == GameState.Playing) {
-			if (!hit) {
+			if (!hit && !hitter) {
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 				//myRB.velocity = transform.up * mySpeed;	
-			} else {
+			} else if (hit) {
 				transform.position += transform.up * Time.deltaTime * mySpeed * 2;
 
-			}	
+			} else if (hitter) {
+				transform.position += transform.up * Time.deltaTime * -mySpeed;
+			}
 			
 		}
 	}
@@ -76,69 +80,57 @@ public class PlayerHolderController : MonoBehaviour
 		}	
 	}
 
-	IEnumerator PushPlayer ()
-	{
-		myRB.AddForce (force * 5, ForceMode2D.Impulse);
-		yield return new WaitForSeconds (0.5f);
-		myRB.velocity = Vector3.zero;
-	}
-
-	public IEnumerator MakeHitFalse ()
-	{
-		yield return new WaitForSeconds (.3f);
-		HitEffectSprite.enabled = false;
-		//myAnim.Play ("player_idle");
-		hit = false;
-	}
-
-	public void ResetPlayer ()
-	{
-		transform.position = myStartPos;
-		transform.rotation = myStartRot;
-		hit = false;
-		myHealth = OfflineManager.Instance.MaxHealth;
-		//GetComponentInChildren<OfflinePlayerController> ().transform.rotation = Quaternion.Euler (0, 0, 0);
-		myHealthText.text = " Health: " + myHealth;
-		myTrigger.SetActive (false);
-		HitEffectSprite.enabled = false;
-		Debug.Log ("myStartPos: " + myStartPos.ToString ());
-	}
-
 	IEnumerator HitEffect (Rigidbody2D r)
 	{
 		if (OnTrigger != null) {
 			OnTrigger ();
 		}
-		//StartCoroutine (PlayPunchAnim ());
-		
+		r.GetComponentInChildren<OfflinePlayerController> ().Punch ();
 		yield return new WaitForSeconds (0.05f);
-		myHealth--;
-		myHealthText.text = " Health: " + myHealth;
-		if (myHealth <= 0) {
-			
-			r.GetComponent<PlayerHolderController> ().roundWins++;
-			if (roundWins < 2) {
-				if (OnRoundOver != null) {
-					OnRoundOver ();
-				}
-			} else {
-				OfflineManager.Instance.MenuPanel.SetActive (true);
-			}
-		}
+		r.GetComponent<PlayerHolderController> ().hitter = true;
 		hit = true;
-		StartCoroutine (MakeHitFalse ());
+		StartCoroutine (MakeHitFalse (r));
 		HitEffectSprite.transform.SetParent (this.transform);
 		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
 		HitEffectSprite.enabled = true;
 		transform.rotation = r.transform.rotation; 
-		//force = (transform.position - other.transform.position).normalized;
-		//force.Normalize ();
-		//StartCoroutine (PushPlayer ());
-		//myRB.AddForce (force * 1000);
-		//other.GetComponentInParent<Rigidbody2D> ().AddForce (-force * 1000);
-		//other.GetComponentInParent<Rigidbody2D> ().transform.Rotate (0, 0, 15);
-
+		myHealth--;
+		myHealthText_HUD.text = " Health: " + myHealth;
+		if (myHealth <= 0) {
+			
+			r.GetComponent<PlayerHolderController> ().roundWins++;
+			if (r.GetComponent<PlayerHolderController> ().roundWins < 2) {
+				OfflineManager.Instance.currentState = GameState.RoundOver;
+				OfflineManager.Instance.ShowRoundPanel ();
+			} else {
+				OfflineManager.Instance.currentState = GameState.MatchOver;
+				OfflineManager.Instance.ShowRoundPanel ();
+			}
+		}
 	}
+
+	
+	public IEnumerator MakeHitFalse (Rigidbody2D r)
+	{
+		yield return new WaitForSeconds (.3f);
+		HitEffectSprite.enabled = false;
+		hit = false;
+		r.GetComponent<PlayerHolderController> ().hitter = false;
+	}
+
+	public void ResetPlayer ()
+	{
+		myWinText_HUD.text = "Wins: " + roundWins + "/2";
+		transform.rotation = myStartRot;
+		hit = false;
+		myHealth = OfflineManager.Instance.MaxHealth;
+		myHealthText_HUD.text = " Health: " + myHealth;
+		myTrigger.SetActive (false);
+		HitEffectSprite.enabled = false;
+		
+	}
+
+	
 
 	
 

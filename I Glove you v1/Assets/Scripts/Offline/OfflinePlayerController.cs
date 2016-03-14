@@ -8,7 +8,6 @@ public class OfflinePlayerController : MonoBehaviour
 
 	void Awake ()
 	{
-		//myPunchAnim = GetComponentInChildren<Animator> ();
 		PlayerHolderController.OnTrigger += Punch;
 	}
 
@@ -19,8 +18,7 @@ public class OfflinePlayerController : MonoBehaviour
 		myPunchAnim.Play ("Punch_Idle");
 	}
 
-
-	void Punch ()
+	public void Punch ()
 	{
 		StartCoroutine (PlayPunchAnim ());
 	}

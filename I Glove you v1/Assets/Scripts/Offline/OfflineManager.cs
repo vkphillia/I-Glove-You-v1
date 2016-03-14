@@ -4,10 +4,11 @@ using UnityEngine.UI;
 
 public enum GameState
 {
-	GetReady,
+	RoundStart,
 	Playing,
 	Paused,
-	RoundOver}
+	RoundOver,
+	MatchOver}
 ;
 
 public class OfflineManager : MonoBehaviour
@@ -27,77 +28,94 @@ public class OfflineManager : MonoBehaviour
 		}	
 	}
 
+	
 	public PlayerHolderController PlayerHolder1;
 	public PlayerHolderController PlayerHolder2;
 	public Transform Player1;
 	public Transform Player2;
 	public GameObject glove;
 	public bool glovePicked;
-	public GameObject MenuPanel;
+	public OfflineRoundController RoundPanel;
 	public int roundNumber;
 	public GameState currentState;
 	public int MaxHealth;
-	public Text roundText;
+	public Text roundHUDText;
+	
+
+	private Vector3 P1StartPos;
+	private Vector3 P2StartPos;
+
 
 	void OnEnable ()
 	{
-		currentState = GameState.GetReady;
+		currentState = GameState.RoundStart;
 		Player1.GetComponent<SpriteRenderer> ().sprite = Player1.GetComponent<OfflinePlayerController> ().mySprites [0];
 		Player2.GetComponent<SpriteRenderer> ().sprite = Player2.GetComponent<OfflinePlayerController> ().mySprites [1];
-		MenuPanel.SetActive (true);
+		
 
 	}
 
-	void Awake ()
-	{
-		PlayerHolderController.OnRoundOver += ResetRound;
-	}
+	
 
 	void Start ()
 	{
-		//spawn first glove
-		glove.SetActive (true);
-		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-4f, 4f), 0);
-		roundText.text = "Round: " + roundNumber;
+		P1StartPos = new Vector3 (0, -4, 0);
+		P2StartPos = new Vector3 (0, 4, 0);
+		PlayerHolder1.transform.position = P1StartPos;
+		PlayerHolder2.transform.position = P2StartPos;
+		ShowRoundPanel ();
 	}
 
 	void Update ()
 	{
 		if (glovePicked && currentState == GameState.Playing) {
-			StartCoroutine (SpawnGlove ());
+			StartCoroutine (SpawnGloveCoroutine ());
+		} else if (currentState != GameState.Playing) {
+			StopCoroutine (SpawnGloveCoroutine ());
 		}
 	}
 
-	public IEnumerator SpawnGlove ()
+	public IEnumerator SpawnGloveCoroutine ()
 	{
 		glovePicked = false;
 		Debug.Log ("Spawned");
 		yield return new WaitForSeconds (10f);
+		SpawnGlove ();
+	}
+
+	void SpawnGlove ()
+	{
 		glove.SetActive (true);
 		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-4f, 4f), 0);
 	}
 
-	public IEnumerator StartNewRound ()
+	public void StartNewRound ()
 	{
-		yield return new WaitForSeconds (5f);
-		currentState = GameState.GetReady;
-		MenuPanel.SetActive (true);
+		roundNumber++;
 		PlayerHolder1.ResetPlayer ();
 		PlayerHolder2.ResetPlayer ();
+		PlayerHolder1.transform.position = P1StartPos;
+		PlayerHolder2.transform.position = P2StartPos;
 		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
-		
+		roundHUDText.text = "Round: " + OfflineManager.Instance.roundNumber;
+		//spawn first glove
+		SpawnGlove ();
+		glovePicked = false;
 	}
 
-	void ResetRound ()
+	
+
+	public void ShowRoundPanel ()
 	{
-		currentState = GameState.RoundOver;
-		roundNumber++;
-		StartCoroutine (StartNewRound ());
+		RoundPanel.gameObject.SetActive (true);
+		if (currentState == GameState.RoundStart) {
+			StartCoroutine (RoundPanel.HideRoundStartText ());
+		} else if (currentState == GameState.RoundOver) {
+			StartCoroutine (RoundPanel.HideRoundOverText ());
+		} else if (currentState == GameState.MatchOver) {
+			StartCoroutine (RoundPanel.HideMatchOverText ());
+		}
 	}
 
-	void OnDestroy ()
-	{
-		PlayerHolderController.OnRoundOver -= ResetRound;
-	}
 	
 }
