@@ -55,10 +55,10 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 				//myRB.velocity = transform.up * mySpeed;	
 			} else if (hit) {
-				transform.position += transform.up * Time.deltaTime * mySpeed * 2;
+				transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
 
 			} else if (hitter) {
-				transform.position += transform.up * Time.deltaTime * -mySpeed;
+				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
 			}
 			
 		}
