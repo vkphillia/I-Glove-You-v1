@@ -16,13 +16,17 @@ public class KeyboardController : MonoBehaviour
 			KeyboardControls ();
 			if (ZDown) {
 				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+
 			} else if (XDown) {
 				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+
 			}
 			if (NDown) {
 				MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+
 			} else if (MDown) {
 				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+
 			}
 		}
 		
