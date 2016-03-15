@@ -28,6 +28,11 @@ public class KeyboardController : MonoBehaviour
 				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
 
 			}
+		} else {
+			ZDown = false;
+			XDown = false;
+			NDown = false;
+			MDown = false;
 		}
 		
 	}
@@ -39,8 +44,6 @@ public class KeyboardController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			ZDown = true;
 			XDown = false;
-			
-			
 
 		} else if (Input.GetKeyDown (KeyCode.X)) {
 			XDown = true;	

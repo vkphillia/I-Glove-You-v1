@@ -22,13 +22,11 @@ public class PlayerHolderController : MonoBehaviour
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
-	private Quaternion myStartRot;
 	private float mySpeed;
 	private Vector3 force;
 
 	void Start ()
 	{
-		myStartRot = transform.rotation;
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = 5f;
 		myHealthText_HUD.text = " Health: " + myHealth;
@@ -36,9 +34,9 @@ public class PlayerHolderController : MonoBehaviour
 
 	void Update ()
 	{
-		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
 		if (OfflineManager.Instance.currentState == GameState.Playing) {
+			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 			
 			if (!hit && !hitter) {
 				transform.position += transform.up * Time.deltaTime * mySpeed;
@@ -48,7 +46,7 @@ public class PlayerHolderController : MonoBehaviour
 			} else if (hitter) {
 				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
 			}
-		}
+		} 
 	}
 
 	void OnTriggerEnter2D (Collider2D other)
@@ -83,8 +81,7 @@ public class PlayerHolderController : MonoBehaviour
 			myHealthText_HUD.text = " Health: " + myHealth;
 			if (myHealth == 0) {
 				r.GetComponent<PlayerHolderController> ().roundWins++;
-				Debug.Log ("PlayerHolder1" + OfflineManager.Instance.PlayerHolder1.roundWins);
-				Debug.Log ("PlayerHolder2" + OfflineManager.Instance.PlayerHolder2.roundWins);
+				this.gameObject.SetActive (false);
 				if (r.GetComponent<PlayerHolderController> ().roundWins < 2) {
 					OfflineManager.Instance.currentState = GameState.RoundOver;
 					OfflineManager.Instance.ShowRoundPanel ();
@@ -107,9 +104,10 @@ public class PlayerHolderController : MonoBehaviour
 
 	public void ResetPlayer ()
 	{
+		gameObject.SetActive (true);		
 		myWinText_HUD.text = "Wins: " + roundWins + "/2";
-		transform.rotation = myStartRot;
 		hit = false;
+		hitter = false;
 		myHealth = OfflineManager.Instance.MaxHealth;
 		myHealthText_HUD.text = " Health: " + myHealth;
 		myTrigger.SetActive (false);

@@ -77,6 +77,7 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.transform.position = P2StartPos;
 		ShowRoundPanel ();
 		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
+		
 		PUPicked = true;
 	}
 
@@ -120,6 +121,8 @@ public class OfflineManager : MonoBehaviour
 			}
 		} else if (currentState == GameState.Fight) {
 			ZoomIn ();
+			Debug.Log (PlayerHolder1.transform.position);
+			Debug.Log (PlayerHolder2.transform.position);
 		} else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver) {
 			ZoomOut ();
 			StopCoroutine (SpawnGloveCoroutine ());
@@ -157,11 +160,12 @@ public class OfflineManager : MonoBehaviour
 	{
 		roundTimer = MaxRoundTimer;
 		roundNumber++;
+		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
+		PlayerHolder2.transform.localPosition = new Vector3 (0, 3, 0);
+		PlayerHolder1.transform.rotation = Quaternion.identity;	
+		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
 		PlayerHolder1.ResetPlayer ();
 		PlayerHolder2.ResetPlayer ();
-		PlayerHolder1.transform.position = P1StartPos;
-		PlayerHolder2.transform.position = P2StartPos;
-		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
 		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 		//spawn first glove
 		SpawnGlove ();
