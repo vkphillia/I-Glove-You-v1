@@ -2,15 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using GooglePlayGames.BasicApi.Multiplayer;
+using UnityEngine.UI;
 
-public class OnlineManager : MonoBehaviour, MPUpdateListener
+public class OnlineManager : MonoBehaviour, MPUpdateListener, MPLobbyListener
 {
+    
+    public Text debugText;
+    public Text debugMessagesLobbby;
     //player and opponent prefabs
     public GameObject PlayerPrefab;
     public GameObject opponentPrefab;
     public Transform Foreground;
 
     private GameObject playerCopy;
+    
+    //lobby messages
+    private string _lobbyMessage;
+    private bool _showLobbyDialog;
 
     //multiplayer stuffs
     private bool _multiplayerReady;
@@ -25,9 +33,11 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener
 	//property to get instance
 	public static OnlineManager Instance
     {
-		get {
+		get
+        {
 			//if we do not have Instance yet
-			if (_Instance == null) {                                                                                   
+			if (_Instance == null)
+            {                                                                                   
 				_Instance = (OnlineManager)FindObjectOfType (typeof(OnlineManager));
 			}
 			return _Instance;
@@ -37,6 +47,7 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener
     void Start()
     {
         SetupMultiplayerGame();
+        _showLobbyDialog = true;
     }
     
     //player and opponenet spawn and sprite selection done here
@@ -47,6 +58,7 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener
         // 2
         List<Participant> allPlayers = MultiplayerController.Instance.GetAllPlayers();
         _opponentScripts = new Dictionary<string, OpponentController>(allPlayers.Count - 1);
+
         for (int i = 0; i < allPlayers.Count; i++)
         {
             string nextParticipantId = allPlayers[i].ParticipantId;
@@ -99,6 +111,30 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener
         _multiplayerReady = true;
     }
 
+    void Update()
+    {
+        if (_multiplayerReady)
+        {
+            DoMultiplayerUpdate();
+        }
+
+        if (_showLobbyDialog)
+        {
+            debugMessagesLobbby.text = _lobbyMessage;
+        }
+    }
+
+    public void SetLobbyStatusMessage(string message)
+    {
+        _lobbyMessage = message;
+    }
+
+    public void HideLobby()
+    {
+        _lobbyMessage = "";
+        _showLobbyDialog = false;
+    }
+
     void DoMultiplayerUpdate()
     {
         MultiplayerController.Instance.SendMyUpdate(playerCopy.transform.position.x,
@@ -108,6 +144,8 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener
 
     public void UpdateReceived(string senderId, float posX, float posY, float rotZ)
     {
+        debugText.text = "Update received";
+
         if (_multiplayerReady)
         {
             OpponentController opponent = _opponentScripts[senderId];
