@@ -28,7 +28,6 @@ public class PlayerHolderController : MonoBehaviour
 
 	void Start ()
 	{
-		
 		myStartRot = transform.rotation;
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = 5f;
@@ -49,7 +48,6 @@ public class PlayerHolderController : MonoBehaviour
 			} else if (hitter) {
 				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
 			}
-			
 		}
 	}
 
@@ -80,18 +78,23 @@ public class PlayerHolderController : MonoBehaviour
 		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
 		HitEffectSprite.enabled = true;
 		transform.rotation = r.transform.rotation; 
-		myHealth--;
-		myHealthText_HUD.text = " Health: " + myHealth;
-		if (myHealth <= 0) {
-			r.GetComponent<PlayerHolderController> ().roundWins++;
-			if (r.GetComponent<PlayerHolderController> ().roundWins < 2) {
-				OfflineManager.Instance.currentState = GameState.RoundOver;
-				OfflineManager.Instance.ShowRoundPanel ();
-			} else {
-				OfflineManager.Instance.currentState = GameState.MatchOver;
-				OfflineManager.Instance.ShowRoundPanel ();
+		if (myHealth > 0) {
+			myHealth--;
+			myHealthText_HUD.text = " Health: " + myHealth;
+			if (myHealth == 0) {
+				r.GetComponent<PlayerHolderController> ().roundWins++;
+				Debug.Log ("PlayerHolder1" + OfflineManager.Instance.PlayerHolder1.roundWins);
+				Debug.Log ("PlayerHolder2" + OfflineManager.Instance.PlayerHolder2.roundWins);
+				if (r.GetComponent<PlayerHolderController> ().roundWins < 2) {
+					OfflineManager.Instance.currentState = GameState.RoundOver;
+					OfflineManager.Instance.ShowRoundPanel ();
+				} else {
+					OfflineManager.Instance.currentState = GameState.MatchOver;
+					OfflineManager.Instance.ShowRoundPanel ();
+				}
 			}
-		}
+		}		
+		
 	}
 
 	public IEnumerator MakeHitFalse (Rigidbody2D r)

@@ -44,6 +44,8 @@ public class OfflineManager : MonoBehaviour
 	public Transform Player2;
 	public GameObject glove;
 	public bool glovePicked;
+	public bool PUPicked;
+	public GameObject PU;
 	public OfflineRoundController RoundPanel;
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
@@ -65,7 +67,6 @@ public class OfflineManager : MonoBehaviour
 		currentState = GameState.RoundStart;
 		Player1.GetComponent<SpriteRenderer> ().sprite = Player1.GetComponent<OfflinePlayerController> ().mySprites [0];
 		Player2.GetComponent<SpriteRenderer> ().sprite = Player2.GetComponent<OfflinePlayerController> ().mySprites [1];
-
 	}
 
 	void Start ()
@@ -76,16 +77,22 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.transform.position = P2StartPos;
 		ShowRoundPanel ();
 		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
-		
+		PUPicked = true;
 	}
 
 	void Update ()
 	{
+
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			SceneManager.LoadScene ("offline menu");
 		}
 		if (currentState == GameState.Playing) {
-			
+			if (glovePicked) {
+				StartCoroutine (SpawnGloveCoroutine ());
+			}
+			if (PUPicked) {
+				StartCoroutine (SpawnPUCoroutine ());
+			}
 			
 			//reduce timer
 			roundTimer -= Time.deltaTime;
@@ -115,18 +122,14 @@ public class OfflineManager : MonoBehaviour
 			ZoomIn ();
 		} else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver) {
 			ZoomOut ();
-		}
-		if (glovePicked && currentState == GameState.Playing) {
-			StartCoroutine (SpawnGloveCoroutine ());
-		} else if (currentState != GameState.Playing) {
 			StopCoroutine (SpawnGloveCoroutine ());
+			StopCoroutine (SpawnPUCoroutine ());
 		}
 	}
 
 	public IEnumerator SpawnGloveCoroutine ()
 	{
 		glovePicked = false;
-		Debug.Log ("Spawned");
 		yield return new WaitForSeconds (10f);
 		SpawnGlove ();
 	}
@@ -135,6 +138,19 @@ public class OfflineManager : MonoBehaviour
 	{
 		glove.SetActive (true);
 		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
+	}
+
+	public IEnumerator SpawnPUCoroutine ()
+	{
+		PUPicked = false;
+		yield return new WaitForSeconds (5f);
+		SpawnPU ();
+	}
+
+	void SpawnPU ()
+	{
+		PU.SetActive (true);
+		PU.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
 	}
 
 	public void StartNewRound ()
