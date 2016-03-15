@@ -14,8 +14,12 @@ public class OfflinePlayerController : MonoBehaviour
 	IEnumerator PlayPunchAnim ()
 	{
 		myPunchAnim.Play ("Punch_Hit");
+		
+		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Punch);
+
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");
+
 	}
 
 	public void Punch ()

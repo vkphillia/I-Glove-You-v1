@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
 	RoundStart,
+	Fight,
 	Playing,
 	Paused,
 	RoundOver,
@@ -28,6 +30,13 @@ public class OfflineManager : MonoBehaviour
 		}	
 	}
 
+	public bool Mute;
+	public AudioSource source_Punch;
+	public AudioSource source_RoundStart;
+	public AudioSource source_Fight;
+	public AudioSource source_Round;
+	public AudioSource[] source_RoundNumber;
+	
 	
 	public PlayerHolderController PlayerHolder1;
 	public PlayerHolderController PlayerHolder2;
@@ -36,13 +45,16 @@ public class OfflineManager : MonoBehaviour
 	public GameObject glove;
 	public bool glovePicked;
 	public OfflineRoundController RoundPanel;
+	public GameObject Player1HUDPanel;
+	public GameObject Player2HUDPanel;
 	public int roundNumber;
 	public GameState currentState;
 	public int MaxHealth;
 	public Text roundText_HUD;
 	public float MaxRoundTimer;
 	public Text timerText_HUD;
-	
+	public Transform foreground;
+
 	private float roundTimer;
 	private Vector3 P1StartPos;
 	private Vector3 P2StartPos;
@@ -58,16 +70,23 @@ public class OfflineManager : MonoBehaviour
 
 	void Start ()
 	{
-		P1StartPos = new Vector3 (0, -4, 0);
-		P2StartPos = new Vector3 (0, 4, 0);
+		P1StartPos = new Vector3 (0, -3, 0);
+		P2StartPos = new Vector3 (0, 3, 0);
 		PlayerHolder1.transform.position = P1StartPos;
 		PlayerHolder2.transform.position = P2StartPos;
 		ShowRoundPanel ();
+		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
+		
 	}
 
 	void Update ()
 	{
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SceneManager.LoadScene ("offline menu");
+		}
 		if (currentState == GameState.Playing) {
+			
+			
 			//reduce timer
 			roundTimer -= Time.deltaTime;
 			timerText_HUD.text = "Time: " + roundTimer.ToString ("N0");
@@ -92,6 +111,10 @@ public class OfflineManager : MonoBehaviour
 				}
 				ShowRoundPanel ();
 			}
+		} else if (currentState == GameState.Fight) {
+			ZoomIn ();
+		} else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver) {
+			ZoomOut ();
 		}
 		if (glovePicked && currentState == GameState.Playing) {
 			StartCoroutine (SpawnGloveCoroutine ());
@@ -111,7 +134,7 @@ public class OfflineManager : MonoBehaviour
 	void SpawnGlove ()
 	{
 		glove.SetActive (true);
-		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-4f, 4f), 0);
+		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
 	}
 
 	public void StartNewRound ()
@@ -129,7 +152,11 @@ public class OfflineManager : MonoBehaviour
 		glovePicked = false;
 	}
 
-	
+	public void NewMatchStart ()
+	{
+		PlayerHolder1.roundWins = 0;
+		PlayerHolder2.roundWins = 0;
+	}
 
 	public void ShowRoundPanel ()
 	{
@@ -143,5 +170,30 @@ public class OfflineManager : MonoBehaviour
 		}
 	}
 
+	void ZoomIn ()
+	{
+		Player1HUDPanel.SetActive (true); 
+		Player2HUDPanel.SetActive (true); 
+		if (foreground.transform.localScale.x < 1) {
+			foreground.transform.localScale += new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
+		}
+	}
+
+	public void ZoomOut ()
+	{
+		Player1HUDPanel.SetActive (false); 
+		Player2HUDPanel.SetActive (false); 
+
+		if (foreground.transform.localScale.x > 0.8f) {
+			foreground.transform.localScale -= new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
+		}
+	}
+
+	public void PlaySound (AudioSource a)
+	{
+		if (!Mute) {
+			a.Play ();
+		}
+	}
 	
 }

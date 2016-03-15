@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 public delegate void TriggerEvent ();
 public class PlayerHolderController : MonoBehaviour
 {
@@ -29,7 +30,6 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		
 		myStartRot = transform.rotation;
-
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = 5f;
 		myHealthText_HUD.text = " Health: " + myHealth;
@@ -37,7 +37,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	void Update ()
 	{
-		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.62f, 2.62f), Mathf.Clamp (transform.position.y, -4.5f, 4.5f), 0);
+		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
 		if (OfflineManager.Instance.currentState == GameState.Playing) {
 			
