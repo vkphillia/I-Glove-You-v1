@@ -11,6 +11,8 @@ public class OfflinePlayerController : MonoBehaviour
 		PlayerHolderController.OnTrigger += Punch;
 	}
 
+	
+
 	IEnumerator PlayPunchAnim ()
 	{
 		myPunchAnim.Play ("Punch_Hit");

@@ -15,6 +15,7 @@ public class PUController : MonoBehaviour
 			OfflineManager.Instance.PUPicked = true;
 			OfflineManager.Instance.PlayerHolder1.myHealth += 2;
 			OfflineManager.Instance.PlayerHolder1.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder1.myHealth;
+
 		} else if (other.gameObject.layer == 10) {
 			OfflineManager.Instance.PUPicked = true;
 			OfflineManager.Instance.PlayerHolder2.myHealth += 2;

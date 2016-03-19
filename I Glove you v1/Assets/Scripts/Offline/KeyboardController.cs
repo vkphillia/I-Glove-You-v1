@@ -61,12 +61,9 @@ public class KeyboardController : MonoBehaviour
 			NDown = true;
 			MDown = false;
 			
-			
-
 		} else if (Input.GetKeyDown (KeyCode.M)) {
 			MDown = true;	
 			NDown = false;	
-			
 			
 		} else if (Input.GetKeyUp (KeyCode.N)) {
 			NDown = false;

@@ -22,7 +22,7 @@ public class PlayerHolderController : MonoBehaviour
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
-	private float mySpeed;
+	public float mySpeed;
 	private Vector3 force;
 
 	void Start ()
@@ -68,7 +68,7 @@ public class PlayerHolderController : MonoBehaviour
 			OnTrigger ();
 		}
 		r.GetComponentInChildren<OfflinePlayerController> ().Punch ();
-		yield return new WaitForSeconds (0.05f);
+		yield return new WaitForSeconds (0f);
 		r.GetComponent<PlayerHolderController> ().hitter = true;
 		hit = true;
 		StartCoroutine (MakeHitFalse (r));
