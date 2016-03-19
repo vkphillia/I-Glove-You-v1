@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PUController : MonoBehaviour
 {
+
 	void OnEnable ()
 	{
 		GetComponent<SpriteRenderer> ().enabled = true;
@@ -11,16 +12,20 @@ public class PUController : MonoBehaviour
 
 	void OnCollisionEnter2D (Collision2D other)
 	{
-		if (other.gameObject.layer == 8) {
+		if (other.gameObject.layer == 8)
+        {
 			OfflineManager.Instance.PUPicked = true;
 			OfflineManager.Instance.PlayerHolder1.myHealth += 2;
 			OfflineManager.Instance.PlayerHolder1.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder1.myHealth;
+		}
 
-		} else if (other.gameObject.layer == 10) {
+        else if (other.gameObject.layer == 10)
+        {
 			OfflineManager.Instance.PUPicked = true;
 			OfflineManager.Instance.PlayerHolder2.myHealth += 2;
 			OfflineManager.Instance.PlayerHolder2.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder2.myHealth;
 		}
+
 		OfflineManager.Instance.PU.SetActive (false);
 	}
 

@@ -5,7 +5,8 @@ public class BorderVerticle : MonoBehaviour
 {
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.gameObject.layer == 8 || other.gameObject.layer == 10) {
+		if (other.gameObject.layer == 8 || other.gameObject.layer == 10)
+        {
 			//other.gameObject.GetComponent<PlayerHolderController> ().hit = false;
 			other.transform.Rotate (0, 0, (360 - other.transform.rotation.eulerAngles.z) - other.transform.rotation.eulerAngles.z);
 			//	StartCoroutine (other.gameObject.GetComponent<PlayerController> ().MakeHitFalse ());

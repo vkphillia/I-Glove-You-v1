@@ -36,14 +36,17 @@ public class OfflineRoundController : MonoBehaviour
 		StartCoroutine (HideRoundStartText ());
 	}
 
-
+    //loads offline menu after showing the winner
 	public IEnumerator HideMatchOverText ()
 	{
 		myRoundText.text = "";
 		yield return new WaitForSeconds (2f);
-		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2) {
+		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
+        {
 			myRoundText.text = "Player 1 Wins";
-		} else if (OfflineManager.Instance.PlayerHolder2.roundWins == 2) {
+		}
+        else if (OfflineManager.Instance.PlayerHolder2.roundWins == 2)
+        {
 			myRoundText.text = "Player 2 Wins";
 		}
 		yield return new WaitForSeconds (3f);

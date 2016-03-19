@@ -16,9 +16,13 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener, MPLobbyListener
 
     private GameObject playerCopy;
     
+
     //lobby messages
     private string _lobbyMessage;
     private bool _showLobbyDialog;
+    
+    //network traffic
+    private float _nextBroadcastTime = 0;
 
     //multiplayer stuffs
     private bool _multiplayerReady;
@@ -137,9 +141,13 @@ public class OnlineManager : MonoBehaviour, MPUpdateListener, MPLobbyListener
 
     void DoMultiplayerUpdate()
     {
-        MultiplayerController.Instance.SendMyUpdate(playerCopy.transform.position.x,
+        if (Time.time > _nextBroadcastTime)
+        {
+            MultiplayerController.Instance.SendMyUpdate(playerCopy.transform.position.x,
                                             playerCopy.transform.position.y,
                                             playerCopy.transform.rotation.eulerAngles.z);
+            _nextBroadcastTime = Time.time + .16f;
+        }
     }
 
     public void UpdateReceived(string senderId, float posX, float posY, float rotZ)

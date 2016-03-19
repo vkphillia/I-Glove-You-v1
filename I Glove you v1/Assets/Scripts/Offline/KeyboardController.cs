@@ -12,23 +12,32 @@ public class KeyboardController : MonoBehaviour
 
 	void Update ()
 	{
-		if (OfflineManager.Instance.currentState == GameState.Playing) {
+		if (OfflineManager.Instance.currentState == GameState.Playing)
+        {
 			KeyboardControls ();
-			if (ZDown) {
+
+			if (ZDown)
+            {
 				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+			}
 
-			} else if (XDown) {
+            else if (XDown)
+            {
 				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
-
 			}
-			if (NDown) {
+
+			if (NDown)
+            {
 				MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
-
-			} else if (MDown) {
-				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
-
 			}
-		} else {
+
+            else if (MDown)
+            {
+				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+			}
+		}
+        else
+        {
 			ZDown = false;
 			XDown = false;
 			NDown = false;
@@ -41,33 +50,48 @@ public class KeyboardController : MonoBehaviour
 	void KeyboardControls ()
 	{
 		//PlayerPrefs 1		
-		if (Input.GetKeyDown (KeyCode.Z)) {
+		if (Input.GetKeyDown (KeyCode.Z))
+        {
 			ZDown = true;
 			XDown = false;
+		}
 
-		} else if (Input.GetKeyDown (KeyCode.X)) {
+        else if (Input.GetKeyDown (KeyCode.X))
+        {
 			XDown = true;	
-			ZDown = false;	
-			
-			
-		} else if (Input.GetKeyUp (KeyCode.X)) {
+			ZDown = false;		
+		}
+
+        else if (Input.GetKeyUp (KeyCode.X))
+        {
 			XDown = false;
-		} else if (Input.GetKeyUp (KeyCode.Z)) {
+		}
+
+        else if (Input.GetKeyUp (KeyCode.Z))
+        {
 			ZDown = false;
 		}
 
 		//player 2
-		if (Input.GetKeyDown (KeyCode.N)) {
+		if (Input.GetKeyDown (KeyCode.N))
+        {
 			NDown = true;
 			MDown = false;
-			
-		} else if (Input.GetKeyDown (KeyCode.M)) {
+		}
+
+        else if (Input.GetKeyDown (KeyCode.M))
+        {
 			MDown = true;	
-			NDown = false;	
-			
-		} else if (Input.GetKeyUp (KeyCode.N)) {
+			NDown = false;		
+		}
+
+        else if (Input.GetKeyUp (KeyCode.N))
+        {
 			NDown = false;
-		} else if (Input.GetKeyUp (KeyCode.M)) {
+		}
+
+        else if (Input.GetKeyUp (KeyCode.M))
+        {
 			MDown = false;
 		}
 		

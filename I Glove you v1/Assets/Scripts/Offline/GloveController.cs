@@ -16,12 +16,15 @@ public class GloveController : MonoBehaviour
 
 	void OnCollisionEnter2D (Collision2D other)
 	{
-		if (other.gameObject.layer == 8) {
+		if (other.gameObject.layer == 8)
+        {
 			OfflineManager.Instance.glovePicked = true;
 			P1Trigger.SetActive (true);
 			P2Trigger.SetActive (false);
 			OfflineManager.Instance.glove.SetActive (false);
-		} else if (other.gameObject.layer == 10) {
+		}
+        else if (other.gameObject.layer == 10)
+        {
 			OfflineManager.Instance.glovePicked = true;
 			P2Trigger.SetActive (true);
 			P1Trigger.SetActive (false);
