@@ -42,10 +42,7 @@ public class PlayerHolderController : MonoBehaviour
 
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			//turn on this code to limit player to borders
-			//transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
-
-			Teleport ();
+			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
 			if (!hit && !hitter)
 			{
@@ -139,35 +136,5 @@ public class PlayerHolderController : MonoBehaviour
 		HitEffectSprite.enabled = false;
 	}
 
-	public void Teleport ()
-	{
-		if (transform.position.x < -2.75f)
-		{
-			StartCoroutine (StopTrail ());
-			transform.position = new Vector3 (2.75f, transform.position.y, 0);
-		}
-		else if (transform.position.x > 2.75f)
-		{
-			StartCoroutine (StopTrail ());
-			transform.position = new Vector3 (-2.75f, transform.position.y, 0);
-		}
-		if (transform.position.y < -3.7f)
-		{
-			StartCoroutine (StopTrail ());
-			transform.position = new Vector3 (transform.position.x, 3.7f, 0);
-		}
-		else if (transform.position.y > 3.7f)
-		{
-			StartCoroutine (StopTrail ());
-			transform.position = new Vector3 (transform.position.x, -3.7f, 0);
-		}
-	}
 
-	IEnumerator StopTrail ()
-	{
-		GetComponent<TrailRenderer> ().enabled = false;
-		yield return new WaitForSeconds (0.3f);
-		GetComponent<TrailRenderer> ().enabled = true;
-	
-	}
 }
