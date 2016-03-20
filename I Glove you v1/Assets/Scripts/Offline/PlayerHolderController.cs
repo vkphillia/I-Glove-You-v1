@@ -19,6 +19,9 @@ public class PlayerHolderController : MonoBehaviour
 	[HideInInspector]
 	public int roundWins;
 
+	public Sprite[] mySprites;
+	public Animator myPunchAnim;
+
 	public SpriteRenderer HitEffectSprite;
 
 	public GameObject myTrigger;
@@ -29,6 +32,11 @@ public class PlayerHolderController : MonoBehaviour
 	public float mySpeed;
 
 	private Vector3 force;
+
+	void Awake ()
+	{
+		PlayerHolderController.OnTrigger += Punch;
+	}
 
 	void Start ()
 	{
@@ -82,7 +90,7 @@ public class PlayerHolderController : MonoBehaviour
 			OnTrigger ();
 		}
 
-		r.GetComponentInChildren<OfflinePlayerController> ().Punch ();
+		r.GetComponent<PlayerHolderController> ().Punch ();
 		yield return new WaitForSeconds (0f);
 		r.GetComponent<PlayerHolderController> ().hitter = true;
 		hit = true;
@@ -134,6 +142,27 @@ public class PlayerHolderController : MonoBehaviour
 		myHealthText_HUD.text = " Health: " + myHealth;
 		myTrigger.SetActive (false);
 		HitEffectSprite.enabled = false;
+	}
+
+
+	IEnumerator PlayPunchAnim ()
+	{
+		myPunchAnim.Play ("Punch_Hit");
+		
+		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Punch);
+
+		yield return new WaitForSeconds (.5f);
+		myPunchAnim.Play ("Punch_Idle");
+	}
+
+	public void Punch ()
+	{
+		StartCoroutine (PlayPunchAnim ());
+	}
+
+	void OnDestroy ()
+	{
+		PlayerHolderController.OnTrigger -= Punch;
 	}
 
 

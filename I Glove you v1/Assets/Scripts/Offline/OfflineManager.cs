@@ -23,7 +23,8 @@ public class OfflineManager : MonoBehaviour
 	public static OfflineManager Instance {
 		get {
 			//if we do not have Instance yet
-			if (_Instance == null) {                                                                                   
+			if (_Instance == null)
+			{                                                                                   
 				_Instance = (OfflineManager)FindObjectOfType (typeof(OfflineManager));
 			}
 			return _Instance;
@@ -47,8 +48,6 @@ public class OfflineManager : MonoBehaviour
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
 
-	public Transform Player1;
-	public Transform Player2;
 	public Transform foreground;
 
 	public GameState currentState;
@@ -73,8 +72,8 @@ public class OfflineManager : MonoBehaviour
 	{
 		currentState = GameState.RoundStart;
 		//why we need this when we know that there are 2 players and we have 2 sprites
-		Player1.GetComponent<SpriteRenderer> ().sprite = Player1.GetComponent<OfflinePlayerController> ().mySprites [0];
-		Player2.GetComponent<SpriteRenderer> ().sprite = Player2.GetComponent<OfflinePlayerController> ().mySprites [1];
+		PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [0];
+		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [1];
 	}
 
 	//sets the player intital position and calls ShowRoundPanel()
@@ -96,11 +95,16 @@ public class OfflineManager : MonoBehaviour
 	{
 		RoundPanel.gameObject.SetActive (true);
 
-		if (currentState == GameState.RoundStart) {
+		if (currentState == GameState.RoundStart)
+		{
 			StartCoroutine (RoundPanel.HideRoundStartText ());
-		} else if (currentState == GameState.RoundOver) {
+		}
+		else if (currentState == GameState.RoundOver)
+		{
 			StartCoroutine (RoundPanel.HideRoundOverText ());
-		} else if (currentState == GameState.MatchOver) {
+		}
+		else if (currentState == GameState.MatchOver)
+		{
 			StartCoroutine (RoundPanel.HideMatchOverText ());
 		}
 	}
@@ -109,15 +113,19 @@ public class OfflineManager : MonoBehaviour
 	void Update ()
 	{
 
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Escape))
+		{
 			SceneManager.LoadScene ("offline menu");
 		}
 
-		if (currentState == GameState.Playing) {
-			if (glovePicked) {
+		if (currentState == GameState.Playing)
+		{
+			if (glovePicked)
+			{
 				StartCoroutine (SpawnGloveCoroutine ());
 			}
-			if (PUPicked) {
+			if (PUPicked)
+			{
 				StartCoroutine (SpawnPUCoroutine ());
 			}
 
@@ -125,16 +133,21 @@ public class OfflineManager : MonoBehaviour
 			roundTimer -= Time.deltaTime;
 			timerText_HUD.text = "Time: " + roundTimer.ToString ("N0");
 
-			if (roundTimer <= 0) {
+			if (roundTimer <= 0)
+			{
 				//Times up and round is over
 				CheckRoundStatus ();
 			}
-		} else if (currentState == GameState.Fight) {
+		}
+		else if (currentState == GameState.Fight)
+		{
 			ZoomIn ();
 
 			//Debug.Log (PlayerHolder1.transform.position);
 			//Debug.Log (PlayerHolder2.transform.position);
-		} else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver) {
+		}
+		else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver)
+		{
 			ZoomOut ();
 			StopCoroutine (SpawnGloveCoroutine ());
 			StopCoroutine (SpawnPUCoroutine ());
@@ -175,7 +188,8 @@ public class OfflineManager : MonoBehaviour
 		Player1HUDPanel.SetActive (true);
 		Player2HUDPanel.SetActive (true);
 
-		if (foreground.transform.localScale.x < 1) {
+		if (foreground.transform.localScale.x < 1)
+		{
 			foreground.transform.localScale += new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
 		}
 	}
@@ -185,7 +199,8 @@ public class OfflineManager : MonoBehaviour
 		Player1HUDPanel.SetActive (false);
 		Player2HUDPanel.SetActive (false);
 
-		if (foreground.transform.localScale.x > 0.8f) {
+		if (foreground.transform.localScale.x > 0.8f)
+		{
 			foreground.transform.localScale -= new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
 		}
 	}
@@ -193,13 +208,18 @@ public class OfflineManager : MonoBehaviour
 	//checks for the winner and sets the GameState to MatchOver or RoundOver
 	void CheckRoundStatus ()
 	{
-		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth && PlayerHolder1.roundWins == 1) {
+		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth && PlayerHolder1.roundWins == 1)
+		{
 			PlayerHolder1.roundWins++;
 			currentState = GameState.MatchOver;
-		} else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth && PlayerHolder2.roundWins == 2) {
+		}
+		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth && PlayerHolder2.roundWins == 2)
+		{
 			PlayerHolder2.roundWins++;
 			currentState = GameState.MatchOver;
-		} else {
+		}
+		else
+		{
 			currentState = GameState.RoundOver;
 		}
 
@@ -237,7 +257,8 @@ public class OfflineManager : MonoBehaviour
 	//plays the sound that is passed in as an argument
 	public void PlaySound (AudioSource a)
 	{
-		if (!Mute) {
+		if (!Mute)
+		{
 			a.Play ();
 		}
 	}
