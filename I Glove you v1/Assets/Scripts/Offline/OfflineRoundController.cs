@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class OfflineRoundController : MonoBehaviour
 {
+    public SoundsController soundController; 
 	public Text myRoundText;
 
 
@@ -18,11 +19,13 @@ public class OfflineRoundController : MonoBehaviour
 		yield return new WaitForSeconds (3f);
 		myRoundText.text = "Fight!";
 		OfflineManager.Instance.currentState = GameState.Fight;
-		
-		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundStart);
-		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Fight);
-		
-		yield return new WaitForSeconds (1f);
+
+        //OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundStart);
+        //OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Fight);
+        soundController.PlaySoundFX("Round_Start");
+        soundController.PlaySoundFX("Fight");
+
+        yield return new WaitForSeconds (1f);
 		OfflineManager.Instance.currentState = GameState.Playing;
 		gameObject.SetActive (false);
 	}
@@ -56,10 +59,18 @@ public class OfflineRoundController : MonoBehaviour
 
 	IEnumerator RoundNumberSFX ()
 	{
-		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
-		yield return new WaitForSeconds (0.3f);
-		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
-	}
+		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
+        soundController.PlaySoundFX("Round");
+        
+        yield return new WaitForSeconds (0.3f);
+		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
+        if(OfflineManager.Instance.roundNumber==1)
+            soundController.PlaySoundFX("one");
+        else if(OfflineManager.Instance.roundNumber==2)
+            soundController.PlaySoundFX("two");
+        else if(OfflineManager.Instance.roundNumber==3)
+            soundController.PlaySoundFX("three");
+    }
 	
 	
 	

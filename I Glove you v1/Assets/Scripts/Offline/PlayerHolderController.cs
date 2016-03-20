@@ -19,7 +19,9 @@ public class PlayerHolderController : MonoBehaviour
 	[HideInInspector]
 	public int roundWins;
 
-	public Sprite[] mySprites;
+    public SoundsController soundController;
+
+    public Sprite[] mySprites;
 	public Animator myPunchAnim;
 
 	public SpriteRenderer HitEffectSprite;
@@ -147,7 +149,9 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		myPunchAnim.Play ("Punch_Hit");
 		
-		OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Punch);
+		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Punch);
+        soundController.PlaySoundFX("Punch");
+        
 
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");

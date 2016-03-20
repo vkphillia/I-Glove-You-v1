@@ -20,7 +20,8 @@ public class OfflineManager : MonoBehaviour
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
-	public static OfflineManager Instance {
+	public static OfflineManager Instance
+    {
 		get {
 			//if we do not have Instance yet
 			if (_Instance == null)
@@ -32,11 +33,11 @@ public class OfflineManager : MonoBehaviour
 	}
 
 	public bool Mute;
-	public AudioSource source_Punch;
-	public AudioSource source_RoundStart;
-	public AudioSource source_Fight;
-	public AudioSource source_Round;
-	public AudioSource[] source_RoundNumber;
+	//public AudioSource source_Punch;
+	//public AudioSource source_RoundStart;
+	//public AudioSource source_Fight;
+	//public AudioSource source_Round;
+	//public AudioSource[] source_RoundNumber;
 	
 	//scripts link
 	public PlayerHolderController PlayerHolder1;
