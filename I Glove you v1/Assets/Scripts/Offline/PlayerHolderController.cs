@@ -24,8 +24,6 @@ public class PlayerHolderController : MonoBehaviour
 
 	public SpriteRenderer HitEffectSprite;
 
-	public GameObject myTrigger;
-
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
@@ -140,7 +138,7 @@ public class PlayerHolderController : MonoBehaviour
 		hitter = false;
 		myHealth = OfflineManager.Instance.MaxHealth;
 		myHealthText_HUD.text = " Health: " + myHealth;
-		myTrigger.SetActive (false);
+		myPunchAnim.gameObject.SetActive (false);
 		HitEffectSprite.enabled = false;
 	}
 
