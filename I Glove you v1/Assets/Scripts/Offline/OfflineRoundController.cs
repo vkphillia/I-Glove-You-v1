@@ -8,6 +8,7 @@ public class OfflineRoundController : MonoBehaviour
 {
     public SoundsController soundController; 
 	public Text myRoundText;
+    public GameObject UI;
 
 
 	public IEnumerator HideRoundStartText ()
@@ -53,8 +54,10 @@ public class OfflineRoundController : MonoBehaviour
 			myRoundText.text = "Player 2 Wins";
 		}
 		yield return new WaitForSeconds (3f);
-		OfflineManager.Instance.NewMatchStart ();
-		SceneManager.LoadScene ("offline menu");
+        myRoundText.text = "";
+        OfflineManager.Instance.NewMatchStart ();
+        UI.SetActive(true);
+		//SceneManager.LoadScene ("offline menu");
 	}
 
 	IEnumerator RoundNumberSFX ()

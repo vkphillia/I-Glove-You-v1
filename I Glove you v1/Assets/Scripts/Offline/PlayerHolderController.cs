@@ -35,9 +35,8 @@ public class PlayerHolderController : MonoBehaviour
 	public float mySpeed;
 
 	private Vector3 force;
-
-
-	void Awake ()
+    
+    void Awake ()
 	{
 		PlayerHolderController.OnTrigger += Punch;
 	}
@@ -47,7 +46,7 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = " Health: " + myHealth;
-	}
+    }
 
 	void Update ()
 	{
@@ -93,8 +92,8 @@ public class PlayerHolderController : MonoBehaviour
 		{
 			OnTrigger ();
 		}
-
-		r.GetComponent<PlayerHolderController> ().Punch ();
+        
+        r.GetComponent<PlayerHolderController> ().Punch ();
 		yield return new WaitForSeconds (0f);
 		r.GetComponent<PlayerHolderController> ().hitter = true;
 		hit = true;
@@ -130,15 +129,20 @@ public class PlayerHolderController : MonoBehaviour
 
 	public IEnumerator MakeHitFalse (Rigidbody2D r)
 	{
-		yield return new WaitForSeconds (.3f);
-		HitEffectSprite.enabled = false;
+        Camera.main.backgroundColor = Color.black;//new code for color effect here
+        
+        yield return new WaitForSeconds (.5f);
+
+        Camera.main.backgroundColor = OfflineManager.Instance.cameraBGcolor;//new code for color effect here also
+
+        HitEffectSprite.enabled = false;
 		hit = false;
 		r.GetComponent<PlayerHolderController> ().hitter = false;
 	}
 
 	public void ResetPlayer ()
 	{
-		gameObject.SetActive (true);		
+        gameObject.SetActive (true);		
 		myWinText_HUD.text = "Wins: " + roundWins + "/2";
 		hit = false;
 		hitter = false;

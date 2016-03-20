@@ -52,6 +52,9 @@ public class OfflineManager : MonoBehaviour
 
 	public GameState currentState;
 
+    [HideInInspector]
+    public Color cameraBGcolor;
+
 	public bool glovePicked;
 	public bool PUPicked;
 
@@ -86,7 +89,9 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.transform.position = P2StartPos;
 		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
 
-		ShowRoundPanel ();
+        cameraBGcolor = Camera.main.backgroundColor;//new code for BG color
+
+        ShowRoundPanel ();
 
 
 	}
@@ -96,7 +101,9 @@ public class OfflineManager : MonoBehaviour
 	{
 		RoundPanel.gameObject.SetActive (true);
 
-		if (currentState == GameState.RoundStart)
+        Camera.main.backgroundColor = cameraBGcolor;//new code for color effect here also
+
+        if (currentState == GameState.RoundStart)
 		{
 			StartCoroutine (RoundPanel.HideRoundStartText ());
 		}
@@ -227,8 +234,22 @@ public class OfflineManager : MonoBehaviour
 
 		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
-		//spawn first glove
-		SpawnGlove ();
+        //some new codes here for BGColor
+        if (this.roundNumber == 2)
+        {
+            Camera.main.backgroundColor = Color.cyan;
+            cameraBGcolor = Camera.main.backgroundColor;
+        }
+        if (roundNumber == 3)
+        {
+            Camera.main.backgroundColor = Color.grey;
+            cameraBGcolor = Camera.main.backgroundColor;
+        }
+        //till here
+
+
+        //spawn first glove
+        Invoke("SpawnGlove",4f);
 		glovePicked = false;
 	}
     
@@ -239,12 +260,21 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.roundWins = 0;
 	}
 
-	//plays the sound that is passed in as an argument
-	public void PlaySound (AudioSource a)
-	{
-		if (!Mute)
-		{
-			a.Play ();
-		}
-	}
+    public void OnMenuClick()
+    {
+        SceneManager.LoadScene("offline menu");
+    }
+
+    public void OnReMatchClick()
+    {
+        SceneManager.LoadScene("offline game");
+    }
+    //plays the sound that is passed in as an argument //Deprecated
+    //public void PlaySound (AudioSource a)
+    //{
+    //	if (!Mute)
+    //	{
+    //		a.Play ();
+    //	}
+    //}
 }
