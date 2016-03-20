@@ -10,8 +10,8 @@ public enum GameState
 	Playing,
 	Paused,
 	RoundOver,
-	MatchOver
-};
+	MatchOver}
+;
 
 public class OfflineManager : MonoBehaviour
 {
@@ -20,12 +20,10 @@ public class OfflineManager : MonoBehaviour
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
-	public static OfflineManager Instance
-    {
+	public static OfflineManager Instance {
 		get {
 			//if we do not have Instance yet
-			if (_Instance == null)
-            {                                                                                   
+			if (_Instance == null) {                                                                                   
 				_Instance = (OfflineManager)FindObjectOfType (typeof(OfflineManager));
 			}
 			return _Instance;
@@ -42,44 +40,44 @@ public class OfflineManager : MonoBehaviour
 	//scripts link
 	public PlayerHolderController PlayerHolder1;
 	public PlayerHolderController PlayerHolder2;
-    public OfflineRoundController RoundPanel;
+	public OfflineRoundController RoundPanel;
 
-    public GameObject glove;
-    public GameObject PU;
-    public GameObject Player1HUDPanel;
-    public GameObject Player2HUDPanel;
+	public GameObject glove;
+	public GameObject PU;
+	public GameObject Player1HUDPanel;
+	public GameObject Player2HUDPanel;
 
-    public Transform Player1;
+	public Transform Player1;
 	public Transform Player2;
-    public Transform foreground;
+	public Transform foreground;
 
-    public GameState currentState;
+	public GameState currentState;
 
-    public bool glovePicked;
+	public bool glovePicked;
 	public bool PUPicked;
 
 	public int roundNumber;
 	public int MaxHealth;
     
-    public float MaxRoundTimer;
+	public float MaxRoundTimer;
 
-    public Text roundText_HUD;
+	public Text roundText_HUD;
 	public Text timerText_HUD;
 	
 	private Vector3 P1StartPos;
 	private Vector3 P2StartPos;
-    private float roundTimer;
+	private float roundTimer;
 
-    //sets GameState to RoundStart and sets the sprite for both player
-    void OnEnable ()
+	//sets GameState to RoundStart and sets the sprite for both player
+	void OnEnable ()
 	{
 		currentState = GameState.RoundStart;
-        //why we need this when we know that there are 2 players and we have 2 sprites
+		//why we need this when we know that there are 2 players and we have 2 sprites
 		Player1.GetComponent<SpriteRenderer> ().sprite = Player1.GetComponent<OfflinePlayerController> ().mySprites [0];
 		Player2.GetComponent<SpriteRenderer> ().sprite = Player2.GetComponent<OfflinePlayerController> ().mySprites [1];
 	}
 
-    //sets the player intital position and calls ShowRoundPanel()
+	//sets the player intital position and calls ShowRoundPanel()
 	void Start ()
 	{
 		P1StartPos = new Vector3 (0, -3, 0);
@@ -93,182 +91,154 @@ public class OfflineManager : MonoBehaviour
 		PUPicked = true;
 	}
 
-    //sets round start and over texts
-    public void ShowRoundPanel()
-    {
-        RoundPanel.gameObject.SetActive(true);
+	//sets round start and over texts
+	public void ShowRoundPanel ()
+	{
+		RoundPanel.gameObject.SetActive (true);
 
-        if (currentState == GameState.RoundStart)
-        {
-            StartCoroutine(RoundPanel.HideRoundStartText());
-        }
-        else if (currentState == GameState.RoundOver)
-        {
-            StartCoroutine(RoundPanel.HideRoundOverText());
-        }
-        else if (currentState == GameState.MatchOver)
-        {
-            StartCoroutine(RoundPanel.HideMatchOverText());
-        }
-    }
+		if (currentState == GameState.RoundStart) {
+			StartCoroutine (RoundPanel.HideRoundStartText ());
+		} else if (currentState == GameState.RoundOver) {
+			StartCoroutine (RoundPanel.HideRoundOverText ());
+		} else if (currentState == GameState.MatchOver) {
+			StartCoroutine (RoundPanel.HideMatchOverText ());
+		}
+	}
 
-    //check for escape button click, spawn gloves and power ups, controls timer, checks round status
-    void Update()
-    {
+	//check for escape button click, spawn gloves and power ups, controls timer, checks round status
+	void Update ()
+	{
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("offline menu");
-        }
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SceneManager.LoadScene ("offline menu");
+		}
 
-        if (currentState == GameState.Playing)
-        {
-            if (glovePicked)
-            {
-                StartCoroutine(SpawnGloveCoroutine());
-            }
-            if (PUPicked)
-            {
-                StartCoroutine(SpawnPUCoroutine());
-            }
+		if (currentState == GameState.Playing) {
+			if (glovePicked) {
+				StartCoroutine (SpawnGloveCoroutine ());
+			}
+			if (PUPicked) {
+				StartCoroutine (SpawnPUCoroutine ());
+			}
 
-            //Timer controller
-            roundTimer -= Time.deltaTime;
-            timerText_HUD.text = "Time: " + roundTimer.ToString("N0");
+			//Timer controller
+			roundTimer -= Time.deltaTime;
+			timerText_HUD.text = "Time: " + roundTimer.ToString ("N0");
 
-            if (roundTimer <= 0)
-            {
-                //Times up and round is over
-                CheckRoundStatus();
-            }
-        }
+			if (roundTimer <= 0) {
+				//Times up and round is over
+				CheckRoundStatus ();
+			}
+		} else if (currentState == GameState.Fight) {
+			ZoomIn ();
 
-        else if (currentState == GameState.Fight)
-        {
-            ZoomIn();
+			//Debug.Log (PlayerHolder1.transform.position);
+			//Debug.Log (PlayerHolder2.transform.position);
+		} else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver) {
+			ZoomOut ();
+			StopCoroutine (SpawnGloveCoroutine ());
+			StopCoroutine (SpawnPUCoroutine ());
+		}
+	}
 
-            //Debug.Log (PlayerHolder1.transform.position);
-            //Debug.Log (PlayerHolder2.transform.position);
-        }
+	//spawn gloves code
+	public IEnumerator SpawnGloveCoroutine ()
+	{
+		glovePicked = false;
+		yield return new WaitForSeconds (7f);
+		SpawnGlove ();
+	}
 
-        else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver)
-        {
-            ZoomOut();
-            StopCoroutine(SpawnGloveCoroutine());
-            StopCoroutine(SpawnPUCoroutine());
-        }
-    }
+	void SpawnGlove ()
+	{
+		glove.SetActive (true);
+		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
+	}
 
-    //spawn gloves code
-    public IEnumerator SpawnGloveCoroutine()
-    {
-        glovePicked = false;
-        yield return new WaitForSeconds(10f);
-        SpawnGlove();
-    }
+	//spawn power ups code
+	public IEnumerator SpawnPUCoroutine ()
+	{
+		PUPicked = false;
+		yield return new WaitForSeconds (10f);
+		SpawnPU ();
+	}
 
-    void SpawnGlove()
-    {
-        glove.SetActive(true);
-        glove.transform.position = new Vector3(Random.Range(-2f, 2f), Random.Range(-3f, 3f), 0);
-    }
+	void SpawnPU ()
+	{
+		PU.SetActive (true);
+		PU.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
+	}
 
-    //spawn power ups code
-    public IEnumerator SpawnPUCoroutine()
-    {
-        PUPicked = false;
-        yield return new WaitForSeconds(5f);
-        SpawnPU();
-    }
+	//camera zoom code
+	void ZoomIn ()
+	{
+		Player1HUDPanel.SetActive (true);
+		Player2HUDPanel.SetActive (true);
 
-    void SpawnPU()
-    {
-        PU.SetActive(true);
-        PU.transform.position = new Vector3(Random.Range(-2f, 2f), Random.Range(-3f, 3f), 0);
-    }
+		if (foreground.transform.localScale.x < 1) {
+			foreground.transform.localScale += new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
+		}
+	}
 
-    //camera zoom code
-    void ZoomIn()
-    {
-        Player1HUDPanel.SetActive(true);
-        Player2HUDPanel.SetActive(true);
+	public void ZoomOut ()
+	{
+		Player1HUDPanel.SetActive (false);
+		Player2HUDPanel.SetActive (false);
 
-        if (foreground.transform.localScale.x < 1)
-        {
-            foreground.transform.localScale += new Vector3(.2f, 0.2f, 0) * Time.deltaTime;
-        }
-    }
+		if (foreground.transform.localScale.x > 0.8f) {
+			foreground.transform.localScale -= new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
+		}
+	}
 
-    public void ZoomOut()
-    {
-        Player1HUDPanel.SetActive(false);
-        Player2HUDPanel.SetActive(false);
+	//checks for the winner and sets the GameState to MatchOver or RoundOver
+	void CheckRoundStatus ()
+	{
+		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth && PlayerHolder1.roundWins == 1) {
+			PlayerHolder1.roundWins++;
+			currentState = GameState.MatchOver;
+		} else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth && PlayerHolder2.roundWins == 2) {
+			PlayerHolder2.roundWins++;
+			currentState = GameState.MatchOver;
+		} else {
+			currentState = GameState.RoundOver;
+		}
 
-        if (foreground.transform.localScale.x > 0.8f)
-        {
-            foreground.transform.localScale -= new Vector3(.2f, 0.2f, 0) * Time.deltaTime;
-        }
-    }
+		ShowRoundPanel ();
+	}
 
-    //checks for the winner and sets the GameState to MatchOver or RoundOver
-    void CheckRoundStatus()
-    {
-        if (PlayerHolder1.myHealth > PlayerHolder2.myHealth && PlayerHolder1.roundWins == 1)
-        {
-            PlayerHolder1.roundWins++;
-            currentState = GameState.MatchOver;
-        }
-        else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth && PlayerHolder2.roundWins == 2)
-        {
-            PlayerHolder2.roundWins++;
-            currentState = GameState.MatchOver;
-        }
-        else
-        {
-            currentState = GameState.RoundOver;
-        }
+	//sets the players intital positions, timer and calls for SpawnGlove()
+	public void StartNewRound ()
+	{
+		roundTimer = MaxRoundTimer;
+		roundNumber++;
 
-        ShowRoundPanel();
-    }
+		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
+		PlayerHolder1.transform.rotation = Quaternion.identity;
+		PlayerHolder1.ResetPlayer ();
 
-    //sets the players intital positions, timer and calls for SpawnGlove()
-    public void StartNewRound()
-    {
-        roundTimer = MaxRoundTimer;
-        roundNumber++;
+		PlayerHolder2.transform.localPosition = new Vector3 (0, 3, 0);
+		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
+		PlayerHolder2.ResetPlayer ();
 
-        PlayerHolder1.transform.localPosition = new Vector3(0, -3, 0);
-        PlayerHolder1.transform.rotation = Quaternion.identity;
-        PlayerHolder1.ResetPlayer();
+		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
-        PlayerHolder2.transform.localPosition = new Vector3(0, 3, 0);
-        PlayerHolder2.transform.rotation = Quaternion.Euler(0, 0, 180);
-        PlayerHolder2.ResetPlayer();
-
-        roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
-
-        //spawn first glove
-        SpawnGlove();
-        glovePicked = false;
-    }
+		//spawn first glove
+		SpawnGlove ();
+		glovePicked = false;
+	}
     
-    //sets the roundWins to 0 for both player
+	//sets the roundWins to 0 for both player
 	public void NewMatchStart ()
 	{
 		PlayerHolder1.roundWins = 0;
 		PlayerHolder2.roundWins = 0;
 	}
 
-    //plays the sound that is passed in as an argument
-    public void PlaySound(AudioSource a)
-    {
-        if (!Mute)
-        {
-            a.Play();
-        }
-    }
-
-
-
-
+	//plays the sound that is passed in as an argument
+	public void PlaySound (AudioSource a)
+	{
+		if (!Mute) {
+			a.Play ();
+		}
+	}
 }

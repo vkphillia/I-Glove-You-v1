@@ -21,14 +21,14 @@ public class PlayerHolderController : MonoBehaviour
 
 	public SpriteRenderer HitEffectSprite;
 
-    public GameObject myTrigger;
+	public GameObject myTrigger;
 
-    public Text myWinText_HUD;
+	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
 	public float mySpeed;
 
-    private Vector3 force;
+	private Vector3 force;
 
 	void Start ()
 	{
@@ -41,20 +41,23 @@ public class PlayerHolderController : MonoBehaviour
 	{
 
 		if (OfflineManager.Instance.currentState == GameState.Playing)
-        {
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
-			
+		{
+			//turn on this code to limit player to borders
+			//transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
+
+			Teleport ();
+
 			if (!hit && !hitter)
-            {
+			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 			}
-            else if (hit)
-            {
+			else if (hit)
+			{
 				transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
 
 			}
-            else if (hitter)
-            {
+			else if (hitter)
+			{
 				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
 			}
 		} 
@@ -63,13 +66,13 @@ public class PlayerHolderController : MonoBehaviour
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1, other= player2
-        {   
+		{   
 			Debug.Log ("Player 1 gets punched");
 			StartCoroutine (HitEffect (other.GetComponentInParent<Rigidbody2D> ()));
 		}
          
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
-        {
+		{
 			Debug.Log ("Player 2 gets punched");
 			StartCoroutine (HitEffect (other.GetComponentInParent<Rigidbody2D> ()));
 		}	
@@ -78,7 +81,7 @@ public class PlayerHolderController : MonoBehaviour
 	IEnumerator HitEffect (Rigidbody2D r)
 	{
 		if (OnTrigger != null)
-        {
+		{
 			OnTrigger ();
 		}
 
@@ -87,34 +90,33 @@ public class PlayerHolderController : MonoBehaviour
 		r.GetComponent<PlayerHolderController> ().hitter = true;
 		hit = true;
 
-        StartCoroutine (MakeHitFalse (r));
+		StartCoroutine (MakeHitFalse (r));
 
-        HitEffectSprite.transform.SetParent (this.transform);
+		HitEffectSprite.transform.SetParent (this.transform);
 		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
 		HitEffectSprite.enabled = true;
 		transform.rotation = r.transform.rotation; 
 
 		if (myHealth > 0)
-        {
+		{
 			myHealth--;
 			myHealthText_HUD.text = " Health: " + myHealth;
 			if (myHealth == 0)
-            {
+			{
 				r.GetComponent<PlayerHolderController> ().roundWins++;
 				this.gameObject.SetActive (false);
 				if (r.GetComponent<PlayerHolderController> ().roundWins < 2)
-                {
+				{
 					OfflineManager.Instance.currentState = GameState.RoundOver;
 					OfflineManager.Instance.ShowRoundPanel ();
 				}
-                else
-                {
+				else
+				{
 					OfflineManager.Instance.currentState = GameState.MatchOver;
 					OfflineManager.Instance.ShowRoundPanel ();
 				}
 			}
 		}		
-		
 	}
 
 	public IEnumerator MakeHitFalse (Rigidbody2D r)
@@ -137,5 +139,35 @@ public class PlayerHolderController : MonoBehaviour
 		HitEffectSprite.enabled = false;
 	}
 
+	public void Teleport ()
+	{
+		if (transform.position.x < -2.75f)
+		{
+			StartCoroutine (StopTrail ());
+			transform.position = new Vector3 (2.75f, transform.position.y, 0);
+		}
+		else if (transform.position.x > 2.75f)
+		{
+			StartCoroutine (StopTrail ());
+			transform.position = new Vector3 (-2.75f, transform.position.y, 0);
+		}
+		if (transform.position.y < -3.7f)
+		{
+			StartCoroutine (StopTrail ());
+			transform.position = new Vector3 (transform.position.x, 3.7f, 0);
+		}
+		else if (transform.position.y > 3.7f)
+		{
+			StartCoroutine (StopTrail ());
+			transform.position = new Vector3 (transform.position.x, -3.7f, 0);
+		}
+	}
+
+	IEnumerator StopTrail ()
+	{
+		GetComponent<TrailRenderer> ().enabled = false;
+		yield return new WaitForSeconds (0.3f);
+		GetComponent<TrailRenderer> ().enabled = true;
 	
+	}
 }
