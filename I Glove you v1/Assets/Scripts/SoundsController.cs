@@ -13,7 +13,7 @@ public class SoundsController : MonoBehaviour
         //for debuggin only
         for (int i=0;i<sounds.Length;i++)
         {
-            Debug.Log(sounds[i].name+"\n");
+            //Debug.Log(sounds[i].name+"\n");
         }    
 	}
 	
