@@ -1,46 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PUController : MonoBehaviour
 {
+	[HideInInspector]
+	public GameObject PU;
+	public List<GameObject> PUList = new List<GameObject> ();
 
-	void OnEnable ()
+	void Start ()
 	{
-		GetComponent<SpriteRenderer> ().enabled = true;
-		GetComponent<BoxCollider2D> ().enabled = true;
+		OfflineManager.Instance.PUPicked = true;
 	}
 
-	void OnCollisionEnter2D (Collision2D other)
+	void Update ()
 	{
-		if (other.gameObject.layer == 8)
+		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			OfflineManager.Instance.PUPicked = true;
-			OfflineManager.Instance.PlayerHolder1.myHealth += 2;
-			OfflineManager.Instance.PlayerHolder1.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder1.myHealth;
-			if (OfflineManager.Instance.PlayerHolder1.myHealth > OfflineManager.Instance.MaxHealth)
+			if (OfflineManager.Instance.PUPicked)
 			{
-				OfflineManager.Instance.PlayerHolder1.myHealth = OfflineManager.Instance.MaxHealth;
-				OfflineManager.Instance.PlayerHolder1.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder1.myHealth;
+				StartCoroutine (SpawnPUCoroutine ());
 			}
 		}
-		else if (other.gameObject.layer == 10)
+		else
 		{
-			OfflineManager.Instance.PUPicked = true;
-			OfflineManager.Instance.PlayerHolder2.myHealth += 2;
-			OfflineManager.Instance.PlayerHolder2.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder2.myHealth;
-			if (OfflineManager.Instance.PlayerHolder2.myHealth > OfflineManager.Instance.MaxHealth)
-			{
-				OfflineManager.Instance.PlayerHolder2.myHealth = OfflineManager.Instance.MaxHealth;
-				OfflineManager.Instance.PlayerHolder2.myHealthText_HUD.text = "Health " + OfflineManager.Instance.PlayerHolder2.myHealth;
-			}
+			StopCoroutine (SpawnPUCoroutine ());
 		}
-
-		OfflineManager.Instance.PU.SetActive (false);
 	}
 
-	void OnDisable ()
+	//spawn power ups code
+	public IEnumerator SpawnPUCoroutine ()
 	{
-		GetComponent<SpriteRenderer> ().enabled = false;
-		GetComponent<BoxCollider2D> ().enabled = false;
+		Debug.Log ("Coroutie started");
+		OfflineManager.Instance.PUPicked = false;
+		int randomChild = Random.Range (0, PUList.Count);
+		PU = PUList [randomChild];
+		yield return new WaitForSeconds (2f);
+		PU.SetActive (true);
+		PU.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
 	}
 }

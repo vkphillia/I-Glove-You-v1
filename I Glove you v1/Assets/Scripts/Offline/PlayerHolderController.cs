@@ -18,10 +18,12 @@ public class PlayerHolderController : MonoBehaviour
 	public int myHealth;
 	[HideInInspector]
 	public int roundWins;
+	[HideInInspector]
+	public bool hasGlove;
 
-    public SoundsController soundController;
+	public SoundsController soundController;
 
-    public Sprite[] mySprites;
+	public Sprite[] mySprites;
 	public Animator myPunchAnim;
 
 	public SpriteRenderer HitEffectSprite;
@@ -29,9 +31,11 @@ public class PlayerHolderController : MonoBehaviour
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
+
 	public float mySpeed;
 
 	private Vector3 force;
+
 
 	void Awake ()
 	{
@@ -41,7 +45,7 @@ public class PlayerHolderController : MonoBehaviour
 	void Start ()
 	{
 		myHealth = OfflineManager.Instance.MaxHealth;
-		mySpeed = 5f;
+		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = " Health: " + myHealth;
 	}
 
@@ -142,6 +146,7 @@ public class PlayerHolderController : MonoBehaviour
 		myHealthText_HUD.text = " Health: " + myHealth;
 		myPunchAnim.gameObject.SetActive (false);
 		HitEffectSprite.enabled = false;
+		mySpeed = OfflineManager.Instance.MaxSpeed;
 	}
 
 
@@ -150,7 +155,7 @@ public class PlayerHolderController : MonoBehaviour
 		myPunchAnim.Play ("Punch_Hit");
 		
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Punch);
-        soundController.PlaySoundFX("Punch");
+		soundController.PlaySoundFX ("Punch");
         
 
 		yield return new WaitForSeconds (.5f);

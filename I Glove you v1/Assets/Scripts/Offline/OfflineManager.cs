@@ -20,8 +20,7 @@ public class OfflineManager : MonoBehaviour
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
-	public static OfflineManager Instance
-    {
+	public static OfflineManager Instance {
 		get {
 			//if we do not have Instance yet
 			if (_Instance == null)
@@ -45,7 +44,7 @@ public class OfflineManager : MonoBehaviour
 	public OfflineRoundController RoundPanel;
 
 	public GameObject glove;
-	public GameObject PU;
+
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
 
@@ -58,6 +57,7 @@ public class OfflineManager : MonoBehaviour
 
 	public int roundNumber;
 	public int MaxHealth;
+	public float MaxSpeed;
     
 	public float MaxRoundTimer;
 
@@ -88,7 +88,7 @@ public class OfflineManager : MonoBehaviour
 
 		ShowRoundPanel ();
 
-		PUPicked = true;
+
 	}
 
 	//sets round start and over texts
@@ -125,10 +125,7 @@ public class OfflineManager : MonoBehaviour
 			{
 				StartCoroutine (SpawnGloveCoroutine ());
 			}
-			if (PUPicked)
-			{
-				StartCoroutine (SpawnPUCoroutine ());
-			}
+
 
 			//Timer controller
 			roundTimer -= Time.deltaTime;
@@ -151,7 +148,6 @@ public class OfflineManager : MonoBehaviour
 		{
 			ZoomOut ();
 			StopCoroutine (SpawnGloveCoroutine ());
-			StopCoroutine (SpawnPUCoroutine ());
 		}
 	}
 
@@ -169,19 +165,7 @@ public class OfflineManager : MonoBehaviour
 		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
 	}
 
-	//spawn power ups code
-	public IEnumerator SpawnPUCoroutine ()
-	{
-		PUPicked = false;
-		yield return new WaitForSeconds (10f);
-		SpawnPU ();
-	}
 
-	void SpawnPU ()
-	{
-		PU.SetActive (true);
-		PU.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
-	}
 
 	//camera zoom code
 	void ZoomIn ()
