@@ -3,12 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-public delegate void TriggerEvent ();
 
 public class PlayerHolderController : MonoBehaviour
 {
 	
-	public static event TriggerEvent OnTrigger;
 
 	[HideInInspector]	
 	public bool hit;
@@ -35,10 +33,9 @@ public class PlayerHolderController : MonoBehaviour
 	public float mySpeed;
 
 	private Vector3 force;
-    
-    void Awake ()
+
+	void Awake ()
 	{
-		PlayerHolderController.OnTrigger += Punch;
 	}
 
 	void Start ()
@@ -46,11 +43,10 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = " Health: " + myHealth;
-    }
+	}
 
 	void Update ()
 	{
-
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
@@ -62,11 +58,13 @@ public class PlayerHolderController : MonoBehaviour
 			else if (hit)
 			{
 				transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
+				StartCoroutine (MakeHitFalse ());
 
 			}
 			else if (hitter)
 			{
 				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
+				StartCoroutine (MakeHitterFalse ());
 			}
 		} 
 	}
@@ -76,44 +74,35 @@ public class PlayerHolderController : MonoBehaviour
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1, other= player2
 		{   
 			//Debug.Log ("Player 1 gets punched");
-			StartCoroutine (HitEffect (other.GetComponentInParent<Rigidbody2D> ()));
+			getPunched (other.transform);
+			OfflineManager.Instance.PlayerHolder2.Punch ();
+
 		}
          
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
 		{
 			//Debug.Log ("Player 2 gets punched");
-			StartCoroutine (HitEffect (other.GetComponentInParent<Rigidbody2D> ()));
+			getPunched (other.transform);
+			OfflineManager.Instance.PlayerHolder1.Punch ();
 		}	
 	}
 
-	IEnumerator HitEffect (Rigidbody2D r)
+	public void getPunched (Transform t)
 	{
-		if (OnTrigger != null)
-		{
-			OnTrigger ();
-		}
-        
-        r.GetComponent<PlayerHolderController> ().Punch ();
-		yield return new WaitForSeconds (0f);
-		r.GetComponent<PlayerHolderController> ().hitter = true;
 		hit = true;
-
-		StartCoroutine (MakeHitFalse (r));
-
 		HitEffectSprite.transform.SetParent (this.transform);
 		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
 		HitEffectSprite.enabled = true;
-		transform.rotation = r.transform.rotation; 
-
+		transform.rotation = t.rotation; 
 		if (myHealth > 0)
 		{
 			myHealth--;
 			myHealthText_HUD.text = " Health: " + myHealth;
 			if (myHealth == 0)
 			{
-				r.GetComponent<PlayerHolderController> ().roundWins++;
+				t.GetComponentInParent<PlayerHolderController> ().roundWins++;
 				this.gameObject.SetActive (false);
-				if (r.GetComponent<PlayerHolderController> ().roundWins < 2)
+				if (t.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
 				{
 					OfflineManager.Instance.currentState = GameState.RoundOver;
 					OfflineManager.Instance.ShowRoundPanel ();
@@ -124,25 +113,29 @@ public class PlayerHolderController : MonoBehaviour
 					OfflineManager.Instance.ShowRoundPanel ();
 				}
 			}
-		}		
+		}	
+
 	}
 
-	public IEnumerator MakeHitFalse (Rigidbody2D r)
+
+
+	IEnumerator MakeHitFalse ()
 	{
-        Camera.main.backgroundColor = Color.black;//new code for color effect here
-        
-        yield return new WaitForSeconds (.5f);
-
-        Camera.main.backgroundColor = OfflineManager.Instance.cameraBGcolor;//new code for color effect here also
-
-        HitEffectSprite.enabled = false;
+		yield return new WaitForSeconds (.5f);
+		HitEffectSprite.enabled = false;
 		hit = false;
-		r.GetComponent<PlayerHolderController> ().hitter = false;
 	}
+
+	IEnumerator MakeHitterFalse ()
+	{
+		yield return new WaitForSeconds (.5f);
+		hitter = false;
+	}
+
 
 	public void ResetPlayer ()
 	{
-        gameObject.SetActive (true);		
+		gameObject.SetActive (true);		
 		myWinText_HUD.text = "Wins: " + roundWins + "/2";
 		hit = false;
 		hitter = false;
@@ -157,23 +150,20 @@ public class PlayerHolderController : MonoBehaviour
 	IEnumerator PlayPunchAnim ()
 	{
 		myPunchAnim.Play ("Punch_Hit");
-		
-		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Punch);
 		soundController.PlaySoundFX ("Punch");
-        
-
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");
 	}
 
 	public void Punch ()
 	{
+		hitter = true;
 		StartCoroutine (PlayPunchAnim ());
 	}
 
 	void OnDestroy ()
 	{
-		PlayerHolderController.OnTrigger -= Punch;
+
 	}
 
 

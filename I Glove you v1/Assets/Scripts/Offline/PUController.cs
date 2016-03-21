@@ -31,7 +31,6 @@ public class PUController : MonoBehaviour
 	//spawn power ups code
 	public IEnumerator SpawnPUCoroutine ()
 	{
-		//Debug.Log ("Coroutie started");
 		OfflineManager.Instance.PUPicked = false;
 		int randomChild = Random.Range (0, PUList.Count);
 		PU = PUList [randomChild];
