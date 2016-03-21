@@ -5,11 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class OfflineRoundController : MonoBehaviour
 {
-	public SoundsController soundController;
 	public Text myRoundText;
 	public GameObject UI;
 
-	public IEnumerator HideRoundStartText ()
+    //sets round start and over texts
+    public void ShowRoundPanel()
+    {
+        gameObject.SetActive(true);
+
+        if (OfflineManager.Instance.currentState == GameState.RoundStart)
+        {
+            StartCoroutine(HideRoundStartText());
+        }
+        else if (OfflineManager.Instance.currentState == GameState.RoundOver)
+        {
+            StartCoroutine(HideRoundOverText());
+        }
+        else if (OfflineManager.Instance.currentState == GameState.MatchOver)
+        {
+            StartCoroutine(HideMatchOverText());
+        }
+    }
+
+    public IEnumerator HideRoundStartText ()
 	{
 		OfflineManager.Instance.StartNewRound ();
 		myRoundText.text = "Round " + OfflineManager.Instance.roundNumber;
@@ -20,8 +38,8 @@ public class OfflineRoundController : MonoBehaviour
 
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundStart);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Fight);
-		soundController.PlaySoundFX ("Round_Start");
-		soundController.PlaySoundFX ("Fight");
+		SoundsController.Instance.PlaySoundFX ("Round_Start");
+        SoundsController.Instance.PlaySoundFX ("Fight");
 
 		yield return new WaitForSeconds (1f);
 		OfflineManager.Instance.currentState = GameState.Playing;
@@ -31,7 +49,7 @@ public class OfflineRoundController : MonoBehaviour
 	public IEnumerator HideRoundOverText ()
 	{	
 		myRoundText.text = "";
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
 		myRoundText.text = "Round Over";
 		yield return new WaitForSeconds (3f);
 		StartCoroutine (HideRoundStartText ());
@@ -59,16 +77,16 @@ public class OfflineRoundController : MonoBehaviour
 
 	IEnumerator RoundNumberSFX ()
 	{
-		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
-		soundController.PlaySoundFX ("Round");
+        //OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
+        SoundsController.Instance.PlaySoundFX ("Round");
         
 		yield return new WaitForSeconds (0.3f);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
 		if (OfflineManager.Instance.roundNumber == 1)
-			soundController.PlaySoundFX ("one");
+            SoundsController.Instance.PlaySoundFX ("one");
 		else if (OfflineManager.Instance.roundNumber == 2)
-			soundController.PlaySoundFX ("two");
+            SoundsController.Instance.PlaySoundFX ("two");
 		else if (OfflineManager.Instance.roundNumber == 3)
-			soundController.PlaySoundFX ("three");
+            SoundsController.Instance.PlaySoundFX ("three");
 	}
 }

@@ -19,8 +19,6 @@ public class PlayerHolderController : MonoBehaviour
 	[HideInInspector]
 	public bool hasGlove;
 
-	public SoundsController soundController;
-
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
 
@@ -142,7 +140,7 @@ public class PlayerHolderController : MonoBehaviour
 	IEnumerator PlayPunchAnim ()
 	{
 		myPunchAnim.Play ("Punch_Hit");
-		soundController.PlaySoundFX ("Punch");
+        SoundsController.Instance.PlaySoundFX ("Punch");
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");
 	}
@@ -184,18 +182,26 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		if (myHealth == 0)
 		{
-			otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
-			this.gameObject.SetActive (false);
+            //increasing round wins from multiple places not fair
+            //round wins increment only from the function checkRoundStatus in offline manager
+			//otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
 			if (otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
 			{
-				OfflineManager.Instance.currentState = GameState.RoundOver;
-				OfflineManager.Instance.ShowRoundPanel ();
-			}
-			else
+				//OfflineManager.Instance.currentState = GameState.RoundOver;
+                //why do they need to call the round panel, its not fair
+                //OfflineManager.Instance.ShowRoundPanel ();
+                //call this instead
+                OfflineManager.Instance.CheckRoundStatus();
+            }
+            else
 			{
-				OfflineManager.Instance.currentState = GameState.MatchOver;
-				OfflineManager.Instance.ShowRoundPanel ();
-			}
-		}
+				//OfflineManager.Instance.currentState = GameState.MatchOver;
+                //why do they need to call the round panel, its not fair
+                //OfflineManager.Instance.ShowRoundPanel ();
+                //call this instead
+                OfflineManager.Instance.CheckRoundStatus();
+            }
+            this.gameObject.SetActive(false);
+        }
 	}
 }

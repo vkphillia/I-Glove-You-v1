@@ -10,8 +10,8 @@ public enum GameState
 	Playing,
 	Paused,
 	RoundOver,
-	MatchOver}
-;
+	MatchOver
+};
 
 public class OfflineManager : MonoBehaviour
 {
@@ -20,8 +20,10 @@ public class OfflineManager : MonoBehaviour
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
-	public static OfflineManager Instance {
-		get {
+	public static OfflineManager Instance
+    {
+		get
+        {
 			//if we do not have Instance yet
 			if (_Instance == null)
 			{                                                                                   
@@ -51,10 +53,7 @@ public class OfflineManager : MonoBehaviour
 	public Transform foreground;
 
 	public GameState currentState;
-
-	[HideInInspector]
-	public Color cameraBGcolor;
-
+    
 	public bool glovePicked;
 	public bool PUPicked;
 
@@ -83,40 +82,19 @@ public class OfflineManager : MonoBehaviour
 	//sets the player intital position and calls ShowRoundPanel()
 	void Start ()
 	{
+        //really need it? never used anywhere else
 		P1StartPos = new Vector3 (0, -3, 0);
 		P2StartPos = new Vector3 (0, 3, 0);
 		PlayerHolder1.transform.position = P1StartPos;
 		PlayerHolder2.transform.position = P2StartPos;
+
 		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
-
-		cameraBGcolor = Camera.main.backgroundColor;//new code for BG color
-
-		ShowRoundPanel ();
-
-
+        
+        //RoundPanel.gameObject.SetActive(true);
+        RoundPanel.ShowRoundPanel ();
+        
 	}
-
-	//sets round start and over texts
-	public void ShowRoundPanel ()
-	{
-		RoundPanel.gameObject.SetActive (true);
-
-		Camera.main.backgroundColor = cameraBGcolor;//new code for color effect here also
-
-		if (currentState == GameState.RoundStart)
-		{
-			StartCoroutine (RoundPanel.HideRoundStartText ());
-		}
-		else if (currentState == GameState.RoundOver)
-		{
-			StartCoroutine (RoundPanel.HideRoundOverText ());
-		}
-		else if (currentState == GameState.MatchOver)
-		{
-			StartCoroutine (RoundPanel.HideMatchOverText ());
-		}
-	}
-
+    
 	//check for escape button click, spawn gloves and power ups, controls timer, checks round status
 	void Update ()
 	{
@@ -155,7 +133,8 @@ public class OfflineManager : MonoBehaviour
 		{
 			ZoomOut ();
 			StopCoroutine (SpawnGloveCoroutine ());
-		}
+            //RoundPanel.ShowRoundPanel();
+        }
 	}
 
 	//spawn gloves code
@@ -171,9 +150,7 @@ public class OfflineManager : MonoBehaviour
 		glove.SetActive (true);
 		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
 	}
-
-
-
+    
 	//camera zoom code
 	void ZoomIn ()
 	{
@@ -198,24 +175,28 @@ public class OfflineManager : MonoBehaviour
 	}
 
 	//checks for the winner and sets the GameState to MatchOver or RoundOver
-	void CheckRoundStatus ()
+    //any call for stoping the game should be sent here
+	public void CheckRoundStatus ()
 	{
-		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth && PlayerHolder1.roundWins == 1)
+		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
 		{
 			PlayerHolder1.roundWins++;
-			currentState = GameState.MatchOver;
 		}
-		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth && PlayerHolder2.roundWins == 2)
+		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth)
 		{
 			PlayerHolder2.roundWins++;
-			currentState = GameState.MatchOver;
 		}
-		else
-		{
-			currentState = GameState.RoundOver;
-		}
-
-		ShowRoundPanel ();
+		
+        if(PlayerHolder1.roundWins==2 || PlayerHolder2.roundWins==2)
+        {
+            currentState = GameState.MatchOver;
+        }
+        else
+        {
+            currentState = GameState.RoundOver;
+        }
+		
+		RoundPanel.ShowRoundPanel();
 	}
 
 	//sets the players intital positions, timer and calls for SpawnGlove()
@@ -235,6 +216,7 @@ public class OfflineManager : MonoBehaviour
 		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
 		//some new codes here for BGColor, do we need this change?? it will be difficult to match all sprites with the bg color
+        //okay lets leave the code till we get the assets
 		if (this.roundNumber == 2)
 		{
 			//Camera.main.backgroundColor = Color.cyan;
@@ -269,6 +251,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SceneManager.LoadScene ("offline game");
 	}
+
 	//plays the sound that is passed in as an argument //Deprecated
 	//public void PlaySound (AudioSource a)
 	//{
