@@ -6,6 +6,7 @@ public class SpeedDown : MonoBehaviour
 
 	public float myTime;
 	public float SpeedReduction;
+	public int weight;
 
 	
 	void OnTriggerEnter2D (Collider2D other)

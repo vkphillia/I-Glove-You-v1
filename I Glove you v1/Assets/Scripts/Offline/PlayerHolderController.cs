@@ -12,7 +12,7 @@ public class PlayerHolderController : MonoBehaviour
 	public bool hit;
 	[HideInInspector]	
 	public bool hitter;
-	[HideInInspector]
+	//[HideInInspector]
 	public int myHealth;
 	[HideInInspector]
 	public int roundWins;
@@ -96,8 +96,7 @@ public class PlayerHolderController : MonoBehaviour
 		transform.rotation = t.rotation; 
 		if (myHealth > 0)
 		{
-			myHealth--;
-			myHealthText_HUD.text = " Health: " + myHealth;
+			AlterHealth (-1);
 			if (myHealth == 0)
 			{
 				t.GetComponentInParent<PlayerHolderController> ().roundWins++;
@@ -175,4 +174,21 @@ public class PlayerHolderController : MonoBehaviour
 		myPunchAnim.gameObject.SetActive (true);
 	}
 
+	//increase or decreases the health of the player based on the amount
+	public void AlterHealth (int amount)
+	{
+		if ((myHealth + amount) > OfflineManager.Instance.MaxHealth)
+		{
+			myHealth = OfflineManager.Instance.MaxHealth;
+		}
+		else if ((myHealth + amount) < 0)
+		{
+			myHealth = 0;
+		}
+		else
+		{
+			myHealth += amount;
+		}
+		myHealthText_HUD.text = "Health " + myHealth;
+	}
 }

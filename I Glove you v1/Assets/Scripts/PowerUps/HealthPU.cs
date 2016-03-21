@@ -5,16 +5,17 @@ public class HealthPU : MonoBehaviour
 {
 
 	public int HealthUp;
+	public int weight;
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.layer == 8 && !OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
-			IncreaseHealth (OfflineManager.Instance.PlayerHolder1);
+			OfflineManager.Instance.PlayerHolder1.AlterHealth (HealthUp);
 		}
 		else if (other.gameObject.layer == 10 && !OfflineManager.Instance.PlayerHolder2.hasGlove)
 		{
-			IncreaseHealth (OfflineManager.Instance.PlayerHolder2);
+			OfflineManager.Instance.PlayerHolder2.AlterHealth (HealthUp);
 		}
 		else if (other.gameObject.layer == 9)
 		{
@@ -27,20 +28,6 @@ public class HealthPU : MonoBehaviour
 			OfflineManager.Instance.PlayerHolder2.Punch ();
 		}
 		DeactivatePU ();
-	}
-
-	void IncreaseHealth (PlayerHolderController p)
-	{
-		if ((p.myHealth + HealthUp) > OfflineManager.Instance.MaxHealth)
-		{
-			p.myHealth = OfflineManager.Instance.MaxHealth;
-		}
-		else
-		{
-			p.myHealth += HealthUp;
-		}
-
-		p.myHealthText_HUD.text = "Health " + p.myHealth;	
 	}
 
 	void DeactivatePU ()

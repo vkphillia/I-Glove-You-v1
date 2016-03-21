@@ -3,17 +3,19 @@ using System.Collections;
 
 public class WalkingBombPU : MonoBehaviour
 {
+	public int weight;
 	public int damageByBlast;
 	public float myTime;
-	private bool active;
 	public GameObject myBlastCol;
 	public float mySpeed;
+
 	private Vector3 EnemyPos;
 	private Vector3 myPos;
 	private Vector3 relativePos;
 	private float angle;
+	private bool active;
 
-	public float Distance;
+
 
 
 	void Update ()
@@ -82,8 +84,7 @@ public class WalkingBombPU : MonoBehaviour
 		GetComponent<SpriteRenderer> ().enabled = false;
 		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
 		p.getPunched (this.transform);
-		p.myHealth -= damageByBlast;
-		p.myHealthText_HUD.text = "Heatlh " + p.myHealth;
+		p.AlterHealth (damageByBlast);
 		yield return new WaitForSeconds (1f);
 		DeactivatePU ();
 
@@ -105,10 +106,6 @@ public class WalkingBombPU : MonoBehaviour
 
 	void AIFollow ()
 	{
-
-
-
-
 		//Find playr with GLove and follow
 		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
@@ -118,8 +115,6 @@ public class WalkingBombPU : MonoBehaviour
 		{
 			EnemyPos = Camera.main.WorldToScreenPoint (OfflineManager.Instance.PlayerHolder2.transform.position);
 		}
-
-
 	
 		myPos = Camera.main.WorldToScreenPoint (this.transform.position);
 		relativePos = EnemyPos - myPos;
