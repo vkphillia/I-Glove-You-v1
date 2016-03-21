@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WalkingBombPU : MonoBehaviour
+public class WalkingBombPU : PowerUp
 {
-	public int weight;
 	public int damageByBlast;
 	public float myTime;
 	public GameObject myBlastCol;
@@ -14,9 +13,6 @@ public class WalkingBombPU : MonoBehaviour
 	private Vector3 relativePos;
 	private float angle;
 	private bool active;
-
-
-
 
 	void Update ()
 	{
@@ -34,35 +30,37 @@ public class WalkingBombPU : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter2D (Collider2D other)
+	public override void Player1Picked ()
 	{
 		if (!active)
 		{
-			if (other.gameObject.layer == 8 && !OfflineManager.Instance.PlayerHolder1.hasGlove)
-			{
-				active = true;
-				Debug.Log ("Player1HitBomb");
-				StartCoroutine (ActivateBomb (OfflineManager.Instance.PlayerHolder1));
-			}
-			else if (other.gameObject.layer == 10 && !OfflineManager.Instance.PlayerHolder2.hasGlove)
-			{
-				active = true;
-				Debug.Log ("Player2HitBomb");
-				StartCoroutine (ActivateBomb (OfflineManager.Instance.PlayerHolder2));
-			}
-			else if (other.gameObject.layer == 9)
-			{
-				Debug.Log ("GloveHitBomb");
-				OfflineManager.Instance.PlayerHolder1.Punch ();
-				DeactivatePU ();
-			}
-			else if (other.gameObject.layer == 11)
-			{
-				Debug.Log ("GloveHitBomb");
-				OfflineManager.Instance.PlayerHolder2.Punch ();
-				DeactivatePU ();
-			}
+			active = true;
+			StartCoroutine (ActivateBomb (OfflineManager.Instance.PlayerHolder1));
+		}
+	}
 
+	public override void Player2Picked ()
+	{
+		if (!active)
+		{
+			active = true;
+			StartCoroutine (ActivateBomb (OfflineManager.Instance.PlayerHolder2));
+		}
+	}
+
+	public override void Player1WithGlovePicked ()
+	{
+		if (!active)
+		{
+			base.Player1WithGlovePicked ();
+		}
+	}
+
+	public override void Player2WithGlovePicked ()
+	{
+		if (!active)
+		{
+			base.Player2WithGlovePicked ();
 		}
 	}
 
@@ -83,14 +81,12 @@ public class WalkingBombPU : MonoBehaviour
 		active = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
 		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
-		p.getPunched (this.transform);
-		p.AlterHealth (damageByBlast);
 		yield return new WaitForSeconds (1f);
 		DeactivatePU ();
 
 	}
 
-	void DeactivatePU ()
+	public override void DeactivatePU ()
 	{
 		transform.rotation = Quaternion.Euler (0, 0, 0);
 		active = false;
@@ -100,8 +96,7 @@ public class WalkingBombPU : MonoBehaviour
 		//activate its collider and sprite renderer
 		GetComponent<CircleCollider2D> ().enabled = true;
 		GetComponent<SpriteRenderer> ().enabled = true;
-		OfflineManager.Instance.PUPicked = true;
-		gameObject.SetActive (false);
+		base.DeactivatePU ();
 	}
 
 	void AIFollow ()

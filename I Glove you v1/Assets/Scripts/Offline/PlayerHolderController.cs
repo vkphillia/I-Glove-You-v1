@@ -97,21 +97,7 @@ public class PlayerHolderController : MonoBehaviour
 		if (myHealth > 0)
 		{
 			AlterHealth (-1);
-			if (myHealth == 0)
-			{
-				t.GetComponentInParent<PlayerHolderController> ().roundWins++;
-				this.gameObject.SetActive (false);
-				if (t.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
-				{
-					OfflineManager.Instance.currentState = GameState.RoundOver;
-					OfflineManager.Instance.ShowRoundPanel ();
-				}
-				else
-				{
-					OfflineManager.Instance.currentState = GameState.MatchOver;
-					OfflineManager.Instance.ShowRoundPanel ();
-				}
-			}
+			CheckForRoundOver (t);
 		}	
 
 	}
@@ -190,5 +176,25 @@ public class PlayerHolderController : MonoBehaviour
 			myHealth += amount;
 		}
 		myHealthText_HUD.text = "Health " + myHealth;
+	}
+
+
+	public void CheckForRoundOver (Transform otherPlayer)
+	{
+		if (myHealth == 0)
+		{
+			otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
+			this.gameObject.SetActive (false);
+			if (otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
+			{
+				OfflineManager.Instance.currentState = GameState.RoundOver;
+				OfflineManager.Instance.ShowRoundPanel ();
+			}
+			else
+			{
+				OfflineManager.Instance.currentState = GameState.MatchOver;
+				OfflineManager.Instance.ShowRoundPanel ();
+			}
+		}
 	}
 }

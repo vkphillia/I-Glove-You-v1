@@ -1,36 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpeedDown : MonoBehaviour
+public class SpeedDown : PowerUp
 {
 
 	public float myTime;
 	public float SpeedReduction;
-	public int weight;
 
-	
-	void OnTriggerEnter2D (Collider2D other)
+	public override void Player1Picked ()
 	{
-		if (other.gameObject.layer == 8 && !OfflineManager.Instance.PlayerHolder1.hasGlove)
-		{
-			StartCoroutine (SpeedBoost (OfflineManager.Instance.PlayerHolder2));
-		}
-		else if (other.gameObject.layer == 10 && !OfflineManager.Instance.PlayerHolder2.hasGlove)
-		{
-			StartCoroutine (SpeedBoost (OfflineManager.Instance.PlayerHolder1));
-		}
-		else if (other.gameObject.layer == 9)
-		{
-			Debug.Log ("GloveHitSpeed");
-			OfflineManager.Instance.PlayerHolder1.Punch ();
-			DeactivatePU ();
-		}
-		else if (other.gameObject.layer == 11)
-		{
-			Debug.Log ("GloveHitSpeed");
-			OfflineManager.Instance.PlayerHolder2.Punch ();
-			DeactivatePU ();
-		}
+		StartCoroutine (SpeedBoost (OfflineManager.Instance.PlayerHolder2));
+	}
+
+	public override void Player2Picked ()
+	{
+		StartCoroutine (SpeedBoost (OfflineManager.Instance.PlayerHolder1));
 	}
 
 	//reduce speed of the other player
@@ -46,13 +30,12 @@ public class SpeedDown : MonoBehaviour
 		DeactivatePU ();
 	}
 
-	void DeactivatePU ()
+	public override void DeactivatePU ()
 	{
 		//re-enabling th sprite and collider before deactivating gameObject
 		GetComponent<SpriteRenderer> ().enabled = true;
 		GetComponent<BoxCollider2D> ().enabled = true;
-		OfflineManager.Instance.PUPicked = true;
-		gameObject.SetActive (false);
+		base.DeactivatePU ();
 	}
 
 
