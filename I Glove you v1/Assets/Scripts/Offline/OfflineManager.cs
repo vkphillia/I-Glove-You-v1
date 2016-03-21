@@ -52,8 +52,8 @@ public class OfflineManager : MonoBehaviour
 
 	public GameState currentState;
 
-    [HideInInspector]
-    public Color cameraBGcolor;
+	[HideInInspector]
+	public Color cameraBGcolor;
 
 	public bool glovePicked;
 	public bool PUPicked;
@@ -89,9 +89,9 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.transform.position = P2StartPos;
 		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
 
-        cameraBGcolor = Camera.main.backgroundColor;//new code for BG color
+		cameraBGcolor = Camera.main.backgroundColor;//new code for BG color
 
-        ShowRoundPanel ();
+		ShowRoundPanel ();
 
 
 	}
@@ -101,9 +101,9 @@ public class OfflineManager : MonoBehaviour
 	{
 		RoundPanel.gameObject.SetActive (true);
 
-        Camera.main.backgroundColor = cameraBGcolor;//new code for color effect here also
+		Camera.main.backgroundColor = cameraBGcolor;//new code for color effect here also
 
-        if (currentState == GameState.RoundStart)
+		if (currentState == GameState.RoundStart)
 		{
 			StartCoroutine (RoundPanel.HideRoundStartText ());
 		}
@@ -234,22 +234,22 @@ public class OfflineManager : MonoBehaviour
 
 		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
-        //some new codes here for BGColor
-        if (this.roundNumber == 2)
-        {
-            Camera.main.backgroundColor = Color.cyan;
-            cameraBGcolor = Camera.main.backgroundColor;
-        }
-        if (roundNumber == 3)
-        {
-            Camera.main.backgroundColor = Color.grey;
-            cameraBGcolor = Camera.main.backgroundColor;
-        }
-        //till here
+		//some new codes here for BGColor, do we need this change?? it will be difficult to match all sprites with the bg color
+		if (this.roundNumber == 2)
+		{
+			//Camera.main.backgroundColor = Color.cyan;
+			//cameraBGcolor = Camera.main.backgroundColor;
+		}
+		if (roundNumber == 3)
+		{
+			//Camera.main.backgroundColor = Color.grey;
+			//cameraBGcolor = Camera.main.backgroundColor;
+		}
+		//till here
 
 
-        //spawn first glove
-        Invoke("SpawnGlove",4f);
+		//spawn first glove
+		Invoke ("SpawnGlove", 4f);
 		glovePicked = false;
 	}
     
@@ -260,21 +260,21 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.roundWins = 0;
 	}
 
-    public void OnMenuClick()
-    {
-        SceneManager.LoadScene("offline menu");
-    }
+	public void OnMenuClick ()
+	{
+		SceneManager.LoadScene ("offline menu");
+	}
 
-    public void OnReMatchClick()
-    {
-        SceneManager.LoadScene("offline game");
-    }
-    //plays the sound that is passed in as an argument //Deprecated
-    //public void PlaySound (AudioSource a)
-    //{
-    //	if (!Mute)
-    //	{
-    //		a.Play ();
-    //	}
-    //}
+	public void OnReMatchClick ()
+	{
+		SceneManager.LoadScene ("offline game");
+	}
+	//plays the sound that is passed in as an argument //Deprecated
+	//public void PlaySound (AudioSource a)
+	//{
+	//	if (!Mute)
+	//	{
+	//		a.Play ();
+	//	}
+	//}
 }
