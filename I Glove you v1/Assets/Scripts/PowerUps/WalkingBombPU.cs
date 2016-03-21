@@ -16,11 +16,9 @@ public class WalkingBombPU : PowerUp
 
 	void Update ()
 	{
-		Debug.Log ("angle " + angle);
-		Debug.Log ("myAngle " + transform.rotation);
+		//find other player and go towards it
 		if (active)
 		{
-			//find other player and go towards it
 			if (OfflineManager.Instance.currentState == GameState.Playing)
 			{
 				AIFollow ();
@@ -76,6 +74,7 @@ public class WalkingBombPU : PowerUp
 		StartCoroutine (BlastNow (p));
 	}
 
+	//explosion stuff goes here
 	public IEnumerator BlastNow (PlayerHolderController p)
 	{
 		active = false;

@@ -87,23 +87,8 @@ public class PlayerHolderController : MonoBehaviour
 		}	
 	}
 
-	public void getPunched (Transform t)
-	{
-		hit = true;
-		HitEffectSprite.transform.SetParent (this.transform);
-		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
-		HitEffectSprite.enabled = true;
-		transform.rotation = t.rotation; 
-		if (myHealth > 0)
-		{
-			AlterHealth (-1);
-			CheckForRoundOver (t);
-		}	
 
-	}
-
-
-
+	//this ensures that the player is going in its forward direction after being punched
 	IEnumerator MakeHitFalse ()
 	{
 		yield return new WaitForSeconds (.5f);
@@ -111,13 +96,14 @@ public class PlayerHolderController : MonoBehaviour
 		hit = false;
 	}
 
+	//this ensures that the player is going int its forward direction after hitting other player
 	IEnumerator MakeHitterFalse ()
 	{
 		yield return new WaitForSeconds (.5f);
 		hitter = false;
 	}
 
-
+	//Reset on new Round/Match
 	public void ResetPlayer ()
 	{
 		gameObject.SetActive (true);		
@@ -131,6 +117,27 @@ public class PlayerHolderController : MonoBehaviour
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 	}
 
+	public void getPunched (Transform t)
+	{
+		hit = true;
+		HitEffectSprite.transform.SetParent (this.transform);
+		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
+		HitEffectSprite.enabled = true;
+		transform.rotation = t.rotation; 
+		if (myHealth > 0)
+		{
+			AlterHealth (-1);
+			CheckForRoundOver (t);
+		}	
+	}
+
+
+	//punch other objects and player
+	public void Punch ()
+	{
+		hitter = true;
+		StartCoroutine (PlayPunchAnim ());
+	}
 
 	IEnumerator PlayPunchAnim ()
 	{
@@ -138,12 +145,6 @@ public class PlayerHolderController : MonoBehaviour
 		soundController.PlaySoundFX ("Punch");
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");
-	}
-
-	public void Punch ()
-	{
-		hitter = true;
-		StartCoroutine (PlayPunchAnim ());
 	}
 
 	//removes glove from player when other player get glove
@@ -178,7 +179,7 @@ public class PlayerHolderController : MonoBehaviour
 		myHealthText_HUD.text = "Health " + myHealth;
 	}
 
-
+	//Checks for win/loss
 	public void CheckForRoundOver (Transform otherPlayer)
 	{
 		if (myHealth == 0)

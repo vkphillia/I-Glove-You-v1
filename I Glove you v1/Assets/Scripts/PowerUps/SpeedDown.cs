@@ -9,16 +9,16 @@ public class SpeedDown : PowerUp
 
 	public override void Player1Picked ()
 	{
-		StartCoroutine (SpeedBoost (OfflineManager.Instance.PlayerHolder2));
+		StartCoroutine (SpeedDrain (OfflineManager.Instance.PlayerHolder2));
 	}
 
 	public override void Player2Picked ()
 	{
-		StartCoroutine (SpeedBoost (OfflineManager.Instance.PlayerHolder1));
+		StartCoroutine (SpeedDrain (OfflineManager.Instance.PlayerHolder1));
 	}
 
 	//reduce speed of the other player
-	IEnumerator SpeedBoost (PlayerHolderController p)
+	IEnumerator SpeedDrain (PlayerHolderController p)
 	{
 		//cannot deactivate gameobject as it will kill this coroutine so we disabled sprite and collider
 		GetComponent<SpriteRenderer> ().enabled = false;

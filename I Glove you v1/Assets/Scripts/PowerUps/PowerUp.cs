@@ -3,8 +3,10 @@ using System.Collections;
 
 public class PowerUp : MonoBehaviour
 {
-	public int weight;
 
+	//This is a base call and all Power ups need to be derived from this class
+
+	public int weight;
 
 	public virtual void OnTriggerEnter2D (Collider2D other)
 	{
