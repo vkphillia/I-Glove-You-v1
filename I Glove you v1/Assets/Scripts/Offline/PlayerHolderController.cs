@@ -161,10 +161,18 @@ public class PlayerHolderController : MonoBehaviour
 		StartCoroutine (PlayPunchAnim ());
 	}
 
-	void OnDestroy ()
+	//removes glove from player when other player get glove
+	public void LoseGlove ()
 	{
-
+		hasGlove = false;
+		myPunchAnim.gameObject.SetActive (false);
 	}
 
+	//adds glove to player when other player loses glove
+	public void AddGlove ()
+	{
+		hasGlove = true;
+		myPunchAnim.gameObject.SetActive (true);
+	}
 
 }
