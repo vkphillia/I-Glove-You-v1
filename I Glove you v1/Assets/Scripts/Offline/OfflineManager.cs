@@ -77,8 +77,11 @@ public class OfflineManager : MonoBehaviour
 	{
 		currentState = GameState.RoundStart;
 		//why we need this when we know that there are 2 players and we have 2 sprites
-		PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [0];
-		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [1];
+		PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
+		Debug.Log (OfflineMenuController.Player1CharacterID);
+		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
+		Debug.Log (OfflineMenuController.Player2CharacterID);
+
 	}
 
 

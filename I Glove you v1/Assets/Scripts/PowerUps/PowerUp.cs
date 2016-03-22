@@ -42,13 +42,13 @@ public class PowerUp : MonoBehaviour
 
 	public virtual void Player1WithGlovePicked ()
 	{
-		OfflineManager.Instance.PlayerHolder1.Punch ();
+		OfflineManager.Instance.PlayerHolder1.PunchPUS ();
 		DeactivatePU ();
 	}
 
 	public virtual void Player2WithGlovePicked ()
 	{
-		OfflineManager.Instance.PlayerHolder2.Punch ();
+		OfflineManager.Instance.PlayerHolder2.PunchPUS ();
 		DeactivatePU ();
 	}
 

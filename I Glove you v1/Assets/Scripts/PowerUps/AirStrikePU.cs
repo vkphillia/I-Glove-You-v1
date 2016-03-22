@@ -8,9 +8,6 @@ public class AirStrikePU : PowerUp
 	public Strike[] AllStrikesArr;
 	public Strike strikePrefab;
 
-	//public Transform strike1;
-	//public Transform strike2;
-	//public Transform strike3;
 	public FighterJet fighterJet;
 	private bool active;
 	private Vector2 EnemyPos;
@@ -47,6 +44,7 @@ public class AirStrikePU : PowerUp
 
 	IEnumerator StrikeNow ()
 	{
+		SoundsController.Instance.PlaySoundFX ("GlovePick");
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<CircleCollider2D> ().enabled = false;
 		for (int i = 0; i < noOfStrikes; i++)

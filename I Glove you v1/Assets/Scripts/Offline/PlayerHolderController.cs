@@ -31,16 +31,16 @@ public class PlayerHolderController : MonoBehaviour
 	public float mySpeed;
 
 	private Vector3 force;
+	private bool PUHitter;
 
-	void Awake ()
-	{
-	}
 
 	void Start ()
 	{
+		
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = " Health: " + myHealth;
+
 	}
 
 	void Update ()
@@ -49,7 +49,7 @@ public class PlayerHolderController : MonoBehaviour
 		{
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
-			if (!hit && !hitter)
+			if (!hit && !hitter && !PUHitter)
 			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 			}
@@ -63,6 +63,11 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
 				StartCoroutine (MakeHitterFalse ());
+			}
+			else if (PUHitter)
+			{
+				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
+				StartCoroutine (MakePUHitterFalse ());
 			}
 		} 
 	}
@@ -101,6 +106,12 @@ public class PlayerHolderController : MonoBehaviour
 		hitter = false;
 	}
 
+	IEnumerator MakePUHitterFalse ()
+	{
+		yield return new WaitForSeconds (.5f);
+		PUHitter = false;
+	}
+
 	//Reset on new Round/Match
 	public void ResetPlayer ()
 	{
@@ -117,6 +128,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	public void getPunched (Transform t)
 	{
+		SoundsController.Instance.PlaySoundFX ("Punch");
 		hit = true;
 		HitEffectSprite.transform.SetParent (this.transform);
 		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
@@ -137,10 +149,15 @@ public class PlayerHolderController : MonoBehaviour
 		StartCoroutine (PlayPunchAnim ());
 	}
 
+	public void PunchPUS ()
+	{
+		PUHitter = true;
+		StartCoroutine (PlayPunchAnim ());
+	}
+
 	IEnumerator PlayPunchAnim ()
 	{
 		myPunchAnim.Play ("Punch_Hit");
-        SoundsController.Instance.PlaySoundFX ("Punch");
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");
 	}
@@ -155,6 +172,7 @@ public class PlayerHolderController : MonoBehaviour
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
 	{
+		SoundsController.Instance.PlaySoundFX ("GlovePick");
 		hasGlove = true;
 		myPunchAnim.gameObject.SetActive (true);
 	}
@@ -173,6 +191,15 @@ public class PlayerHolderController : MonoBehaviour
 		else
 		{
 			myHealth += amount;
+			if (myHealth < 0)
+			{
+				myHealth = 0;
+			}
+			if (amount > 0)
+			{
+				SoundsController.Instance.PlaySoundFX ("HealthUp");
+			}
+
 		}
 		myHealthText_HUD.text = "Health " + myHealth;
 	}
@@ -182,26 +209,26 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		if (myHealth == 0)
 		{
-            //increasing round wins from multiple places not fair
-            //round wins increment only from the function checkRoundStatus in offline manager
+			//increasing round wins from multiple places not fair
+			//round wins increment only from the function checkRoundStatus in offline manager
 			//otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
 			if (otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
 			{
 				//OfflineManager.Instance.currentState = GameState.RoundOver;
-                //why do they need to call the round panel, its not fair
-                //OfflineManager.Instance.ShowRoundPanel ();
-                //call this instead
-                OfflineManager.Instance.CheckRoundStatus();
-            }
-            else
+				//why do they need to call the round panel, its not fair
+				//OfflineManager.Instance.ShowRoundPanel ();
+				//call this instead
+				OfflineManager.Instance.CheckRoundStatus ();
+			}
+			else
 			{
 				//OfflineManager.Instance.currentState = GameState.MatchOver;
-                //why do they need to call the round panel, its not fair
-                //OfflineManager.Instance.ShowRoundPanel ();
-                //call this instead
-                OfflineManager.Instance.CheckRoundStatus();
-            }
-            this.gameObject.SetActive(false);
-        }
+				//why do they need to call the round panel, its not fair
+				//OfflineManager.Instance.ShowRoundPanel ();
+				//call this instead
+				OfflineManager.Instance.CheckRoundStatus ();
+			}
+			this.gameObject.SetActive (false);
+		}
 	}
 }

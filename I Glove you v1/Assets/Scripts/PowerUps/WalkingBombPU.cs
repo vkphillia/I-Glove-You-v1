@@ -24,6 +24,7 @@ public class WalkingBombPU : PowerUp
 				AIFollow ();
 				transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 				transform.position += transform.up * Time.deltaTime * mySpeed;
+
 			}
 		}
 	}
@@ -51,7 +52,7 @@ public class WalkingBombPU : PowerUp
 	{
 		if (!active)
 		{
-			OfflineManager.Instance.PlayerHolder1.Punch ();
+			OfflineManager.Instance.PlayerHolder1.PunchPUS ();
 			DeactivatePU ();
 		}
 	}
@@ -60,13 +61,17 @@ public class WalkingBombPU : PowerUp
 	{
 		if (!active)
 		{
-			OfflineManager.Instance.PlayerHolder2.Punch ();
+			OfflineManager.Instance.PlayerHolder2.PunchPUS ();
 			DeactivatePU ();
 		}
 	}
 
 	public IEnumerator ActivateBomb (PlayerHolderController p)
 	{
+		//bomb pickup sound
+		SoundsController.Instance.PlaySoundFX ("GlovePick");
+		//bomb ticking sound goes here
+
 		myBlastCol.GetComponent<CircleCollider2D> ().enabled = true;
 		myBlastCol.GetComponent<CircleCollider2D> ().enabled = true;
 		//deactivate its collider to ensure it doesn't get picked again
@@ -83,6 +88,7 @@ public class WalkingBombPU : PowerUp
 		active = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
 		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
+		SoundsController.Instance.PlaySoundFX ("Blast");
 		yield return new WaitForSeconds (1f);
 		DeactivatePU ();
 
@@ -119,10 +125,5 @@ public class WalkingBombPU : PowerUp
 		//rotate towards player with glove
 		angle = Mathf.Atan2 (relativePos.y, relativePos.x) * Mathf.Rad2Deg;
 		this.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, (angle - 90)));
-
-
 	}
-
-
-
 }
