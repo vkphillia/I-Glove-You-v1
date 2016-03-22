@@ -15,7 +15,7 @@ public class AirStrikePU : PowerUp
 
 	void Awake ()
 	{
-		Debug.Log ("I am Awake");
+		//Debug.Log ("I am Awake");
 		AllStrikesArr = new Strike[noOfStrikes]; 
 		for (int i = 0; i < noOfStrikes; i++)
 		{
@@ -44,7 +44,7 @@ public class AirStrikePU : PowerUp
 
 	IEnumerator StrikeNow ()
 	{
-		SoundsController.Instance.PlaySoundFX ("GlovePick");
+		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<CircleCollider2D> ().enabled = false;
 		for (int i = 0; i < noOfStrikes; i++)

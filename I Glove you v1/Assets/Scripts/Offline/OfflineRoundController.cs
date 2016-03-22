@@ -38,8 +38,8 @@ public class OfflineRoundController : MonoBehaviour
 
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundStart);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Fight);
-		SoundsController.Instance.PlaySoundFX ("Fight");
-		SoundsController.Instance.PlaySoundFX ("BoxingBell");
+		SoundsController.Instance.PlaySoundFX ("Fight",1.0f);
+		SoundsController.Instance.PlaySoundFX ("BoxingBell",1.0f);
 
         
 		yield return new WaitForSeconds (1f);
@@ -61,7 +61,7 @@ public class OfflineRoundController : MonoBehaviour
 	{
 		myRoundText.text = "";
 		yield return new WaitForSeconds (2f);
-		SoundsController.Instance.PlaySoundFX ("Win");
+		SoundsController.Instance.PlaySoundFX ("Win",1.0f);
 		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
 		{
 			myRoundText.text = "Player 1 Wins";
@@ -80,15 +80,15 @@ public class OfflineRoundController : MonoBehaviour
 	IEnumerator RoundNumberSFX ()
 	{
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
-		SoundsController.Instance.PlaySoundFX ("Round");
+		SoundsController.Instance.PlaySoundFX ("Round",1.0f);
         
 		yield return new WaitForSeconds (0.3f);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
 		if (OfflineManager.Instance.roundNumber == 1)
-			SoundsController.Instance.PlaySoundFX ("one");
+			SoundsController.Instance.PlaySoundFX ("one",1.0f);
 		else if (OfflineManager.Instance.roundNumber == 2)
-			SoundsController.Instance.PlaySoundFX ("two");
+			SoundsController.Instance.PlaySoundFX ("two", 1.0f);
 		else if (OfflineManager.Instance.roundNumber == 3)
-			SoundsController.Instance.PlaySoundFX ("three");
+			SoundsController.Instance.PlaySoundFX ("three", 1.0f);
 	}
 }

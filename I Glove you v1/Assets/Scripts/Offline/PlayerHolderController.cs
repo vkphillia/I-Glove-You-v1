@@ -128,7 +128,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	public void getPunched (Transform t)
 	{
-		SoundsController.Instance.PlaySoundFX ("Punch");
+		SoundsController.Instance.PlaySoundFX ("Punch", 1.0f);
 		hit = true;
 		HitEffectSprite.transform.SetParent (this.transform);
 		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
@@ -137,7 +137,6 @@ public class PlayerHolderController : MonoBehaviour
 		if (myHealth > 0)
 		{
 			AlterHealth (-1);
-			CheckForRoundOver (t);
 		}	
 	}
 
@@ -172,7 +171,7 @@ public class PlayerHolderController : MonoBehaviour
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
 	{
-		SoundsController.Instance.PlaySoundFX ("GlovePick");
+		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
 		hasGlove = true;
 		myPunchAnim.gameObject.SetActive (true);
 	}
@@ -184,53 +183,48 @@ public class PlayerHolderController : MonoBehaviour
 		{
 			myHealth = OfflineManager.Instance.MaxHealth;
 		}
-		else if ((myHealth + amount) < 0)
+		else if ((myHealth + amount) <= 0)
 		{
 			myHealth = 0;
-		}
+            //CheckForRoundOver();
+            //code for checking who wins the round and stops the round
+            OfflineManager.Instance.CheckRoundStatus();
+        }
 		else
 		{
 			myHealth += amount;
-			if (myHealth < 0)
-			{
-				myHealth = 0;
-			}
-			if (amount > 0)
-			{
-				SoundsController.Instance.PlaySoundFX ("HealthUp");
-			}
-
+            SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f); 
 		}
-
-		myHealthText_HUD.text = "Health " + myHealth;
+        myHealthText_HUD.text = "Health " + myHealth;
 	}
 
 	//Checks for win/loss
-	public void CheckForRoundOver (Transform otherPlayer)
-	{
-		if (myHealth == 0)
-		{
-			//increasing round wins from multiple places not fair
-			//round wins increment only from the function checkRoundStatus in offline manager
-			//otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
-			if (otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
-			{
-				//OfflineManager.Instance.currentState = GameState.RoundOver;
-				//why do they need to call the round panel, its not fair
-				//OfflineManager.Instance.ShowRoundPanel ();
-				//call this instead
-				OfflineManager.Instance.CheckRoundStatus ();
-			}
-			else
-			{
-				//OfflineManager.Instance.currentState = GameState.MatchOver;
-				//why do they need to call the round panel, its not fair
-				//OfflineManager.Instance.ShowRoundPanel ();
-				//call this instead
-				OfflineManager.Instance.CheckRoundStatus ();
-			}
-			//Player lose animation
-			//this.gameObject.SetActive (false);
-		}
-	}
+	//public void CheckForRoundOver (/*Transform otherPlayer*/)
+	//{
+        //if (myHealth == 0)
+        //{
+        //increasing round wins from multiple places not fair
+        //round wins increment only from the function checkRoundStatus in offline manager
+        //otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
+        //if (otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
+        //{
+        //OfflineManager.Instance.currentState = GameState.RoundOver;
+        //why do they need to call the round panel, its not fair
+        //OfflineManager.Instance.ShowRoundPanel ();
+        //call this instead
+        //	OfflineManager.Instance.CheckRoundStatus ();
+        //}
+        //else
+        //{
+        //OfflineManager.Instance.currentState = GameState.MatchOver;
+        //why do they need to call the round panel, its not fair
+        //OfflineManager.Instance.ShowRoundPanel ();
+        //call this instead
+        //	OfflineManager.Instance.CheckRoundStatus ();
+        //}
+        //Player lose animation
+        //this.gameObject.SetActive (false);
+        //}
+    //    OfflineManager.Instance.CheckRoundStatus();
+    //}
 }

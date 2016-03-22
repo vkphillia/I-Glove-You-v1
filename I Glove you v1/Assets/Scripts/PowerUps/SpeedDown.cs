@@ -25,7 +25,7 @@ public class SpeedDown : PowerUp
 		GetComponent<BoxCollider2D> ().enabled = false;
 
 		p.mySpeed -= SpeedReduction;
-		SoundsController.Instance.PlaySoundFX ("SpeedDown");
+		SoundsController.Instance.PlaySoundFX ("SpeedDown", 1.0f);
 		yield return new WaitForSeconds (myTime);
 		p.mySpeed = OfflineManager.Instance.MaxSpeed;
 		DeactivatePU ();

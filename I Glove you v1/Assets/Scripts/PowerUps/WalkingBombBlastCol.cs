@@ -18,7 +18,7 @@ public class WalkingBombBlastCol : MonoBehaviour
 			StopCoroutine (myParentBomb.ActivateBomb (OfflineManager.Instance.PlayerHolder1));
 			StartCoroutine (myParentBomb.BlastNow (OfflineManager.Instance.PlayerHolder1));
 			OfflineManager.Instance.PlayerHolder1.AlterHealth (myParentBomb.damageByBlast);
-			OfflineManager.Instance.PlayerHolder1.CheckForRoundOver (OfflineManager.Instance.PlayerHolder2.transform);
+			//OfflineManager.Instance.PlayerHolder1.CheckForRoundOver (OfflineManager.Instance.PlayerHolder2.transform);
 			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 			OfflineManager.Instance.PlayerHolder2.AddGlove ();
 		}
@@ -27,7 +27,7 @@ public class WalkingBombBlastCol : MonoBehaviour
 			StopCoroutine (myParentBomb.ActivateBomb (OfflineManager.Instance.PlayerHolder2));
 			StartCoroutine (myParentBomb.BlastNow (OfflineManager.Instance.PlayerHolder2));
 			OfflineManager.Instance.PlayerHolder2.AlterHealth (myParentBomb.damageByBlast);
-			OfflineManager.Instance.PlayerHolder2.CheckForRoundOver (OfflineManager.Instance.PlayerHolder1.transform);
+			//OfflineManager.Instance.PlayerHolder2.CheckForRoundOver (OfflineManager.Instance.PlayerHolder1.transform);
 			OfflineManager.Instance.PlayerHolder1.AddGlove ();
 			OfflineManager.Instance.PlayerHolder2.LoseGlove ();
 		}

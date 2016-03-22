@@ -21,6 +21,6 @@ public class Strike : MonoBehaviour
 		yield return new WaitForSeconds (1f);
 		myChildBlast.gameObject.SetActive (true);
 		myChildBlast.GetComponent<Animator> ().Play ("blast_strike");
-		SoundsController.Instance.PlaySoundFX ("Blast");
+		SoundsController.Instance.PlaySoundFX ("Blast", 1.0f);
 	}
 }

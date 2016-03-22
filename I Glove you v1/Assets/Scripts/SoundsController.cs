@@ -3,6 +3,12 @@ using System.Collections;
 
 public class SoundsController : MonoBehaviour
 {
+    public AudioSource bgMusic;
+
+    private Object[] sounds;
+    private AudioSource[] audioSource = new AudioSource[3];
+
+
     //Static Singleton Instance
     public static SoundsController _Instance = null;
 
@@ -19,10 +25,7 @@ public class SoundsController : MonoBehaviour
             return _Instance;
         }
     }
-
-    private Object[] sounds;
-    private AudioSource[] audioSource= new AudioSource[3];
-
+    
     //initialization all the sound effects
     void Start ()
     {
@@ -36,8 +39,21 @@ public class SoundsController : MonoBehaviour
         //}    
 	}
 	
+    void Update()
+    {
+        if(OfflineManager.Instance.currentState==GameState.Playing && !bgMusic.isPlaying)
+        {
+            Debug.Log("playing");
+            bgMusic.Play();
+        }
+        else  if(OfflineManager.Instance.currentState != GameState.Playing && bgMusic.isPlaying)
+        {
+            Debug.Log("not playing");
+            bgMusic.Stop();
+        }
+    }
     //call this function with a parameter of the sound name as in resource folder
-	public void PlaySoundFX(string sfxName)
+	public void PlaySoundFX(string sfxName,float vol)
     {
         for (int i = 0; i < sounds.Length; i++)
         {
@@ -46,16 +62,19 @@ public class SoundsController : MonoBehaviour
                 if(!audioSource[0].isPlaying)
                 {
                     audioSource[0].clip= sounds[i] as AudioClip;
+                    audioSource[0].volume =vol;
                     audioSource[0].Play();
                 }
                 else if(!audioSource[1].isPlaying)
                 {
                     audioSource[1].clip = sounds[i] as AudioClip;
+                    audioSource[1].volume = vol;
                     audioSource[1].Play();
                 }
                 else
                 {
                     audioSource[2].clip = sounds[i] as AudioClip;
+                    audioSource[2].volume = vol;
                     audioSource[2].Play();
                 }
 

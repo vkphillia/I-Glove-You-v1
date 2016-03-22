@@ -69,7 +69,7 @@ public class WalkingBombPU : PowerUp
 	public IEnumerator ActivateBomb (PlayerHolderController p)
 	{
 		//bomb pickup sound
-		SoundsController.Instance.PlaySoundFX ("GlovePick");
+		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
 		//bomb ticking sound goes here
 
 		myBlastCol.GetComponent<CircleCollider2D> ().enabled = true;
@@ -88,7 +88,7 @@ public class WalkingBombPU : PowerUp
 		active = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
 		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
-		SoundsController.Instance.PlaySoundFX ("Blast");
+		SoundsController.Instance.PlaySoundFX ("Blast", 1.0f);
 		yield return new WaitForSeconds (1f);
 		DeactivatePU ();
 

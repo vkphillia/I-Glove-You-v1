@@ -47,7 +47,17 @@ public class OfflineMenuController : MonoBehaviour
 
 	}
 
-	public void Exit ()
+    public void Player1Character(int id)
+    {
+        Player1CharacterID = id;
+    }
+
+    public void Player2Character(int id)
+    {
+        Player2CharacterID = id;
+    }
+
+    public void Exit ()
 	{
 		SceneManager.LoadScene ("main menu");
 	}
