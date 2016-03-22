@@ -201,6 +201,7 @@ public class PlayerHolderController : MonoBehaviour
 			}
 
 		}
+
 		myHealthText_HUD.text = "Health " + myHealth;
 	}
 
@@ -228,7 +229,8 @@ public class PlayerHolderController : MonoBehaviour
 				//call this instead
 				OfflineManager.Instance.CheckRoundStatus ();
 			}
-			this.gameObject.SetActive (false);
+			//Player lose animation
+			//this.gameObject.SetActive (false);
 		}
 	}
 }
