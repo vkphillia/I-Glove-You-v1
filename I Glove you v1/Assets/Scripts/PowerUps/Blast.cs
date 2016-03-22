@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Strike : MonoBehaviour
+public class Blast : MonoBehaviour
 {
-
-	public AirStrikePU myParent;
+	public AirStrikePU myParentPU;
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
@@ -12,7 +11,7 @@ public class Strike : MonoBehaviour
 		{
 			Debug.Log ("GotBombed");
 			OfflineManager.Instance.PlayerHolder1.getPunched (this.transform);
-			OfflineManager.Instance.PlayerHolder1.AlterHealth (myParent.damage);
+			OfflineManager.Instance.PlayerHolder1.AlterHealth (myParentPU.damage);
 			OfflineManager.Instance.PlayerHolder1.CheckForRoundOver (OfflineManager.Instance.PlayerHolder2.transform);
 			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 			OfflineManager.Instance.PlayerHolder2.AddGlove ();
@@ -21,7 +20,7 @@ public class Strike : MonoBehaviour
 		{
 			Debug.Log ("GotBombed");
 			OfflineManager.Instance.PlayerHolder2.getPunched (this.transform);
-			OfflineManager.Instance.PlayerHolder2.AlterHealth (myParent.damage);
+			OfflineManager.Instance.PlayerHolder2.AlterHealth (myParentPU.damage);
 			OfflineManager.Instance.PlayerHolder2.CheckForRoundOver (OfflineManager.Instance.PlayerHolder1.transform);
 			OfflineManager.Instance.PlayerHolder1.AddGlove ();
 			OfflineManager.Instance.PlayerHolder2.LoseGlove ();

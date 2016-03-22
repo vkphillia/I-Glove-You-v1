@@ -4,7 +4,7 @@ using System.Collections;
 public class FighterJet : MonoBehaviour
 {
 	public float mySpeed;
-	public Transform strike1;
+	//public Transform strike1;
 	private Vector3 myStartPos;
 	private Vector3 targetPos;
 	private Vector3 myPos;
@@ -25,7 +25,7 @@ public class FighterJet : MonoBehaviour
 	{
 		//Find distance to target
 
-		targetPos = Camera.main.WorldToScreenPoint (strike1.position);
+		targetPos = Camera.main.WorldToScreenPoint (OfflineManager.Instance.PlayerHolder1.transform.position);
 		myPos = Camera.main.WorldToScreenPoint (this.transform.position);
 		relativePos = targetPos - myPos;
 
