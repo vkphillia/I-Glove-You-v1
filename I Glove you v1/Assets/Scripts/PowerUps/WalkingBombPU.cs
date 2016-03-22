@@ -46,11 +46,13 @@ public class WalkingBombPU : PowerUp
 		}
 	}
 
+
 	public override void Player1WithGlovePicked ()
 	{
 		if (!active)
 		{
-			base.Player1WithGlovePicked ();
+			OfflineManager.Instance.PlayerHolder1.Punch ();
+			DeactivatePU ();
 		}
 	}
 
@@ -58,7 +60,8 @@ public class WalkingBombPU : PowerUp
 	{
 		if (!active)
 		{
-			base.Player2WithGlovePicked ();
+			OfflineManager.Instance.PlayerHolder2.Punch ();
+			DeactivatePU ();
 		}
 	}
 

@@ -4,8 +4,6 @@ using System.Collections;
 public class GloveController : MonoBehaviour
 {
 	
-	public GameObject P1Trigger;
-	public GameObject P2Trigger;
 
 	void OnEnable ()
 	{
