@@ -3,11 +3,13 @@ using System.Collections;
 
 public class AirStrikePU : PowerUp
 {
+	public int noOfStrikes;
 	public int damage;
 	public Transform strike1;
 	public Transform strike2;
 	public Transform strike3;
 	public FighterJet fighterJet;
+	private bool active;
 
 
 	private Vector2 EnemyPos;
@@ -15,12 +17,20 @@ public class AirStrikePU : PowerUp
 
 	public override void Player1Picked ()
 	{
-		StartCoroutine (Strike ());
+		if (!active)
+		{
+			active = true;
+			StartCoroutine (Strike ());
+		}
 	}
 
 	public override void Player2Picked ()
 	{
-		StartCoroutine (Strike ());
+		if (!active)
+		{
+			active = true;
+			StartCoroutine (Strike ());
+		}
 	}
 
 	IEnumerator Strike ()
@@ -48,12 +58,13 @@ public class AirStrikePU : PowerUp
 		strike3.GetComponent<Animator> ().Play ("blast_strike");
 
 
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (.5f);
 		DeactivatePU ();
 	}
 
 	public override void DeactivatePU ()
 	{
+		active = false;
 		strike1.GetComponent<Animator> ().Play ("blast_idle");
 		strike2.GetComponent<Animator> ().Play ("blast_idle");
 		strike3.GetComponent<Animator> ().Play ("blast_idle");

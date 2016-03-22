@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public enum GameState
 {
@@ -10,8 +11,8 @@ public enum GameState
 	Playing,
 	Paused,
 	RoundOver,
-	MatchOver
-};
+	MatchOver}
+;
 
 public class OfflineManager : MonoBehaviour
 {
@@ -20,10 +21,8 @@ public class OfflineManager : MonoBehaviour
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
-	public static OfflineManager Instance
-    {
-		get
-        {
+	public static OfflineManager Instance {
+		get {
 			//if we do not have Instance yet
 			if (_Instance == null)
 			{                                                                                   
@@ -70,6 +69,9 @@ public class OfflineManager : MonoBehaviour
 	private Vector3 P2StartPos;
 	private float roundTimer;
 
+
+
+
 	//sets GameState to RoundStart and sets the sprite for both player
 	void OnEnable ()
 	{
@@ -79,10 +81,12 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [1];
 	}
 
+
+
 	//sets the player intital position and calls ShowRoundPanel()
 	void Start ()
 	{
-        //really need it? never used anywhere else
+		//really need it? never used anywhere else
 		P1StartPos = new Vector3 (0, -3, 0);
 		P2StartPos = new Vector3 (0, 3, 0);
 		PlayerHolder1.transform.position = P1StartPos;
@@ -90,8 +94,8 @@ public class OfflineManager : MonoBehaviour
 
 		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
         
-        //RoundPanel.gameObject.SetActive(true);
-        RoundPanel.ShowRoundPanel ();
+		//RoundPanel.gameObject.SetActive(true);
+		RoundPanel.ShowRoundPanel ();
         
 	}
     
@@ -133,8 +137,8 @@ public class OfflineManager : MonoBehaviour
 		{
 			ZoomOut ();
 			StopCoroutine (SpawnGloveCoroutine ());
-            //RoundPanel.ShowRoundPanel();
-        }
+			//RoundPanel.ShowRoundPanel();
+		}
 	}
 
 	//spawn gloves code
@@ -175,7 +179,7 @@ public class OfflineManager : MonoBehaviour
 	}
 
 	//checks for the winner and sets the GameState to MatchOver or RoundOver
-    //any call for stoping the game should be sent here
+	//any call for stoping the game should be sent here
 	public void CheckRoundStatus ()
 	{
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
@@ -187,16 +191,16 @@ public class OfflineManager : MonoBehaviour
 			PlayerHolder2.roundWins++;
 		}
 		
-        if(PlayerHolder1.roundWins==2 || PlayerHolder2.roundWins==2)
-        {
-            currentState = GameState.MatchOver;
-        }
-        else
-        {
-            currentState = GameState.RoundOver;
-        }
+		if (PlayerHolder1.roundWins == 2 || PlayerHolder2.roundWins == 2)
+		{
+			currentState = GameState.MatchOver;
+		}
+		else
+		{
+			currentState = GameState.RoundOver;
+		}
 		
-		RoundPanel.ShowRoundPanel();
+		RoundPanel.ShowRoundPanel ();
 	}
 
 	//sets the players intital positions, timer and calls for SpawnGlove()
@@ -216,7 +220,7 @@ public class OfflineManager : MonoBehaviour
 		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
 		//some new codes here for BGColor, do we need this change?? it will be difficult to match all sprites with the bg color
-        //okay lets leave the code till we get the assets
+		//okay lets leave the code till we get the assets
 		if (this.roundNumber == 2)
 		{
 			//Camera.main.backgroundColor = Color.cyan;
