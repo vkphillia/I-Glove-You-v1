@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+
+public delegate void GloveEvent ();
 public enum GameState
 {
 	RoundStart,
@@ -16,7 +18,7 @@ public enum GameState
 
 public class OfflineManager : MonoBehaviour
 {
-	
+	public static event GloveEvent SpwanFirstGlove;
 	//Static Singleton Instance
 	public static OfflineManager _Instance = null;
 
@@ -44,7 +46,7 @@ public class OfflineManager : MonoBehaviour
 	public PlayerHolderController PlayerHolder2;
 	public OfflineRoundController RoundPanel;
 
-	public GameObject glove;
+
 
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
@@ -113,11 +115,7 @@ public class OfflineManager : MonoBehaviour
 
 		if (currentState == GameState.Playing)
 		{
-			if (glovePicked)
-			{
-				StartCoroutine (SpawnGloveCoroutine ());
-			}
-
+			
 
 			//Timer controller
 			roundTimer -= Time.deltaTime;
@@ -132,32 +130,16 @@ public class OfflineManager : MonoBehaviour
 		else if (currentState == GameState.Fight)
 		{
 			ZoomIn ();
-
-			//Debug.Log (PlayerHolder1.transform.position);
-			//Debug.Log (PlayerHolder2.transform.position);
 		}
 		else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver)
 		{
 			ZoomOut ();
-			StopCoroutine (SpawnGloveCoroutine ());
-			//RoundPanel.ShowRoundPanel();
 		}
 	}
 
-	//spawn gloves code
-	public IEnumerator SpawnGloveCoroutine ()
-	{
-		glovePicked = false;
-		yield return new WaitForSeconds (7f);
-		SpawnGlove ();
-	}
 
-	void SpawnGlove ()
-	{
-		glove.SetActive (true);
-		glove.transform.position = new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0);
-	}
-    
+
+
 	//camera zoom code
 	void ZoomIn ()
 	{
@@ -237,9 +219,8 @@ public class OfflineManager : MonoBehaviour
 		//till here
 
 
-		//spawn first glove
-		Invoke ("SpawnGlove", 4f);
-		glovePicked = false;
+
+
 	}
     
 	//sets the roundWins to 0 for both player

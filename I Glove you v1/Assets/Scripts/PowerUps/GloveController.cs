@@ -20,7 +20,7 @@ public class GloveController : MonoBehaviour
 			OfflineManager.Instance.PlayerHolder2.LoseGlove ();
 
 			OfflineManager.Instance.glovePicked = true;
-			OfflineManager.Instance.glove.SetActive (false);
+			gameObject.SetActive (false);
 		}
 		else if (other.gameObject.layer == 10)
 		{
@@ -28,7 +28,7 @@ public class GloveController : MonoBehaviour
 			OfflineManager.Instance.PlayerHolder2.AddGlove ();
 
 			OfflineManager.Instance.glovePicked = true;
-			OfflineManager.Instance.glove.SetActive (false);
+			gameObject.SetActive (false);
 		}
 	}
 

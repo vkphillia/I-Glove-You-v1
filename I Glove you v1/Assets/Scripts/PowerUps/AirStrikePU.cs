@@ -21,6 +21,7 @@ public class AirStrikePU : PowerUp
 		{
 			Strike temp = Instantiate (strikePrefab)as Strike;
 			AllStrikesArr [i] = temp;
+			AllStrikesArr [i].transform.SetParent (this.transform);
 		}     
 	}
 
