@@ -3,7 +3,6 @@ using System.Collections;
 
 public class HealthPU : PowerUp
 {
-
 	public int HealthUp;
 
 	public override void Player1Picked ()

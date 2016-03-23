@@ -22,7 +22,7 @@ public class PlayerHolderController : MonoBehaviour
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
 
-	public SpriteRenderer HitEffectSprite;
+	private SpriteRenderer mySprite;
 
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
@@ -33,10 +33,18 @@ public class PlayerHolderController : MonoBehaviour
 	private Vector3 force;
 	private bool PUHitter;
 
+	//for puff effect when punch hits PU
+	private Transform myPooledPunchPU_FX;
+	private PunchPU_FX PunchPU_Obj;
+
+	//for hit effect when punch hits opponent
+	private Transform myPooledHit_FX;
+	private GetHit_FX Hit_Obj;
+
 
 	void Start ()
 	{
-		
+		mySprite = GetComponent<SpriteRenderer> ();
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = " Health: " + myHealth;
@@ -95,7 +103,6 @@ public class PlayerHolderController : MonoBehaviour
 	IEnumerator MakeHitFalse ()
 	{
 		yield return new WaitForSeconds (.5f);
-		HitEffectSprite.enabled = false;
 		hit = false;
 	}
 
@@ -122,16 +129,16 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = OfflineManager.Instance.MaxHealth;
 		myHealthText_HUD.text = " Health: " + myHealth;
 		myPunchAnim.gameObject.SetActive (false);
-		HitEffectSprite.enabled = false;
+		//HitEffectSprite.enabled = false;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
+		hasGlove = false;
+
 	}
 
 	public void getPunched (Transform t)
 	{
 		hit = true;
-		HitEffectSprite.transform.SetParent (this.transform);
-		HitEffectSprite.gameObject.transform.position = new Vector3 (transform.position.x, transform.position.y, -5);
-		HitEffectSprite.enabled = true;
+		SpawnHit_FX ();
 		transform.rotation = t.rotation; 
 		if (myHealth > 0)
 		{
@@ -149,11 +156,13 @@ public class PlayerHolderController : MonoBehaviour
 
 	}
 
-	public void PunchPUS ()
+	public void PunchPUS (Transform PU)
 	{
 		PUHitter = true;
 		StartCoroutine (PlayPunchAnim ());
+		SpawnPunchPU_FX (PU);
 		SoundsController.Instance.PlaySoundFX ("BreakPU", 1.0f);
+
 	}
 
 	IEnumerator PlayPunchAnim ()
@@ -188,7 +197,6 @@ public class PlayerHolderController : MonoBehaviour
 		else if ((myHealth + amount) <= 0)
 		{
 			myHealth = 0;
-			//CheckForRoundOver();
 			//code for checking who wins the round and stops the round
 			OfflineManager.Instance.CheckRoundStatus ();
 		}
@@ -199,38 +207,41 @@ public class PlayerHolderController : MonoBehaviour
 			if (amount > 0)
 			{
 				SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f); 
+				StartCoroutine (ChangeColor (Color.green));
+
+
+			}
+			else
+			{
+				StartCoroutine (ChangeColor (Color.red));
 			}
 		}
 		myHealthText_HUD.text = "Health " + myHealth;
 	}
 
-	//Checks for win/loss
-	//public void CheckForRoundOver (/*Transform otherPlayer*/)
-	//{
-	//if (myHealth == 0)
-	//{
-	//increasing round wins from multiple places not fair
-	//round wins increment only from the function checkRoundStatus in offline manager
-	//otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins++;
-	//if (otherPlayer.GetComponentInParent<PlayerHolderController> ().roundWins < 2)
-	//{
-	//OfflineManager.Instance.currentState = GameState.RoundOver;
-	//why do they need to call the round panel, its not fair
-	//OfflineManager.Instance.ShowRoundPanel ();
-	//call this instead
-	//	OfflineManager.Instance.CheckRoundStatus ();
-	//}
-	//else
-	//{
-	//OfflineManager.Instance.currentState = GameState.MatchOver;
-	//why do they need to call the round panel, its not fair
-	//OfflineManager.Instance.ShowRoundPanel ();
-	//call this instead
-	//	OfflineManager.Instance.CheckRoundStatus ();
-	//}
-	//Player lose animation
-	//this.gameObject.SetActive (false);
-	//}
-	//    OfflineManager.Instance.CheckRoundStatus();
-	//}
+	IEnumerator ChangeColor (Color C)
+	{
+		mySprite.color = C;
+		yield return new WaitForSeconds (.5f);
+		mySprite.color = Color.white;
+	}
+
+	//Spawining from game object pools
+	public void SpawnPunchPU_FX (Transform PU)
+	{
+		myPooledPunchPU_FX = GameObjectPool.GetPool ("PunchPUPool").GetInstance ();
+		PunchPU_Obj = myPooledPunchPU_FX.GetComponent<PunchPU_FX> ();
+		PunchPU_Obj.transform.position = PU.position;
+		PunchPU_Obj.transform.rotation = Quaternion.identity;
+	}
+
+	public void SpawnHit_FX ()
+	{
+		myPooledHit_FX = GameObjectPool.GetPool ("GetHitPool").GetInstance ();
+		Hit_Obj = myPooledHit_FX.GetComponent<GetHit_FX> ();
+		Hit_Obj.transform.position = this.transform.position;
+		Hit_Obj.transform.rotation = Quaternion.identity;
+	}
+
+
 }

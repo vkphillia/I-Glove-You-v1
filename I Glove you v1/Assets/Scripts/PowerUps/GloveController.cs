@@ -5,6 +5,8 @@ public class GloveController : MonoBehaviour
 {
 	
 
+
+
 	void OnEnable ()
 	{
 		GetComponent<SpriteRenderer> ().enabled = true;
@@ -34,17 +36,20 @@ public class GloveController : MonoBehaviour
 		}
 		else if (other.gameObject.layer == 9)
 		{
-			OfflineManager.Instance.PlayerHolder1.PunchPUS ();
+			OfflineManager.Instance.PlayerHolder1.PunchPUS (this.transform);
 			OfflineManager.Instance.glovePicked = true;
 			gameObject.SetActive (false);
 		}
 		else if (other.gameObject.layer == 11)
 		{
-			OfflineManager.Instance.PlayerHolder2.PunchPUS ();
+			OfflineManager.Instance.PlayerHolder2.PunchPUS (this.transform);
 			OfflineManager.Instance.glovePicked = true;
 			gameObject.SetActive (false);
 		}
 	}
+
+
+
 
 
 

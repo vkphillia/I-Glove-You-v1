@@ -39,7 +39,7 @@ public class OfflineRoundController : MonoBehaviour
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundStart);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Fight);
 		SoundsController.Instance.PlaySoundFX ("Fight", 1.0f);
-		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.5f);
+		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.1f);
 
         
 		yield return new WaitForSeconds (1f);
@@ -50,6 +50,7 @@ public class OfflineRoundController : MonoBehaviour
 	public IEnumerator HideRoundOverText ()
 	{	
 		myRoundText.text = "";
+		SoundsController.Instance.PlaySoundFX ("RoundEnd", 1.0f);
 		yield return new WaitForSeconds (1f);
 		myRoundText.text = "Round Over";
 		yield return new WaitForSeconds (3f);

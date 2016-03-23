@@ -52,7 +52,7 @@ public class WalkingBombPU : PowerUp
 	{
 		if (!active)
 		{
-			OfflineManager.Instance.PlayerHolder1.PunchPUS ();
+			OfflineManager.Instance.PlayerHolder1.PunchPUS (this.transform);
 			DeactivatePU ();
 		}
 	}
@@ -61,7 +61,7 @@ public class WalkingBombPU : PowerUp
 	{
 		if (!active)
 		{
-			OfflineManager.Instance.PlayerHolder2.PunchPUS ();
+			OfflineManager.Instance.PlayerHolder2.PunchPUS (this.transform);
 			DeactivatePU ();
 		}
 	}
@@ -69,7 +69,7 @@ public class WalkingBombPU : PowerUp
 	public IEnumerator ActivateBomb (PlayerHolderController p)
 	{
 		//bomb pickup sound
-		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("BombWalk", 1.0f);
 		//bomb ticking sound goes here
 
 		myBlastCol.GetComponent<CircleCollider2D> ().enabled = true;
@@ -86,9 +86,10 @@ public class WalkingBombPU : PowerUp
 	public IEnumerator BlastNow (PlayerHolderController p)
 	{
 		active = false;
+		SoundsController.Instance.StopSoundFX ("BombWalk", 0f);
+		SoundsController.Instance.PlaySoundFX ("Blast", 1.0f);
 		GetComponent<SpriteRenderer> ().enabled = false;
 		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
-		SoundsController.Instance.PlaySoundFX ("Blast", 1.0f);
 		yield return new WaitForSeconds (1f);
 		DeactivatePU ();
 
@@ -109,6 +110,7 @@ public class WalkingBombPU : PowerUp
 
 	void AIFollow ()
 	{
+		
 		//Find playr with GLove and follow
 		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
