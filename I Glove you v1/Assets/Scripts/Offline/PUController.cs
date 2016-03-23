@@ -42,7 +42,6 @@ public class PUController : MonoBehaviour
 				StartCoroutine (SpawnGloveCoroutine ());
 			}
 
-
 		}
 		else
 		{

@@ -12,9 +12,11 @@ public class GloveController : MonoBehaviour
 
 	}
 
-	void OnCollisionEnter2D (Collision2D other)
+
+
+	public virtual void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.gameObject.layer == 8)
+		if (other.gameObject.layer == 8 && !OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
 			OfflineManager.Instance.PlayerHolder1.AddGlove ();
 			OfflineManager.Instance.PlayerHolder2.LoseGlove ();
@@ -22,7 +24,7 @@ public class GloveController : MonoBehaviour
 			OfflineManager.Instance.glovePicked = true;
 			gameObject.SetActive (false);
 		}
-		else if (other.gameObject.layer == 10)
+		else if (other.gameObject.layer == 10 && !OfflineManager.Instance.PlayerHolder2.hasGlove)
 		{
 			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 			OfflineManager.Instance.PlayerHolder2.AddGlove ();
@@ -30,7 +32,21 @@ public class GloveController : MonoBehaviour
 			OfflineManager.Instance.glovePicked = true;
 			gameObject.SetActive (false);
 		}
+		else if (other.gameObject.layer == 9)
+		{
+			OfflineManager.Instance.PlayerHolder1.PunchPUS ();
+			OfflineManager.Instance.glovePicked = true;
+			gameObject.SetActive (false);
+		}
+		else if (other.gameObject.layer == 11)
+		{
+			OfflineManager.Instance.PlayerHolder2.PunchPUS ();
+			OfflineManager.Instance.glovePicked = true;
+			gameObject.SetActive (false);
+		}
 	}
+
+
 
 	void OnDisable ()
 	{

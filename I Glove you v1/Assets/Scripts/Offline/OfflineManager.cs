@@ -218,7 +218,10 @@ public class OfflineManager : MonoBehaviour
 		}
 		//till here
 
-
+		if (SpwanFirstGlove != null)
+		{
+			SpwanFirstGlove ();
+		}
 
 
 	}
