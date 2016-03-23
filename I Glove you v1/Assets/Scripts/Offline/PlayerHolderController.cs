@@ -10,12 +10,16 @@ public class PlayerHolderController : MonoBehaviour
 
 	[HideInInspector]	
 	public bool hit;
+
 	[HideInInspector]	
 	public bool hitter;
+
 	//[HideInInspector]
 	public int myHealth;
+
 	[HideInInspector]
 	public int roundWins;
+
 	[HideInInspector]
 	public bool hasGlove;
 
@@ -55,6 +59,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
+            //why this?
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
 			if (!hit && !hitter && !PUHitter)

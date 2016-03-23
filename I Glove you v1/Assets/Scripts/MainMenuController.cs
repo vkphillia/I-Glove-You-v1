@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-	public Text signingResponse;
+	//public Text signingResponse;
 
 	//Static Singleton Instance
 	public static MainMenuController _Instance = null;
@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
 
 	void Start ()
 	{
-		MultiplayerController.Instance.TrySilentSignIn ();
+		//MultiplayerController.Instance.TrySilentSignIn ();
 	}
 
 	public void Offline ()
@@ -31,7 +31,12 @@ public class MainMenuController : MonoBehaviour
 		SceneManager.LoadScene ("offline menu");
 	}
 
-	public void Online ()
+    public void Story()
+    {
+        SceneManager.LoadScene("story main");
+    }
+
+    public void Online ()
 	{
 		MultiplayerController.Instance.SignInAndStartMPGame ();
 		SceneManager.LoadScene ("online menu");
@@ -39,6 +44,6 @@ public class MainMenuController : MonoBehaviour
 
 	public void showSigninError ()
 	{
-		signingResponse.text = "sign in failed. Try later";
+		//signingResponse.text = "sign in failed. Try later";
 	}
 }

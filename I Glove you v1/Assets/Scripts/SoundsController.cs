@@ -6,7 +6,7 @@ public class SoundsController : MonoBehaviour
 	public AudioSource bgMusic;
 
 	private Object[] sounds;
-	private AudioSource[] audioSource = new AudioSource[3];
+	private AudioSource[] audioSource = new AudioSource[5];
 
 
 	//Static Singleton Instance
@@ -41,12 +41,12 @@ public class SoundsController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing && !bgMusic.isPlaying)
 		{
-			Debug.Log ("playing");
+			//Debug.Log ("playing");
 			bgMusic.Play ();
 		}
 		else if (OfflineManager.Instance.currentState != GameState.Playing && bgMusic.isPlaying)
 		{
-			Debug.Log ("not playing");
+			//Debug.Log ("not playing");
 			bgMusic.Stop ();
 		}
 	}
@@ -101,8 +101,8 @@ public class SoundsController : MonoBehaviour
 			{
 				if (!audioSource [0].isPlaying)
 				{
-					audioSource [0].clip = sounds [i] as AudioClip;
-					audioSource [0].volume = vol;
+					audioSource [0].clip = sounds [i] as AudioClip; //why setting clip if we are going to kill this sound
+					audioSource [0].volume = vol;//why setting volume?
 					audioSource [0].Stop ();
 				}
 				else if (!audioSource [1].isPlaying)
