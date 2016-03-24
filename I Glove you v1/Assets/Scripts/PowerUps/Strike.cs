@@ -22,9 +22,11 @@ public class Strike : MonoBehaviour
 		myController.SpawnAnything (this.gameObject);
 		yield return new WaitForSeconds (0.75f);
 		GetComponent<SpriteRenderer> ().enabled = true;
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (0.25f);
 		myChildBlast.gameObject.SetActive (true);
 		myChildBlast.GetComponent<Animator> ().Play ("blast_strike");
 		SoundsController.Instance.PlaySoundFX ("Blast_Strike", 1.0f);
+		GetComponent<SpriteRenderer> ().enabled = false;
+
 	}
 }
