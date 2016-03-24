@@ -18,7 +18,7 @@ public class PlayerControlsUniversal : MonoBehaviour
 	{
 		Color tempColor = GetComponent<SpriteRenderer> ().color;
 		tempColor.a = 0;
-		GetComponent<SpriteRenderer> ().color = tempColor;
+		GetComponent<SpriteRenderer> ().color = tempColor;  
 		yield return new WaitForSeconds (1f);
 		while (tempColor.a <= 1)
 		{
@@ -33,17 +33,25 @@ public class PlayerControlsUniversal : MonoBehaviour
 		KeyboardControls ();
 		MobileControls ();
 
-		if (StoryManager.Instance.currentState == StoryGameState.Playing)
-		{
-			//why this? I just copied from ur code. 
-			//Chintan: somehow sometimes the player went past the borders to stop them i applied a clamp
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.34f, 4.34f), 0);
-			transform.position += transform.up * Time.deltaTime * mySpeed;
-		}
-	}
+        //if (StoryManager.Instance.currentState == StoryGameState.Playing)
+        //{
+        //	//why this? I just copied from ur code. 
+        //	//Chintan: somehow sometimes the player went past the borders to stop them i applied a clamp
+        //          //good
+        //	transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.34f, 4.34f), 0);
+        //	transform.position += transform.up * Time.deltaTime * mySpeed;
+        //}
+
+        //move player only when challengeControl tells u to
+        if (move)
+        {
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2.75f, 2.75f), Mathf.Clamp(transform.position.y, -4.34f, 4.34f), 0);
+            transform.position += transform.up * Time.deltaTime * mySpeed;
+        }
+    }
 
 
-	void KeyboardControls ()
+    void KeyboardControls ()
 	{
         
 		if (Input.GetButton ("movez"))

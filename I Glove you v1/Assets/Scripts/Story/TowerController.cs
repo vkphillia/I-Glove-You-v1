@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TowerController : MonoBehaviour
 {
@@ -10,18 +11,18 @@ public class TowerController : MonoBehaviour
 
 	void OnEnable ()
 	{
-		PlayerData.Instance.ReadData ();
-		Debug.Log (PlayerData.Instance.Level);
-		for (int i = 0; i < Challenge_List.Count; i++)
-		{
-			if (PlayerData.Instance.Level == i)
-			{
-				Debug.Log ("Player is on level " + Challenge_List [i].myLevelNum);
-				Challenge_List [i].myButton.enabled = true;
-				StoryManager.Instance.currentChallenge = Challenge_List [i];
+		//PlayerData.Instance.ReadData ();
+		//Debug.Log (PlayerData.Instance.Level);
+		//for (int i = 0; i < Challenge_List.Count; i++)
+		//{
+		//	if (PlayerData.Instance.Level == i)
+		//	{
+		//		Debug.Log ("Player is on level " + Challenge_List [i].myLevelNum);
+		//		Challenge_List [i].myButton.enabled = true;
+		//		StoryManager.Instance.currentChallenge = Challenge_List [i];
 
-			}
-		}
+		//	}
+		//}
 	}
 
 	public void ClickOnChallenge ()
@@ -33,4 +34,9 @@ public class TowerController : MonoBehaviour
 
 
 	}
+
+    public void challengeOne()
+    {
+        SceneManager.LoadScene("1st challenge");
+    }
 }

@@ -116,7 +116,7 @@ public class StoryManager : MonoBehaviour
 	{
 		if (StoryManager.Instance.currentState == StoryGameState.Playing)
 		{
-			Debug.Log ("playing");
+			//Debug.Log ("playing");
 			currentChallenge.CheckForObjectiveComplete ();
 		}
 	}
