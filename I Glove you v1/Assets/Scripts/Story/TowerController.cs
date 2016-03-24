@@ -10,6 +10,8 @@ public class TowerController : MonoBehaviour
 
 	void OnEnable ()
 	{
+		PlayerData.Instance.ReadData ();
+		Debug.Log (PlayerData.Instance.Level);
 		for (int i = 0; i < Challenge_List.Count; i++)
 		{
 			if (PlayerData.Instance.Level == i)

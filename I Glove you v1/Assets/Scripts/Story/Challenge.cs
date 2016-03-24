@@ -32,7 +32,8 @@ public class Challenge : MonoBehaviour
 	[HideInInspector]
 	public int roundNumber;
 	public float MaxRoundTimer;
-	private float roundTimer;
+	[HideInInspector]
+	public float roundTimer;
 	//public Text roundText_HUD;
 	//public Text timerText_HUD;
 	[HideInInspector]
@@ -43,6 +44,7 @@ public class Challenge : MonoBehaviour
 	public virtual void Awake ()
 	{
 		myButton = GetComponent<Button> ();
+		roundTimer = MaxRoundTimer;
 
 	}
 
@@ -73,6 +75,33 @@ public class Challenge : MonoBehaviour
 
 	}
 
+	public virtual void CheckForObjectiveComplete ()
+	{
+		//Debug.Log(Check);
+	}
+
+	public virtual void Update ()
+	{
+		//Debug.Log ("Kya ho raha hai");
+	}
+
+
+	public virtual void CheckRoundStatus ()
+	{
+		
+		if (roundNumber == NoOfRounds)
+		{
+			StoryManager.Instance.currentState = StoryGameState.MatchOver;
+		}
+		else
+		{
+			StoryManager.Instance.currentState = StoryGameState.RoundOver;
+		}
+		
+		StoryManager.Instance.RoundPanel.gameObject.SetActive (true);
+	}
+
+
 	public virtual void SpawnEnemy ()
 	{
 		if (NoOfEnemies > 0)
@@ -86,5 +115,7 @@ public class Challenge : MonoBehaviour
 	{
 		StoryManager.Instance.myPlayer.Initialize ();
 	}
+
+
 
 }

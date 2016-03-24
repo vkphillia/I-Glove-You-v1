@@ -65,19 +65,13 @@ public class StoryRoundController : MonoBehaviour
 		myRoundText.text = "";
 		yield return new WaitForSeconds (2f);
 		StorySoundsController.Instance.PlaySoundFX ("Win", 1.0f);
-		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
-		{
-			myRoundText.text = "Player 1 Wins";
-		}
-		else if (OfflineManager.Instance.PlayerHolder2.roundWins == 2)
-		{
-			myRoundText.text = "Player 2 Wins";
-		}
+
+		myRoundText.text = "Challenge Complete";
+		
 		yield return new WaitForSeconds (3f);
 		myRoundText.text = "";
-		OfflineManager.Instance.NewMatchStart ();
+		StoryManager.Instance.RoundPanel.gameObject.SetActive (false);
 		UI.SetActive (true);
-		//SceneManager.LoadScene ("offline menu");
 	}
 
 	IEnumerator RoundNumberSFX ()

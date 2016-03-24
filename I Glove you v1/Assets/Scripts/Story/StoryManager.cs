@@ -79,7 +79,7 @@ public class StoryManager : MonoBehaviour
 		yield return new WaitForSeconds (2f);
 		story.text = "Hi";
 		yield return new WaitForSeconds (2f);
-		story.text = "How are you?";
+		/*story.text = "How are you?";
 		yield return new WaitForSeconds (2f);
 		story.text = "This is your player";
 		yield return new WaitForSeconds (3f);
@@ -103,7 +103,7 @@ public class StoryManager : MonoBehaviour
 		story.text = "Congats, you learned about your player movements";
 		playerControl.move = false;
 		yield return new WaitForSeconds (4f);
-		story.text = "Come back later for more :)";
+		story.text = "Come back later for more :)";*/
 		PlayerData.Instance.TutorialDone = 1; //set to true
 
 		//Show challange tower
@@ -112,5 +112,12 @@ public class StoryManager : MonoBehaviour
 	}
 
 
-
+	void Update ()
+	{
+		if (StoryManager.Instance.currentState == StoryGameState.Playing)
+		{
+			Debug.Log ("playing");
+			currentChallenge.CheckForObjectiveComplete ();
+		}
+	}
 }
