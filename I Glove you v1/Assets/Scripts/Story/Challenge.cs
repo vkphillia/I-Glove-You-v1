@@ -7,7 +7,9 @@ public delegate void StoryGloveEvent ();
 public class Challenge : MonoBehaviour
 {
 	public static event StoryGloveEvent SpwanFirstGlove;
-	//challene stuff
+    public static int noOfEnemyAlive;//temporary, can be removed later
+
+	//challenge stuff
 	[HideInInspector]
 	public Button myButton;
 	public int myLevelNum;
@@ -56,11 +58,11 @@ public class Challenge : MonoBehaviour
 		roundNumber++;
 
 		//spawn players
-		if (NoOfEnemies > 0)
-		{
-			SpawnEnemy ();
-		}
-		SpawnPlayer ();
+		//if (NoOfEnemies > 0)
+		//{
+		//	SpawnEnemy ();
+		//}
+		//SpawnPlayer ();
 
 
 		//roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
@@ -80,10 +82,10 @@ public class Challenge : MonoBehaviour
 		//Debug.Log(Check);
 	}
 
-	public virtual void Update ()
-	{
-		//Debug.Log ("Kya ho raha hai");
-	}
+	//public virtual void Update ()
+	//{
+	//	//Debug.Log ("Kya ho raha hai");
+	//}
 
 
 	public virtual void CheckRoundStatus ()
@@ -102,19 +104,19 @@ public class Challenge : MonoBehaviour
 	}
 
 
-	public virtual void SpawnEnemy ()
-	{
-		if (NoOfEnemies > 0)
-		{
-			StoryManager.Instance.myEnemy.Initialize ();
-		}
+	//public virtual void SpawnEnemy ()
+	//{
+	//	if (NoOfEnemies > 0)
+	//	{
+	//		StoryManager.Instance.myEnemy.Initialize ();
+	//	}
 
-	}
+	//}
 
-	public virtual void SpawnPlayer ()
-	{
-		StoryManager.Instance.myPlayer.Initialize ();
-	}
+	//public virtual void SpawnPlayer ()
+	//{
+	//	StoryManager.Instance.myPlayer.Initialize ();
+	//}
 
 
 

@@ -19,7 +19,8 @@ public enum GameState
 public class OfflineManager : MonoBehaviour
 {
 	public static event GloveEvent SpwanFirstGlove;
-	//Static Singleton Instance
+	
+    //Static Singleton Instance
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
