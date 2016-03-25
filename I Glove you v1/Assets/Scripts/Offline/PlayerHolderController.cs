@@ -49,7 +49,10 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-	}
+
+        //code for health bar
+        GetComponentInChildren<ProgressBar>().SetUpdateBar(myHealth);
+    }
 
 	void Update ()
 	{
@@ -232,6 +235,10 @@ public class PlayerHolderController : MonoBehaviour
 				StartCoroutine (ChangeColor (Color.red));
 			}
 		}
+
+        //code for health bar
+        GetComponentInChildren<ProgressBar>().UpdateBar(myHealth);
+
 		myHealthText_HUD.text = myHealth.ToString ();
 	}
 

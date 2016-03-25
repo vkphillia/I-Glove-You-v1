@@ -120,7 +120,10 @@ public class OfflineManager : MonoBehaviour
 
 			//Timer controller
 			roundTimer -= Time.deltaTime;
-			timerText_HUD.text = roundTimer.ToString ("N0");
+            //code for timer
+            GetComponentInChildren<ProgressBar>().UpdateBar((int)roundTimer);
+
+            timerText_HUD.text = roundTimer.ToString ("N0");
 
 			if (roundTimer <= 0)
 			{
@@ -193,6 +196,8 @@ public class OfflineManager : MonoBehaviour
 	public void StartNewRound ()
 	{
 		roundTimer = MaxRoundTimer;
+        //code for timer
+        GetComponentInChildren<ProgressBar>().SetUpdateBar((int)roundTimer);
 		roundNumber++;
 
 		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
