@@ -39,7 +39,6 @@ public class Challenge1 : Challenge
     public GameObject UI;
     public Text filler;
     public Text enemyKilled;
-
     
     private int enemyCount;
 

@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerControlsUniversal : MonoBehaviour
 {
 	public float mySpeed;
+    public float health;
 
 	[HideInInspector]
 	public bool move;
@@ -28,19 +29,52 @@ public class PlayerControlsUniversal : MonoBehaviour
 		}
 	}
 
-	void Update ()
-	{
-		KeyboardControls ();
-		MobileControls ();
+    //increase or decreases the health of the player based on the amount
+    public void AlterHealth(int amount)
+    {
+        if ((health + amount) > OfflineManager.Instance.MaxHealth)
+        {
+            health = OfflineManager.Instance.MaxHealth;
+        }
+        else if ((health + amount) <= 0)
+        {
+            health = 0;
+            //code for checking who wins the round and stops the round
+            //OfflineManager.Instance.CheckRoundStatus();
+        }
+        else
+        {
+            health += amount;
+            //only play sound when adding health
+            if (amount > 0)
+            {
+                SoundsController.Instance.PlaySoundFX("HealthUp", 1.0f);
+                //StartCoroutine(ChangeColor(Color.green));
+            }
+            else
+            {
+                //StartCoroutine(ChangeColor(Color.red));
+            }
+        }
+        //myHealthText_HUD.text = myHealth.ToString();
+    }
 
+    
+    void Update ()
+	{
 		//Read This,
 		//this code alone wont give u the hitting effect
 		//you need to add code from PlayerHolderController Update functionm
 		//where based on hit the movement transform vector and speed varies
+        //Read
+        //I am adding code piece by piece so it wont get complicated, I will add those codes too when needed
 		//move player only when challengeControl tells u to
 		if (move)
 		{
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.34f, 4.34f), 0);
+            KeyboardControls();
+            MobileControls();
+
+            transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.34f, 4.34f), 0);
 			transform.position += transform.up * Time.deltaTime * mySpeed;
 		}
 	}

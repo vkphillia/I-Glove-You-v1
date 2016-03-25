@@ -38,20 +38,50 @@ public class Enemy : MonoBehaviour
 	{
 		//Debug.Log("triggered");
 
-		if (other.gameObject.layer == 8)
+		if (other.gameObject.layer == 13)
 		{
 			health--;
 			if (health == 0)
 			{
-				Challenge.noOfEnemyAlive--;
-				gameObject.SetActive (false);
+				
 			}
 		}
 	}
 
+    //increase or decreases the health of the player based on the amount
+    public void AlterHealth(int amount)
+    {
+        health += amount; 
 
-   
-	public void Initialize ()
+        if (health > OfflineManager.Instance.MaxHealth)
+        {
+            health = OfflineManager.Instance.MaxHealth;
+        }
+        else if (health <= 0)
+        {
+            //code for checking who wins the round and stops the round
+            //OfflineManager.Instance.CheckRoundStatus();
+            Challenge.noOfEnemyAlive--;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            //only play sound when adding health
+            if (amount > 0)
+            {
+                SoundsController.Instance.PlaySoundFX("HealthUp", 1.0f);
+                //StartCoroutine(ChangeColor(Color.green));
+            }
+            else
+            {
+                //StartCoroutine(ChangeColor(Color.red));
+            }
+        }
+        //myHealthText_HUD.text = myHealth.ToString();
+    }
+
+
+    public void Initialize ()
 	{
 		StartCoroutine (FadeEnemy ());
 	}
