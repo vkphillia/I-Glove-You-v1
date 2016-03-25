@@ -78,8 +78,23 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
 				StartCoroutine (MakePUHitterFalse ());
 			}
-		} 
+
+		}
+		else if (OfflineManager.Instance.currentState == GameState.MatchOver)
+		{
+			if (roundWins == 2)
+			{
+				transform.position += transform.up * Time.deltaTime * mySpeed;
+				transform.Rotate (0, 0, 5);
+			}
+			else
+			{
+				gameObject.SetActive (false);
+			}
+		}
 	}
+
+
 
 	void OnTriggerEnter2D (Collider2D other)
 	{

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class OfflineRoundController : MonoBehaviour
 {
 	public Text myRoundText;
+	public Text P1Text;
+	public Text P2Text;
 	public GameObject UI;
 
 	//sets round start and over texts
@@ -63,16 +65,22 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundText.text = "";
 		yield return new WaitForSeconds (2f);
 		SoundsController.Instance.PlaySoundFX ("Win", 1.0f);
+		P1Text.gameObject.SetActive (true);
+		P2Text.gameObject.SetActive (true);
 		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
 		{
-			myRoundText.text = "Player 1 Wins";
+			P1Text.text = "You Win";
+			P2Text.text = "Lose Lose";
 		}
 		else if (OfflineManager.Instance.PlayerHolder2.roundWins == 2)
 		{
-			myRoundText.text = "Player 2 Wins";
+			P2Text.text = "You Win";
+			P1Text.text = "Lose Lose";
 		}
 		yield return new WaitForSeconds (3f);
 		myRoundText.text = "";
+		P1Text.gameObject.SetActive (false);
+		P2Text.gameObject.SetActive (false);
 		OfflineManager.Instance.NewMatchStart ();
 		UI.SetActive (true);
 		//SceneManager.LoadScene ("offline menu");
