@@ -75,7 +75,7 @@ public class Challenge1 : Challenge
         {
             enemyKilled.text = "Enemy killed: " + enemyCount;
 
-            enemyHolder.Spawn(1);
+            enemyHolder.Spawn(1,false,false);
             Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
             enemyCount++;//keeping count of enemy spawned in this scene yet
         }

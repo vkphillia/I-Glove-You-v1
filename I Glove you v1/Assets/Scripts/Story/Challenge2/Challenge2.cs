@@ -36,7 +36,7 @@ public class Challenge2 : Challenge
         player.move = true;//enables player movement
 
         GameTimer.Instance.timerStarted = true;//starts timer
-        enemyHolder.Spawn(1);
+        enemyHolder.Spawn(1,true,true);
         Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
 
     }
@@ -48,9 +48,11 @@ public class Challenge2 : Challenge
         if (player.health == 0 && GameTimer.Instance.timerStarted)
         {
             GameTimer.Instance.timerStarted=false;
+            Debug.Log("I stopped it");
         }
         else if(player.move == true && !GameTimer.Instance.timerStarted)
         {
+            Debug.Log("I stopped it too");
             StartCoroutine(StopRound());
         }
     }
@@ -61,7 +63,15 @@ public class Challenge2 : Challenge
         player.move = false;
         Challenge.noOfEnemyAlive = 0;//reseting
 
-        filler.text = "You killed " + enemyCount + " enemy";
+        if(player.health==0)
+        {
+            filler.text = "Success comes with great practice";
+        }
+        else
+        {
+            filler.text = "Congrats, You survived";
+        }
+        
         UI.SetActive(true);//setting challenge complete buttons to active
         yield return new WaitForSeconds(1f);
 

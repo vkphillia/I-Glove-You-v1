@@ -1,16 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerControlsUniversal : MonoBehaviour
 {
 	public float mySpeed;
     public float health;
+    public float maxHealth;
 
-	[HideInInspector]
+    public Text myHealthText_HUD;
+
+    [HideInInspector]
 	public bool move;
 
-	//this is temporary code, to be removed when new assets are added
-	public void Initialize ()
+    [HideInInspector]
+    public bool hasGlove;
+
+    void Start()
+    {
+        myHealthText_HUD.text = "Health: " + health;
+    }
+
+    //this is temporary code, to be removed when new assets are added
+    public void Initialize ()
 	{
 		StartCoroutine (FadePlayer ());
 	}
@@ -30,21 +42,26 @@ public class PlayerControlsUniversal : MonoBehaviour
 	}
 
     //increase or decreases the health of the player based on the amount
+    //this is called by glove, power ups
     public void AlterHealth(int amount)
     {
-        if ((health + amount) > OfflineManager.Instance.MaxHealth)
+        Debug.Log("player hit");
+
+        health += amount;
+
+        if (health > maxHealth)
         {
-            health = OfflineManager.Instance.MaxHealth;
+            health = maxHealth;
         }
-        else if ((health + amount) <= 0)
+        else if (health <= 0)
         {
-            health = 0;
             //code for checking who wins the round and stops the round
             //OfflineManager.Instance.CheckRoundStatus();
+            
+            gameObject.SetActive(false);
         }
         else
         {
-            health += amount;
             //only play sound when adding health
             if (amount > 0)
             {
@@ -56,7 +73,7 @@ public class PlayerControlsUniversal : MonoBehaviour
                 //StartCoroutine(ChangeColor(Color.red));
             }
         }
-        //myHealthText_HUD.text = myHealth.ToString();
+        myHealthText_HUD.text = "Health: "+health;
     }
 
     

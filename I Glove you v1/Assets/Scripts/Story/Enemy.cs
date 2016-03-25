@@ -5,12 +5,18 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
 	public int health;
-	public float enemySpeed;
+    public int maxHealth;
+    public float enemySpeed;
 
 	//AI stuff
 	//temporary variable, this should be linked to the challenges I guess
+    [HideInInspector]
 	public bool AIOn;
-	public Transform myPlayer;
+
+    [HideInInspector]
+    public bool hasGlove;
+
+    public Transform myPlayer;
 	//temporary variable, get reference from where ever PU is spawning
 	public Transform PUOnScreen;
 
@@ -25,37 +31,29 @@ public class Enemy : MonoBehaviour
 	private float angle;
 
 	private bool PUInRange;
-	private bool hasGlove;
 
 	void Start ()
 	{
 		health = 1;//default value, can be changed as required
 		destReached = true;
+
+        if(hasGlove)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
 	}
-
-	//decreases the health if it is get hit by player, deactivates itself if the health reaches 0
-	void OnTriggerEnter2D (Collider2D other)
-	{
-		//Debug.Log("triggered");
-
-		if (other.gameObject.layer == 13)
-		{
-			health--;
-			if (health == 0)
-			{
-				
-			}
-		}
-	}
-
+    
     //increase or decreases the health of the player based on the amount
+    //this is called by glove, power ups
     public void AlterHealth(int amount)
     {
+        Debug.Log("enemy hit");
+
         health += amount; 
 
-        if (health > OfflineManager.Instance.MaxHealth)
+        if (health > maxHealth)
         {
-            health = OfflineManager.Instance.MaxHealth;
+            health = maxHealth;
         }
         else if (health <= 0)
         {
@@ -104,7 +102,7 @@ public class Enemy : MonoBehaviour
 	{
 		
 
-		if (AIOn)
+		if (AIOn && GameTimer.Instance.timerStarted)
 		{
 			//this makes it move
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.59f, 2.59f), Mathf.Clamp (transform.position.y, -4.5f, 3.8f), 0);
@@ -112,7 +110,7 @@ public class Enemy : MonoBehaviour
 
 			if (hasGlove)
 			{
-				AIFollowOpponent ();
+				//AIFollowOpponent (); //deactivated for testing, please reactvate later
 			}
 			else
 			{

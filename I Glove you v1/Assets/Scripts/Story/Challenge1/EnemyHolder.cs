@@ -7,7 +7,7 @@ public class EnemyHolder : MonoBehaviour
 	public Sprite[] enemySprites;
 
 
-	public void Spawn (int noOfEnemy)
+	public void Spawn (int noOfEnemy,bool aI,bool hasGlove)
 	{
 		for (int i = 0; i < noOfEnemy; i++)
 		{
@@ -15,7 +15,10 @@ public class EnemyHolder : MonoBehaviour
 			enemyCopy.transform.SetParent (transform);
 			enemyCopy.transform.position = new Vector3 (Random.Range (-2.5f, 2.5f), Random.Range (-4.3f, 3.5f));
 			enemyCopy.GetComponent<SpriteRenderer> ().sprite = enemySprites [Mathf.FloorToInt (Random.Range (0, enemySprites.Length))];
-			enemyCopy.SetActive (true);
+            enemyCopy.GetComponent<Enemy>().AIOn = aI;
+            enemyCopy.GetComponent<Enemy>().hasGlove = hasGlove;
+
+            enemyCopy.SetActive (true);
 			//Debug.Log("Spawn");
 		}
        
