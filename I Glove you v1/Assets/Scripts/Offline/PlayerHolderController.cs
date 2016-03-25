@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerHolderController : MonoBehaviour
 {
-	
-
 	[HideInInspector]	
 	public bool hit;
 
@@ -31,7 +29,6 @@ public class PlayerHolderController : MonoBehaviour
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
-
 	public float mySpeed;
 
 	private Vector3 force;
@@ -51,15 +48,14 @@ public class PlayerHolderController : MonoBehaviour
 		mySprite = GetComponent<SpriteRenderer> ();
 		myHealth = OfflineManager.Instance.MaxHealth;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
-		myHealthText_HUD.text = " Health: " + myHealth;
-
+		myHealthText_HUD.text = myHealth.ToString ();
 	}
 
 	void Update ()
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-            //why this?
+			//why this?
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
 			if (!hit && !hitter && !PUHitter)
@@ -128,11 +124,11 @@ public class PlayerHolderController : MonoBehaviour
 	public void ResetPlayer ()
 	{
 		gameObject.SetActive (true);		
-		myWinText_HUD.text = "Wins: " + roundWins + "/2";
+		myWinText_HUD.text = roundWins + "/2";
 		hit = false;
 		hitter = false;
 		myHealth = OfflineManager.Instance.MaxHealth;
-		myHealthText_HUD.text = " Health: " + myHealth;
+		myHealthText_HUD.text = myHealth.ToString ();
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
@@ -221,7 +217,7 @@ public class PlayerHolderController : MonoBehaviour
 				StartCoroutine (ChangeColor (Color.red));
 			}
 		}
-		myHealthText_HUD.text = "Health " + myHealth;
+		myHealthText_HUD.text = myHealth.ToString ();
 	}
 
 	IEnumerator ChangeColor (Color C)

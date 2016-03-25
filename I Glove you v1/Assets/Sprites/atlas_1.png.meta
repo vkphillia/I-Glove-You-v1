@@ -1,0 +1,313 @@
+fileFormatVersion: 2
+guid: acff5652095084fdbaad5736faf92469
+timeCreated: 1458907479
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: BG
+    21300002: Life_Icon
+    21300004: Win_Icon
+    21300006: Timer_Icon
+    21300008: Punch_Effect
+    21300010: Health_UI_BG
+    21300012: Fighter_4
+    21300014: Timer_UI_BG
+    21300016: Fighter_1
+    21300018: Fighter_5
+    21300020: Fighter_2
+    21300022: Fighter_6
+    21300024: Fighter_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: BG
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 181
+        width: 461
+        height: 825
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -230.5, y: 412.5}
+        - {x: -230.5, y: -412.5}
+        - {x: 230.5, y: -412.5}
+        - {x: 230.5, y: 412.5}
+    - name: Life_Icon
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 953
+        width: 55
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20.5, y: 24.5}
+        - {x: -27.5, y: 17.5}
+        - {x: -27.5, y: -4.5}
+        - {x: -4.5, y: -24.5}
+        - {x: 8.5, y: -24.5}
+        - {x: 27.5, y: -4.5}
+        - {x: 27.5, y: 17.5}
+        - {x: 20.5, y: 24.5}
+    - name: Win_Icon
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 954
+        width: 41
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20.5, y: 16}
+        - {x: -20.5, y: -1}
+        - {x: -16.5, y: -16}
+        - {x: 15.5, y: -16}
+        - {x: 20.5, y: 4}
+        - {x: 20.5, y: 16}
+    - name: Timer_Icon
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 954
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: -23}
+        - {x: 23, y: -23}
+        - {x: 23, y: 23}
+        - {x: -23, y: 23}
+        - {x: -23, y: -19}
+    - name: Punch_Effect
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 918
+        width: 111
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -55.5, y: 26}
+        - {x: -55.5, y: -4}
+        - {x: -38.5, y: -26}
+        - {x: 50.5, y: -26}
+        - {x: 55.5, y: -25}
+        - {x: 55.5, y: 26}
+      - - {x: -37.5, y: 26}
+        - {x: -37.5, y: 19}
+        - {x: -35.5, y: 17}
+        - {x: -29.5, y: 17}
+        - {x: -27.5, y: 19}
+        - {x: -27.5, y: 26}
+    - name: Health_UI_BG
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 820
+        width: 158
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -78, y: 36}
+        - {x: -79, y: 35}
+        - {x: -79, y: -36}
+        - {x: 71, y: -36}
+        - {x: 79, y: -28}
+        - {x: 79, y: 36}
+    - name: Fighter_4
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 672
+        width: 194
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 93, y: -105}
+        - {x: 97, y: -106}
+        - {x: 97, y: 57}
+        - {x: 85, y: 106}
+        - {x: -40, y: 106}
+        - {x: -94, y: 54}
+        - {x: -97, y: 29}
+        - {x: -97, y: -106}
+        - {x: -35, y: -106}
+        - {x: -24, y: -73}
+        - {x: 34, y: -106}
+        - {x: 87, y: -106}
+    - name: Timer_UI_BG
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 726
+        width: 158
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -73, y: 36}
+        - {x: -79, y: 35}
+        - {x: -79, y: -25}
+        - {x: -69, y: -36}
+        - {x: 77, y: -36}
+        - {x: 79, y: -25}
+        - {x: 79, y: 36}
+    - name: Fighter_1
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 471
+        width: 198
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93, y: 105.5}
+        - {x: -99, y: 104.5}
+        - {x: -99, y: -52.5}
+        - {x: -49, y: -105.5}
+        - {x: 56, y: -105.5}
+        - {x: 93, y: -78.5}
+        - {x: 99, y: -11.5}
+        - {x: 99, y: 105.5}
+    - name: Fighter_5
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 436
+        width: 198
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93, y: 105.5}
+        - {x: -99, y: 104.5}
+        - {x: -99, y: -52.5}
+        - {x: -49, y: -105.5}
+        - {x: 56, y: -105.5}
+        - {x: 93, y: -78.5}
+        - {x: 99, y: -11.5}
+        - {x: 99, y: 105.5}
+    - name: Fighter_2
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 241
+        width: 198
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93, y: 105.5}
+        - {x: -99, y: 104.5}
+        - {x: -99, y: -52.5}
+        - {x: -49, y: -105.5}
+        - {x: 56, y: -105.5}
+        - {x: 93, y: -78.5}
+        - {x: 99, y: -11.5}
+        - {x: 99, y: 105.5}
+    - name: Fighter_6
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 184
+        width: 198
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93, y: 105.5}
+        - {x: -99, y: 104.5}
+        - {x: -99, y: -52.5}
+        - {x: -49, y: -105.5}
+        - {x: 56, y: -105.5}
+        - {x: 93, y: -78.5}
+        - {x: 99, y: -11.5}
+        - {x: 99, y: 105.5}
+    - name: Fighter_3
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 16
+        width: 198
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93, y: 105.5}
+        - {x: -99, y: 104.5}
+        - {x: -99, y: -52.5}
+        - {x: -49, y: -105.5}
+        - {x: 56, y: -105.5}
+        - {x: 93, y: -78.5}
+        - {x: 99, y: -11.5}
+        - {x: 99, y: 105.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -20,7 +20,7 @@ public class OfflineManager : MonoBehaviour
 {
 	public static event GloveEvent SpwanFirstGlove;
 	
-    //Static Singleton Instance
+	//Static Singleton Instance
 	public static OfflineManager _Instance = null;
 
 	//property to get instance
@@ -120,7 +120,7 @@ public class OfflineManager : MonoBehaviour
 
 			//Timer controller
 			roundTimer -= Time.deltaTime;
-			timerText_HUD.text = "Time: " + roundTimer.ToString ("N0");
+			timerText_HUD.text = roundTimer.ToString ("N0");
 
 			if (roundTimer <= 0)
 			{
