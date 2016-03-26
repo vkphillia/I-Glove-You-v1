@@ -35,6 +35,7 @@ public class Challenge3 : MonoBehaviour
         filler.text = "";
 
         player.move = true;//enables player movement
+        player.AddGlove();
 
         GameTimer.Instance.timerStarted = true;//starts timer
        
@@ -66,7 +67,7 @@ public class Challenge3 : MonoBehaviour
         player.move = false;
         Challenge.noOfEnemyAlive = 0;//reseting
 
-        if (enemyCount <3)
+        if (enemyCount-1 <3)
         {
             filler.text = "Success comes with great practice";
         }

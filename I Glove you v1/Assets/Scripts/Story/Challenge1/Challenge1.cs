@@ -63,6 +63,7 @@ public class Challenge1 : Challenge
         filler.text = "";
 
         player.move = true;//enables player movement
+        player.AddGlove();
 
         GameTimer.Instance.timerStarted = true;//starts timer
     }
@@ -94,22 +95,12 @@ public class Challenge1 : Challenge
         player.move = false;
         Challenge.noOfEnemyAlive = 0;//reseting
 
-        filler.text = "You killed " + enemyCount + " enemy";
+        filler.text = "You killed " + (enemyCount - 1).ToString() + " enemy";
         UI.SetActive(true);//setting challenge complete buttons to active
         yield return new WaitForSeconds(1f);
         
     }
     
-    public void NextChallenge()
-    {
-        SceneManager.LoadScene("2nd challenge");
-    }
-
-    public void BackToTowerMenu()
-    {
-        SceneManager.LoadScene("story main");
-    }
-
     //public override void SpawnEnemy ()
     //{
     //	base.SpawnEnemy ();

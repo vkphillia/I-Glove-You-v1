@@ -16,6 +16,12 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public bool hasGlove;
 
+    [HideInInspector]
+    public bool hit;
+
+    [HideInInspector]
+    public bool hitter;
+
     public Transform myPlayer;
 	//temporary variable, get reference from where ever PU is spawning
 	public Transform PUOnScreen;
@@ -37,28 +43,51 @@ public class Enemy : MonoBehaviour
 		//health = 1;//default value, can be changed as required
 		destReached = true;
 
-        if(hasGlove)
-        {
-            transform.GetChild(0).gameObject.SetActive(true);
-        }
+        maxHealth = health;
+        
 	}
-    
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("enemy has glove:"+hasGlove);
+
+        if (other.gameObject.layer == 8) //layer 8 is player1
+        {
+            if(hasGlove)
+            {
+                hitter = true;
+                StartCoroutine(MakeHitterFalse());
+            }
+            else
+            {
+                hit = true;
+                
+                if(health!=1)
+                {
+                    transform.rotation = other.transform.rotation;
+                    StartCoroutine(MakeHitFalse());
+                }
+                if (health > 0)
+                {
+                    AlterHealth(-1);
+                }
+            }
+        }
+    }
+
+
     //increase or decreases the health of the player based on the amount
     //this is called by glove, power ups
     public void AlterHealth(int amount)
     {
-        Debug.Log("enemy hit");
-
-        health += amount; 
-
+        health += amount;
+        
         if (health > maxHealth)
         {
             health = maxHealth;
         }
         else if (health <= 0)
         {
-            //code for checking who wins the round and stops the round
-            //OfflineManager.Instance.CheckRoundStatus();
             Challenge.noOfEnemyAlive--;
             gameObject.SetActive(false);
         }
@@ -68,16 +97,36 @@ public class Enemy : MonoBehaviour
             if (amount > 0)
             {
                 SoundsController.Instance.PlaySoundFX("HealthUp", 1.0f);
-                //StartCoroutine(ChangeColor(Color.green));
+                StartCoroutine(ChangeColor(Color.green));
             }
             else
             {
-                //StartCoroutine(ChangeColor(Color.red));
+                StartCoroutine(ChangeColor(Color.red));
             }
         }
         //myHealthText_HUD.text = myHealth.ToString();
     }
 
+    //this ensures that the player is going in its forward direction after being punched
+    IEnumerator MakeHitFalse()
+    {
+        yield return new WaitForSeconds(.5f);
+        hit = false;
+    }
+
+    //this ensures that the player is going int its forward direction after hitting other player
+    IEnumerator MakeHitterFalse()
+    {
+        yield return new WaitForSeconds(.5f);
+        hitter = false;
+    }
+
+    IEnumerator ChangeColor(Color C)
+    {
+        GetComponent<SpriteRenderer>().color = C;
+        yield return new WaitForSeconds(.5f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
 
     public void Initialize ()
 	{
@@ -98,6 +147,9 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
+
+
+    //AI code starts from here..........................................
 	void Update ()
 	{
 		

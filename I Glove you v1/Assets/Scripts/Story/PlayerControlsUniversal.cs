@@ -18,7 +18,7 @@ public class PlayerControlsUniversal : MonoBehaviour
 
     [HideInInspector]
     public bool hitter;
-
+    
     [HideInInspector]
     public bool hasGlove;
 
@@ -46,6 +46,33 @@ public class PlayerControlsUniversal : MonoBehaviour
 			yield return new WaitForSeconds (.1f);
 		}
 	}
+
+    //this code works when collision happens with enemy or glove
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("player glove:"+hasGlove);
+
+        if (other.gameObject.layer == 10) //layer 10 is player2, which in our case is enemy
+        {
+            if (hasGlove)
+            {
+                hitter = true;
+            }
+            else
+            {
+                hit = true;
+
+                if (health != 1)
+                {
+                    transform.rotation = other.transform.rotation;
+                }
+                if (health > 0)
+                {
+                    AlterHealth(-1);
+                }
+            }
+        }
+    }
 
     //increase or decreases the health of the player based on the amount
     //this is called by glove, power ups
@@ -116,7 +143,16 @@ public class PlayerControlsUniversal : MonoBehaviour
             
 		}
 	}
-    
+
+    //adds glove to player when other player loses glove
+    public void AddGlove()
+    {
+        //SoundsController.Instance.PlaySoundFX("GlovePick", 1.0f);
+        hasGlove = true;
+        //myPunchAnim.gameObject.SetActive(true);
+
+    }
+
     //this ensures that the player is going in its forward direction after being punched
     IEnumerator MakeHitFalse()
     {
@@ -127,7 +163,7 @@ public class PlayerControlsUniversal : MonoBehaviour
     //this ensures that the player is going int its forward direction after hitting other player
     IEnumerator MakeHitterFalse()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         hitter = false;
     }
 
@@ -140,6 +176,7 @@ public class PlayerControlsUniversal : MonoBehaviour
 
 
 
+    //player movement control code start from here..................................................
     void KeyboardControls ()
 	{
         
