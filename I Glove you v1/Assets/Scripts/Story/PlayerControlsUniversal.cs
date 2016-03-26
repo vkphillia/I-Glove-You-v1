@@ -72,12 +72,12 @@ public class PlayerControlsUniversal : MonoBehaviour
             if (amount > 0)
             {
                 SoundsController.Instance.PlaySoundFX("HealthUp", 1.0f);
-                //StartCoroutine(ChangeColor(Color.green));
+                StartCoroutine(ChangeColor(Color.green));
             }
             else
             {
                 hit = true;
-                //StartCoroutine(ChangeColor(Color.red));
+                StartCoroutine(ChangeColor(Color.red));
             }
         }
         myHealthText_HUD.text = "Health: "+health;
@@ -130,6 +130,15 @@ public class PlayerControlsUniversal : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         hitter = false;
     }
+
+    IEnumerator ChangeColor(Color C)
+    {
+        GetComponent<SpriteRenderer>().color = C;
+        yield return new WaitForSeconds(.5f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+
 
     void KeyboardControls ()
 	{
