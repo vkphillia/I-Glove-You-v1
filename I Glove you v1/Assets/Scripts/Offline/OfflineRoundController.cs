@@ -38,11 +38,7 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundText.text = "Fight!";
 		OfflineManager.Instance.currentState = GameState.Fight;
 
-		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundStart);
-		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Fight);
 		SoundsController.Instance.PlaySoundFX ("Fight", 1.0f);
-		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.1f);
-
         
 		yield return new WaitForSeconds (1f);
 		OfflineManager.Instance.currentState = GameState.Playing;

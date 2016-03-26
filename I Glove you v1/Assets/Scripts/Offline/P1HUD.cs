@@ -12,7 +12,14 @@ public class P1HUD : MonoBehaviour
 
 	void OnEnable ()
 	{
+		StartCoroutine (ShowHUD ());
+	}
+
+	public IEnumerator ShowHUD ()
+	{
 		myAnim.Play ("P1HUD_Up");
+		yield return new WaitForSeconds (0.6f);
+		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.8f);
 	}
 
 	public IEnumerator GoDown ()
