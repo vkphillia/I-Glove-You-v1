@@ -14,6 +14,12 @@ public class PlayerControlsUniversal : MonoBehaviour
 	public bool move;
 
     [HideInInspector]
+    public bool hit;
+
+    [HideInInspector]
+    public bool hitter;
+
+    [HideInInspector]
     public bool hasGlove;
 
     void Start()
@@ -70,6 +76,7 @@ public class PlayerControlsUniversal : MonoBehaviour
             }
             else
             {
+                hit = true;
                 //StartCoroutine(ChangeColor(Color.red));
             }
         }
@@ -92,12 +99,39 @@ public class PlayerControlsUniversal : MonoBehaviour
             MobileControls();
 
             transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.34f, 4.34f), 0);
-			transform.position += transform.up * Time.deltaTime * mySpeed;
+            if (!hit && !hitter)
+            {
+                transform.position += transform.up * Time.deltaTime * mySpeed;
+            }
+            else if (hit)
+            {
+                transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
+                StartCoroutine(MakeHitFalse());
+            }
+            else if (hitter)
+            {
+                transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
+                StartCoroutine(MakeHitterFalse());
+            }
+            
 		}
 	}
+    
+    //this ensures that the player is going in its forward direction after being punched
+    IEnumerator MakeHitFalse()
+    {
+        yield return new WaitForSeconds(.5f);
+        hit = false;
+    }
 
+    //this ensures that the player is going int its forward direction after hitting other player
+    IEnumerator MakeHitterFalse()
+    {
+        yield return new WaitForSeconds(.5f);
+        hitter = false;
+    }
 
-	void KeyboardControls ()
+    void KeyboardControls ()
 	{
         
 		if (Input.GetButton ("movez"))

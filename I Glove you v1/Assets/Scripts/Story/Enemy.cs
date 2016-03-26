@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 
 	void Start ()
 	{
-		health = 1;//default value, can be changed as required
+		//health = 1;//default value, can be changed as required
 		destReached = true;
 
         if(hasGlove)

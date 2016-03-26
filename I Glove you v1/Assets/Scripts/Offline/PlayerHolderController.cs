@@ -58,7 +58,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			//why this?
+			
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
 
 			if (!hit && !hitter && !PUHitter)

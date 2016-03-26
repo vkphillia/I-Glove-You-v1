@@ -57,7 +57,7 @@ public class Challenge2 : Challenge
         }
     }
     
-    //temporay codes just to give an idea
+    //for stoping the player movement and showing challenge complete UI 
     IEnumerator StopRound()
     {
         player.move = false;

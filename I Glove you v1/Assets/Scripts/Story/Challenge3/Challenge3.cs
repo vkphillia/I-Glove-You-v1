@@ -6,16 +6,23 @@ using UnityEngine.SceneManagement;
 public class Challenge3 : MonoBehaviour
 {
     public PlayerControlsUniversal player;
+    public EnemyHolder enemyHolder;
+
+    public GameObject UI;
     public Text filler;
+    public Text enemyKilled;
+
+    private int enemyCount;
 
     void Start()
     {
-        //all these things are temporary
-        StartCoroutine(stopRound());
+        enemyKilled.text = "Enemy killed: 0";
+
+        //all these things are not temporary now
+        StartCoroutine(StartRound());
     }
 
-    //temporay codes just to give an idea
-    IEnumerator stopRound()
+    IEnumerator StartRound()
     {
         filler.text = "Challenge 3";
         yield return new WaitForSeconds(1f);
@@ -25,13 +32,52 @@ public class Challenge3 : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         filler.text = "1";
         yield return new WaitForSeconds(0.5f);
-        filler.text = "Show some moves";
-        player.move = true;
-        yield return new WaitForSeconds(7f);
+        filler.text = "";
+
+        player.move = true;//enables player movement
+
+        GameTimer.Instance.timerStarted = true;//starts timer
+       
+    }
+
+    void Update()
+    {
+        // noOfEnemyAlive is set to 0 by Enemy scipt when player triggers enemy
+        //timerStarted is set to false by GameTimer when time reaches 0
+        if (Challenge.noOfEnemyAlive == 0 && GameTimer.Instance.timerStarted)
+        {
+            enemyKilled.text = "Enemy killed: " + enemyCount;
+
+            enemyHolder.Spawn(3, true, false);
+            Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
+            enemyCount++;//keeping count of enemy spawned in this scene yet
+        }
+
+        //if timer has stopped and player is still moving then call for the round stop
+        else if (player.move && !GameTimer.Instance.timerStarted)
+        {
+            StartCoroutine(StopRound());
+        }
+    }
+
+    //for stoping the player movement and showing challenge complete UI 
+    IEnumerator StopRound()
+    {
         player.move = false;
-        filler.text = "stop showing\n Taking you to the another challenge";
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("4th challenge");
+        Challenge.noOfEnemyAlive = 0;//reseting
+
+        if (enemyCount <3)
+        {
+            filler.text = "Success comes with great practice";
+        }
+        else
+        {
+            filler.text = "Congrats, You Win";
+        }
+
+        UI.SetActive(true);//setting challenge complete buttons to active
+        yield return new WaitForSeconds(1f);
+
     }
 
 }
