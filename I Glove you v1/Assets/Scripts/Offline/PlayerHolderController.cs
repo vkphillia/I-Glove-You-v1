@@ -58,7 +58,7 @@ public class PlayerHolderController : MonoBehaviour
 		myHealthText_HUD.text = myHealth.ToString ();
 
 		//code for health bar
-		myProgressBar.SetUpdateBar (myHealth);
+		myProgressBar.SetUpdateBar (OfflineManager.Instance.MaxHealth);
 	}
 
 	void Update ()
@@ -153,7 +153,7 @@ public class PlayerHolderController : MonoBehaviour
 		hit = false;
 		hitter = false;
 		myHealth = OfflineManager.Instance.MaxHealth;
-		myProgressBar.SetUpdateBar (myHealth);
+		myProgressBar.SetUpdateBar (OfflineManager.Instance.MaxHealth);
 		myHealthText_HUD.text = myHealth.ToString ();
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
@@ -222,6 +222,8 @@ public class PlayerHolderController : MonoBehaviour
 		//FT_Obj.transform.SetParent (this.transform);
 		FT_Obj.transform.position = myProgressBar.transform.position;
 		FT_Obj.transform.rotation = myProgressBar.transform.rotation;
+		//code for health bar
+		myProgressBar.UpdateBar (myHealth);
 		if (amount > 0)
 		{
 			FT_Obj.myGreenText.color = Color.green;
@@ -262,8 +264,7 @@ public class PlayerHolderController : MonoBehaviour
 			}
 		}
 
-		//code for health bar
-		myProgressBar.UpdateBar (myHealth);
+
 
 		myHealthText_HUD.text = myHealth.ToString ();
 	}
