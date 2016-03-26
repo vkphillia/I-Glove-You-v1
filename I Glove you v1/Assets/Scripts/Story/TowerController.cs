@@ -35,8 +35,30 @@ public class TowerController : MonoBehaviour
 
 	}
 
-    public void challengeOne()
+    public void Tutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+        //SceneManager.LoadSceneAsync("Tutorial");
+        //StartCoroutine(LoadingScene());
+    }
+    IEnumerator LoadingScene()
+    {
+        while(!SceneManager.LoadSceneAsync("Tutorial").isDone)
+        {
+            Debug.Log(SceneManager.LoadSceneAsync("Tutorial").progress);
+            yield return new WaitForSeconds(0.1f);
+            
+        }
+        Debug.Log(SceneManager.LoadSceneAsync("Tutorial").isDone);
+    }
+
+    public void ChallengeOne()
     {
         SceneManager.LoadScene("1st challenge");
+    }
+
+    public void OnMenuClick()
+    {
+        SceneManager.LoadScene("main menu");
     }
 }
