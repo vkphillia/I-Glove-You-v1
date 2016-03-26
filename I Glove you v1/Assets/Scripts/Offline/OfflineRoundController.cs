@@ -75,7 +75,7 @@ public class OfflineRoundController : MonoBehaviour
 		else if (OfflineManager.Instance.PlayerHolder2.roundWins == 2)
 		{
 			P2Text.text = "You Win";
-			P1Text.text = "Lose Lose";
+			P1Text.text = "You Lose";
 		}
 		yield return new WaitForSeconds (3f);
 		myRoundText.text = "";
