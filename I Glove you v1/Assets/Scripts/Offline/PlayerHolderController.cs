@@ -42,6 +42,13 @@ public class PlayerHolderController : MonoBehaviour
 	private Transform myPooledHit_FX;
 	private GetHit_FX Hit_Obj;
 
+	//for flying text
+	private Transform myPooledFT;
+	private FlyingText FT_Obj;
+
+	//for health
+	public ProgressBar myProgressBar;
+
 
 	void Start ()
 	{
@@ -50,16 +57,21 @@ public class PlayerHolderController : MonoBehaviour
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
 
-        //code for health bar
-        GetComponentInChildren<ProgressBar>().SetUpdateBar(myHealth);
-    }
+		//code for health bar
+		myProgressBar.SetUpdateBar (OfflineManager.Instance.MaxHealth);
+	}
 
 	void Update ()
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
+<<<<<<< HEAD
 			
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -3.7f, 3.7f), 0);
+=======
+			//why this?
+			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.4f, 4.4f), 0);
+>>>>>>> origin/master
 
 			if (!hit && !hitter && !PUHitter)
 			{
@@ -146,6 +158,7 @@ public class PlayerHolderController : MonoBehaviour
 		hit = false;
 		hitter = false;
 		myHealth = OfflineManager.Instance.MaxHealth;
+		myProgressBar.SetUpdateBar (OfflineManager.Instance.MaxHealth);
 		myHealthText_HUD.text = myHealth.ToString ();
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
@@ -209,6 +222,26 @@ public class PlayerHolderController : MonoBehaviour
 	//increase or decreases the health of the player based on the amount
 	public void AlterHealth (int amount)
 	{
+		myPooledFT = GameObjectPool.GetPool ("FlyingTextPool").GetInstance ();
+		FT_Obj = myPooledFT.GetComponent<FlyingText> ();
+		//FT_Obj.transform.SetParent (this.transform);
+		FT_Obj.transform.position = myProgressBar.transform.position;
+		FT_Obj.transform.rotation = myProgressBar.transform.rotation;
+		//code for health bar
+		myProgressBar.UpdateBar (myHealth);
+		if (amount > 0)
+		{
+			FT_Obj.myGreenText.color = Color.green;
+			FT_Obj.myBlackText.text = "+" + amount.ToString ();
+			FT_Obj.myGreenText.text = "+" + amount.ToString ();
+		}
+		else
+		{
+			FT_Obj.myGreenText.color = Color.red;
+			FT_Obj.myBlackText.text = amount.ToString ();
+			FT_Obj.myGreenText.text = amount.ToString ();
+		}
+
 		if ((myHealth + amount) > OfflineManager.Instance.MaxHealth)
 		{
 			myHealth = OfflineManager.Instance.MaxHealth;
@@ -236,8 +269,7 @@ public class PlayerHolderController : MonoBehaviour
 			}
 		}
 
-        //code for health bar
-        GetComponentInChildren<ProgressBar>().UpdateBar(myHealth);
+
 
 		myHealthText_HUD.text = myHealth.ToString ();
 	}
