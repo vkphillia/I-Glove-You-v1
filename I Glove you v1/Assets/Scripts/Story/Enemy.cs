@@ -5,24 +5,24 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
 	public int health;
-    public int maxHealth;
-    public float enemySpeed;
+	public int maxHealth;
+	public float enemySpeed;
 
 	//AI stuff
 	//temporary variable, this should be linked to the challenges I guess
-    [HideInInspector]
+	//[HideInInspector]
 	public bool AIOn;
 
-    [HideInInspector]
-    public bool hasGlove;
+	[HideInInspector]
+	public bool hasGlove;
 
-    [HideInInspector]
-    public bool hit;
+	[HideInInspector]
+	public bool hit;
 
-    [HideInInspector]
-    public bool hitter;
+	[HideInInspector]
+	public bool hitter;
 
-    public Transform myPlayer;
+	public Transform myPlayer;
 	//temporary variable, get reference from where ever PU is spawning
 	public Transform PUOnScreen;
 
@@ -36,99 +36,108 @@ public class Enemy : MonoBehaviour
 	private Vector3 randPos;
 	private float angle;
 
+	//temp var, jsut checking
+	private Challenge myChallenge;
+
 	private bool PUInRange;
+
+
+	void Awake ()
+	{
+		myChallenge = GameObject.FindObjectOfType<Challenge> ();
+	}
 
 	void Start ()
 	{
 		//health = 1;//default value, can be changed as required
 		destReached = true;
 
-        maxHealth = health;
+		maxHealth = health;
         
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("enemy has glove:"+hasGlove);
+	void OnTriggerEnter2D (Collider2D other)
+	{
+		Debug.Log ("enemy has glove:" + hasGlove);
 
-        if (other.gameObject.layer == 8) //layer 8 is player1
-        {
-            if(hasGlove)
-            {
-                hitter = true;
-                StartCoroutine(MakeHitterFalse());
-            }
-            else
-            {
-                hit = true;
+		if (other.gameObject.layer == 8) //layer 8 is player1
+		{
+			if (hasGlove)
+			{
+				hitter = true;
+				StartCoroutine (MakeHitterFalse ());
+			}
+			else
+			{
+				hit = true;
                 
-                if(health!=1)
-                {
-                    transform.rotation = other.transform.rotation;
-                    StartCoroutine(MakeHitFalse());
-                }
-                if (health > 0)
-                {
-                    AlterHealth(-1);
-                }
-            }
-        }
-    }
+				if (health != 1)
+				{
+					transform.rotation = other.transform.rotation;
+					StartCoroutine (MakeHitFalse ());
+				}
+				if (health > 0)
+				{
+					AlterHealth (-1);
+				}
+			}
+		}
+	}
 
 
-    //increase or decreases the health of the player based on the amount
-    //this is called by glove, power ups
-    public void AlterHealth(int amount)
-    {
-        health += amount;
+	//increase or decreases the health of the player based on the amount
+	//this is called by glove, power ups
+	public void AlterHealth (int amount)
+	{
+		health += amount;
         
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-        else if (health <= 0)
-        {
-            Challenge.noOfEnemyAlive--;
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            //only play sound when adding health
-            if (amount > 0)
-            {
-                SoundsController.Instance.PlaySoundFX("HealthUp", 1.0f);
-                StartCoroutine(ChangeColor(Color.green));
-            }
-            else
-            {
-                StartCoroutine(ChangeColor(Color.red));
-            }
-        }
-        //myHealthText_HUD.text = myHealth.ToString();
-    }
+		if (health > maxHealth)
+		{
+			health = maxHealth;
+		}
+		else if (health <= 0)
+		{
+			Challenge.noOfEnemyAlive--;
+			gameObject.SetActive (false);
+		}
+		else
+		{
+			//only play sound when adding health
+			if (amount > 0)
+			{
+				SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f);
+				StartCoroutine (ChangeColor (Color.green));
+			}
+			else
+			{
+				StartCoroutine (ChangeColor (Color.red));
+			}
+		}
+		//myHealthText_HUD.text = myHealth.ToString();
+	}
 
-    //this ensures that the player is going in its forward direction after being punched
-    IEnumerator MakeHitFalse()
-    {
-        yield return new WaitForSeconds(.5f);
-        hit = false;
-    }
+	//this ensures that the player is going in its forward direction after being punched
+	IEnumerator MakeHitFalse ()
+	{
+		yield return new WaitForSeconds (.5f);
+		hit = false;
+	}
 
-    //this ensures that the player is going int its forward direction after hitting other player
-    IEnumerator MakeHitterFalse()
-    {
-        yield return new WaitForSeconds(.5f);
-        hitter = false;
-    }
+	//this ensures that the player is going int its forward direction after hitting other player
+	IEnumerator MakeHitterFalse ()
+	{
+		yield return new WaitForSeconds (.5f);
+		hitter = false;
+	}
 
-    IEnumerator ChangeColor(Color C)
-    {
-        GetComponent<SpriteRenderer>().color = C;
-        yield return new WaitForSeconds(.5f);
-        GetComponent<SpriteRenderer>().color = Color.white;
-    }
+	IEnumerator ChangeColor (Color C)
+	{
+		GetComponent<SpriteRenderer> ().color = C;
+		yield return new WaitForSeconds (.5f);
+		GetComponent<SpriteRenderer> ().color = Color.white;
+	}
 
-    public void Initialize ()
+	public void Initialize ()
 	{
 		StartCoroutine (FadeEnemy ());
 	}
@@ -149,7 +158,7 @@ public class Enemy : MonoBehaviour
 
 
 
-    //AI code starts from here..........................................
+	//AI code starts from here..........................................
 	void Update ()
 	{
 		
@@ -157,12 +166,12 @@ public class Enemy : MonoBehaviour
 		if (AIOn && GameTimer.Instance.timerStarted)
 		{
 			//this makes it move
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.59f, 2.59f), Mathf.Clamp (transform.position.y, -4.5f, 3.8f), 0);
+			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.4f, 4.4f), 0);
 			transform.position += transform.up * Time.deltaTime * enemySpeed;
 
 			if (hasGlove)
 			{
-				//AIFollowOpponent (); //deactivated for testing, please reactvate later
+				AIFollowOpponent (); //deactivated for testing, please reactvate later
 			}
 			else
 			{
@@ -199,6 +208,7 @@ public class Enemy : MonoBehaviour
 			//Find random point away from player and rotate towards that point
 			if (destReached)
 			{
+				Debug.Log ("find new dest");
 				destReached = false;//until it reaches the below new destination
 				randPos = Camera.main.WorldToScreenPoint (new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0));
 				Debug.Log (randPos);
@@ -221,7 +231,6 @@ public class Enemy : MonoBehaviour
 	//later we will add code to avoid the bombs and air strikes
 	void AIFollowOpponent ()
 	{
-		EnemyPos = Camera.main.WorldToScreenPoint (this.transform.position);
 
 		if (PUReady && PUInRange) //PUInRange will be determined by a larger Trigger area around the enemy
 		{
@@ -230,10 +239,14 @@ public class Enemy : MonoBehaviour
 		}
 		else
 		{
-			PlayerPos = Camera.main.WorldToScreenPoint (myPlayer.transform.position);
-			relativePos = PlayerPos - EnemyPos;
+			Debug.Log ("PLAYER pos " + myChallenge.player.transform.position);
+			PlayerPos = Camera.main.WorldToScreenPoint (myChallenge.player.transform.position);
 		}
+		Debug.Log ("Enemy pos " + this.transform.position);
+		EnemyPos = Camera.main.WorldToScreenPoint (this.transform.position);
+		relativePos = PlayerPos - EnemyPos;
 		angle = Mathf.Atan2 (relativePos.y, relativePos.x) * Mathf.Rad2Deg;
 		this.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, (angle - 90)));
+
 	}
 }

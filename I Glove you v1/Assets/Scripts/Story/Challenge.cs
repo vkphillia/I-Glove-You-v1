@@ -7,7 +7,9 @@ public delegate void StoryGloveEvent ();
 public class Challenge : MonoBehaviour
 {
 	public static event StoryGloveEvent SpwanFirstGlove;
-    public static int noOfEnemyAlive;//temporary, can be removed later
+
+	public static int noOfEnemyAlive;
+//temporary, can be removed later
 
 	//challenge stuff
 	[HideInInspector]
@@ -40,6 +42,10 @@ public class Challenge : MonoBehaviour
 	//public Text timerText_HUD;
 	[HideInInspector]
 	public bool glovePicked;
+
+	public PlayerControlsUniversal player;
+	public EnemyHolder enemyHolder;
+
 
 
 
