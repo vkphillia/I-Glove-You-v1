@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
 			//only play sound when adding health
 			if (amount > 0)
 			{
-				SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f);
+				//SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f);
 				StartCoroutine (ChangeColor (Color.green));
 			}
 			else

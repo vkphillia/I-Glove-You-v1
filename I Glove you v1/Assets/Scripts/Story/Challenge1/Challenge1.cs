@@ -90,7 +90,7 @@ public class Challenge1 : Challenge
 
 	}
     
-	//temporay codes just to give an idea
+	//not a temporay code now
 	IEnumerator StopRound ()
 	{
 		player.move = false;
