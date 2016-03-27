@@ -9,7 +9,7 @@ public class Challenge : MonoBehaviour
 	public static event StoryGloveEvent SpwanFirstGlove;
 
 	public static int noOfEnemyAlive;
-//temporary, can be removed later
+	//temporary, can be removed later
 
 	//challenge stuff
 	[HideInInspector]
@@ -46,9 +46,6 @@ public class Challenge : MonoBehaviour
 	public PlayerControlsUniversal player;
 	public EnemyHolder enemyHolder;
 
-
-
-
 	public virtual void Awake ()
 	{
 		myButton = GetComponent<Button> ();
@@ -63,23 +60,6 @@ public class Challenge : MonoBehaviour
 		roundTimer = MaxRoundTimer;
 		roundNumber++;
 
-		//spawn players
-		//if (NoOfEnemies > 0)
-		//{
-		//	SpawnEnemy ();
-		//}
-		//SpawnPlayer ();
-
-
-		//roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
-
-		//till here
-
-		/*if (SpwanFirstGlove != null)
-		{
-			SpwanFirstGlove ();
-		}*/
-
 
 	}
 
@@ -87,11 +67,6 @@ public class Challenge : MonoBehaviour
 	{
 		//Debug.Log(Check);
 	}
-
-	//public virtual void Update ()
-	//{
-	//	//Debug.Log ("Kya ho raha hai");
-	//}
 
 
 	public virtual void CheckRoundStatus ()
@@ -124,6 +99,10 @@ public class Challenge : MonoBehaviour
 	//	StoryManager.Instance.myPlayer.Initialize ();
 	//}
 
+	public virtual void Initialize ()
+	{
+		//add code in individual challenges
+	}
 
 
 }

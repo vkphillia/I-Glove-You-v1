@@ -19,6 +19,14 @@ public class Challenge2 : Challenge
 		StartCoroutine (StartRound ());
 	}
 
+	public override void Initialize ()
+	{
+		enemyHolder.enemy.AIOn = true;
+		enemyHolder.enemy.enemySpeed = 4;
+		enemyHolder.enemy.hasGlove = true;
+
+	}
+
 	IEnumerator StartRound ()
 	{
 		filler.text = "Challenge 2";

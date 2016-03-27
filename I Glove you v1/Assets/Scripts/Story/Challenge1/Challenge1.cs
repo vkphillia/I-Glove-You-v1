@@ -33,82 +33,89 @@ using UnityEngine.SceneManagement;
 
 public class Challenge1 : Challenge
 {
-    public PlayerControlsUniversal player;
-    public EnemyHolder enemyHolder;
+	
 
-    public GameObject UI;
-    public Text filler;
-    public Text enemyKilled;
+	public GameObject UI;
+	public Text filler;
+	public Text enemyKilled;
     
-    private int enemyCount;
+	private int enemyCount;
 
-    void Start()
-    {
-        enemyKilled.text = "Enemy killed: 0";
+	void Start ()
+	{
+		enemyKilled.text = "Enemy killed: 0";
 
-        //all these things are not temporary now
-        StartCoroutine(StartRound());
-    }
+		//all these things are not temporary now
+		StartCoroutine (StartRound ());
+	}
 
-    IEnumerator StartRound()
-    {
-        filler.text = "Challenge 1";
-        yield return new WaitForSeconds(1f);
-        filler.text = "3";
-        yield return new WaitForSeconds(0.5f);
-        filler.text = "2";
-        yield return new WaitForSeconds(0.5f);
-        filler.text = "1";
-        yield return new WaitForSeconds(0.5f);
-        filler.text = "";
+	public override void Initialize ()
+	{
+		enemyHolder.enemy.AIOn = false;
+		enemyHolder.enemy.enemySpeed = 0;
+		enemyHolder.enemy.hasGlove = false;
 
-        player.move = true;//enables player movement
-        player.AddGlove();
+	}
 
-        GameTimer.Instance.timerStarted = true;//starts timer
-    }
+	IEnumerator StartRound ()
+	{
+		filler.text = "Challenge 1";
+		yield return new WaitForSeconds (1f);
+		filler.text = "3";
+		yield return new WaitForSeconds (0.5f);
+		filler.text = "2";
+		yield return new WaitForSeconds (0.5f);
+		filler.text = "1";
+		yield return new WaitForSeconds (0.5f);
+		filler.text = "";
 
-    void Update()
-    {
-        // noOfEnemyAlive is set to 0 by Enemy scipt when player triggers enemy
-        //timerStarted is set to false by GameTimer when time reaches 0
-        if(Challenge.noOfEnemyAlive==0 && GameTimer.Instance.timerStarted)
-        {
-            enemyKilled.text = "Enemy killed: " + enemyCount;
+		player.move = true;//enables player movement
+		player.AddGlove ();
 
-            enemyHolder.Spawn(1,false,false);
-            Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
-            enemyCount++;//keeping count of enemy spawned in this scene yet
-        }
+		GameTimer.Instance.timerStarted = true;//starts timer
+	}
+
+	void Update ()
+	{
+		// noOfEnemyAlive is set to 0 by Enemy scipt when player triggers enemy
+		//timerStarted is set to false by GameTimer when time reaches 0
+		if (Challenge.noOfEnemyAlive == 0 && GameTimer.Instance.timerStarted)
+		{
+			enemyKilled.text = "Enemy killed: " + enemyCount;
+
+			enemyHolder.Spawn (1, false, false);
+			Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
+			enemyCount++;//keeping count of enemy spawned in this scene yet
+		}
 
         //if timer has stopped and player is still moving then call for the round stop
-        else if(player.move && !GameTimer.Instance.timerStarted)
-        {
-            StartCoroutine(StopRound());
-        }
+        else if (player.move && !GameTimer.Instance.timerStarted)
+		{
+			StartCoroutine (StopRound ());
+		}
 
-    }
+	}
     
-    //temporay codes just to give an idea
-    IEnumerator StopRound()
-    {
-        player.move = false;
-        Challenge.noOfEnemyAlive = 0;//reseting
+	//temporay codes just to give an idea
+	IEnumerator StopRound ()
+	{
+		player.move = false;
+		Challenge.noOfEnemyAlive = 0;//reseting
 
-        filler.text = "You killed " + (enemyCount - 1).ToString() + " enemy";
-        UI.SetActive(true);//setting challenge complete buttons to active
-        yield return new WaitForSeconds(1f);
+		filler.text = "You killed " + (enemyCount - 1).ToString () + " enemy";
+		UI.SetActive (true);//setting challenge complete buttons to active
+		yield return new WaitForSeconds (1f);
         
-    }
+	}
     
-    //public override void SpawnEnemy ()
-    //{
-    //	base.SpawnEnemy ();
-    //	//StoryManager.Instance.myEnemy.GetComponent<SpriteRenderer> ().sprite = myEnemySprite;
+	//public override void SpawnEnemy ()
+	//{
+	//	base.SpawnEnemy ();
+	//	//StoryManager.Instance.myEnemy.GetComponent<SpriteRenderer> ().sprite = myEnemySprite;
 
-    //}
+	//}
 
- //   public override void CheckForObjectiveComplete ()
+	//   public override void CheckForObjectiveComplete ()
 	//{
 	//	//Timer controller
 	//	roundTimer -= Time.deltaTime;

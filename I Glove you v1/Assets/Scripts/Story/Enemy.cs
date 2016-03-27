@@ -22,7 +22,6 @@ public class Enemy : MonoBehaviour
 	[HideInInspector]
 	public bool hitter;
 
-	public Transform myPlayer;
 	//temporary variable, get reference from where ever PU is spawning
 	public Transform PUOnScreen;
 
@@ -35,8 +34,9 @@ public class Enemy : MonoBehaviour
 	private bool destReached;
 	private Vector3 randPos;
 	private float angle;
+	private bool timeToCheckAI;
+	private float timerAI;
 
-	//temp var, jsut checking
 	private Challenge myChallenge;
 
 	private bool PUInRange;
@@ -45,6 +45,8 @@ public class Enemy : MonoBehaviour
 	void Awake ()
 	{
 		myChallenge = GameObject.FindObjectOfType<Challenge> ();
+		//use this to initialize everything about the enemy
+		myChallenge.Initialize ();
 	}
 
 	void Start ()
@@ -140,6 +142,7 @@ public class Enemy : MonoBehaviour
 	public void Initialize ()
 	{
 		StartCoroutine (FadeEnemy ());
+
 	}
 
 	IEnumerator FadeEnemy ()
@@ -165,18 +168,27 @@ public class Enemy : MonoBehaviour
 
 		if (AIOn && GameTimer.Instance.timerStarted)
 		{
+			//checks if 2 seconds are over and makes the enemy check for player position
+			timerAI -= Time.deltaTime;
+			if (timerAI <= 0)
+			{
+				timeToCheckAI = true;
+				timerAI = 1f;
+			}
 			//this makes it move
 			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.75f, 2.75f), Mathf.Clamp (transform.position.y, -4.4f, 4.4f), 0);
 			transform.position += transform.up * Time.deltaTime * enemySpeed;
-
-			if (hasGlove)
+			if (hasGlove && timeToCheckAI)
 			{
+				timeToCheckAI = false;
 				AIFollowOpponent (); //deactivated for testing, please reactvate later
 			}
-			else
+			else if (!hasGlove && timeToCheckAI)
 			{
+				timeToCheckAI = false;
 				AIAvoidOpponent ();
 			}
+		
 		}
 	}
 
@@ -246,7 +258,9 @@ public class Enemy : MonoBehaviour
 		EnemyPos = Camera.main.WorldToScreenPoint (this.transform.position);
 		relativePos = PlayerPos - EnemyPos;
 		angle = Mathf.Atan2 (relativePos.y, relativePos.x) * Mathf.Rad2Deg;
-		this.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, (angle - 90)));
+		float inconsistentAI = Random.Range (80, 100);
+		this.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, (angle - inconsistentAI)));
 
 	}
+
 }
