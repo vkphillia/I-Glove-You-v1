@@ -4,14 +4,15 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+	[HideInInspector]
 	public int health;
-	public int maxHealth;
+	[HideInInspector]
 	public float enemySpeed;
 
 	//AI stuff
 	//temporary variable, this should be linked to the challenges I guess
 	//[HideInInspector]
-	public bool AIOn;
+	//public bool AIOn;
 
 	[HideInInspector]
 	public bool hasGlove;
@@ -37,25 +38,26 @@ public class Enemy : MonoBehaviour
 	private bool timeToCheckAI;
 	private float timerAI;
 
-	private Challenge myChallenge;
+	//private Challenge myChallenge;
 
 	private bool PUInRange;
 
 
 	void Awake ()
 	{
-		myChallenge = GameObject.FindObjectOfType<Challenge> ();
+		//myChallenge = GameObject.FindObjectOfType<Challenge> ();
 		//use this to initialize everything about the enemy
-		myChallenge.Initialize ();
 	}
 
 	void Start ()
 	{
-		//health = 1;//default value, can be changed as required
-		destReached = true;
-
-		maxHealth = health;
-        
+		if (Challenge.Instance.AIOn)
+		{
+			destReached = true;
+	
+		}
+		enemySpeed = Challenge.Instance.myEnemyMaxSpeed;
+		health = Challenge.Instance.myEnemyMaxHealth;
 	}
 
 	void OnTriggerEnter2D (Collider2D other)
@@ -93,9 +95,9 @@ public class Enemy : MonoBehaviour
 	{
 		health += amount;
         
-		if (health > maxHealth)
+		if (health > Challenge.Instance.myEnemyMaxHealth)
 		{
-			health = maxHealth;
+			health = Challenge.Instance.myEnemyMaxHealth;
 		}
 		else if (health <= 0)
 		{
@@ -166,7 +168,7 @@ public class Enemy : MonoBehaviour
 	{
 		
 
-		if (AIOn && GameTimer.Instance.timerStarted)
+		if (Challenge.Instance.AIOn && GameTimer.Instance.timerStarted)
 		{
 			//checks if 2 seconds are over and makes the enemy check for player position
 			timerAI -= Time.deltaTime;
@@ -251,15 +253,29 @@ public class Enemy : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log ("PLAYER pos " + myChallenge.player.transform.position);
-			PlayerPos = Camera.main.WorldToScreenPoint (myChallenge.player.transform.position);
+			PlayerPos = Camera.main.WorldToScreenPoint (Challenge.Instance.player.transform.position);
 		}
-		Debug.Log ("Enemy pos " + this.transform.position);
 		EnemyPos = Camera.main.WorldToScreenPoint (this.transform.position);
 		relativePos = PlayerPos - EnemyPos;
 		angle = Mathf.Atan2 (relativePos.y, relativePos.x) * Mathf.Rad2Deg;
 		float inconsistentAI = Random.Range (80, 100);
 		this.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, (angle - inconsistentAI)));
+
+	}
+
+	//adds glove to enemy when other player loses glove
+	public void AddGlove ()
+	{
+		//SoundsController.Instance.PlaySoundFX("GlovePick", 1.0f);
+		hasGlove = true;
+		//myPunchAnim.gameObject.SetActive(true);
+
+	}
+
+	public void LoseGlove ()
+	{
+		hasGlove = false;
+		//myPunchAnim.gameObject.SetActive(false);
 
 	}
 

@@ -49,13 +49,7 @@ public class Challenge1 : Challenge
 		StartCoroutine (StartRound ());
 	}
 
-	public override void Initialize ()
-	{
-		enemyHolder.enemy.AIOn = false;
-		enemyHolder.enemy.enemySpeed = 0;
-		enemyHolder.enemy.hasGlove = false;
 
-	}
 
 	IEnumerator StartRound ()
 	{

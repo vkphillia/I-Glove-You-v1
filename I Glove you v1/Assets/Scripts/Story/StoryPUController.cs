@@ -14,30 +14,51 @@ public class StoryPUController : MonoBehaviour
 	public List<Transform> spawnPointsArrTemp = new List<Transform> ();
 
 	private float[] PUWeightTable = null;
-
+	//private Challenge myChallenge;
 
 	void Awake ()
 	{
 		// Table to Store probability of PUS
 		CreateWeightTable ();
-		Challenge.SpwanFirstGlove += Spawn;
 	}
 
 	void Start ()
 	{
-		OfflineManager.Instance.PUPicked = true;
+
+		if (Challenge.Instance.PUOn)
+		{
+			Challenge.Instance.PUPicked = true;
+		
+		}
+		else
+		{
+			Challenge.Instance.PUPicked = false;
+		}
+		
+
+		//Ensure no gloves are spawned if GloveOff
+		if (Challenge.Instance.GloveOn)
+		{
+			Challenge.SpwanFirstGlove += Spawn;
+		}
+		else
+		{
+			Challenge.Instance.glovePicked = false;
+		}
+
 
 	}
 
 	void Update ()
 	{
-		if (OfflineManager.Instance.currentState == GameState.Playing)
+		if (GameTimer.Instance.timerStarted)
 		{
-			if (OfflineManager.Instance.PUPicked)
+			if (Challenge.Instance.PUPicked)
 			{
+				Debug.Log ("PUPicked is true in update");
 				StartCoroutine (SpawnPUCoroutine ());
 			}
-			if (OfflineManager.Instance.glovePicked)
+			if (Challenge.Instance.glovePicked)
 			{
 				StartCoroutine (SpawnGloveCoroutine ());
 			}
@@ -53,11 +74,14 @@ public class StoryPUController : MonoBehaviour
 	//spawn power ups code
 	public IEnumerator SpawnPUCoroutine ()
 	{
-		OfflineManager.Instance.PUPicked = false;
+		Debug.Log ("Now spawning PU");
+	
+		Challenge.Instance.PUPicked = false;
 		int PUIndex = GetPUIndex ();
 		PU = PUList [PUIndex];
 
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
+		Debug.Log ("Now Activating PU");
 		PU.SetActive (true);
 		SpawnAnything (PU);
 	}
@@ -92,7 +116,7 @@ public class StoryPUController : MonoBehaviour
 
 		for (i = 0; i < noOfPU; i++)
 		{
-			PowerUp PUScript = PUList [i].GetComponent<PowerUp> ();
+			PowerUp_Story PUScript = PUList [i].GetComponent<PowerUp_Story> ();
 		
 			if (PUList != null)
 			{
@@ -118,7 +142,7 @@ public class StoryPUController : MonoBehaviour
 	//spawn gloves code
 	public IEnumerator SpawnGloveCoroutine ()
 	{
-		OfflineManager.Instance.glovePicked = false;
+		Challenge.Instance.glovePicked = false;
 		yield return new WaitForSeconds (7f);
 		SpawnGlove ();
 	}
@@ -127,7 +151,7 @@ public class StoryPUController : MonoBehaviour
 	void Spawn ()
 	{
 		Invoke ("SpawnGlove", 4f);
-		StoryManager.Instance.currentChallenge.glovePicked = false;
+		Challenge.Instance.glovePicked = false;
 	}
 
 

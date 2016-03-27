@@ -22,13 +22,7 @@ public class Challenge3 : Challenge
 		StartCoroutine (StartRound ());
 	}
 
-	public override void Initialize ()
-	{
-		enemyHolder.enemy.AIOn = true;
-		enemyHolder.enemy.enemySpeed = 5;
-		enemyHolder.enemy.hasGlove = false;
 
-	}
 
 	IEnumerator StartRound ()
 	{
@@ -43,7 +37,7 @@ public class Challenge3 : Challenge
 		filler.text = "";
 
 		player.move = true;//enables player movement
-		player.AddGlove ();
+		//player.AddGlove ();
 
 		GameTimer.Instance.timerStarted = true;//starts timer
        

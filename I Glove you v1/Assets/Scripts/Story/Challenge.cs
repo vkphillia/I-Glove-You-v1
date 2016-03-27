@@ -6,6 +6,23 @@ using UnityEngine.UI;
 public delegate void StoryGloveEvent ();
 public class Challenge : MonoBehaviour
 {
+
+	
+	//Static Singleton Instance
+	public static Challenge _Instance = null;
+
+	//property to get instance
+	public static Challenge Instance {
+		get {
+			//if we do not have Instance yet
+			if (_Instance == null)
+			{                                                                                   
+				_Instance = (Challenge)FindObjectOfType (typeof(Challenge));
+			}
+			return _Instance;
+		}	
+	}
+
 	public static event StoryGloveEvent SpwanFirstGlove;
 
 	public static int noOfEnemyAlive;
@@ -14,42 +31,51 @@ public class Challenge : MonoBehaviour
 	//challenge stuff
 	[HideInInspector]
 	public Button myButton;
-	public int myLevelNum;
-	public string myLevelDesciption;
-	public int NoOfEnemies;
 
-	//enemy stuff
-	public Sprite myEnemySprite;
-	public float myEnemyMaxSpeed;
-	public float myEnemyMaxHealth;
-	private int myEnemySpeed;
-	private int myEnemyHealth;
 
-	//player stuff
-	public float myPlayerMaxSpeed;
-	public float myPlayerMaxHealth;
-	private int myPlayerSpeed;
-	private int myPlayerHealth;
-
-	//round stuff
-	public int NoOfRounds;
 	[HideInInspector]
 	public int roundNumber;
-	public float MaxRoundTimer;
+
+
 	[HideInInspector]
 	public float roundTimer;
 	//public Text roundText_HUD;
 	//public Text timerText_HUD;
 	[HideInInspector]
 	public bool glovePicked;
+	[HideInInspector]
+	public bool PUPicked;
 
-	public PlayerControlsUniversal player;
+	//Set in inspector for each challenge
+	public int myLevelNum;
+	public string myLevelDesciption;
+	public int NoOfEnemies;
+	//enemy stuff
 	public EnemyHolder enemyHolder;
+	public Sprite myEnemySprite;
+	public float myEnemyMaxSpeed;
+	public int myEnemyMaxHealth;
+	public bool enemyHasGlove;
+	public bool AIOn;
+	//public GameObject myPUController;
+	public bool PUOn;
+	public bool GloveOn;
+	//player stuff
+	public PlayerControlsUniversal player;
+	public float myPlayerMaxSpeed;
+	public int myPlayerMaxHealth;
+	public bool playerHasGlove;
+	//round stuff
+	public int NoOfRounds;
+	public float MaxRoundTimer;
+
+
 
 	public virtual void Awake ()
 	{
 		myButton = GetComponent<Button> ();
 		roundTimer = MaxRoundTimer;
+		Initialize ();
 
 	}
 
@@ -59,8 +85,10 @@ public class Challenge : MonoBehaviour
 	{
 		roundTimer = MaxRoundTimer;
 		roundNumber++;
-
-
+		if (SpwanFirstGlove != null)
+		{
+			SpwanFirstGlove ();
+		}
 	}
 
 	public virtual void CheckForObjectiveComplete ()
@@ -99,9 +127,13 @@ public class Challenge : MonoBehaviour
 	//	StoryManager.Instance.myPlayer.Initialize ();
 	//}
 
-	public virtual void Initialize ()
+	public void Initialize ()
 	{
-		//add code in individual challenges
+		//Set properties for enemy and player
+		enemyHolder.enemy.hasGlove = enemyHasGlove;
+		player.hasGlove = playerHasGlove;
+		player.maxHealth = myPlayerMaxHealth;
+		GameTimer.Instance.totalTime = MaxRoundTimer;
 	}
 
 
