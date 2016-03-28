@@ -29,6 +29,9 @@ public class PlayerHolderController : MonoBehaviour
 	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
+
+
+
 	public float mySpeed;
 
 	private Vector3 force;
@@ -47,7 +50,10 @@ public class PlayerHolderController : MonoBehaviour
 	private FlyingText FT_Obj;
 
 	//for health
-	public ProgressBar myProgressBar;
+	public Transform myFlyingTextSpawnPoint;
+	//new health meter
+	public Image myHealthBar;
+
 
 
 	void Start ()
@@ -57,8 +63,6 @@ public class PlayerHolderController : MonoBehaviour
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
 
-		//code for health bar
-		myProgressBar.SetUpdateBar (OfflineManager.Instance.MaxHealth);
 	}
 
 	void Update ()
@@ -149,17 +153,16 @@ public class PlayerHolderController : MonoBehaviour
 	public void ResetPlayer ()
 	{
 		gameObject.SetActive (true);		
-		myWinText_HUD.text = roundWins + "/2";
+		myWinText_HUD.text = roundWins.ToString ();
 		hit = false;
 		hitter = false;
 		myHealth = OfflineManager.Instance.MaxHealth;
-		myProgressBar.SetUpdateBar (OfflineManager.Instance.MaxHealth);
 		myHealthText_HUD.text = myHealth.ToString ();
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
 		mySpeed = OfflineManager.Instance.MaxSpeed;
 		hasGlove = false;
-
+		myHealthBar.fillAmount = 1;
 	}
 
 	public void getPunched (Transform t)
@@ -220,10 +223,11 @@ public class PlayerHolderController : MonoBehaviour
 		myPooledFT = GameObjectPool.GetPool ("FlyingTextPool").GetInstance ();
 		FT_Obj = myPooledFT.GetComponent<FlyingText> ();
 		//FT_Obj.transform.SetParent (this.transform);
-		FT_Obj.transform.position = myProgressBar.transform.position;
-		FT_Obj.transform.rotation = myProgressBar.transform.rotation;
-		//code for health bar
-		myProgressBar.UpdateBar (myHealth);
+		FT_Obj.transform.position = myFlyingTextSpawnPoint.position;
+		FT_Obj.transform.rotation = myFlyingTextSpawnPoint.rotation;
+		//new health bar
+
+
 		if (amount > 0)
 		{
 			FT_Obj.myGreenText.color = Color.green;
@@ -240,27 +244,32 @@ public class PlayerHolderController : MonoBehaviour
 		if ((myHealth + amount) > OfflineManager.Instance.MaxHealth)
 		{
 			myHealth = OfflineManager.Instance.MaxHealth;
+			myHealthBar.fillAmount = 1f; 
+
 		}
 		else if ((myHealth + amount) <= 0)
 		{
 			myHealth = 0;
+			myHealthBar.fillAmount = 0f; 
+
 			//code for checking who wins the round and stops the round
 			OfflineManager.Instance.CheckRoundStatus ();
 		}
 		else
 		{
 			myHealth += amount;
+			myHealthBar.fillAmount = (float)(myHealth) / OfflineManager.Instance.MaxHealth; 
+
 			//only play sound when adding health
 			if (amount > 0)
 			{
 				SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f); 
 				StartCoroutine (ChangeColor (Color.green));
-
-
 			}
 			else
 			{
 				StartCoroutine (ChangeColor (Color.red));
+				StartCoroutine (ChangeHealthBarColor ());
 			}
 		}
 
@@ -268,6 +277,14 @@ public class PlayerHolderController : MonoBehaviour
 
 		myHealthText_HUD.text = myHealth.ToString ();
 	}
+
+	IEnumerator ChangeHealthBarColor ()
+	{
+		myHealthBar.color = Color.red;
+		yield return new WaitForSeconds (.3f);
+		myHealthBar.color = Color.green;
+	}
+
 
 	IEnumerator ChangeColor (Color C)
 	{

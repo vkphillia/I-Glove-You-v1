@@ -63,16 +63,20 @@ public class OfflineManager : MonoBehaviour
 	public int MaxHealth;
 	public float MaxSpeed;
     
-	public float MaxRoundTimer;
+	//public float MaxRoundTimer;
 
-	public Text roundText_HUD;
-	public Text timerText_HUD;
+	//public Text roundText_HUD;
+	//public Text timerText_HUD;
 	
 	private Vector3 P1StartPos;
 	private Vector3 P2StartPos;
-	private float roundTimer;
+	//private float roundTimer;
 
+	public bool Pause;
+	public Text PauseText;
 
+	public P1Trophy TrophyP1;
+	public P2Trophy TrophyP2;
 
 
 	//sets GameState to RoundStart and sets the sprite for both player
@@ -111,25 +115,39 @@ public class OfflineManager : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Escape))
 		{
-			SceneManager.LoadScene ("offline menu");
-		}
+			if (!Pause)
+			{
+				Pause = true;
+				Time.timeScale = 0;
 
+				PauseText.text = "Paused";
+			}
+			else
+			{
+				Pause = false;
+				Time.timeScale = 1;
+				PauseText.text = "";
+
+			
+			}
+		}
+		
 		if (currentState == GameState.Playing)
 		{
 			
 
 			//Timer controller
-			roundTimer -= Time.deltaTime;
+			//roundTimer -= Time.deltaTime;
 			//code for timer
-			GetComponentInChildren<ProgressBar> ().UpdateBar ((int)roundTimer);
+			//GetComponentInChildren<ProgressBar> ().UpdateBar ((int)roundTimer);
 
-			timerText_HUD.text = roundTimer.ToString ("N0");
+			//timerText_HUD.text = roundTimer.ToString ("N0");
 
-			if (roundTimer <= 0)
+			/*if (roundTimer <= 0)
 			{
 				//Times up and round is over
 				CheckRoundStatus ();
-			}
+			}*/
 		}
 		else if (currentState == GameState.Fight)
 		{
@@ -158,8 +176,8 @@ public class OfflineManager : MonoBehaviour
 
 	public void ZoomOut ()
 	{
-		StartCoroutine (Player1HUDPanel.GetComponent<P1HUD> ().GoDown ());
-		StartCoroutine (Player2HUDPanel.GetComponent<P2HUD> ().GoDown ());
+		
+		
 
 		//Player1HUDPanel.SetActive (false);
 		//Player2HUDPanel.SetActive (false);
@@ -177,10 +195,28 @@ public class OfflineManager : MonoBehaviour
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
 		{
 			PlayerHolder1.roundWins++;
+			TrophyP1.gameObject.SetActive (true);
 		}
 		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth)
 		{
 			PlayerHolder2.roundWins++;
+			TrophyP2.gameObject.SetActive (true);
+
+		}
+		else if (PlayerHolder2.myHealth == PlayerHolder1.myHealth)
+		{
+			if (PlayerHolder1.hasGlove)
+			{
+				PlayerHolder1.roundWins++;
+				TrophyP1.gameObject.SetActive (true);
+
+			}
+			else if (PlayerHolder2.hasGlove)
+			{
+				PlayerHolder2.roundWins++;
+				TrophyP2.gameObject.SetActive (true);
+
+			}
 		}
 		
 		if (PlayerHolder1.roundWins == 2 || PlayerHolder2.roundWins == 2)
@@ -198,9 +234,9 @@ public class OfflineManager : MonoBehaviour
 	//sets the players intital positions, timer and calls for SpawnGlove()
 	public void StartNewRound ()
 	{
-		roundTimer = MaxRoundTimer;
+		//roundTimer = MaxRoundTimer;
 		//code for timer
-		GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
+		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
 		roundNumber++;
 
 		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
@@ -211,7 +247,7 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
 		PlayerHolder2.ResetPlayer ();
 
-		roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
+		//roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
 		//some new codes here for BGColor, do we need this change?? it will be difficult to match all sprites with the bg color
 		//okay lets leave the code till we get the assets

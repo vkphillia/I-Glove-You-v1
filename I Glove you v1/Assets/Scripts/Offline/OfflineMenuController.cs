@@ -32,6 +32,10 @@ public class OfflineMenuController : MonoBehaviour
 			P2Ready = false;
 			SceneManager.LoadSceneAsync ("offline game");
 		}
+		if (Input.GetKeyDown (KeyCode.Escape))
+		{
+			Exit ();
+		}
 	}
 
 	public void P1Fight ()
@@ -47,17 +51,17 @@ public class OfflineMenuController : MonoBehaviour
 
 	}
 
-    public void Player1Character(int id)
-    {
-        Player1CharacterID = id;
-    }
+	public void Player1Character (int id)
+	{
+		Player1CharacterID = id;
+	}
 
-    public void Player2Character(int id)
-    {
-        Player2CharacterID = id;
-    }
+	public void Player2Character (int id)
+	{
+		Player2CharacterID = id;
+	}
 
-    public void Exit ()
+	public void Exit ()
 	{
 		SceneManager.LoadScene ("main menu");
 	}
