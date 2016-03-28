@@ -30,7 +30,7 @@ public class GameTimer : MonoBehaviour
 
     void Start()
     {
-        timerUI.text = "Time: 0";
+        timerUI.text = "0";
     }
 
     // Update is called once per frame

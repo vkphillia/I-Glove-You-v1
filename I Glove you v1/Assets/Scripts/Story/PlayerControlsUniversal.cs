@@ -25,7 +25,7 @@ public class PlayerControlsUniversal : MonoBehaviour
 	void Start ()
 	{
 		health = maxHealth;
-		myHealthText_HUD.text = "Health: " + health;
+		myHealthText_HUD.text = health.ToString();
 	}
 
 	//this is temporary code, to be removed when new assets are added
@@ -108,7 +108,7 @@ public class PlayerControlsUniversal : MonoBehaviour
 				StartCoroutine (ChangeColor (Color.red));
 			}
 		}
-		myHealthText_HUD.text = "Health: " + health;
+		myHealthText_HUD.text = health.ToString();
 	}
 
     

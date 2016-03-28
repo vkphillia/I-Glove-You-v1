@@ -43,7 +43,7 @@ public class Challenge1 : Challenge
 
 	void Start ()
 	{
-		enemyKilled.text = "Enemy killed: 0";
+		enemyKilled.text = "0";
 
 		//all these things are not temporary now
 		StartCoroutine (StartRound ());
@@ -75,7 +75,7 @@ public class Challenge1 : Challenge
 		//timerStarted is set to false by GameTimer when time reaches 0
 		if (Challenge.noOfEnemyAlive == 0 && GameTimer.Instance.timerStarted)
 		{
-			enemyKilled.text = "Enemy killed: " + enemyCount;
+			enemyKilled.text = enemyCount.ToString();
 
 			enemyHolder.Spawn (1, false, false);
 			Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
