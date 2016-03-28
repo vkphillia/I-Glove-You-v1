@@ -6,6 +6,7 @@ public class TutorialManager : MonoBehaviour
 {
     public PlayerControlsUniversal player;
     public GameObject UI;
+    public GameObject Intro;
 
     public string[] dialouges;
     public Text dialougeText;
@@ -18,21 +19,45 @@ public class TutorialManager : MonoBehaviour
 	
 	IEnumerator StartTutorial()
     {
-        for(int i=0;i<dialouges.Length;i++)
+        yield return new WaitForSeconds(0.5f);
+        Color temp = Intro.GetComponent<SpriteRenderer>().color;
+        float alpha=0;
+        while(alpha<1)
         {
-            yield return new WaitForSeconds(3f);
-            dialougeText.text = dialouges[i];
+            temp.a = alpha;
+            Intro.GetComponent<SpriteRenderer>().color = temp;
+            alpha+=0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
+
+        Intro.GetComponent<Animator>().enabled = true;
+        yield return new WaitForSeconds(5f);
+        
+        while (alpha > 0)
+        {
+            temp.a = alpha;
+            Intro.GetComponent<SpriteRenderer>().color = temp;
+            alpha -= 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+        Intro.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
+        player.gameObject.SetActive(true);
+        for (int i = 0; i < dialouges.Length; i++)
+        {
+            dialougeText.text = dialouges[i];
+            yield return new WaitForSeconds(3f);
+        }
+        
         player.mySpeed = 0;
         player.move = true;
-        yield return new WaitForSeconds(4f);
-        dialougeText.text = "and now lets move";
+        dialougeText.text = "thats how I move";
         player.mySpeed = 4;
-        yield return new WaitForSeconds(2f);
-        dialougeText.text = "yes, we got it covered for you :)";
-        yield return new WaitForSeconds(3f);
-        dialougeText.text = "Congrats, you are all done with tutorial";
+        yield return new WaitForSeconds(4f);
+        dialougeText.text = "I am going to the next level, see you there";
         player.move = false;
+        player.gameObject.SetActive(false);
         UI.SetActive(true);
 
     }

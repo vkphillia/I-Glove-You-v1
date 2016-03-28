@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TowerController : MonoBehaviour
 {
+    [SerializeField]
+    private CanvasGroup canvas;
 
-	public List<Challenge> Challenge_List = new List<Challenge> ();
+    public List<Challenge> Challenge_List = new List<Challenge> ();
 
 
 	void OnEnable ()
@@ -25,6 +28,11 @@ public class TowerController : MonoBehaviour
 		//}
 	}
 
+    void Start()
+    {
+        StartCoroutine(LoadingMyScene());
+    }
+
 	public void ClickOnChallenge ()
 	{
 		Debug.Log ("Starting Challenge - " + StoryManager.Instance.currentChallenge.myLevelDesciption);
@@ -38,9 +46,9 @@ public class TowerController : MonoBehaviour
     
     public void Tutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        //SceneManager.LoadScene("Tutorial");
         //async = SceneManager.LoadSceneAsync("Tutorial");
-        //StartCoroutine(LoadingScene());
+        StartCoroutine(LoadingScene("Tutorial"));
     }
 
     //for loading effect
@@ -58,5 +66,28 @@ public class TowerController : MonoBehaviour
     public void OnMenuClick()
     {
         SceneManager.LoadScene("main menu");
+    }
+
+    IEnumerator LoadingMyScene()
+    {
+        yield return new WaitForSeconds(0.5f);
+        float speed = 1;
+        
+        while (canvas.alpha <1)
+        {
+            canvas.alpha += speed * Time.deltaTime;
+            yield return null;
+        }
+    }
+    IEnumerator LoadingScene(string sceneName)
+    {
+        float speed = 1;
+        
+        while (canvas.alpha > 0)
+        {
+            canvas.alpha -= speed * Time.deltaTime;
+            yield return null;
+        }
+        SceneManager.LoadScene(sceneName);
     }
 }
