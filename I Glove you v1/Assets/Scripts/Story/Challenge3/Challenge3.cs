@@ -16,7 +16,7 @@ public class Challenge3 : Challenge
 
 	void Start ()
 	{
-		enemyKilled.text = "Enemy killed: 0";
+		enemyKilled.text = "0";
 
 		//all these things are not temporary now
 		StartCoroutine (StartRound ());
@@ -28,7 +28,9 @@ public class Challenge3 : Challenge
 	{
 		filler.text = "Challenge 3";
 		yield return new WaitForSeconds (1f);
-		filler.text = "3";
+        filler.text = "Kill Kill and Kill";
+        yield return new WaitForSeconds(3f);
+        filler.text = "3";
 		yield return new WaitForSeconds (0.5f);
 		filler.text = "2";
 		yield return new WaitForSeconds (0.5f);
@@ -49,7 +51,7 @@ public class Challenge3 : Challenge
 		//timerStarted is set to false by GameTimer when time reaches 0
 		if (Challenge.noOfEnemyAlive == 0 && GameTimer.Instance.timerStarted)
 		{
-			enemyKilled.text = "Enemy killed: " + enemyCount;
+			enemyKilled.text = enemyCount.ToString();
 
 			enemyHolder.Spawn (3, true, false);
 			Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene
@@ -71,11 +73,11 @@ public class Challenge3 : Challenge
 
 		if (enemyCount - 1 < 3)
 		{
-			filler.text = "Success comes with great practice";
+			filler.text = "Not enough enemies killed !";
 		}
 		else
 		{
-			filler.text = "Congrats, You Win";
+			filler.text = "Congrats, You Win\nMore challenges coming soon";
 		}
 
 		UI.SetActive (true);//setting challenge complete buttons to active

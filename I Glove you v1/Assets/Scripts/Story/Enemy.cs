@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		Debug.Log ("enemy has glove:" + hasGlove);
+		//Debug.Log ("enemy has glove:" + hasGlove);
 
 		if (other.gameObject.layer == 8) //layer 8 is player1
 		{
@@ -222,14 +222,14 @@ public class Enemy : MonoBehaviour
 			//Find random point away from player and rotate towards that point
 			if (destReached)
 			{
-				Debug.Log ("find new dest");
+				//Debug.Log ("find new dest");
 				destReached = false;//until it reaches the below new destination
 				randPos = Camera.main.WorldToScreenPoint (new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 3f), 0));
-				Debug.Log (randPos);
+				//Debug.Log (randPos);
 				relativePos = randPos - EnemyPos;
 				angle = Mathf.Atan2 (relativePos.y, relativePos.x) * Mathf.Rad2Deg;
 				this.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, (angle - 90) * Time.deltaTime * enemySpeed));
-				Debug.Log (angle);
+				//Debug.Log (angle);
 			}
 			if (EnemyPos == randPos)
 			{

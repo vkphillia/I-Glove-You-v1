@@ -39,7 +39,7 @@ public class GameTimer : MonoBehaviour
 	    if(timerStarted && totalTime>0)
         {
             totalTime = totalTime - Time.deltaTime;
-            timerUI.text = totalTime.ToString("F2");
+            timerUI.text = totalTime.ToString("0");
         }
         else if(timerStarted && totalTime<=0)
         {

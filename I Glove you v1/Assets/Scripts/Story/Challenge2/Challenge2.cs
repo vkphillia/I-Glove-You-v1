@@ -13,7 +13,7 @@ public class Challenge2 : Challenge
 
 	void Start ()
 	{
-		enemyKilled.text = "Hit received: 0";
+		enemyKilled.text = "0";
 
 		//all these things are not temporary now
 		StartCoroutine (StartRound ());
@@ -25,7 +25,9 @@ public class Challenge2 : Challenge
 	{
 		filler.text = "Challenge 2";
 		yield return new WaitForSeconds (1f);
-		filler.text = "3";
+        filler.text = "Be alive till timer runs out";
+        yield return new WaitForSeconds(3f);
+        filler.text = "3";
 		yield return new WaitForSeconds (0.5f);
 		filler.text = "2";
 		yield return new WaitForSeconds (0.5f);

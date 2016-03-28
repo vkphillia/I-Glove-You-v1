@@ -55,7 +55,9 @@ public class Challenge1 : Challenge
 	{
 		filler.text = "Challenge 1";
 		yield return new WaitForSeconds (1f);
-		filler.text = "3";
+        filler.text = "Kill atleast 3 enemy";
+        yield return new WaitForSeconds(2f);
+        filler.text = "3";
 		yield return new WaitForSeconds (0.5f);
 		filler.text = "2";
 		yield return new WaitForSeconds (0.5f);

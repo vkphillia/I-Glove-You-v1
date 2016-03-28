@@ -51,7 +51,7 @@ public class PlayerControlsUniversal : MonoBehaviour
 	//this code works when collision happens with enemy or glove
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		Debug.Log ("player glove:" + hasGlove);
+		//Debug.Log ("player glove:" + hasGlove);
 
 		if (other.gameObject.layer == 10) //layer 10 is player2, which in our case is enemy
 		{
