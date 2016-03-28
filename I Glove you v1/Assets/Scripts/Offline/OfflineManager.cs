@@ -78,6 +78,9 @@ public class OfflineManager : MonoBehaviour
 	public P1Trophy TrophyP1;
 	public P2Trophy TrophyP2;
 
+	public PUController myPUController;
+
+
 
 	//sets GameState to RoundStart and sets the sprite for both player
 	void OnEnable ()
@@ -156,6 +159,9 @@ public class OfflineManager : MonoBehaviour
 		else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver)
 		{
 			ZoomOut ();
+			myPUController.glove.SetActive (false);
+			myPUController.PU.SetActive (false);
+			PUPicked = true;
 		}
 	}
 
@@ -225,7 +231,10 @@ public class OfflineManager : MonoBehaviour
 		}
 		else
 		{
-			currentState = GameState.RoundOver;
+			if (currentState != GameState.MatchOver)
+			{
+				currentState = GameState.RoundOver;
+			}
 		}
 		
 		RoundPanel.ShowRoundPanel ();
@@ -238,7 +247,6 @@ public class OfflineManager : MonoBehaviour
 		//code for timer
 		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
 		roundNumber++;
-
 		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
 		PlayerHolder1.transform.rotation = Quaternion.identity;
 		PlayerHolder1.ResetPlayer ();

@@ -220,57 +220,61 @@ public class PlayerHolderController : MonoBehaviour
 	//increase or decreases the health of the player based on the amount
 	public void AlterHealth (int amount)
 	{
-		myPooledFT = GameObjectPool.GetPool ("FlyingTextPool").GetInstance ();
-		FT_Obj = myPooledFT.GetComponent<FlyingText> ();
-		//FT_Obj.transform.SetParent (this.transform);
-		FT_Obj.transform.position = myFlyingTextSpawnPoint.position;
-		FT_Obj.transform.rotation = myFlyingTextSpawnPoint.rotation;
-		//new health bar
-
-
-		if (amount > 0)
+		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			FT_Obj.myGreenText.color = Color.green;
-			FT_Obj.myBlackText.text = "+" + amount.ToString ();
-			FT_Obj.myGreenText.text = "+" + amount.ToString ();
-		}
-		else
-		{
-			FT_Obj.myGreenText.color = Color.red;
-			FT_Obj.myBlackText.text = amount.ToString ();
-			FT_Obj.myGreenText.text = amount.ToString ();
-		}
+			myPooledFT = GameObjectPool.GetPool ("FlyingTextPool").GetInstance ();
+			FT_Obj = myPooledFT.GetComponent<FlyingText> ();
+			//FT_Obj.transform.SetParent (this.transform);
+			FT_Obj.transform.position = myFlyingTextSpawnPoint.position;
+			FT_Obj.transform.rotation = myFlyingTextSpawnPoint.rotation;
+			//new health bar
 
-		if ((myHealth + amount) > OfflineManager.Instance.MaxHealth)
-		{
-			myHealth = OfflineManager.Instance.MaxHealth;
-			myHealthBar.fillAmount = 1f; 
 
-		}
-		else if ((myHealth + amount) <= 0)
-		{
-			myHealth = 0;
-			myHealthBar.fillAmount = 0f; 
-
-			//code for checking who wins the round and stops the round
-			OfflineManager.Instance.CheckRoundStatus ();
-		}
-		else
-		{
-			myHealth += amount;
-			myHealthBar.fillAmount = (float)(myHealth) / OfflineManager.Instance.MaxHealth; 
-
-			//only play sound when adding health
 			if (amount > 0)
 			{
-				SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f); 
-				StartCoroutine (ChangeColor (Color.green));
+				FT_Obj.myGreenText.color = Color.green;
+				FT_Obj.myBlackText.text = "+" + amount.ToString ();
+				FT_Obj.myGreenText.text = "+" + amount.ToString ();
 			}
 			else
 			{
-				StartCoroutine (ChangeColor (Color.red));
-				StartCoroutine (ChangeHealthBarColor ());
+				FT_Obj.myGreenText.color = Color.red;
+				FT_Obj.myBlackText.text = amount.ToString ();
+				FT_Obj.myGreenText.text = amount.ToString ();
 			}
+
+			if ((myHealth + amount) > OfflineManager.Instance.MaxHealth)
+			{
+				myHealth = OfflineManager.Instance.MaxHealth;
+				myHealthBar.fillAmount = 1f; 
+
+			}
+			else if ((myHealth + amount) <= 0)
+			{
+				myHealth = 0;
+				myHealthBar.fillAmount = 0f; 
+
+				//code for checking who wins the round and stops the round
+				OfflineManager.Instance.CheckRoundStatus ();
+			}
+			else
+			{
+				myHealth += amount;
+				myHealthBar.fillAmount = (float)(myHealth) / OfflineManager.Instance.MaxHealth; 
+
+				//only play sound when adding health
+				if (amount > 0)
+				{
+					SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f); 
+					StartCoroutine (ChangeColor (Color.green));
+				}
+				else
+				{
+					StartCoroutine (ChangeColor (Color.red));
+					StartCoroutine (ChangeHealthBarColor ());
+				}
+			}
+
 		}
 
 

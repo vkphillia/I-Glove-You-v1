@@ -10,6 +10,9 @@ public class OfflineRoundController : MonoBehaviour
 	public Text P2Text;
 	public GameObject UI;
 	private Animator myRoundTextAnim;
+	public P1HUD HUDP1;
+	public P2HUD HUDP2;
+
 
 
 	void Awake ()
@@ -39,11 +42,23 @@ public class OfflineRoundController : MonoBehaviour
 	public IEnumerator HideRoundStartText ()
 	{
 		OfflineManager.Instance.StartNewRound ();
-		myRoundText.text = "Round " + OfflineManager.Instance.roundNumber;
+		if (OfflineManager.Instance.roundNumber == 1)
+		{
+			myRoundText.text = "Round I";
+		}
+		else if (OfflineManager.Instance.roundNumber == 2)
+		{
+			myRoundText.text = "Round II";
+		}
+		else if (OfflineManager.Instance.roundNumber == 3)
+		{
+			myRoundText.text = "Round III";
+		}
+
 		myRoundTextAnim.Play ("Round_Show");
 		StartCoroutine (RoundNumberSFX ());
 		yield return new WaitForSeconds (3f);
-		myRoundTextAnim.Play ("Round_Idle");
+		//myRoundTextAnim.Play ("Round_Idle");
 		myRoundText.text = "Fight!";
 		OfflineManager.Instance.currentState = GameState.Fight;
 
@@ -60,13 +75,13 @@ public class OfflineRoundController : MonoBehaviour
 	{	
 		myRoundText.text = "";
 		SoundsController.Instance.PlaySoundFX ("RoundEnd", 1.0f);
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (.2f);
 		myRoundText.text = "Round Over";
 		myRoundTextAnim.Play ("Round_Show");
 
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (3f);
 		myRoundTextAnim.Play ("Round_Hide");
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
 
 		StartCoroutine (HideRoundStartText ());
 	}
@@ -74,8 +89,10 @@ public class OfflineRoundController : MonoBehaviour
 	//loads offline menu after showing the winner
 	public IEnumerator HideMatchOverText ()
 	{
-		myRoundText.text = "";
-		yield return new WaitForSeconds (2f);
+		myRoundText.text = "Game Over";
+		myRoundTextAnim.Play ("Round_Show");
+
+		yield return new WaitForSeconds (1f);
 		SoundsController.Instance.PlaySoundFX ("Win", 1.0f);
 		P1Text.gameObject.SetActive (true);
 		P2Text.gameObject.SetActive (true);
@@ -98,7 +115,6 @@ public class OfflineRoundController : MonoBehaviour
 		}
 		else if (OfflineManager.Instance.PlayerHolder2.roundWins == 2)
 		{
-			//TrophyP2.gameObject.SetActive (true);
 
 			if (OfflineManager.Instance.PlayerHolder2.myHealth == OfflineManager.Instance.MaxHealth)
 			{
@@ -111,14 +127,19 @@ public class OfflineRoundController : MonoBehaviour
 				P1Text.text = "You Lose";
 			}
 		}
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (5f);
 		myRoundText.text = "";
 		P1Text.gameObject.SetActive (false);
 		P2Text.gameObject.SetActive (false);
+		StartCoroutine (HUDP1.GoDown ());
+		StartCoroutine (HUDP2.GoDown ());
 		OfflineManager.Instance.NewMatchStart ();
 		UI.SetActive (true);
+
 		//SceneManager.LoadScene ("offline menu");
 	}
+
+
 
 	IEnumerator RoundNumberSFX ()
 	{
