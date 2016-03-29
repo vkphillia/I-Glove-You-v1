@@ -14,6 +14,15 @@ public class WalkingBombPU : PowerUp
 	private float angle;
 	private bool active;
 
+	void OnEnable ()
+	{
+		GetComponent<SpriteRenderer> ().enabled = true;
+		GetComponent<CircleCollider2D> ().enabled = true;
+		myBlastCol.GetComponent<SpriteRenderer> ().enabled = false;
+		myBlastCol.GetComponent<CircleCollider2D> ().enabled = false;
+
+	}
+
 	void Update ()
 	{
 		//find other player and go towards it

@@ -55,9 +55,9 @@ public class Challenge1 : Challenge
 	{
 		filler.text = "Challenge 1";
 		yield return new WaitForSeconds (1f);
-        filler.text = "Kill atleast 3 enemy";
-        yield return new WaitForSeconds(2f);
-        filler.text = "3";
+		filler.text = myLevelDesciption;
+		yield return new WaitForSeconds (2f);
+		filler.text = "3";
 		yield return new WaitForSeconds (0.5f);
 		filler.text = "2";
 		yield return new WaitForSeconds (0.5f);
@@ -77,7 +77,7 @@ public class Challenge1 : Challenge
 		//timerStarted is set to false by GameTimer when time reaches 0
 		if (Challenge.noOfEnemyAlive == 0 && GameTimer.Instance.timerStarted)
 		{
-			enemyKilled.text = enemyCount.ToString();
+			enemyKilled.text = enemyCount.ToString ();
 
 			enemyHolder.Spawn (1, false, false);
 			Challenge.noOfEnemyAlive++;//increaing no of enemy available in scene

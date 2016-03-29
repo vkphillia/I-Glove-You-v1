@@ -80,6 +80,14 @@ public class OfflineManager : MonoBehaviour
 
 	public PUController myPUController;
 
+	//for rematch
+	private bool P1Ready;
+	private bool P2Ready;
+	public Text P1ReadtText;
+	public Text P2ReadtText;
+
+	public GameObject pauseBtn;
+
 
 
 	//sets GameState to RoundStart and sets the sprite for both player
@@ -99,6 +107,10 @@ public class OfflineManager : MonoBehaviour
 	//sets the player intital position and calls ShowRoundPanel()
 	void Start ()
 	{
+		P1ReadtText.text = "Re-Match";
+		P2ReadtText.text = "Re-Match";
+
+
 		//really need it? never used anywhere else
 		P1StartPos = new Vector3 (0, -3, 0);
 		P2StartPos = new Vector3 (0, 3, 0);
@@ -116,7 +128,8 @@ public class OfflineManager : MonoBehaviour
 	void Update ()
 	{
 
-		if (Input.GetKeyDown (KeyCode.Escape))
+		//commenting this coz it gets too frustrating while playing
+		/*if (Input.GetKeyDown (KeyCode.Escape))
 		{
 			if (!Pause)
 			{
@@ -130,10 +143,8 @@ public class OfflineManager : MonoBehaviour
 				Pause = false;
 				Time.timeScale = 1;
 				PauseText.text = "";
-
-			
 			}
-		}
+		}*/
 		
 		if (currentState == GameState.Playing)
 		{
@@ -158,11 +169,20 @@ public class OfflineManager : MonoBehaviour
 		}
 		else if (currentState == GameState.RoundOver || currentState == GameState.MatchOver)
 		{
+			
 			ZoomOut ();
 			myPUController.glove.SetActive (false);
 			myPUController.PU.SetActive (false);
 			PUPicked = true;
+			if (P1Ready && P2Ready)
+			{
+				P1Ready = false;
+				P2Ready = false;
+				SceneManager.LoadScene ("offline game");
+			}
 		}
+
+
 	}
 
 
@@ -291,9 +311,19 @@ public class OfflineManager : MonoBehaviour
 		SceneManager.LoadScene ("offline menu");
 	}
 
-	public void OnReMatchClick ()
+	public void OnReMatchClickP1 ()
 	{
-		SceneManager.LoadScene ("offline game");
+		P1Ready = true;
+		P1ReadtText.text = "Ready!";
+
+
+	}
+
+	public void OnReMatchClickP2 ()
+	{
+		P2Ready = true;
+		P2ReadtText.text = "Ready!";
+
 	}
 
 	//plays the sound that is passed in as an argument //Deprecated
@@ -304,4 +334,23 @@ public class OfflineManager : MonoBehaviour
 	//		a.Play ();
 	//	}
 	//}
+
+
+	public void OnPauseBtn ()
+	{
+		if (!Pause)
+		{
+			Pause = true;
+
+			Time.timeScale = 0;
+
+			PauseText.text = "Paused";
+		}
+		else
+		{
+			Pause = false;
+			Time.timeScale = 1;
+			PauseText.text = "II";
+		}
+	}
 }

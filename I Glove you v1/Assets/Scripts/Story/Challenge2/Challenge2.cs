@@ -25,9 +25,9 @@ public class Challenge2 : Challenge
 	{
 		filler.text = "Challenge 2";
 		yield return new WaitForSeconds (1f);
-        filler.text = "Be alive till timer runs out";
-        yield return new WaitForSeconds(3f);
-        filler.text = "3";
+		filler.text = myLevelDesciption;
+		yield return new WaitForSeconds (3f);
+		filler.text = "3";
 		yield return new WaitForSeconds (0.5f);
 		filler.text = "2";
 		yield return new WaitForSeconds (0.5f);

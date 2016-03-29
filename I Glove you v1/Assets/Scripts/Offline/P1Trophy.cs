@@ -23,7 +23,7 @@ public class P1Trophy : MonoBehaviour
 		myAnim.Play ("Trophy_Show");
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1f);
 		yield return new WaitForSeconds (1f);
-		iTween.MoveTo (this.gameObject, iTween.Hash ("position", new Vector3 (-2.3f, -4.3f, -1), "time", 2f, "easetype", "linear", "onComplete", "DestoryGO"));
+		iTween.MoveTo (this.gameObject, iTween.Hash ("position", new Vector3 (-2.3f, -4.3f, -1), "time", 1f, "easetype", "linear", "onComplete", "DestoryGO"));
 
 	}
 
