@@ -4,8 +4,8 @@ using System.Collections;
 public class SoundsController : MonoBehaviour
 {
 	public AudioSource bgMusic;
+	public AudioSource bgMenuMusic;
 	public AudioSource walkingBomb;
-
 
 	private Object[] sounds;
 	private AudioSource[] audioSource = new AudioSource[5];
@@ -25,13 +25,26 @@ public class SoundsController : MonoBehaviour
 			return _Instance;
 		}
 	}
-    
+
+	void Awake ()
+	{
+		if (_Instance != null && _Instance != this)
+		{
+			Destroy (this.gameObject);
+		}
+		else
+		{
+			_Instance = this;
+			DontDestroyOnLoad (gameObject);
+		}
+	}
 	//initialization all the sound effects
 	void Start ()
 	{
 		sounds = Resources.LoadAll ("Sounds", typeof(AudioClip));
 		audioSource = GetComponents<AudioSource> ();
-
+		bgMenuMusic.Play ();
+		//bgMusic.Play ();
 		//for debuggin only
 		//for (int i=0;i<sounds.Length;i++)
 		//{
@@ -41,16 +54,14 @@ public class SoundsController : MonoBehaviour
 
 	void Update ()
 	{
-		if (OfflineManager.Instance.currentState == GameState.Playing && !bgMusic.isPlaying)
+		/*if (OfflineManager.Instance.currentState == GameState.Playing && !bgMusic.isPlaying)
 		{
-			//Debug.Log ("playing");
 			bgMusic.Play ();
 		}
 		else if (OfflineManager.Instance.currentState != GameState.Playing && bgMusic.isPlaying)
 		{
-			//Debug.Log ("not playing");
 			bgMusic.Stop ();
-		}
+		}*/
 	}
 	//call this function with a parameter of the sound name as in resource folder
 	public void PlaySoundFX (string sfxName, float vol)

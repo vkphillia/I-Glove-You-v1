@@ -13,6 +13,7 @@ public class WalkingBombPU : PowerUp
 	private Vector3 relativePos;
 	private float angle;
 	private bool active;
+	private bool blasted;
 
 	public override void OnEnable ()
 	{
@@ -27,7 +28,7 @@ public class WalkingBombPU : PowerUp
 	void Update ()
 	{
 		//find other player and go towards it
-		if (active)
+		if (active && !blasted)
 		{
 			if (OfflineManager.Instance.currentState == GameState.Playing)
 			{
@@ -99,12 +100,14 @@ public class WalkingBombPU : PowerUp
 	//explosion stuff goes here
 	public IEnumerator BlastNow (PlayerHolderController p)
 	{
-		active = false;
+		blasted = true;
 		SoundsController.Instance.walkingBomb.Pause (); 
 		SoundsController.Instance.PlaySoundFX ("Blast", 1.0f);
 		GetComponent<SpriteRenderer> ().enabled = false;
 		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
 		yield return new WaitForSeconds (1f);
+		active = false;
+		blasted = false;
 		DeactivatePU ();
 
 	}

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: acff5652095084fdbaad5736faf92469
-timeCreated: 1458907479
+timeCreated: 1459347777
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -67,17 +67,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 17
-        y: 181
-        width: 461
-        height: 825
+        y: 283
+        width: 462
+        height: 620
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -230.5, y: 412.5}
-        - {x: -230.5, y: -412.5}
-        - {x: 230.5, y: -412.5}
-        - {x: 230.5, y: 412.5}
+      - - {x: -231, y: 310}
+        - {x: -231, y: -310}
+        - {x: 231, y: -310}
+        - {x: 231, y: 310}
     - name: Life_Icon
       rect:
         serializedVersion: 2

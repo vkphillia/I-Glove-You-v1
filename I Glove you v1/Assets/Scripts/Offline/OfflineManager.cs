@@ -52,7 +52,7 @@ public class OfflineManager : MonoBehaviour
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
 
-	public Transform foreground;
+	//public Transform foreground;
 
 	public GameState currentState;
     
@@ -117,7 +117,7 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder1.transform.position = P1StartPos;
 		PlayerHolder2.transform.position = P2StartPos;
 
-		foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
+		//foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
         
 		//RoundPanel.gameObject.SetActive(true);
 		RoundPanel.ShowRoundPanel ();
@@ -194,10 +194,10 @@ public class OfflineManager : MonoBehaviour
 		Player1HUDPanel.SetActive (true);
 		Player2HUDPanel.SetActive (true);
 
-		if (foreground.transform.localScale.x < 1)
+		/*if (foreground.transform.localScale.x < 1)
 		{
 			foreground.transform.localScale += new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
-		}
+		}*/
 	}
 
 	public void ZoomOut ()
@@ -208,10 +208,10 @@ public class OfflineManager : MonoBehaviour
 		//Player1HUDPanel.SetActive (false);
 		//Player2HUDPanel.SetActive (false);
 
-		if (foreground.transform.localScale.x > 0.8f)
+		/*if (foreground.transform.localScale.x > 0.8f)
 		{
 			foreground.transform.localScale -= new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
-		}
+		}*/
 	}
 
 	//checks for the winner and sets the GameState to MatchOver or RoundOver
