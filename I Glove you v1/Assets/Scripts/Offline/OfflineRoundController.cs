@@ -134,7 +134,8 @@ public class OfflineRoundController : MonoBehaviour
 		StartCoroutine (HUDP1.GoDown ());
 		StartCoroutine (HUDP2.GoDown ());
 		OfflineManager.Instance.NewMatchStart ();
-		UI.SetActive (true);
+		SceneManager.LoadScene ("offline menu");
+		//UI.SetActive (true);
 
 		//SceneManager.LoadScene ("offline menu");
 	}

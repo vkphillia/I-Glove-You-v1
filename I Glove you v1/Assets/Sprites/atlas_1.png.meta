@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: acff5652095084fdbaad5736faf92469
-timeCreated: 1459347777
+timeCreated: 1459351468
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -17,6 +17,35 @@ TextureImporter:
     21300020: Fighter_2
     21300022: Fighter_6
     21300024: Fighter_3
+    21300026: bg
+    21300028: atlas_1_1
+    21300030: atlas_1_2
+    21300032: atlas_1_3
+    21300034: atlas_1_4
+    21300036: atlas_1_5
+    21300038: life_bg
+    21300040: atlas_1_7
+    21300042: timer_bg
+    21300044: c1
+    21300046: c2
+    21300048: c1_2
+    21300050: c2_2
+    21300052: Glove1
+    21300054: Glove2
+    21300056: atlas_1_15
+    21300058: atlas_1_16
+    21300060: atlas_1_17
+    21300062: atlas_1_18
+    21300064: atlas_1_19
+    21300066: atlas_1_20
+    21300068: atlas_1_21
+    21300070: atlas_1_22
+    21300072: atlas_1_23
+    21300074: atlas_1_24
+    21300076: atlas_1_25
+    21300078: atlas_1_26
+    21300080: atlas_1_27
+    21300082: atlas_1_28
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,22 +92,22 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: BG
+    - name: bg
       rect:
         serializedVersion: 2
         x: 17
-        y: 283
+        y: 288
         width: 462
-        height: 620
+        height: 613
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -231, y: 310}
-        - {x: -231, y: -310}
-        - {x: 231, y: -310}
-        - {x: 231, y: 310}
-    - name: Life_Icon
+      - - {x: -231, y: 306.5}
+        - {x: -231, y: -306.5}
+        - {x: 231, y: -306.5}
+        - {x: 231, y: 306.5}
+    - name: atlas_1_1
       rect:
         serializedVersion: 2
         x: 584
@@ -86,7 +115,7 @@ TextureImporter:
         width: 55
         height: 49
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -20.5, y: 24.5}
@@ -97,7 +126,7 @@ TextureImporter:
         - {x: 27.5, y: -4.5}
         - {x: 27.5, y: 17.5}
         - {x: 20.5, y: 24.5}
-    - name: Win_Icon
+    - name: atlas_1_2
       rect:
         serializedVersion: 2
         x: 675
@@ -105,7 +134,7 @@ TextureImporter:
         width: 41
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -20.5, y: 16}
@@ -114,7 +143,7 @@ TextureImporter:
         - {x: 15.5, y: -16}
         - {x: 20.5, y: 4}
         - {x: 20.5, y: 16}
-    - name: Timer_Icon
+    - name: atlas_1_3
       rect:
         serializedVersion: 2
         x: 759
@@ -122,7 +151,7 @@ TextureImporter:
         width: 46
         height: 46
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -21, y: -23}
@@ -130,30 +159,43 @@ TextureImporter:
         - {x: 23, y: 23}
         - {x: -23, y: 23}
         - {x: -23, y: -19}
-    - name: Punch_Effect
+    - name: atlas_1_4
       rect:
         serializedVersion: 2
-        x: 864
-        y: 918
-        width: 111
-        height: 52
+        x: 845
+        y: 956
+        width: 42
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -55.5, y: 26}
-        - {x: -55.5, y: -4}
-        - {x: -38.5, y: -26}
-        - {x: 50.5, y: -26}
-        - {x: 55.5, y: -25}
-        - {x: 55.5, y: 26}
-      - - {x: -37.5, y: 26}
-        - {x: -37.5, y: 19}
-        - {x: -35.5, y: 17}
-        - {x: -29.5, y: 17}
-        - {x: -27.5, y: 19}
-        - {x: -27.5, y: 26}
-    - name: Health_UI_BG
+      - - {x: -15, y: 30}
+        - {x: -17, y: 29}
+        - {x: -21, y: 25}
+        - {x: -21, y: -20}
+        - {x: -16, y: -30}
+        - {x: 9, y: -30}
+        - {x: 21, y: -14}
+        - {x: 21, y: 30}
+    - name: atlas_1_5
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 961
+        width: 42
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 30}
+        - {x: -21, y: -15}
+        - {x: -9, y: -30}
+        - {x: 19, y: -30}
+        - {x: 21, y: -19}
+        - {x: 21, y: 30}
+    - name: life_bg
       rect:
         serializedVersion: 2
         x: 559
@@ -170,30 +212,25 @@ TextureImporter:
         - {x: 71, y: -36}
         - {x: 79, y: -28}
         - {x: 79, y: 36}
-    - name: Fighter_4
+    - name: atlas_1_7
       rect:
         serializedVersion: 2
-        x: 753
-        y: 672
-        width: 194
-        height: 212
+        x: 850
+        y: 716
+        width: 149
+        height: 228
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 93, y: -105}
-        - {x: 97, y: -106}
-        - {x: 97, y: 57}
-        - {x: 85, y: 106}
-        - {x: -40, y: 106}
-        - {x: -94, y: 54}
-        - {x: -97, y: 29}
-        - {x: -97, y: -106}
-        - {x: -35, y: -106}
-        - {x: -24, y: -73}
-        - {x: 34, y: -106}
-        - {x: 87, y: -106}
-    - name: Timer_UI_BG
+      - - {x: -48.5, y: 114}
+        - {x: -74.5, y: 87}
+        - {x: -74.5, y: -77}
+        - {x: -13.5, y: -114}
+        - {x: 74.5, y: -114}
+        - {x: 74.5, y: 97}
+        - {x: 31.5, y: 114}
+    - name: timer_bg
       rect:
         serializedVersion: 2
         x: 556
@@ -211,101 +248,336 @@ TextureImporter:
         - {x: 77, y: -36}
         - {x: 79, y: -25}
         - {x: 79, y: 36}
-    - name: Fighter_1
+    - name: c1
       rect:
         serializedVersion: 2
-        x: 518
-        y: 471
-        width: 198
-        height: 211
+        x: 564
+        y: 549
+        width: 150
+        height: 93
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -93, y: 105.5}
-        - {x: -99, y: 104.5}
-        - {x: -99, y: -52.5}
-        - {x: -49, y: -105.5}
-        - {x: 56, y: -105.5}
-        - {x: 93, y: -78.5}
-        - {x: 99, y: -11.5}
-        - {x: 99, y: 105.5}
-    - name: Fighter_5
+      - - {x: -34, y: -11.5}
+        - {x: -36, y: -9.5}
+        - {x: -25, y: -18.5}
+        - {x: -24, y: -21.5}
+        - {x: -12, y: -31.5}
+        - {x: 16, y: -31.5}
+        - {x: 31, y: -16.5}
+        - {x: 31, y: -9.5}
+        - {x: 34, y: -13.5}
+        - {x: 25, y: -24.5}
+        - {x: 25, y: -46.5}
+        - {x: 54, y: -46.5}
+        - {x: 75, y: -29.5}
+        - {x: 75, y: 44.5}
+        - {x: 65, y: 46.5}
+        - {x: -75, y: 46.5}
+        - {x: -75, y: -23.5}
+        - {x: -63, y: -46.5}
+        - {x: -25, y: -46.5}
+        - {x: -24, y: -45.5}
+        - {x: -24, y: -25.5}
+        - {x: -26, y: -21.5}
+    - name: c2
       rect:
         serializedVersion: 2
-        x: 762
-        y: 436
-        width: 198
-        height: 211
+        x: 783
+        y: 576
+        width: 150
+        height: 93
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -93, y: 105.5}
-        - {x: -99, y: 104.5}
-        - {x: -99, y: -52.5}
-        - {x: -49, y: -105.5}
-        - {x: 56, y: -105.5}
-        - {x: 93, y: -78.5}
-        - {x: 99, y: -11.5}
-        - {x: 99, y: 105.5}
-    - name: Fighter_2
+      - - {x: -34, y: -11.5}
+        - {x: -36, y: -9.5}
+        - {x: -25, y: -18.5}
+        - {x: -24, y: -21.5}
+        - {x: -17, y: -27.5}
+        - {x: -9, y: -31.5}
+        - {x: 16, y: -31.5}
+        - {x: 18, y: -29.5}
+        - {x: 22, y: -27.5}
+        - {x: 25, y: -46.5}
+        - {x: 55, y: -46.5}
+        - {x: 75, y: -22.5}
+        - {x: 75, y: 46.5}
+        - {x: -75, y: 46.5}
+        - {x: -75, y: -31.5}
+        - {x: -52, y: -46.5}
+        - {x: -25, y: -46.5}
+        - {x: -24, y: -45.5}
+        - {x: -24, y: -25.5}
+        - {x: -26, y: -21.5}
+      - - {x: -55, y: -33.5}
+        - {x: -57, y: -35.5}
+        - {x: -57, y: -42.5}
+        - {x: -55, y: -44.5}
+        - {x: -53, y: -44.5}
+        - {x: -51, y: -42.5}
+        - {x: -51, y: -35.5}
+        - {x: -53, y: -33.5}
+    - name: c1_2
       rect:
         serializedVersion: 2
-        x: 520
-        y: 241
-        width: 198
-        height: 211
+        x: 558
+        y: 386
+        width: 150
+        height: 115
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -93, y: 105.5}
-        - {x: -99, y: 104.5}
-        - {x: -99, y: -52.5}
-        - {x: -49, y: -105.5}
-        - {x: 56, y: -105.5}
-        - {x: 93, y: -78.5}
-        - {x: 99, y: -11.5}
-        - {x: 99, y: 105.5}
-    - name: Fighter_6
+      - - {x: -75, y: 57.5}
+        - {x: -75, y: -57.5}
+        - {x: 72, y: -57.5}
+        - {x: 75, y: -40.5}
+        - {x: 75, y: 46.5}
+        - {x: 65, y: 57.5}
+    - name: c2_2
       rect:
         serializedVersion: 2
-        x: 756
-        y: 184
-        width: 198
-        height: 211
+        x: 789
+        y: 435
+        width: 150
+        height: 114
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -93, y: 105.5}
-        - {x: -99, y: 104.5}
-        - {x: -99, y: -52.5}
-        - {x: -49, y: -105.5}
-        - {x: 56, y: -105.5}
-        - {x: 93, y: -78.5}
-        - {x: 99, y: -11.5}
-        - {x: 99, y: 105.5}
-    - name: Fighter_3
+      - - {x: -75, y: 57}
+        - {x: -75, y: -34}
+        - {x: -71, y: -57}
+        - {x: 75, y: -57}
+        - {x: 75, y: 56}
+        - {x: 74, y: 57}
+    - name: Glove1
       rect:
         serializedVersion: 2
-        x: 530
-        y: 16
-        width: 198
-        height: 211
+        x: 556
+        y: 302
+        width: 39
+        height: 56
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -93, y: 105.5}
-        - {x: -99, y: 104.5}
-        - {x: -99, y: -52.5}
-        - {x: -49, y: -105.5}
-        - {x: 56, y: -105.5}
-        - {x: 93, y: -78.5}
-        - {x: 99, y: -11.5}
-        - {x: 99, y: 105.5}
+      - - {x: 19.5, y: -28}
+        - {x: 19.5, y: 24}
+        - {x: 18.5, y: 28}
+        - {x: -14.5, y: 28}
+        - {x: -19.5, y: 26}
+        - {x: -19.5, y: -28}
+    - name: Glove2
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 302
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.5, y: 28}
+        - {x: -11.5, y: 28}
+        - {x: -19.5, y: 17}
+        - {x: -19.5, y: -26}
+        - {x: -17.5, y: -28}
+        - {x: 11.5, y: -28}
+        - {x: 16.5, y: -27}
+        - {x: 19.5, y: -25}
+        - {x: 19.5, y: 24}
+    - name: atlas_1_15
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 319
+        width: 116
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -58, y: 27}
+        - {x: -58, y: 6}
+        - {x: -54, y: -7}
+        - {x: -39, y: -27}
+        - {x: 54, y: -27}
+        - {x: 58, y: -26}
+        - {x: 58, y: 23}
+        - {x: 56, y: 27}
+      - - {x: -40, y: 27}
+        - {x: -40, y: 20}
+        - {x: -38, y: 18}
+        - {x: -31, y: 18}
+        - {x: -29, y: 20}
+        - {x: -29, y: 27}
+    - name: atlas_1_16
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 295
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_17
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 289
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_18
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 33
+        width: 149
+        height: 228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38.5, y: 114}
+        - {x: -74.5, y: 42}
+        - {x: -74.5, y: -63}
+        - {x: -63.5, y: -87}
+        - {x: -12.5, y: -114}
+        - {x: 74.5, y: -114}
+        - {x: 74.5, y: 93}
+        - {x: 23.5, y: 114}
+    - name: atlas_1_19
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 228
+        width: 148
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 52, y: 30.5}
+        - {x: 51, y: 15.5}
+        - {x: -39, y: 30.5}
+        - {x: -74, y: 30.5}
+        - {x: -74, y: -0.5}
+        - {x: -52, y: -30.5}
+        - {x: 64, y: -30.5}
+        - {x: 73, y: -29.5}
+        - {x: 74, y: -10.5}
+        - {x: 74, y: 25.5}
+        - {x: 69, y: 30.5}
+    - name: atlas_1_20
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 176
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_21
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 163
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_22
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 150
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_23
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 150
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_24
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 125
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_25
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 125
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_26
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 112
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_27
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 105
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: atlas_1_28
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 105
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
