@@ -200,7 +200,16 @@ public class PlayerHolderController : MonoBehaviour
 
 	IEnumerator PlayPunchAnim ()
 	{
-		myPunchAnim.Play ("Punch_Hit");
+		int randPunch = Random.Range (0, 2);
+		if (randPunch == 0)
+		{
+			myPunchAnim.Play ("Punch_Hit");
+		
+		}
+		else
+		{
+			myPunchAnim.Play ("Punch_Hit2");
+		}
 		yield return new WaitForSeconds (.5f);
 		myPunchAnim.Play ("Punch_Idle");
 	}

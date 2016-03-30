@@ -4,26 +4,26 @@ using UnityEngine.SceneManagement;
 
 public class SplashLogin : MonoBehaviour
 {
-    Color tempC;
-    Color tempo;
+	Color tempC;
+	Color tempo;
 
-    void Start ()
-    {
-        tempo = GetComponent<SpriteRenderer>().color;
-        tempC = GetComponent<SpriteRenderer>().color;
-        tempC.a = 0;//removing alpha to make the sprite invisible
+	void Start ()
+	{
+		tempo = GetComponent<SpriteRenderer> ().color;
+		tempC = GetComponent<SpriteRenderer> ().color;
+		tempC.a = 0;//removing alpha to make the sprite invisible
 
-        Invoke("LoadMenu", 3f);
-    }
-	
-    void Update()
-    {
-        //just some loading effect //replace this before shipping
-        GetComponent<SpriteRenderer>().color = Color.Lerp(tempC, tempo, Mathf.PingPong(Time.time, 1.5f));
-    }
+		Invoke ("LoadMenu", 3f);
+	}
 
-    void LoadMenu()
-    {
-        SceneManager.LoadScene("main menu");
-    }
+	void Update ()
+	{
+		//just some loading effect //replace this before shipping
+		GetComponent<SpriteRenderer> ().color = Color.Lerp (tempC, tempo, Mathf.PingPong (Time.time, 1.5f));
+	}
+
+	void LoadMenu ()
+	{
+		SceneManager.LoadScene ("main menu");
+	}
 }
