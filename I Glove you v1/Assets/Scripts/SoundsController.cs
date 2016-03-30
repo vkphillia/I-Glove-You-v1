@@ -4,6 +4,8 @@ using System.Collections;
 public class SoundsController : MonoBehaviour
 {
 	public AudioSource bgMusic;
+	public AudioSource walkingBomb;
+
 
 	private Object[] sounds;
 	private AudioSource[] audioSource = new AudioSource[5];
