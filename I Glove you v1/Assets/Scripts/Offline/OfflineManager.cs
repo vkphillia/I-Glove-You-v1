@@ -315,8 +315,6 @@ public class OfflineManager : MonoBehaviour
 	{
 		P1Ready = true;
 		P1ReadtText.text = "Ready!";
-
-
 	}
 
 	public void OnReMatchClickP2 ()
