@@ -14,6 +14,12 @@ public class OfflineMenuController : MonoBehaviour
 	private bool P1Ready;
 	private bool P2Ready;
 
+	//for placement
+	[HideInInspector]
+	public Vector3 screenSizeInWord;
+	public Transform leftBorder;
+	public Transform rightBorder;
+
 
 
 	void Enable ()
@@ -22,6 +28,13 @@ public class OfflineMenuController : MonoBehaviour
 		Player2CharacterID = 1;
 		P1Text.text = "Fight!";
 		P2Text.text = "Fight!";
+	}
+
+	void Start ()
+	{
+		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
+		leftBorder.position = new Vector3 (-screenSizeInWord.x + .2f, 0, 0);
+		rightBorder.position = new Vector3 (screenSizeInWord.x - .2f, 0, 0);
 	}
 
 	void Update ()

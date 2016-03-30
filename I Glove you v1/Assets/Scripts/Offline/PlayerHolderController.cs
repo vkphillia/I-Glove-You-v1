@@ -220,6 +220,7 @@ public class PlayerHolderController : MonoBehaviour
 		hasGlove = true;
 		mySprite.sprite = myPunchSprite;
 		myPunchAnim.gameObject.SetActive (true);
+		myPunchAnim.Play ("Punch_Idle");
 	}
 
 	//increase or decreases the health of the player based on the amount

@@ -88,6 +88,11 @@ public class OfflineManager : MonoBehaviour
 
 	public GameObject pauseBtn;
 
+	//for placement
+	[HideInInspector]
+	public Vector3 screenSizeInWord;
+	public Transform leftBorder;
+	public Transform rightBorder;
 
 
 	//sets GameState to RoundStart and sets the sprite for both player
@@ -109,6 +114,9 @@ public class OfflineManager : MonoBehaviour
 	{
 		P1ReadtText.text = "Re-Match";
 		P2ReadtText.text = "Re-Match";
+		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
+		leftBorder.position = new Vector3 (-screenSizeInWord.x + .2f, 0, 0);
+		rightBorder.position = new Vector3 (screenSizeInWord.x - .2f, 0, 0);
 
 
 		//really need it? never used anywhere else
@@ -172,7 +180,7 @@ public class OfflineManager : MonoBehaviour
 			
 			ZoomOut ();
 			myPUController.glove.SetActive (false);
-			myPUController.PU.SetActive (false);
+			myPUController.PU.GetComponent<PowerUp> ().DeactivatePU ();
 			PUPicked = true;
 			if (P1Ready && P2Ready)
 			{
