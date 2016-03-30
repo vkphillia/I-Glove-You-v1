@@ -267,12 +267,12 @@ public class OfflineManager : MonoBehaviour
 		//code for timer
 		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
 		roundNumber++;
-		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 180);
+		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
 		PlayerHolder1.transform.rotation = Quaternion.identity;
 		PlayerHolder1.ResetPlayer ();
 
 		PlayerHolder2.transform.localPosition = new Vector3 (0, 3, 0);
-		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 0);
+		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
 		PlayerHolder2.ResetPlayer ();
 
 		//roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
@@ -321,6 +321,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		P2Ready = true;
 		P2ReadtText.text = "Ready!";
+
 	}
 
 	//plays the sound that is passed in as an argument //Deprecated
