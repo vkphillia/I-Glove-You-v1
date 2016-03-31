@@ -93,6 +93,9 @@ public class OfflineManager : MonoBehaviour
 	public Vector3 screenSizeInWord;
 	public Transform leftBorder;
 	public Transform rightBorder;
+	public Transform topBorder;
+	public Transform botBorder;
+
 
 
 	//sets GameState to RoundStart and sets the sprite for both player
@@ -115,8 +118,10 @@ public class OfflineManager : MonoBehaviour
 		P1ReadtText.text = "Re-Match";
 		P2ReadtText.text = "Re-Match";
 		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
-		leftBorder.position = new Vector3 (-screenSizeInWord.x + .2f, 0, 0);
-		rightBorder.position = new Vector3 (screenSizeInWord.x - .2f, 0, 0);
+		leftBorder.position = new Vector3 (-screenSizeInWord.x + .1f, 0, 0);
+		rightBorder.position = new Vector3 (screenSizeInWord.x - .1f, 0, 0);
+		topBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, topBorder.localScale.y, topBorder.localScale.y);
+		botBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, botBorder.localScale.y, botBorder.localScale.y);
 
 
 		//really need it? never used anywhere else

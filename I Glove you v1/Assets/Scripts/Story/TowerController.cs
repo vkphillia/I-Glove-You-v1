@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class TowerController : MonoBehaviour
 {
-    [SerializeField]
-    private CanvasGroup canvas;
+	[SerializeField]
+	private CanvasGroup canvas;
 
-    public List<Challenge> Challenge_List = new List<Challenge> ();
+	public List<Challenge> Challenge_List = new List<Challenge> ();
 
 
 	void OnEnable ()
@@ -28,10 +28,10 @@ public class TowerController : MonoBehaviour
 		//}
 	}
 
-    void Start()
-    {
-        StartCoroutine(LoadingMyScene());
-    }
+	void Start ()
+	{
+		StartCoroutine (LoadingMyScene ());
+	}
 
 	public void ClickOnChallenge ()
 	{
@@ -44,50 +44,51 @@ public class TowerController : MonoBehaviour
 	}
 
     
-    public void Tutorial()
-    {
-        //SceneManager.LoadScene("Tutorial");
-        //async = SceneManager.LoadSceneAsync("Tutorial");
-        StartCoroutine(LoadingScene("Tutorial"));
-    }
+	public void Tutorial ()
+	{
+		//SceneManager.LoadScene("Tutorial");
+		//async = SceneManager.LoadSceneAsync("Tutorial");
+		StartCoroutine (LoadingScene ("0th Challenge"));
+	}
 
-    //for loading effect
-    //IEnumerator LoadingScene()
-    //{
-    //    yield return async;
-    //    Debug.Log("done");
-    //}
+	//for loading effect
+	//IEnumerator LoadingScene()
+	//{
+	//    yield return async;
+	//    Debug.Log("done");
+	//}
     
-    public void ChallengeOne()
-    {
-        SceneManager.LoadScene("1st challenge");
-    }
+	public void ChallengeOne ()
+	{
+		SceneManager.LoadScene ("1st challenge");
+	}
 
-    public void OnMenuClick()
-    {
-        SceneManager.LoadScene("main menu");
-    }
+	public void OnMenuClick ()
+	{
+		SceneManager.LoadScene ("main menu");
+	}
 
-    IEnumerator LoadingMyScene()
-    {
-        yield return new WaitForSeconds(0.5f);
-        float speed = 1;
+	IEnumerator LoadingMyScene ()
+	{
+		yield return new WaitForSeconds (0.5f);
+		float speed = 1;
         
-        while (canvas.alpha <1)
-        {
-            canvas.alpha += speed * Time.deltaTime;
-            yield return null;
-        }
-    }
-    IEnumerator LoadingScene(string sceneName)
-    {
-        float speed = 1;
+		while (canvas.alpha < 1)
+		{
+			canvas.alpha += speed * Time.deltaTime;
+			yield return null;
+		}
+	}
+
+	IEnumerator LoadingScene (string sceneName)
+	{
+		float speed = 1;
         
-        while (canvas.alpha > 0)
-        {
-            canvas.alpha -= speed * Time.deltaTime;
-            yield return null;
-        }
-        SceneManager.LoadScene(sceneName);
-    }
+		while (canvas.alpha > 0)
+		{
+			canvas.alpha -= speed * Time.deltaTime;
+			yield return null;
+		}
+		SceneManager.LoadScene (sceneName);
+	}
 }
