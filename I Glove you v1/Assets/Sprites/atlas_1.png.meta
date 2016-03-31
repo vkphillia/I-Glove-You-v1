@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: acff5652095084fdbaad5736faf92469
-timeCreated: 1459373663
+timeCreated: 1459408566
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -21,7 +21,7 @@ TextureImporter:
     21300028: atlas_1_1
     21300030: atlas_1_2
     21300032: atlas_1_3
-    21300034: atlas_1_4
+    21300034: fx3
     21300036: atlas_1_5
     21300038: life_bg
     21300040: atlas_1_7
@@ -50,10 +50,10 @@ TextureImporter:
     21300086: atlas_1_6
     21300088: atlas_1_9
     21300090: atlas_1_10
-    21300092: atlas_1_11
+    21300092: fx2
     21300094: atlas_1_12
     21300096: atlas_1_13
-    21300098: atlas_1_14
+    21300098: fx1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -155,17 +155,79 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: atlas_1_4
+    - name: fx3
       rect:
         serializedVersion: 2
-        x: 112
-        y: 887
-        width: 13
-        height: 12
+        x: 71
+        y: 822
+        width: 179
+        height: 112
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 67.5, y: -28}
+        - {x: 65.5, y: -30}
+        - {x: 65.5, y: -43}
+        - {x: 67.5, y: -45}
+        - {x: 80.5, y: -45}
+        - {x: 82.5, y: -43}
+        - {x: 82.5, y: -30}
+        - {x: 80.5, y: -28}
+      - - {x: -81.5, y: -15}
+        - {x: -83.5, y: -17}
+        - {x: -83.5, y: -24}
+        - {x: -81.5, y: -26}
+        - {x: -72.5, y: -26}
+        - {x: -72.5, y: -15}
+      - - {x: -55.5, y: -2}
+        - {x: -57.5, y: -4}
+        - {x: -57.5, y: -11}
+        - {x: -55.5, y: -13}
+        - {x: -48.5, y: -13}
+        - {x: -46.5, y: -11}
+        - {x: -46.5, y: -4}
+        - {x: -48.5, y: -2}
+      - - {x: 74.5, y: -2}
+        - {x: 72.5, y: -4}
+        - {x: 72.5, y: -11}
+        - {x: 74.5, y: -13}
+        - {x: 80.5, y: -13}
+        - {x: 82.5, y: -11}
+        - {x: 82.5, y: -4}
+        - {x: 80.5, y: -2}
+      - - {x: -48.5, y: 23}
+        - {x: -50.5, y: 21}
+        - {x: -50.5, y: 9}
+        - {x: -48.5, y: 7}
+        - {x: -35.5, y: 7}
+        - {x: -33.5, y: 9}
+        - {x: -33.5, y: 21}
+        - {x: -35.5, y: 23}
+      - - {x: 46.5, y: 23}
+        - {x: 46.5, y: 7}
+        - {x: 63.5, y: 7}
+        - {x: 63.5, y: 23}
+      - - {x: -83.5, y: 43}
+        - {x: -83.5, y: 26}
+        - {x: -66.5, y: 26}
+        - {x: -66.5, y: 43}
+      - - {x: 22.5, y: 36}
+        - {x: 20.5, y: 34}
+        - {x: 20.5, y: 28}
+        - {x: 22.5, y: 26}
+        - {x: 28.5, y: 26}
+        - {x: 30.5, y: 28}
+        - {x: 30.5, y: 34}
+        - {x: 28.5, y: 36}
+      - - {x: -42.5, y: 43}
+        - {x: -44.5, y: 41}
+        - {x: -44.5, y: 34}
+        - {x: -42.5, y: 32}
+        - {x: -35.5, y: 32}
+        - {x: -33.5, y: 34}
+        - {x: -33.5, y: 41}
+        - {x: -35.5, y: 43}
     - name: atlas_1_5
       rect:
         serializedVersion: 2
@@ -236,7 +298,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: atlas_1_11
+    - name: fx2
       rect:
         serializedVersion: 2
         x: 86
@@ -277,7 +339,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: atlas_1_14
+    - name: fx1
       rect:
         serializedVersion: 2
         x: 102
