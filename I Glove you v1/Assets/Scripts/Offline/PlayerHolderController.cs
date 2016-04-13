@@ -117,7 +117,6 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1, other= player2
 		{   
-			//Debug.Log ("Player 1 gets punched");
 			getPunched (other.transform);
 			OfflineManager.Instance.PlayerHolder2.Punch ();
 
@@ -125,7 +124,6 @@ public class PlayerHolderController : MonoBehaviour
          
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
 		{
-			//Debug.Log ("Player 2 gets punched");
 			getPunched (other.transform);
 			OfflineManager.Instance.PlayerHolder1.Punch ();
 		}	
