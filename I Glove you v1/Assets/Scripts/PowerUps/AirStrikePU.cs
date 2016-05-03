@@ -15,6 +15,7 @@ public class AirStrikePU : PowerUp
 
 	void Awake ()
 	{
+		PlayerHolderController.OnPUReady += FirePU;
 		//Debug.Log ("I am Awake");
 		AllStrikesArr = new Strike[noOfStrikes]; 
 		for (int i = 0; i < noOfStrikes; i++)
@@ -80,6 +81,16 @@ public class AirStrikePU : PowerUp
 			AllStrikesArr [i].myChildBlast.gameObject.SetActive (false);
 			AllStrikesArr [i].gameObject.SetActive (false);
 		}
+	}
+
+	void FirePU ()
+	{
+		StartCoroutine (StrikeNow ());
+	}
+
+	void OnDestroy ()
+	{
+		PlayerHolderController.OnPUReady -= FirePU;
 	}
 
 }

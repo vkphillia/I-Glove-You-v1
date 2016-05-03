@@ -3,17 +3,18 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-
+public delegate void PUReadyEvent ();
 public class PlayerHolderController : MonoBehaviour
 {
+	public static event PUReadyEvent OnPUReady;
+
 	[HideInInspector]	
 	public bool hit;
 
 	[HideInInspector]	
 	public bool hitter;
 
-	//[HideInInspector]
-	public int myHealth;
+
 
 	[HideInInspector]
 	public int roundWins;
@@ -31,8 +32,12 @@ public class PlayerHolderController : MonoBehaviour
 
 
 
+	public int MaxHealth;
+	public float MaxSpeed;
 
+	public int myHealth;
 	public float mySpeed;
+	public int myDamage;
 
 	private Vector3 force;
 	private bool PUHitter;
@@ -58,13 +63,17 @@ public class PlayerHolderController : MonoBehaviour
 	public Sprite myPunchSprite;
 	private Sprite myOriginalSprite;
 
+	public int myPowerPoints;
+	public Text myPowerText_HUD;
+
 	void Start ()
 	{
 		mySprite = GetComponent<SpriteRenderer> ();
 		myOriginalSprite = mySprite.sprite;
-		myHealth = OfflineManager.Instance.MaxHealth;
-		mySpeed = OfflineManager.Instance.MaxSpeed;
+		myHealth = MaxHealth;
+		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
+		myPowerText_HUD.text = myPowerPoints.ToString ();
 
 	}
 
@@ -119,6 +128,7 @@ public class PlayerHolderController : MonoBehaviour
 		{   
 			getPunched (other.transform);
 			OfflineManager.Instance.PlayerHolder2.Punch ();
+			AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
 
 		}
          
@@ -126,6 +136,8 @@ public class PlayerHolderController : MonoBehaviour
 		{
 			getPunched (other.transform);
 			OfflineManager.Instance.PlayerHolder1.Punch ();
+			AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
+
 		}	
 	}
 
@@ -157,11 +169,12 @@ public class PlayerHolderController : MonoBehaviour
 		myWinText_HUD.text = roundWins.ToString ();
 		hit = false;
 		hitter = false;
-		myHealth = OfflineManager.Instance.MaxHealth;
+		myHealth = MaxHealth;
+		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
+		myPowerText_HUD.text = "0";
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
-		mySpeed = OfflineManager.Instance.MaxSpeed;
 		hasGlove = false;
 		myHealthBar.fillAmount = 1;
 	}
@@ -171,10 +184,6 @@ public class PlayerHolderController : MonoBehaviour
 		hit = true;
 		SpawnHit_FX ();
 		transform.rotation = t.rotation; 
-		if (myHealth > 0)
-		{
-			AlterHealth (-1);
-		}	
 	}
 
 
@@ -255,9 +264,9 @@ public class PlayerHolderController : MonoBehaviour
 				FT_Obj.myGreenText.text = amount.ToString ();
 			}
 
-			if ((myHealth + amount) > OfflineManager.Instance.MaxHealth)
+			if ((myHealth + amount) > MaxHealth)
 			{
-				myHealth = OfflineManager.Instance.MaxHealth;
+				myHealth = MaxHealth;
 				myHealthBar.fillAmount = 1f; 
 
 			}
@@ -272,7 +281,7 @@ public class PlayerHolderController : MonoBehaviour
 			else
 			{
 				myHealth += amount;
-				myHealthBar.fillAmount = (float)(myHealth) / OfflineManager.Instance.MaxHealth; 
+				myHealthBar.fillAmount = (float)(myHealth) / MaxHealth; 
 
 				//only play sound when adding health
 				if (amount > 0)
@@ -292,6 +301,27 @@ public class PlayerHolderController : MonoBehaviour
 
 
 		myHealthText_HUD.text = myHealth.ToString ();
+
+
+	}
+
+	public void UpdatePP ()
+	{
+		if (myPowerPoints < 5)
+		{
+			myPowerPoints++;
+			myPowerText_HUD.text = myPowerPoints.ToString ();
+		}
+		if (myPowerPoints == 5)
+		{
+			OfflineManager.Instance.myStrike.gameObject.SetActive (true);
+			//fire PU
+			if (OnPUReady != null)
+			{
+				OnPUReady ();
+			}
+			myPowerPoints = 0;
+		}
 	}
 
 	IEnumerator ChangeHealthBarColor ()

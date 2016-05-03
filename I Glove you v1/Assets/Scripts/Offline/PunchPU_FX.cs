@@ -13,5 +13,8 @@ public class PunchPU_FX : MonoBehaviour
 		yield return new WaitForSeconds (1f);
 		GameObjectPool.GetPool ("PunchPUPool").ReleaseInstance (transform);
 	}
+
+
+
 	
 }

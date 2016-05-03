@@ -96,6 +96,8 @@ public class OfflineManager : MonoBehaviour
 	public Transform topBorder;
 	public Transform botBorder;
 
+	public bool ppCall;
+	public AirStrikePU myStrike;
 
 
 	//sets GameState to RoundStart and sets the sprite for both player
@@ -185,7 +187,7 @@ public class OfflineManager : MonoBehaviour
 			
 			ZoomOut ();
 			myPUController.glove.SetActive (false);
-			myPUController.PU.GetComponent<PowerUp> ().DeactivatePU ();
+			//myPUController.PU.GetComponent<PowerUp> ().DeactivatePU ();
 			PUPicked = true;
 			if (P1Ready && P2Ready)
 			{
@@ -276,6 +278,7 @@ public class OfflineManager : MonoBehaviour
 	//sets the players intital positions, timer and calls for SpawnGlove()
 	public void StartNewRound ()
 	{
+		OfflineManager.Instance.ppCall = false;
 		//roundTimer = MaxRoundTimer;
 		//code for timer
 		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
