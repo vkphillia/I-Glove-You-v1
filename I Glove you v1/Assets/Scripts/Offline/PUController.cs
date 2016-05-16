@@ -41,19 +41,19 @@ public class PUController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			/*	if (OfflineManager.Instance.PUPicked)
+			if (OfflineManager.Instance.PUPicked)
 			{
 				StartCoroutine (SpawnPUCoroutine ());
-			}*/
+			}
 			if (OfflineManager.Instance.glovePicked)
 			{
 				StartCoroutine (SpawnGloveCoroutine ());
 			}
-			if (!OfflineManager.Instance.ppCall)
+			/*if (!OfflineManager.Instance.ppCall)
 			{
 				OfflineManager.Instance.ppCall = true;
 				StartCoroutine (SpawnPowerPointsCoroutine ());
-			}
+			}*/
 
 		}
 		else

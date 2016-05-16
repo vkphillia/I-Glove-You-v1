@@ -196,12 +196,7 @@ public class OfflineManager : MonoBehaviour
 				SceneManager.LoadScene ("offline game");
 			}
 		}
-
-
 	}
-
-
-
 
 	//camera zoom code
 	void ZoomIn ()
@@ -217,8 +212,6 @@ public class OfflineManager : MonoBehaviour
 
 	public void ZoomOut ()
 	{
-		
-		
 
 		//Player1HUDPanel.SetActive (false);
 		//Player2HUDPanel.SetActive (false);

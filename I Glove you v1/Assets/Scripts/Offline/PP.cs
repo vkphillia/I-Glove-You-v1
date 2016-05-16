@@ -33,13 +33,17 @@ public class PP : MonoBehaviour
 		else if (other.gameObject.layer == 9)
 		{
 			Debug.Log ("Player1PPdestroyed");
-			OfflineManager.Instance.PlayerHolder1.PunchPUS (this.transform);
+			OfflineManager.Instance.PlayerHolder1.UpdatePP ();
+
+			//OfflineManager.Instance.PlayerHolder1.PunchPUS (this.transform);
 			GameObjectPool.GetPool ("PPPool").ReleaseInstance (transform);
 		}
 		else if (other.gameObject.layer == 11)
 		{
 			Debug.Log ("Player2PPdestroyed");
-			OfflineManager.Instance.PlayerHolder2.PunchPUS (this.transform);
+			OfflineManager.Instance.PlayerHolder2.UpdatePP ();
+
+			//OfflineManager.Instance.PlayerHolder2.PunchPUS (this.transform);
 			GameObjectPool.GetPool ("PPPool").ReleaseInstance (transform);
 		}
 	}

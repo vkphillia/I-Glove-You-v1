@@ -27,12 +27,57 @@ public class KeyboardController : MonoBehaviour
 	private bool NDown;
 	private bool MDown;
 
+	private int staminaKeYPresscounter;
+	bool a;
+	bool l;
+
+
 	void Update ()
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			KeyboardControls ();
+			/*	if (!a)
+			{
+				OfflineManager.Instance.PlayerHolder1.transform.position += OfflineManager.Instance.PlayerHolder1.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder1.MaxSpeed;
 
+			}
+			else if (a)
+			{
+				OfflineManager.Instance.PlayerHolder1.transform.Rotate (0, 0, 5);
+			
+			}
+			if (Input.GetKeyDown (KeyCode.A))
+			{
+				a = true;
+			}
+			else if (Input.GetKeyUp (KeyCode.A))
+			{
+				a = false;
+			}
+
+
+			if (!l)
+			{
+				OfflineManager.Instance.PlayerHolder2.transform.position += OfflineManager.Instance.PlayerHolder2.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder2.MaxSpeed;
+
+			}
+			else if (l)
+			{
+				OfflineManager.Instance.PlayerHolder2.transform.Rotate (0, 0, 5);
+			
+			}
+			if (Input.GetKeyDown (KeyCode.L))
+			{
+				l = true;
+			}
+			else if (Input.GetKeyUp (KeyCode.L))
+			{
+				l = false;
+			}
+		}*/
+			KeyboardControls ();
+			RegainP1Stamina ();
+			RegainP2Stamina ();
 			if (ZDown)
 			{
 				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
@@ -59,6 +104,10 @@ public class KeyboardController : MonoBehaviour
 						P1ArrowClock.SetActive (false);
 					}
 				}
+			}
+			else if (!XDown && !ZDown)
+			{
+				OfflineManager.Instance.PlayerHolder1.transform.position += OfflineManager.Instance.PlayerHolder1.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder1.MaxSpeed;
 			}
 
 			if (NDown)
@@ -89,6 +138,10 @@ public class KeyboardController : MonoBehaviour
 						P2ArrowClock.SetActive (false);
 					}
 				}
+			}
+			else if (!NDown && !MDown)
+			{
+				OfflineManager.Instance.PlayerHolder2.transform.position += OfflineManager.Instance.PlayerHolder2.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder2.MaxSpeed;
 			}
 		}
 		else
@@ -154,5 +207,44 @@ public class KeyboardController : MonoBehaviour
 	void MoveAntiClockWise (Transform t)
 	{
 		t.Rotate (0, 0, -5);
+	}
+
+	void RegainP2Stamina ()
+	{
+		if (OfflineManager.Instance.PlayerHolder2.waitingForStamina)
+		{
+			if (Input.GetKeyDown (KeyCode.N) || Input.GetKeyDown (KeyCode.M))
+			{
+				staminaKeYPresscounter++;
+				Debug.Log ("staminaKeYPresscounter::" + staminaKeYPresscounter);
+				if (staminaKeYPresscounter >= 5)
+				{
+					OfflineManager.Instance.PlayerHolder2.waitingForStamina = false;
+					OfflineManager.Instance.PlayerHolder2.mySpeed = OfflineManager.Instance.PlayerHolder2.MaxSpeed;
+					StopCoroutine (OfflineManager.Instance.PlayerHolder2.RegainSpeed ());
+					staminaKeYPresscounter = 0;
+				}
+			}
+		}
+	}
+
+	void RegainP1Stamina ()
+	{
+		if (OfflineManager.Instance.PlayerHolder1.waitingForStamina)
+		{
+			if (Input.GetKeyDown (KeyCode.Z) || Input.GetKeyDown (KeyCode.X))
+			{
+				staminaKeYPresscounter++;
+				Debug.Log ("staminaKeYPresscounter::" + staminaKeYPresscounter);
+
+				if (staminaKeYPresscounter >= 5)
+				{
+					OfflineManager.Instance.PlayerHolder1.waitingForStamina = false;
+					OfflineManager.Instance.PlayerHolder1.mySpeed = OfflineManager.Instance.PlayerHolder1.MaxSpeed;
+					StopCoroutine (OfflineManager.Instance.PlayerHolder1.RegainSpeed ());
+					staminaKeYPresscounter = 0;
+				}
+			}
+		}
 	}
 }

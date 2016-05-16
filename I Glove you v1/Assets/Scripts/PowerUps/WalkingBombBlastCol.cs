@@ -19,6 +19,7 @@ public class WalkingBombBlastCol : MonoBehaviour
 			GetComponent<SpriteRenderer> ().enabled = false;
 			StopCoroutine (myParentBomb.ActivateBomb (OfflineManager.Instance.PlayerHolder1));
 			StartCoroutine (myParentBomb.BlastNow (OfflineManager.Instance.PlayerHolder1));
+
 			OfflineManager.Instance.PlayerHolder1.AlterHealth (myParentBomb.damageByBlast);
 			OfflineManager.Instance.PlayerHolder1.getPunched (this.transform);
 			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
@@ -30,6 +31,7 @@ public class WalkingBombBlastCol : MonoBehaviour
 			GetComponent<SpriteRenderer> ().enabled = false;
 			StopCoroutine (myParentBomb.ActivateBomb (OfflineManager.Instance.PlayerHolder2));
 			StartCoroutine (myParentBomb.BlastNow (OfflineManager.Instance.PlayerHolder2));
+
 			OfflineManager.Instance.PlayerHolder2.AlterHealth (myParentBomb.damageByBlast);
 			OfflineManager.Instance.PlayerHolder2.getPunched (this.transform);
 			OfflineManager.Instance.PlayerHolder1.AddGlove ();

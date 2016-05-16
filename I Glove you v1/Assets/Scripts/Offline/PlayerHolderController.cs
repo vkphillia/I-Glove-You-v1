@@ -21,6 +21,8 @@ public class PlayerHolderController : MonoBehaviour
 
 	[HideInInspector]
 	public bool hasGlove;
+	public bool staminaOver;
+	public bool waitingForStamina;
 
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
@@ -59,12 +61,19 @@ public class PlayerHolderController : MonoBehaviour
 	//new health meter
 	public Image myHealthBar;
 
+	//for speed meter
+	public Image mySpeedBar;
+
+
 	//new punch anim
 	public Sprite myPunchSprite;
 	private Sprite myOriginalSprite;
 
 	public int myPowerPoints;
 	public Text myPowerText_HUD;
+
+
+
 
 	void Start ()
 	{
@@ -73,16 +82,56 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myPowerText_HUD.text = myPowerPoints.ToString ();
+		myPowerText_HUD.text = mySpeed.ToString ();
 
 	}
 
 	void Update ()
 	{
-		if (OfflineManager.Instance.currentState == GameState.Playing)
-		{
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.7f, 2.7f), Mathf.Clamp (transform.position.y, -3.8f, 3.7f), 0);
+		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.7f, 2.7f), Mathf.Clamp (transform.position.y, -3.8f, 3.7f), 0);
+	
+		//new controls
+		//transform.position += transform.up * Time.deltaTime * mySpeed;
 
+			
+
+		//old controls
+		/*if (OfflineManager.Instance.currentState == GameState.Playing)
+		{
+			if (!hit && !hitter)
+			{
+				
+		
+		mySpeedBar.fillAmount = (float)(mySpeed) / MaxSpeed; 
+			myPowerText_HUD.text = mySpeed.ToString ();
+			if (hasGlove)
+			{
+				if (mySpeed > 0)
+				{
+					mySpeed -= Time.deltaTime * 1f;
+				}
+				else
+				{
+					mySpeed = 0;
+					staminaOver = true;
+					if (staminaOver && !waitingForStamina)
+					{
+						StartCoroutine (RegainSpeed ());
+					}
+				}
+			}
+			else if (!hasGlove)
+			{
+				//if (mySpeed < MaxSpeed)
+				//{
+				//mySpeed += Time.deltaTime * 1f;
+				//}
+				//else
+				//{
+				mySpeed = MaxSpeed;
+
+				//}
+			}
 
 			if (!hit && !hitter && !PUHitter)
 			{
@@ -105,8 +154,8 @@ public class PlayerHolderController : MonoBehaviour
 				StartCoroutine (MakePUHitterFalse ());
 			}
 
-		}
-		else if (OfflineManager.Instance.currentState == GameState.MatchOver)
+		}*/
+		/*if (OfflineManager.Instance.currentState == GameState.MatchOver)
 		{
 			if (roundWins == 2)
 			{
@@ -117,7 +166,7 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				gameObject.SetActive (false);
 			}
-		}
+		}*/
 	}
 
 
@@ -125,20 +174,63 @@ public class PlayerHolderController : MonoBehaviour
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1, other= player2
-		{   
-			getPunched (other.transform);
-			OfflineManager.Instance.PlayerHolder2.Punch ();
-			AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
-
+		{
+			if (!OfflineManager.Instance.PlayerHolder2.waitingForStamina)
+			{
+				getPunched (other.transform);
+				OfflineManager.Instance.PlayerHolder2.Punch ();
+				AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
+			}
+			else
+			{
+				//steal glove
+				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
+				OfflineManager.Instance.PlayerHolder1.AddGlove ();
+				OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+			}
 		}
+
+		if (this.gameObject.layer == 8 && other.gameObject.layer == 10) // this = player1, other= player2
+		{
+			if (OfflineManager.Instance.PlayerHolder2.waitingForStamina)
+			{
+				//steal glove
+				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
+				OfflineManager.Instance.PlayerHolder1.AddGlove ();
+				OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+			}
+			else if (OfflineManager.Instance.PlayerHolder1.waitingForStamina)
+			{
+				//steal glove
+				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
+				OfflineManager.Instance.PlayerHolder2.AddGlove ();
+				OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+			}
+		}
+
          
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
 		{
-			getPunched (other.transform);
-			OfflineManager.Instance.PlayerHolder1.Punch ();
-			AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
+			
+
+
+			if (!OfflineManager.Instance.PlayerHolder1.waitingForStamina)
+			{
+				getPunched (other.transform);
+				OfflineManager.Instance.PlayerHolder1.Punch ();
+				AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
+			}
+			else
+			{
+				//steal glove
+				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
+				OfflineManager.Instance.PlayerHolder2.AddGlove ();
+				OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+			}
 
 		}	
+
+
 	}
 
 
@@ -177,6 +269,8 @@ public class PlayerHolderController : MonoBehaviour
 		//HitEffectSprite.enabled = false;
 		hasGlove = false;
 		myHealthBar.fillAmount = 1;
+		mySpeedBar.fillAmount = 1;
+
 	}
 
 	public void getPunched (Transform t)
@@ -307,7 +401,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	public void UpdatePP ()
 	{
-		if (myPowerPoints < 5)
+		/*if (myPowerPoints < 5)
 		{
 			myPowerPoints++;
 			myPowerText_HUD.text = myPowerPoints.ToString ();
@@ -321,7 +415,16 @@ public class PlayerHolderController : MonoBehaviour
 				OnPUReady ();
 			}
 			myPowerPoints = 0;
+		}*/
+		if (mySpeed + 2 < MaxSpeed)
+		{
+			mySpeed += 2;
 		}
+		else
+		{
+			mySpeed = MaxSpeed;
+		}
+
 	}
 
 	IEnumerator ChangeHealthBarColor ()
@@ -354,6 +457,16 @@ public class PlayerHolderController : MonoBehaviour
 		Hit_Obj = myPooledHit_FX.GetComponent<GetHit_FX> ();
 		Hit_Obj.transform.position = this.transform.position;
 		Hit_Obj.transform.rotation = Quaternion.identity;
+	}
+
+	public IEnumerator RegainSpeed ()
+	{
+		staminaOver = false;
+		waitingForStamina = true;
+		Debug.Log ("waitingForStamina:: " + waitingForStamina);
+		yield return new WaitForSeconds (3f);
+		mySpeed = MaxSpeed;
+		waitingForStamina = false;
 	}
 
 
