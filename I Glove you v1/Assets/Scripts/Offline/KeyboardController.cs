@@ -36,7 +36,7 @@ public class KeyboardController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			/*	if (!a)
+			if (!a)
 			{
 				OfflineManager.Instance.PlayerHolder1.transform.position += OfflineManager.Instance.PlayerHolder1.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder1.MaxSpeed;
 
@@ -74,8 +74,8 @@ public class KeyboardController : MonoBehaviour
 			{
 				l = false;
 			}
-		}*/
-			KeyboardControls ();
+		}
+		/*KeyboardControls ();
 			RegainP1Stamina ();
 			RegainP2Stamina ();
 			if (ZDown)
@@ -150,7 +150,7 @@ public class KeyboardController : MonoBehaviour
 			XDown = false;
 			NDown = false;
 			MDown = false;
-		}
+		}*/
 		
 	}
 
