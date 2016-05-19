@@ -16,6 +16,10 @@ public class PlayerHolderController : MonoBehaviour
 	[HideInInspector]	
 	public bool hitter;
 
+	[HideInInspector]	
+	public bool justRobbed;
+
+	private BoxCollider2D myCollider;
 
 
 	[HideInInspector]
@@ -69,7 +73,6 @@ public class PlayerHolderController : MonoBehaviour
 	public Sprite myPunchSprite;
 	private Sprite myOriginalSprite;
 
-	public float myTurningSpeed;
 
 
 
@@ -82,7 +85,7 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-
+		myCollider = GetComponent<BoxCollider2D> ();
 
 	}
 
@@ -94,30 +97,37 @@ public class PlayerHolderController : MonoBehaviour
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 
-			if (!hit && !hitter && isTurning && !PUHitter)
+			if (!hit && !hitter && isTurning && !PUHitter && !justRobbed)
 			{
-				transform.position += transform.up * Time.deltaTime * (mySpeed - 2);
-				Debug.Log ("Turning");
+				float tempSpeed = mySpeed - 1;
+				transform.position += transform.up * Time.deltaTime * (tempSpeed);
+				Debug.Log ("mySpeed = " + mySpeed);
+				Debug.Log ("tempSpeed = " + tempSpeed);
 			}
-			else if (!hit && !hitter && !isTurning && !PUHitter)
+			else if (!hit && !hitter && !isTurning && !PUHitter && !justRobbed)
 			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 			}
-			else if (hit)
+			else if (hit && !justRobbed)
 			{
 				transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
 				StartCoroutine (MakeHitFalse ());
 
 			}
-			else if (hitter)
+			else if (hitter && !justRobbed)
 			{
+				transform.Rotate (0, 0, 3);
 				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
 				StartCoroutine (MakeHitterFalse ());
 			}
-			else if (PUHitter)
+			else if (PUHitter && !justRobbed)
 			{
 				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
 				StartCoroutine (MakePUHitterFalse ());
+			}
+			else if (justRobbed)
+			{
+				StartCoroutine (MakeJustRobbedFalse ());
 			}
 
 		}
@@ -143,18 +153,22 @@ public class PlayerHolderController : MonoBehaviour
 
 		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1 without glove, other= player2 with glove
 		{
+			
 			getPunched (other.transform);
 			OfflineManager.Instance.PlayerHolder2.Punch ();
 			AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
+			
+			
 		}
 		else if (this.gameObject.layer == 8 && other.gameObject.layer == 17) // this = player1, other= player2
 		{
 			if (OfflineManager.Instance.PlayerHolder2.hasGlove)
 			{
-				//steal glove
+				OfflineManager.Instance.PlayerHolder2.justRobbed = true;
 				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
 				OfflineManager.Instance.PlayerHolder1.AddGlove ();
 				OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+				
 			}
 		}
 
@@ -162,18 +176,22 @@ public class PlayerHolderController : MonoBehaviour
          
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
 		{
+			
 			getPunched (other.transform);
 			OfflineManager.Instance.PlayerHolder1.Punch ();
 			AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
+			
+			
 		}
 		else if (this.gameObject.layer == 10 && other.gameObject.layer == 16) // this = player1, other= player2
 		{
 			if (OfflineManager.Instance.PlayerHolder1.hasGlove)
 			{
-				//steal glove
+				OfflineManager.Instance.PlayerHolder1.justRobbed = true;
 				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
 				OfflineManager.Instance.PlayerHolder2.AddGlove ();
 				OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+				
 			}
 		}
 
@@ -187,6 +205,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		yield return new WaitForSeconds (.5f);
 		hit = false;
+
 	}
 
 	//this ensures that the player is going int its forward direction after hitting other player
@@ -201,6 +220,16 @@ public class PlayerHolderController : MonoBehaviour
 		yield return new WaitForSeconds (.5f);
 		PUHitter = false;
 	}
+
+	IEnumerator MakeJustRobbedFalse ()
+	{
+		myCollider.enabled = false;
+		yield return new WaitForSeconds (1f);
+		justRobbed = false;
+		myCollider.enabled = true;
+
+	}
+
 
 	//Reset on new Round/Match
 	public void ResetPlayer ()
@@ -278,8 +307,7 @@ public class PlayerHolderController : MonoBehaviour
 	public void AddGlove ()
 	{
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
-		mySpeed = 3;
-		myTurningSpeed = mySpeed - 2;
+		mySpeed = 4;
 		hasGlove = true;
 		mySprite.sprite = myPunchSprite; 
 		myPunchAnim.gameObject.SetActive (true);

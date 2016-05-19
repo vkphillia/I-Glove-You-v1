@@ -43,7 +43,8 @@ public class KeyboardController : MonoBehaviour
 			KeyboardControls ();
 			if (ZDown)
 			{
-				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+				OfflineManager.Instance.PlayerHolder1.isTurning = true;
+				MoveClockWise (OfflineManager.Instance.PlayerHolder1);
 				if (!P1ArrowAntiClock_Done)
 				{
 					P1AntiClockTime -= Time.deltaTime;
@@ -57,7 +58,8 @@ public class KeyboardController : MonoBehaviour
 			}
 			else if (XDown)
 			{
-				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+				OfflineManager.Instance.PlayerHolder1.isTurning = true;
+				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1);
 				if (!P1ArrowClock_Done)
 				{
 					P1ClockTime -= Time.deltaTime;
@@ -72,7 +74,8 @@ public class KeyboardController : MonoBehaviour
 
 			if (NDown)
 			{
-				MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+				OfflineManager.Instance.PlayerHolder2.isTurning = true;
+				MoveClockWise (OfflineManager.Instance.PlayerHolder2);
 				if (!P2ArrowAntiClock_Done)
 				{
 					P2AntiClockTime -= Time.deltaTime;
@@ -87,7 +90,8 @@ public class KeyboardController : MonoBehaviour
 			}
 			else if (MDown)
 			{
-				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+				OfflineManager.Instance.PlayerHolder2.isTurning = true;
+				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2);
 				if (!P2ArrowClock_Done)
 				{
 
@@ -119,13 +123,11 @@ public class KeyboardController : MonoBehaviour
 		{
 			ZDown = true;
 			XDown = false;
-			OfflineManager.Instance.PlayerHolder1.isTurning = true;
 		}
 		else if (Input.GetKeyDown (KeyCode.X))
 		{
 			XDown = true;	
 			ZDown = false;		
-			OfflineManager.Instance.PlayerHolder1.isTurning = true;
 		}
 		else if (Input.GetKeyUp (KeyCode.X))
 		{
@@ -143,13 +145,11 @@ public class KeyboardController : MonoBehaviour
 		{
 			NDown = true;
 			MDown = false;
-			OfflineManager.Instance.PlayerHolder2.isTurning = true;
 		}
 		else if (Input.GetKeyDown (KeyCode.M))
 		{
 			MDown = true;	
 			NDown = false;
-			OfflineManager.Instance.PlayerHolder2.isTurning = true;
 		}
 		else if (Input.GetKeyUp (KeyCode.N))
 		{
@@ -164,16 +164,30 @@ public class KeyboardController : MonoBehaviour
 		
 	}
 
-	void MoveClockWise (Transform t)
+	void MoveClockWise (PlayerHolderController t)
 	{
-		t.Rotate (0, 0, 5);
+		if (t.hasGlove)
+		{
+			t.transform.Rotate (0, 0, 3);
+		}
+		else if (!t.hasGlove && !t.justRobbed)
+		{
+			t.transform.Rotate (0, 0, 6);
+		}
 
 
 	}
 
-	void MoveAntiClockWise (Transform t)
+	void MoveAntiClockWise (PlayerHolderController t)
 	{
-		t.Rotate (0, 0, -5);
+		if (t.hasGlove)
+		{
+			t.transform.Rotate (0, 0, -3);
+		}
+		else if (!t.hasGlove && !t.justRobbed)
+		{
+			t.transform.Rotate (0, 0, -6);
+		}
 
 
 

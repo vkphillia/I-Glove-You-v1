@@ -44,11 +44,11 @@ public class TouchController : MonoBehaviour
 			{
 				if (touch.position.x < Screen.width / 2)
 				{
-					MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+					MoveClockWise (OfflineManager.Instance.PlayerHolder1);
 				}
 				else if (touch.position.x > Screen.width / 2)
 				{
-					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1);
 				}
 				p1Touched = true;
 			}
@@ -58,11 +58,11 @@ public class TouchController : MonoBehaviour
 
 				if (touch.position.x < Screen.width / 2)
 				{
-					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2);
 				}
 				else if (touch.position.x > Screen.width / 2)
 				{
-					MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+					MoveClockWise (OfflineManager.Instance.PlayerHolder2);
 				}
 				p2Touched = true;
 			}
@@ -88,13 +88,30 @@ public class TouchController : MonoBehaviour
 		p2Touched = false;
 	}
 
-	void MoveClockWise (Transform t)
+	void MoveClockWise (PlayerHolderController t)
 	{
-		t.Rotate (0, 0, 5);
+		if (t.hasGlove)
+		{
+			t.transform.Rotate (0, 0, 3);
+		}
+		else if (!t.hasGlove && !t.justRobbed)
+		{
+			t.transform.Rotate (0, 0, 6);
+		}
+
+
 	}
 
-	void MoveAntiClockWise (Transform t)
+	void MoveAntiClockWise (PlayerHolderController t)
 	{
-		t.Rotate (0, 0, -5);
+		if (t.hasGlove)
+		{
+			t.transform.Rotate (0, 0, -3);
+		}
+		else if (!t.hasGlove && !t.justRobbed)
+		{
+			t.transform.Rotate (0, 0, -6);
+		}
+
 	}
 }

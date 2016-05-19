@@ -41,7 +41,7 @@ public class PUController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			/*if (OfflineManager.Instance.PUPicked)
+			if (OfflineManager.Instance.PUPicked)
 			{
 				OfflineManager.Instance.PUPicked = false;
 				StartCoroutine (SpawnPUCoroutine ());
@@ -49,7 +49,7 @@ public class PUController : MonoBehaviour
 			if (OfflineManager.Instance.glovePicked)
 			{
 				StartCoroutine (SpawnGloveCoroutine ());
-			}*/
+			}
 			/*if (!OfflineManager.Instance.ppCall)
 			{
 				OfflineManager.Instance.ppCall = true;
