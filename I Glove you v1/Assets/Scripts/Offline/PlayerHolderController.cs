@@ -9,6 +9,8 @@ public class PlayerHolderController : MonoBehaviour
 	public static event PUReadyEvent OnPUReady;
 
 	[HideInInspector]	
+	public bool isTurning;
+	[HideInInspector]	
 	public bool hit;
 
 	[HideInInspector]	
@@ -21,8 +23,6 @@ public class PlayerHolderController : MonoBehaviour
 
 	[HideInInspector]
 	public bool hasGlove;
-	public bool staminaOver;
-	public bool waitingForStamina;
 
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
@@ -69,8 +69,8 @@ public class PlayerHolderController : MonoBehaviour
 	public Sprite myPunchSprite;
 	private Sprite myOriginalSprite;
 
-	public int myPowerPoints;
-	public Text myPowerText_HUD;
+	public float myTurningSpeed;
+
 
 
 
@@ -82,7 +82,7 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myPowerText_HUD.text = mySpeed.ToString ();
+
 
 	}
 
@@ -90,50 +90,16 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.7f, 2.7f), Mathf.Clamp (transform.position.y, -3.8f, 3.7f), 0);
 	
-		//new controls
-		//transform.position += transform.up * Time.deltaTime * mySpeed;
-
-			
-
 		//old controls
-		/*if (OfflineManager.Instance.currentState == GameState.Playing)
+		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			if (!hit && !hitter)
-			{
-				
-		
-		mySpeedBar.fillAmount = (float)(mySpeed) / MaxSpeed; 
-			myPowerText_HUD.text = mySpeed.ToString ();
-			if (hasGlove)
-			{
-				if (mySpeed > 0)
-				{
-					mySpeed -= Time.deltaTime * 1f;
-				}
-				else
-				{
-					mySpeed = 0;
-					staminaOver = true;
-					if (staminaOver && !waitingForStamina)
-					{
-						StartCoroutine (RegainSpeed ());
-					}
-				}
-			}
-			else if (!hasGlove)
-			{
-				//if (mySpeed < MaxSpeed)
-				//{
-				//mySpeed += Time.deltaTime * 1f;
-				//}
-				//else
-				//{
-				mySpeed = MaxSpeed;
 
-				//}
+			if (!hit && !hitter && isTurning && !PUHitter)
+			{
+				transform.position += transform.up * Time.deltaTime * (mySpeed - 2);
+				Debug.Log ("Turning");
 			}
-
-			if (!hit && !hitter && !PUHitter)
+			else if (!hit && !hitter && !isTurning && !PUHitter)
 			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 			}
@@ -154,8 +120,8 @@ public class PlayerHolderController : MonoBehaviour
 				StartCoroutine (MakePUHitterFalse ());
 			}
 
-		}*/
-		/*if (OfflineManager.Instance.currentState == GameState.MatchOver)
+		}
+		if (OfflineManager.Instance.currentState == GameState.MatchOver)
 		{
 			if (roundWins == 2)
 			{
@@ -166,22 +132,24 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				gameObject.SetActive (false);
 			}
-		}*/
+		}
 	}
 
 
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1, other= player2
+
+
+		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1 without glove, other= player2 with glove
 		{
-			if (!OfflineManager.Instance.PlayerHolder2.waitingForStamina)
-			{
-				getPunched (other.transform);
-				OfflineManager.Instance.PlayerHolder2.Punch ();
-				AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
-			}
-			else
+			getPunched (other.transform);
+			OfflineManager.Instance.PlayerHolder2.Punch ();
+			AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
+		}
+		else if (this.gameObject.layer == 8 && other.gameObject.layer == 17) // this = player1, other= player2
+		{
+			if (OfflineManager.Instance.PlayerHolder2.hasGlove)
 			{
 				//steal glove
 				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
@@ -190,45 +158,25 @@ public class PlayerHolderController : MonoBehaviour
 			}
 		}
 
-		if (this.gameObject.layer == 8 && other.gameObject.layer == 10) // this = player1, other= player2
-		{
-			if (OfflineManager.Instance.PlayerHolder2.waitingForStamina)
-			{
-				//steal glove
-				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
-				OfflineManager.Instance.PlayerHolder1.AddGlove ();
-				OfflineManager.Instance.PlayerHolder2.LoseGlove ();
-			}
-			else if (OfflineManager.Instance.PlayerHolder1.waitingForStamina)
-			{
-				//steal glove
-				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
-				OfflineManager.Instance.PlayerHolder2.AddGlove ();
-				OfflineManager.Instance.PlayerHolder1.LoseGlove ();
-			}
-		}
 
          
 		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
 		{
-			
-
-
-			if (!OfflineManager.Instance.PlayerHolder1.waitingForStamina)
-			{
-				getPunched (other.transform);
-				OfflineManager.Instance.PlayerHolder1.Punch ();
-				AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
-			}
-			else
+			getPunched (other.transform);
+			OfflineManager.Instance.PlayerHolder1.Punch ();
+			AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
+		}
+		else if (this.gameObject.layer == 10 && other.gameObject.layer == 16) // this = player1, other= player2
+		{
+			if (OfflineManager.Instance.PlayerHolder1.hasGlove)
 			{
 				//steal glove
 				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
 				OfflineManager.Instance.PlayerHolder2.AddGlove ();
 				OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 			}
+		}
 
-		}	
 
 
 	}
@@ -257,19 +205,21 @@ public class PlayerHolderController : MonoBehaviour
 	//Reset on new Round/Match
 	public void ResetPlayer ()
 	{
-		gameObject.SetActive (true);		
+		
+		gameObject.SetActive (true);	
 		myWinText_HUD.text = roundWins.ToString ();
 		hit = false;
 		hitter = false;
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myPowerText_HUD.text = "0";
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
-		hasGlove = false;
+		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
 		mySpeedBar.fillAmount = 1;
+			
+
 
 	}
 
@@ -318,6 +268,7 @@ public class PlayerHolderController : MonoBehaviour
 	//removes glove from player when other player get glove
 	public void LoseGlove ()
 	{
+		mySpeed = MaxSpeed;
 		hasGlove = false;
 		mySprite.sprite = myOriginalSprite;
 		myPunchAnim.gameObject.SetActive (false);
@@ -327,8 +278,10 @@ public class PlayerHolderController : MonoBehaviour
 	public void AddGlove ()
 	{
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
+		mySpeed = 3;
+		myTurningSpeed = mySpeed - 2;
 		hasGlove = true;
-		mySprite.sprite = myPunchSprite;
+		mySprite.sprite = myPunchSprite; 
 		myPunchAnim.gameObject.SetActive (true);
 		myPunchAnim.Play ("Punch_Idle");
 	}
@@ -459,15 +412,6 @@ public class PlayerHolderController : MonoBehaviour
 		Hit_Obj.transform.rotation = Quaternion.identity;
 	}
 
-	public IEnumerator RegainSpeed ()
-	{
-		staminaOver = false;
-		waitingForStamina = true;
-		Debug.Log ("waitingForStamina:: " + waitingForStamina);
-		yield return new WaitForSeconds (3f);
-		mySpeed = MaxSpeed;
-		waitingForStamina = false;
-	}
 
 
 }

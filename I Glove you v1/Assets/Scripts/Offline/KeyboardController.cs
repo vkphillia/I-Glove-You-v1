@@ -32,52 +32,15 @@ public class KeyboardController : MonoBehaviour
 	bool l;
 
 
+	bool P1Rotate;
+	bool P2Rotate;
+
 	void Update ()
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			if (!a)
-			{
-				OfflineManager.Instance.PlayerHolder1.transform.position += OfflineManager.Instance.PlayerHolder1.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder1.MaxSpeed;
-
-			}
-			else if (a)
-			{
-				OfflineManager.Instance.PlayerHolder1.transform.Rotate (0, 0, 5);
 			
-			}
-			if (Input.GetKeyDown (KeyCode.A))
-			{
-				a = true;
-			}
-			else if (Input.GetKeyUp (KeyCode.A))
-			{
-				a = false;
-			}
-
-
-			if (!l)
-			{
-				OfflineManager.Instance.PlayerHolder2.transform.position += OfflineManager.Instance.PlayerHolder2.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder2.MaxSpeed;
-
-			}
-			else if (l)
-			{
-				OfflineManager.Instance.PlayerHolder2.transform.Rotate (0, 0, 5);
-			
-			}
-			if (Input.GetKeyDown (KeyCode.L))
-			{
-				l = true;
-			}
-			else if (Input.GetKeyUp (KeyCode.L))
-			{
-				l = false;
-			}
-		}
-		/*KeyboardControls ();
-			RegainP1Stamina ();
-			RegainP2Stamina ();
+			KeyboardControls ();
 			if (ZDown)
 			{
 				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
@@ -105,10 +68,7 @@ public class KeyboardController : MonoBehaviour
 					}
 				}
 			}
-			else if (!XDown && !ZDown)
-			{
-				OfflineManager.Instance.PlayerHolder1.transform.position += OfflineManager.Instance.PlayerHolder1.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder1.MaxSpeed;
-			}
+
 
 			if (NDown)
 			{
@@ -139,10 +99,7 @@ public class KeyboardController : MonoBehaviour
 					}
 				}
 			}
-			else if (!NDown && !MDown)
-			{
-				OfflineManager.Instance.PlayerHolder2.transform.position += OfflineManager.Instance.PlayerHolder2.transform.up * Time.deltaTime * OfflineManager.Instance.PlayerHolder2.MaxSpeed;
-			}
+
 		}
 		else
 		{
@@ -150,7 +107,7 @@ public class KeyboardController : MonoBehaviour
 			XDown = false;
 			NDown = false;
 			MDown = false;
-		}*/
+		}
 		
 	}
 
@@ -162,19 +119,23 @@ public class KeyboardController : MonoBehaviour
 		{
 			ZDown = true;
 			XDown = false;
+			OfflineManager.Instance.PlayerHolder1.isTurning = true;
 		}
 		else if (Input.GetKeyDown (KeyCode.X))
 		{
 			XDown = true;	
 			ZDown = false;		
+			OfflineManager.Instance.PlayerHolder1.isTurning = true;
 		}
 		else if (Input.GetKeyUp (KeyCode.X))
 		{
 			XDown = false;
+			OfflineManager.Instance.PlayerHolder1.isTurning = false;
 		}
 		else if (Input.GetKeyUp (KeyCode.Z))
 		{
 			ZDown = false;
+			OfflineManager.Instance.PlayerHolder1.isTurning = false;
 		}
 
 		//player 2
@@ -182,19 +143,23 @@ public class KeyboardController : MonoBehaviour
 		{
 			NDown = true;
 			MDown = false;
+			OfflineManager.Instance.PlayerHolder2.isTurning = true;
 		}
 		else if (Input.GetKeyDown (KeyCode.M))
 		{
 			MDown = true;	
-			NDown = false;		
+			NDown = false;
+			OfflineManager.Instance.PlayerHolder2.isTurning = true;
 		}
 		else if (Input.GetKeyUp (KeyCode.N))
 		{
 			NDown = false;
+			OfflineManager.Instance.PlayerHolder2.isTurning = false;
 		}
 		else if (Input.GetKeyUp (KeyCode.M))
 		{
 			MDown = false;
+			OfflineManager.Instance.PlayerHolder2.isTurning = false;
 		}
 		
 	}
@@ -202,49 +167,17 @@ public class KeyboardController : MonoBehaviour
 	void MoveClockWise (Transform t)
 	{
 		t.Rotate (0, 0, 5);
+
+
 	}
 
 	void MoveAntiClockWise (Transform t)
 	{
 		t.Rotate (0, 0, -5);
+
+
+
 	}
 
-	void RegainP2Stamina ()
-	{
-		if (OfflineManager.Instance.PlayerHolder2.waitingForStamina)
-		{
-			if (Input.GetKeyDown (KeyCode.N) || Input.GetKeyDown (KeyCode.M))
-			{
-				staminaKeYPresscounter++;
-				Debug.Log ("staminaKeYPresscounter::" + staminaKeYPresscounter);
-				if (staminaKeYPresscounter >= 5)
-				{
-					OfflineManager.Instance.PlayerHolder2.waitingForStamina = false;
-					OfflineManager.Instance.PlayerHolder2.mySpeed = OfflineManager.Instance.PlayerHolder2.MaxSpeed;
-					StopCoroutine (OfflineManager.Instance.PlayerHolder2.RegainSpeed ());
-					staminaKeYPresscounter = 0;
-				}
-			}
-		}
-	}
 
-	void RegainP1Stamina ()
-	{
-		if (OfflineManager.Instance.PlayerHolder1.waitingForStamina)
-		{
-			if (Input.GetKeyDown (KeyCode.Z) || Input.GetKeyDown (KeyCode.X))
-			{
-				staminaKeYPresscounter++;
-				Debug.Log ("staminaKeYPresscounter::" + staminaKeYPresscounter);
-
-				if (staminaKeYPresscounter >= 5)
-				{
-					OfflineManager.Instance.PlayerHolder1.waitingForStamina = false;
-					OfflineManager.Instance.PlayerHolder1.mySpeed = OfflineManager.Instance.PlayerHolder1.MaxSpeed;
-					StopCoroutine (OfflineManager.Instance.PlayerHolder1.RegainSpeed ());
-					staminaKeYPresscounter = 0;
-				}
-			}
-		}
-	}
 }

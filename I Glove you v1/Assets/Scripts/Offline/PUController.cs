@@ -41,14 +41,15 @@ public class PUController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			if (OfflineManager.Instance.PUPicked)
+			/*if (OfflineManager.Instance.PUPicked)
 			{
+				OfflineManager.Instance.PUPicked = false;
 				StartCoroutine (SpawnPUCoroutine ());
 			}
 			if (OfflineManager.Instance.glovePicked)
 			{
 				StartCoroutine (SpawnGloveCoroutine ());
-			}
+			}*/
 			/*if (!OfflineManager.Instance.ppCall)
 			{
 				OfflineManager.Instance.ppCall = true;
@@ -134,7 +135,7 @@ public class PUController : MonoBehaviour
 	public IEnumerator SpawnGloveCoroutine ()
 	{
 		OfflineManager.Instance.glovePicked = false;
-		yield return new WaitForSeconds (7f);
+		yield return new WaitForSeconds (10f);
 		SpawnGlove ();
 	}
 

@@ -22,11 +22,15 @@ public class TouchController : MonoBehaviour
 	private int staminaKeYPresscounter;
 
 
+	private bool p1Touched;
+	private bool p2Touched;
+
 
 	void Update ()
 	{
 		MobileControls ();
 	}
+
 
 	void MobileControls ()
 	{
@@ -36,26 +40,52 @@ public class TouchController : MonoBehaviour
 		{
 			Touch touch = Input.GetTouch (i);
 
-			if (touch.position.x < Screen.width / 2 && touch.position.y < Screen.height / 2)
-			{	
-				MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+			if (touch.position.y < Screen.height / 2)
+			{
+				if (touch.position.x < Screen.width / 2)
+				{
+					MoveClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+				}
+				else if (touch.position.x > Screen.width / 2)
+				{
+					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
+				}
+				p1Touched = true;
 			}
 
-			if (touch.position.x > Screen.width / 2 && touch.position.y < Screen.height / 2)
-			{	
-				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1.transform);
-			}
+			if (touch.position.y > Screen.height / 2)
+			{
 
-			if (touch.position.x < Screen.width / 2 && touch.position.y > Screen.height / 2)
-			{	
-				MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
-			}
-
-			if (touch.position.x > Screen.width / 2 && touch.position.y > Screen.height / 2)
-			{	
-				MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+				if (touch.position.x < Screen.width / 2)
+				{
+					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+				}
+				else if (touch.position.x > Screen.width / 2)
+				{
+					MoveClockWise (OfflineManager.Instance.PlayerHolder2.transform);
+				}
+				p2Touched = true;
 			}
 		}
+		if (!p1Touched)
+		{
+			OfflineManager.Instance.PlayerHolder1.isTurning = false;
+		}
+		else
+		{
+			OfflineManager.Instance.PlayerHolder1.isTurning = true;
+		}
+
+		if (!p2Touched)
+		{
+			OfflineManager.Instance.PlayerHolder2.isTurning = false;
+		}
+		else
+		{
+			OfflineManager.Instance.PlayerHolder2.isTurning = true;
+		}
+		p1Touched = false;
+		p2Touched = false;
 	}
 
 	void MoveClockWise (Transform t)
@@ -67,9 +97,4 @@ public class TouchController : MonoBehaviour
 	{
 		t.Rotate (0, 0, -5);
 	}
-
-
-
-
-
 }

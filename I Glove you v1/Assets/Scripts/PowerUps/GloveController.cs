@@ -3,18 +3,11 @@ using System.Collections;
 
 public class GloveController : MonoBehaviour
 {
-	
-
-
-
 	void OnEnable ()
 	{
 		GetComponent<SpriteRenderer> ().enabled = true;
 		GetComponent<BoxCollider2D> ().enabled = true;
-
 	}
-
-
 
 	public virtual void OnTriggerEnter2D (Collider2D other)
 	{
@@ -47,11 +40,6 @@ public class GloveController : MonoBehaviour
 			gameObject.SetActive (false);
 		}
 	}
-
-
-
-
-
 
 	void OnDisable ()
 	{

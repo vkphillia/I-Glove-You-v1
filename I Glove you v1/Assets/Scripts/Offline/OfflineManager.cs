@@ -136,6 +136,8 @@ public class OfflineManager : MonoBehaviour
         
 		//RoundPanel.gameObject.SetActive(true);
 		RoundPanel.ShowRoundPanel ();
+
+
         
 	}
     
