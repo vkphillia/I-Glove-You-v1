@@ -100,6 +100,13 @@ public class OfflineManager : MonoBehaviour
 	public AirStrikePU myStrike;
 
 
+	//for testing only
+	public bool test_speedChange;
+	public bool test_PUOn;
+	public bool test_GloveOn;
+
+
+
 	//sets GameState to RoundStart and sets the sprite for both player
 	void OnEnable ()
 	{

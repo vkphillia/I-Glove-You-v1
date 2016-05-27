@@ -19,7 +19,7 @@ public class PlayerHolderController : MonoBehaviour
 	[HideInInspector]	
 	public bool justRobbed;
 
-	private BoxCollider2D myCollider;
+	private CircleCollider2D myCollider;
 
 
 	[HideInInspector]
@@ -30,6 +30,8 @@ public class PlayerHolderController : MonoBehaviour
 
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
+
+	private Animator myWalkAnim;
 
 	private SpriteRenderer mySprite;
 
@@ -85,7 +87,8 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myCollider = GetComponent<BoxCollider2D> ();
+		myCollider = GetComponent<CircleCollider2D> ();
+		myWalkAnim = GetComponent<Animator> ();
 
 	}
 
@@ -99,10 +102,17 @@ public class PlayerHolderController : MonoBehaviour
 
 			if (!hit && !hitter && isTurning && !PUHitter && !justRobbed)
 			{
-				float tempSpeed = mySpeed - 1;
-				transform.position += transform.up * Time.deltaTime * (tempSpeed);
-				Debug.Log ("mySpeed = " + mySpeed);
-				Debug.Log ("tempSpeed = " + tempSpeed);
+				if (OfflineManager.Instance.test_speedChange)
+				{
+					float tempSpeed = mySpeed - 2;
+					transform.position += transform.up * Time.deltaTime * (tempSpeed);
+				}
+				else
+				{
+					transform.position += transform.up * Time.deltaTime * (mySpeed);
+				}
+
+
 			}
 			else if (!hit && !hitter && !isTurning && !PUHitter && !justRobbed)
 			{
@@ -110,14 +120,14 @@ public class PlayerHolderController : MonoBehaviour
 			}
 			else if (hit && !justRobbed)
 			{
-				transform.position += transform.up * Time.deltaTime * (mySpeed + 2);
+				transform.position += transform.up * Time.deltaTime * (mySpeed + 1);
 				StartCoroutine (MakeHitFalse ());
 
 			}
 			else if (hitter && !justRobbed)
 			{
-				transform.Rotate (0, 0, 3);
-				transform.position += transform.up * Time.deltaTime * (-mySpeed + 1);
+				transform.Rotate (0, 0, 2);
+				transform.position += transform.up * Time.deltaTime * (-mySpeed);
 				StartCoroutine (MakeHitterFalse ());
 			}
 			else if (PUHitter && !justRobbed)
@@ -127,6 +137,7 @@ public class PlayerHolderController : MonoBehaviour
 			}
 			else if (justRobbed)
 			{
+				//myCollider.enabled = false;
 				StartCoroutine (MakeJustRobbedFalse ());
 			}
 
@@ -162,7 +173,7 @@ public class PlayerHolderController : MonoBehaviour
 		}
 		else if (this.gameObject.layer == 8 && other.gameObject.layer == 17) // this = player1, other= player2
 		{
-			if (OfflineManager.Instance.PlayerHolder2.hasGlove)
+			if (OfflineManager.Instance.PlayerHolder2.hasGlove && !OfflineManager.Instance.PlayerHolder1.justRobbed)
 			{
 				OfflineManager.Instance.PlayerHolder2.justRobbed = true;
 				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
@@ -185,7 +196,7 @@ public class PlayerHolderController : MonoBehaviour
 		}
 		else if (this.gameObject.layer == 10 && other.gameObject.layer == 16) // this = player1, other= player2
 		{
-			if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+			if (OfflineManager.Instance.PlayerHolder1.hasGlove && !OfflineManager.Instance.PlayerHolder2.justRobbed)
 			{
 				OfflineManager.Instance.PlayerHolder1.justRobbed = true;
 				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
@@ -223,10 +234,9 @@ public class PlayerHolderController : MonoBehaviour
 
 	IEnumerator MakeJustRobbedFalse ()
 	{
-		myCollider.enabled = false;
 		yield return new WaitForSeconds (1f);
 		justRobbed = false;
-		myCollider.enabled = true;
+		//myCollider.enabled = true;
 
 	}
 
@@ -301,17 +311,35 @@ public class PlayerHolderController : MonoBehaviour
 		hasGlove = false;
 		mySprite.sprite = myOriginalSprite;
 		myPunchAnim.gameObject.SetActive (false);
+		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
+		{
+			myWalkAnim.Play ("P1Boxer_Idle1");
+		}
+		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+		{
+			myWalkAnim.Play ("Boxer_Idle1");
+		}
 	}
 
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
 	{
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
-		mySpeed = 4;
+
+		//mySpeed -= 1;
+		
 		hasGlove = true;
 		mySprite.sprite = myPunchSprite; 
 		myPunchAnim.gameObject.SetActive (true);
 		myPunchAnim.Play ("Punch_Idle");
+		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+		{
+			myWalkAnim.Play ("P1Boxer_Idle");
+		}
+		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
+		{
+			myWalkAnim.Play ("Boxer_Idle");
+		}
 	}
 
 	//increase or decreases the health of the player based on the amount

@@ -32,8 +32,8 @@ public class PUController : MonoBehaviour
 
 	void Start ()
 	{
-		OfflineManager.Instance.PUPicked = true;
-		OfflineManager.Instance.ppCall = false;
+		//OfflineManager.Instance.PUPicked = true;
+		//OfflineManager.Instance.ppCall = false;
 
 	}
 
@@ -41,15 +41,16 @@ public class PUController : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			if (OfflineManager.Instance.PUPicked)
+			if (OfflineManager.Instance.PUPicked && OfflineManager.Instance.test_PUOn)
 			{
 				OfflineManager.Instance.PUPicked = false;
 				StartCoroutine (SpawnPUCoroutine ());
 			}
-			if (OfflineManager.Instance.glovePicked)
+
+			/*if (OfflineManager.Instance.glovePicked && OfflineManager.Instance.test_GloveOn)
 			{
 				StartCoroutine (SpawnGloveCoroutine ());
-			}
+			}*/
 			/*if (!OfflineManager.Instance.ppCall)
 			{
 				OfflineManager.Instance.ppCall = true;
@@ -60,7 +61,7 @@ public class PUController : MonoBehaviour
 		else
 		{
 			StopCoroutine (SpawnPUCoroutine ());
-			StopCoroutine (SpawnGloveCoroutine ());
+			//StopCoroutine (SpawnGloveCoroutine ());
 		}
 	}
 
@@ -73,7 +74,7 @@ public class PUController : MonoBehaviour
 		int PUIndex = GetPUIndex ();
 		PU = PUList [PUIndex];
 
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (5f);
 		PU.SetActive (true);
 		SpawnAnything (PU);
 	}
@@ -135,7 +136,7 @@ public class PUController : MonoBehaviour
 	public IEnumerator SpawnGloveCoroutine ()
 	{
 		OfflineManager.Instance.glovePicked = false;
-		yield return new WaitForSeconds (10f);
+		yield return new WaitForSeconds (15f);
 		SpawnGlove ();
 	}
 

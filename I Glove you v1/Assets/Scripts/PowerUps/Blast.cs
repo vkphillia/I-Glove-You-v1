@@ -7,22 +7,22 @@ public class Blast : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if ((other.gameObject.layer == 8 && OfflineManager.Instance.PlayerHolder1.hasGlove))
+		if ((other.gameObject.layer == 8 && OfflineManager.Instance.PlayerHolder1.hasGlove) || other.gameObject.layer == 9)
 		{
 			Debug.Log ("GotBombed");
 			OfflineManager.Instance.PlayerHolder1.getPunched (this.transform);
 			OfflineManager.Instance.PlayerHolder1.AlterHealth (myParentPU.damage);
-			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
-			OfflineManager.Instance.PlayerHolder2.AddGlove ();
+
+
 		}
-		else if ((other.gameObject.layer == 10 && OfflineManager.Instance.PlayerHolder2.hasGlove))
+		else if ((other.gameObject.layer == 10 && OfflineManager.Instance.PlayerHolder2.hasGlove) || other.gameObject.layer == 11)
 		{
 			Debug.Log ("GotBombed");
 
 			OfflineManager.Instance.PlayerHolder2.getPunched (this.transform);
 			OfflineManager.Instance.PlayerHolder2.AlterHealth (myParentPU.damage);
-			OfflineManager.Instance.PlayerHolder1.AddGlove ();
-			OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+
+
 		}
 	}
 }

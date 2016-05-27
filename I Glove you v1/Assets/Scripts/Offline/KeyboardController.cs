@@ -166,13 +166,21 @@ public class KeyboardController : MonoBehaviour
 
 	void MoveClockWise (PlayerHolderController t)
 	{
-		if (t.hasGlove)
+		if (OfflineManager.Instance.test_speedChange)
 		{
-			t.transform.Rotate (0, 0, 3);
+			if (t.hasGlove)
+			{
+				t.transform.Rotate (0, 0, 4);
+			}
+			else if (!t.hasGlove && !t.justRobbed)
+			{
+				t.transform.Rotate (0, 0, 6);
+			}
 		}
-		else if (!t.hasGlove && !t.justRobbed)
+		else
 		{
 			t.transform.Rotate (0, 0, 6);
+		
 		}
 
 
@@ -180,18 +188,27 @@ public class KeyboardController : MonoBehaviour
 
 	void MoveAntiClockWise (PlayerHolderController t)
 	{
-		if (t.hasGlove)
+		if (OfflineManager.Instance.test_speedChange)
 		{
-			t.transform.Rotate (0, 0, -3);
+			if (t.hasGlove)
+			{
+				t.transform.Rotate (0, 0, -4);
+			}
+			else if (!t.hasGlove && !t.justRobbed)
+			{
+				t.transform.Rotate (0, 0, -6);
+			}
 		}
-		else if (!t.hasGlove && !t.justRobbed)
+		else
 		{
 			t.transform.Rotate (0, 0, -6);
+		
 		}
-
-
-
 	}
 
 
+
 }
+
+
+
