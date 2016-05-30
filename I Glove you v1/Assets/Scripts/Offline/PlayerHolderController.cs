@@ -256,7 +256,6 @@ public class PlayerHolderController : MonoBehaviour
 		//HitEffectSprite.enabled = false;
 		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
-		mySpeedBar.fillAmount = 1;
 			
 
 
