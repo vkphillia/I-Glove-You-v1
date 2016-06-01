@@ -94,7 +94,7 @@ public class TouchController : MonoBehaviour
 		{
 			t.transform.Rotate (0, 0, 3);
 		}
-		else if (!t.hasGlove && !t.justRobbed)
+		else if (!t.hasGlove && !t.lyingDead)
 		{
 			t.transform.Rotate (0, 0, 6);
 		}
@@ -108,7 +108,7 @@ public class TouchController : MonoBehaviour
 		{
 			t.transform.Rotate (0, 0, -3);
 		}
-		else if (!t.hasGlove && !t.justRobbed)
+		else if (!t.hasGlove && !t.lyingDead)
 		{
 			t.transform.Rotate (0, 0, -6);
 		}

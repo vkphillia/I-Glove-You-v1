@@ -172,7 +172,7 @@ public class KeyboardController : MonoBehaviour
 			{
 				t.transform.Rotate (0, 0, 4);
 			}
-			else if (!t.hasGlove && !t.justRobbed)
+			else if (!t.hasGlove && !t.lyingDead)
 			{
 				t.transform.Rotate (0, 0, 6);
 			}
@@ -194,7 +194,7 @@ public class KeyboardController : MonoBehaviour
 			{
 				t.transform.Rotate (0, 0, -4);
 			}
-			else if (!t.hasGlove && !t.justRobbed)
+			else if (!t.hasGlove && !t.lyingDead)
 			{
 				t.transform.Rotate (0, 0, -6);
 			}

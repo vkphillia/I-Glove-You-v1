@@ -3,10 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-public delegate void PUReadyEvent ();
 public class PlayerHolderController : MonoBehaviour
 {
-	public static event PUReadyEvent OnPUReady;
 
 	[HideInInspector]	
 	public bool isTurning;
@@ -17,7 +15,9 @@ public class PlayerHolderController : MonoBehaviour
 	public bool hitter;
 
 	[HideInInspector]	
-	public bool justRobbed;
+	public bool lyingDead;
+
+	private bool justRobbed;
 
 	private CircleCollider2D myCollider;
 
@@ -31,7 +31,8 @@ public class PlayerHolderController : MonoBehaviour
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
 
-	private Animator myWalkAnim;
+
+	public Animator myWalkAnim;
 
 	private SpriteRenderer mySprite;
 
@@ -79,7 +80,6 @@ public class PlayerHolderController : MonoBehaviour
 
 
 
-
 	void Start ()
 	{
 		mySprite = GetComponent<SpriteRenderer> ();
@@ -100,8 +100,9 @@ public class PlayerHolderController : MonoBehaviour
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 
-			if (!hit && !hitter && isTurning && !PUHitter && !justRobbed)
+			if (!hit && !hitter && isTurning && !PUHitter && !lyingDead)
 			{
+
 				if (OfflineManager.Instance.test_speedChange)
 				{
 					float tempSpeed = mySpeed - 2;
@@ -114,33 +115,27 @@ public class PlayerHolderController : MonoBehaviour
 
 
 			}
-			else if (!hit && !hitter && !isTurning && !PUHitter && !justRobbed)
+			else if (!hit && !hitter && !isTurning && !PUHitter && !lyingDead)
 			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 			}
-			else if (hit && !justRobbed)
+			else if (hit && !lyingDead)
 			{
 				transform.position += transform.up * Time.deltaTime * (mySpeed + 1);
 				StartCoroutine (MakeHitFalse ());
 
 			}
-			else if (hitter && !justRobbed)
+			else if (hitter && !lyingDead)
 			{
-				transform.Rotate (0, 0, 2);
+				transform.Rotate (0, 0, 1);
 				transform.position += transform.up * Time.deltaTime * (-mySpeed);
 				StartCoroutine (MakeHitterFalse ());
 			}
-			else if (PUHitter && !justRobbed)
+			else if (PUHitter && !lyingDead)
 			{
 				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
 				StartCoroutine (MakePUHitterFalse ());
 			}
-			else if (justRobbed)
-			{
-				//myCollider.enabled = false;
-				StartCoroutine (MakeJustRobbedFalse ());
-			}
-
 		}
 		if (OfflineManager.Instance.currentState == GameState.MatchOver)
 		{
@@ -149,10 +144,7 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 				transform.Rotate (0, 0, 5);
 			}
-			else
-			{
-				gameObject.SetActive (false);
-			}
+
 		}
 	}
 
@@ -160,54 +152,59 @@ public class PlayerHolderController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-
-
-		if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1 without glove, other= player2 with glove
+		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			
-			getPunched (other.transform);
-			OfflineManager.Instance.PlayerHolder2.Punch ();
-			AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
-			
-			
-		}
-		else if (this.gameObject.layer == 8 && other.gameObject.layer == 17) // this = player1, other= player2
-		{
-			if (OfflineManager.Instance.PlayerHolder2.hasGlove && !OfflineManager.Instance.PlayerHolder1.justRobbed)
+			if (this.gameObject.layer == 8 && other.gameObject.layer == 11) // this = player1 without glove, other= player2 with glove
 			{
-				OfflineManager.Instance.PlayerHolder2.justRobbed = true;
-				OfflineManager.Instance.PlayerHolder2.getPunched (other.transform);
-				OfflineManager.Instance.PlayerHolder1.AddGlove ();
-				OfflineManager.Instance.PlayerHolder2.LoseGlove ();
-				
+				if (!OfflineManager.Instance.PlayerHolder2.lyingDead)
+				{
+					getPunched (other.transform);
+					OfflineManager.Instance.PlayerHolder2.Punch ();
+					AlterHealth (-OfflineManager.Instance.PlayerHolder1.myDamage);
+				}
+
+			
+			
 			}
-		}
+			else if (this.gameObject.layer == 8 && other.gameObject.layer == 17) // this = player1, other= player2
+			{
+				if (OfflineManager.Instance.PlayerHolder2.hasGlove && !OfflineManager.Instance.PlayerHolder1.lyingDead)
+				{
+					//OfflineManager.Instance.PlayerHolder2.justRobbed = true;
+					//OfflineManager.Instance.PlayerHolder2.lyingDead = true;
+
+					OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+					OfflineManager.Instance.PlayerHolder1.AddGlove ();
+					StartCoroutine (OfflineManager.Instance.PlayerHolder2.MakeLyingDeadFalse ());
+
+				}
+			}
 
 
          
-		if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
-		{
-			
-			getPunched (other.transform);
-			OfflineManager.Instance.PlayerHolder1.Punch ();
-			AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
-			
-			
-		}
-		else if (this.gameObject.layer == 10 && other.gameObject.layer == 16) // this = player1, other= player2
-		{
-			if (OfflineManager.Instance.PlayerHolder1.hasGlove && !OfflineManager.Instance.PlayerHolder2.justRobbed)
+			if (this.gameObject.layer == 10 && other.gameObject.layer == 9)
 			{
-				OfflineManager.Instance.PlayerHolder1.justRobbed = true;
-				OfflineManager.Instance.PlayerHolder1.getPunched (other.transform);
-				OfflineManager.Instance.PlayerHolder2.AddGlove ();
-				OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+				if (!OfflineManager.Instance.PlayerHolder1.lyingDead)
+				{
+					getPunched (other.transform);
+					OfflineManager.Instance.PlayerHolder1.Punch ();
+					AlterHealth (-OfflineManager.Instance.PlayerHolder2.myDamage);
+				}
+			}
+			else if (this.gameObject.layer == 10 && other.gameObject.layer == 16) // this = player1, other= player2
+			{
+				if (OfflineManager.Instance.PlayerHolder1.hasGlove && !OfflineManager.Instance.PlayerHolder2.lyingDead)
+				{
+					//OfflineManager.Instance.PlayerHolder1.justRobbed = true;
+					//OfflineManager.Instance.PlayerHolder1.lyingDead = true;
+					OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+					OfflineManager.Instance.PlayerHolder2.AddGlove ();
+					//OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
+					StartCoroutine (OfflineManager.Instance.PlayerHolder1.MakeLyingDeadFalse ());
 				
+				}
 			}
 		}
-
-
-
 	}
 
 
@@ -235,7 +232,7 @@ public class PlayerHolderController : MonoBehaviour
 	IEnumerator MakeJustRobbedFalse ()
 	{
 		yield return new WaitForSeconds (1f);
-		justRobbed = false;
+		lyingDead = false;
 		//myCollider.enabled = true;
 
 	}
@@ -246,6 +243,8 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		
 		gameObject.SetActive (true);	
+		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle");
+		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle");
 		myWinText_HUD.text = roundWins.ToString ();
 		hit = false;
 		hitter = false;
@@ -256,6 +255,7 @@ public class PlayerHolderController : MonoBehaviour
 		//HitEffectSprite.enabled = false;
 		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
+
 			
 
 
@@ -309,27 +309,51 @@ public class PlayerHolderController : MonoBehaviour
 		mySpeed = MaxSpeed;
 		hasGlove = false;
 		mySprite.sprite = myOriginalSprite;
+		StartCoroutine (GloveDisappear ());
+	}
+
+	IEnumerator GloveDisappear ()
+	{
+		myPunchAnim.Play ("Punch_Disappear");
+		//StartCoroutine (StartWalking ());
+		yield return new WaitForSeconds (0.5f);
 		myPunchAnim.gameObject.SetActive (false);
+
+	}
+
+	/*public IEnumerator StartWalking ()
+	{
+		Debug.Log ("CoroutineStarted");
+		yield return new WaitForSeconds (1f);
 		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
 		{
-			myWalkAnim.Play ("P1Boxer_Idle1");
+			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle1");
+			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle");
 		}
-		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+		else if (OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
-			myWalkAnim.Play ("Boxer_Idle1");
+			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle");
+			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle1");
 		}
-	}
+	}*/
 
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
 	{
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
-
-		//mySpeed -= 1;
-		
 		hasGlove = true;
 		mySprite.sprite = myPunchSprite; 
 		myPunchAnim.gameObject.SetActive (true);
+		StartCoroutine (GloveAppear ());
+	}
+
+
+	IEnumerator GloveAppear ()
+	{
+		Debug.Log ("playing GloveAppear anim");
+		myPunchAnim.Play ("Punch_Appear");
+		yield return new WaitForSeconds (0.5f);
+
 		myPunchAnim.Play ("Punch_Idle");
 		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
@@ -377,6 +401,7 @@ public class PlayerHolderController : MonoBehaviour
 				myHealth = 0;
 				myHealthBar.fillAmount = 0f; 
 
+
 				//code for checking who wins the round and stops the round
 				OfflineManager.Instance.CheckRoundStatus ();
 			}
@@ -400,40 +425,12 @@ public class PlayerHolderController : MonoBehaviour
 
 		}
 
-
-
 		myHealthText_HUD.text = myHealth.ToString ();
 
 
 	}
 
-	public void UpdatePP ()
-	{
-		/*if (myPowerPoints < 5)
-		{
-			myPowerPoints++;
-			myPowerText_HUD.text = myPowerPoints.ToString ();
-		}
-		if (myPowerPoints == 5)
-		{
-			OfflineManager.Instance.myStrike.gameObject.SetActive (true);
-			//fire PU
-			if (OnPUReady != null)
-			{
-				OnPUReady ();
-			}
-			myPowerPoints = 0;
-		}*/
-		if (mySpeed + 2 < MaxSpeed)
-		{
-			mySpeed += 2;
-		}
-		else
-		{
-			mySpeed = MaxSpeed;
-		}
 
-	}
 
 	IEnumerator ChangeHealthBarColor ()
 	{
@@ -465,6 +462,36 @@ public class PlayerHolderController : MonoBehaviour
 		Hit_Obj = myPooledHit_FX.GetComponent<GetHit_FX> ();
 		Hit_Obj.transform.position = this.transform.position;
 		Hit_Obj.transform.rotation = Quaternion.identity;
+	}
+
+	public IEnumerator MakeLyingDeadFalse ()
+	{
+		lyingDead = true;
+		if (OfflineManager.Instance.PlayerHolder1.lyingDead)
+		{
+			Debug.Log ("P1IsLyingDead");
+			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
+		}
+		else if (OfflineManager.Instance.PlayerHolder2.lyingDead)
+		{
+			Debug.Log ("P2IsLyingDead");
+			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_dead");
+		}
+		yield return new WaitForSeconds (1f);
+		Debug.Log ("waited for 1 sec");
+		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+		{
+			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle");
+			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle1");
+
+		}
+		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
+		{
+			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle");
+			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle1");
+		}
+		lyingDead = false; //start moving forward
+		Debug.Log (lyingDead);
 	}
 
 

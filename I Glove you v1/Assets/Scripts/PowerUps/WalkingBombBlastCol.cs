@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate void BombHitEvent (PlayerHolderController p);
+
 public class WalkingBombBlastCol : MonoBehaviour
 {
+	public static event BombHitEvent OnHit;
+
 	private WalkingBombPU myParentBomb;
 
 	void Awake ()
@@ -21,7 +25,16 @@ public class WalkingBombBlastCol : MonoBehaviour
 			StartCoroutine (myParentBomb.BlastNow (OfflineManager.Instance.PlayerHolder1));
 
 			OfflineManager.Instance.PlayerHolder1.AlterHealth (myParentBomb.damageByBlast);
-			OfflineManager.Instance.PlayerHolder1.getPunched (this.transform);
+			if (OnHit != null)
+			{
+				OnHit (OfflineManager.Instance.PlayerHolder1);
+			}
+			//StartCoroutine (OfflineManager.Instance.PlayerHolder1.MakeLyingDeadFalse ());
+
+			//OfflineManager.Instance.PlayerHolder1.lyingDead = true;
+			//OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
+			//StartCoroutine (OfflineManager.Instance.PlayerHolder1.StartWalking ());
+
 
 
 		}
@@ -33,7 +46,16 @@ public class WalkingBombBlastCol : MonoBehaviour
 			StartCoroutine (myParentBomb.BlastNow (OfflineManager.Instance.PlayerHolder2));
 
 			OfflineManager.Instance.PlayerHolder2.AlterHealth (myParentBomb.damageByBlast);
-			OfflineManager.Instance.PlayerHolder2.getPunched (this.transform);
+			if (OnHit != null)
+			{
+				OnHit (OfflineManager.Instance.PlayerHolder2);
+			}
+
+
+			//StartCoroutine (OfflineManager.Instance.PlayerHolder2.MakeLyingDeadFalse ());
+			//OfflineManager.Instance.PlayerHolder2.lyingDead = true;
+			//OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_dead");
+
 
 
 		}

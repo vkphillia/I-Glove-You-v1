@@ -80,11 +80,8 @@ public class OfflineManager : MonoBehaviour
 
 	public PUController myPUController;
 
-	//for rematch
-	private bool P1Ready;
-	private bool P2Ready;
-	public Text P1ReadtText;
-	public Text P2ReadtText;
+
+
 
 	public GameObject pauseBtn;
 
@@ -96,8 +93,6 @@ public class OfflineManager : MonoBehaviour
 	public Transform topBorder;
 	public Transform botBorder;
 
-	public bool ppCall;
-	public AirStrikePU myStrike;
 
 
 	//for testing only
@@ -106,6 +101,11 @@ public class OfflineManager : MonoBehaviour
 	public bool test_GloveOn;
 
 
+	void Awake ()
+	{
+		Blast.OnHit += makePlayerFall;
+		WalkingBombBlastCol.OnHit += makePlayerFall;
+	}
 
 	//sets GameState to RoundStart and sets the sprite for both player
 	void OnEnable ()
@@ -116,7 +116,6 @@ public class OfflineManager : MonoBehaviour
 		//Debug.Log (OfflineMenuController.Player1CharacterID);
 		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
 		//Debug.Log (OfflineMenuController.Player2CharacterID);
-
 	}
 
 
@@ -124,8 +123,7 @@ public class OfflineManager : MonoBehaviour
 	//sets the player intital position and calls ShowRoundPanel()
 	void Start ()
 	{
-		P1ReadtText.text = "Re-Match";
-		P2ReadtText.text = "Re-Match";
+		
 		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
 		leftBorder.position = new Vector3 (-screenSizeInWord.x + .1f, 0, 0);
 		rightBorder.position = new Vector3 (screenSizeInWord.x - .1f, 0, 0);
@@ -170,24 +168,7 @@ public class OfflineManager : MonoBehaviour
 			}
 		}*/
 		
-		if (currentState == GameState.Playing)
-		{
-			
-
-			//Timer controller
-			//roundTimer -= Time.deltaTime;
-			//code for timer
-			//GetComponentInChildren<ProgressBar> ().UpdateBar ((int)roundTimer);
-
-			//timerText_HUD.text = roundTimer.ToString ("N0");
-
-			/*if (roundTimer <= 0)
-			{
-				//Times up and round is over
-				CheckRoundStatus ();
-			}*/
-		}
-		else if (currentState == GameState.Fight)
+		if (currentState == GameState.Fight)
 		{
 			ZoomIn ();
 		}
@@ -198,12 +179,7 @@ public class OfflineManager : MonoBehaviour
 			myPUController.glove.SetActive (false);
 			//myPUController.PU.GetComponent<PowerUp> ().DeactivatePU ();
 			PUPicked = true;
-			if (P1Ready && P2Ready)
-			{
-				P1Ready = false;
-				P2Ready = false;
-				SceneManager.LoadScene ("offline game");
-			}
+
 		}
 	}
 
@@ -238,29 +214,17 @@ public class OfflineManager : MonoBehaviour
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
 		{
 			PlayerHolder1.roundWins++;
+			PlayerHolder2.myWalkAnim.Play ("Boxer_dead");
 			TrophyP1.gameObject.SetActive (true);
 		}
 		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth)
 		{
 			PlayerHolder2.roundWins++;
+			PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
 			TrophyP2.gameObject.SetActive (true);
 
 		}
-		else if (PlayerHolder2.myHealth == PlayerHolder1.myHealth)
-		{
-			if (PlayerHolder1.hasGlove)
-			{
-				PlayerHolder1.roundWins++;
-				TrophyP1.gameObject.SetActive (true);
 
-			}
-			else if (PlayerHolder2.hasGlove)
-			{
-				PlayerHolder2.roundWins++;
-				TrophyP2.gameObject.SetActive (true);
-
-			}
-		}
 		
 		if (PlayerHolder1.roundWins == 2 || PlayerHolder2.roundWins == 2)
 		{
@@ -280,7 +244,6 @@ public class OfflineManager : MonoBehaviour
 	//sets the players intital positions, timer and calls for SpawnGlove()
 	public void StartNewRound ()
 	{
-		OfflineManager.Instance.ppCall = false;
 		//roundTimer = MaxRoundTimer;
 		//code for timer
 		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
@@ -295,18 +258,7 @@ public class OfflineManager : MonoBehaviour
 
 		//roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;
 
-		//some new codes here for BGColor, do we need this change?? it will be difficult to match all sprites with the bg color
-		//okay lets leave the code till we get the assets
-		if (this.roundNumber == 2)
-		{
-			//Camera.main.backgroundColor = Color.cyan;
-			//cameraBGcolor = Camera.main.backgroundColor;
-		}
-		if (roundNumber == 3)
-		{
-			//Camera.main.backgroundColor = Color.grey;
-			//cameraBGcolor = Camera.main.backgroundColor;
-		}
+
 		//till here
 
 		if (SpwanFirstGlove != null)
@@ -329,18 +281,7 @@ public class OfflineManager : MonoBehaviour
 		SceneManager.LoadScene ("offline menu");
 	}
 
-	public void OnReMatchClickP1 ()
-	{
-		P1Ready = true;
-		P1ReadtText.text = "Ready!";
-	}
 
-	public void OnReMatchClickP2 ()
-	{
-		P2Ready = true;
-		P2ReadtText.text = "Ready!";
-
-	}
 
 	//plays the sound that is passed in as an argument //Deprecated
 	//public void PlaySound (AudioSource a)
@@ -368,5 +309,17 @@ public class OfflineManager : MonoBehaviour
 			Time.timeScale = 1;
 			PauseText.text = "II";
 		}
+	}
+
+	void makePlayerFall (PlayerHolderController p)
+	{
+		StartCoroutine (p.MakeLyingDeadFalse ());
+	}
+
+	void OnDestroy ()
+	{
+		Blast.OnHit -= makePlayerFall;
+		WalkingBombBlastCol.OnHit -= makePlayerFall;
+
 	}
 }

@@ -8,11 +8,11 @@ public class PowerUp : MonoBehaviour
 
 	public int weight;
 	public ParticleSystem myPS;
+	public bool active;
 
 	public virtual void OnEnable ()
 	{
 		myPS.gameObject.SetActive (true);
-
 	}
 
 	public virtual void OnTriggerEnter2D (Collider2D other)
@@ -25,13 +25,22 @@ public class PowerUp : MonoBehaviour
 		{
 			Player2Picked ();
 		}
-		else if (other.gameObject.layer == 9)
+		else if (other.gameObject.layer == 9 && this.gameObject.layer == 14)
 		{
-			Player1WithGlovePicked ();
+			if (!active)
+			{
+				Player1WithGlovePicked ();
+				Debug.Log ("boxerHitPU");
+			}
 		}
-		else if (other.gameObject.layer == 11)
+		else if (other.gameObject.layer == 11 && this.gameObject.layer == 14)
 		{
-			Player2WithGlovePicked ();
+			if (!active)
+			{
+				Player2WithGlovePicked ();
+				Debug.Log ("boxerHitPU");
+
+			}
 		}
 	}
 
@@ -61,7 +70,6 @@ public class PowerUp : MonoBehaviour
 
 	public virtual void DeactivatePU ()
 	{
-		
 		OfflineManager.Instance.PUPicked = true;
 		gameObject.SetActive (false);
 	}

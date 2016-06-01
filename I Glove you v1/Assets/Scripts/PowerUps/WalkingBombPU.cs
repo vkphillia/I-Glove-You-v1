@@ -12,7 +12,6 @@ public class WalkingBombPU : PowerUp
 	private Vector3 myPos;
 	private Vector3 relativePos;
 	private float angle;
-	private bool active;
 	private bool blasted;
 
 	public override void OnEnable ()

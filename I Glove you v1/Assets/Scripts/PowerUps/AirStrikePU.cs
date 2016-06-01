@@ -9,14 +9,13 @@ public class AirStrikePU : PowerUp
 	public Strike strikePrefab;
 
 	public FighterJet fighterJet;
-	private bool active;
+
 	private Vector2 EnemyPos;
 
 
 	void Awake ()
 	{
-		PlayerHolderController.OnPUReady += FirePU;
-		//Debug.Log ("I am Awake");
+
 		AllStrikesArr = new Strike[noOfStrikes]; 
 		for (int i = 0; i < noOfStrikes; i++)
 		{
@@ -48,14 +47,17 @@ public class AirStrikePU : PowerUp
 		}
 	}
 
+
+
 	IEnumerator StrikeNow ()
 	{
+		GetComponent<CircleCollider2D> ().enabled = false;
 		SoundsController.Instance.PlaySoundFX ("AirStrike", 1.0f);
 		GetComponent<SpriteRenderer> ().enabled = false;
-		GetComponent<CircleCollider2D> ().enabled = false;
 		for (int i = 0; i < noOfStrikes; i++)
 		{
 			AllStrikesArr [i].gameObject.SetActive (true); 
+			AllStrikesArr [i].gameObject.layer = 15;
 		}
 		fighterJet.gameObject.SetActive (true);
 		fighterJet.AIFollow ();
@@ -83,14 +85,5 @@ public class AirStrikePU : PowerUp
 		}
 	}
 
-	void FirePU ()
-	{
-		StartCoroutine (StrikeNow ());
-	}
-
-	void OnDestroy ()
-	{
-		PlayerHolderController.OnPUReady -= FirePU;
-	}
 
 }
