@@ -83,7 +83,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	void Update ()
 	{
-		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.6f, 2.6f), Mathf.Clamp (transform.position.y, -3.4f, 3.4f), 0);
+		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.5f, 2.5f), Mathf.Clamp (transform.position.y, -3.2f, 3.2f), 0);
 
 		//transform.position = new Vector3 (Mathf.Clamp (transform.position.x, OfflineManager.Instance.leftBorder.position.x, OfflineManager.Instance.rightBorder.position.x), Mathf.Clamp (transform.position.y, OfflineManager.Instance.botBorder.position.y, OfflineManager.Instance.topBorder.position.y), 0);
 
