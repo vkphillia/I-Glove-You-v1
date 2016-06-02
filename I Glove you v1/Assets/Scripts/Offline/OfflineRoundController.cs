@@ -71,6 +71,10 @@ public class OfflineRoundController : MonoBehaviour
 		yield return new WaitForSeconds (1f);
 		myRoundTextAnim.Play ("Round_Hide");
 		OfflineManager.Instance.currentState = GameState.Playing;
+		//make player move
+		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("WalkNoGlove");
+		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("WalkNoGlove");
+
 		SoundsController.Instance.bgMenuMusic.Play ();
 		yield return new WaitForSeconds (1f);
 		gameObject.SetActive (false);

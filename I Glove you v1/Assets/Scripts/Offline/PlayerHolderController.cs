@@ -30,7 +30,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	public Sprite[] mySprites;
 	public Animator myPunchAnim;
-
+	public Animator myPunchReadyAnim;
 
 	public Animator myWalkAnim;
 
@@ -195,11 +195,8 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				if (OfflineManager.Instance.PlayerHolder1.hasGlove && !OfflineManager.Instance.PlayerHolder2.lyingDead)
 				{
-					//OfflineManager.Instance.PlayerHolder1.justRobbed = true;
-					//OfflineManager.Instance.PlayerHolder1.lyingDead = true;
 					OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 					OfflineManager.Instance.PlayerHolder2.AddGlove ();
-					//OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
 					StartCoroutine (OfflineManager.Instance.PlayerHolder1.MakeLyingDeadFalse ());
 				
 				}
@@ -243,8 +240,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		
 		gameObject.SetActive (true);	
-		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle");
-		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle");
+		myWalkAnim.Play ("Idle");
 		myWinText_HUD.text = roundWins.ToString ();
 		hit = false;
 		hitter = false;
@@ -255,10 +251,6 @@ public class PlayerHolderController : MonoBehaviour
 		//HitEffectSprite.enabled = false;
 		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
-
-			
-
-
 	}
 
 	public void getPunched (Transform t)
@@ -309,33 +301,16 @@ public class PlayerHolderController : MonoBehaviour
 		mySpeed = MaxSpeed;
 		hasGlove = false;
 		mySprite.sprite = myOriginalSprite;
-		StartCoroutine (GloveDisappear ());
+		GloveDisappear ();
 	}
 
-	IEnumerator GloveDisappear ()
+	void GloveDisappear ()
 	{
-		myPunchAnim.Play ("Punch_Disappear");
-		//StartCoroutine (StartWalking ());
-		yield return new WaitForSeconds (0.5f);
 		myPunchAnim.gameObject.SetActive (false);
-
+		myPunchReadyAnim.Play ("Punch_Disappear");
 	}
 
-	/*public IEnumerator StartWalking ()
-	{
-		Debug.Log ("CoroutineStarted");
-		yield return new WaitForSeconds (1f);
-		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
-		{
-			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle1");
-			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle");
-		}
-		else if (OfflineManager.Instance.PlayerHolder1.hasGlove)
-		{
-			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle");
-			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle1");
-		}
-	}*/
+
 
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
@@ -343,7 +318,6 @@ public class PlayerHolderController : MonoBehaviour
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
 		hasGlove = true;
 		mySprite.sprite = myPunchSprite; 
-		myPunchAnim.gameObject.SetActive (true);
 		StartCoroutine (GloveAppear ());
 	}
 
@@ -351,18 +325,11 @@ public class PlayerHolderController : MonoBehaviour
 	IEnumerator GloveAppear ()
 	{
 		Debug.Log ("playing GloveAppear anim");
-		myPunchAnim.Play ("Punch_Appear");
+		myPunchReadyAnim.Play ("Punch_Appear");
 		yield return new WaitForSeconds (0.5f);
-
+		myPunchAnim.gameObject.SetActive (true);
 		myPunchAnim.Play ("Punch_Idle");
-		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
-		{
-			myWalkAnim.Play ("P1Boxer_Idle");
-		}
-		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
-		{
-			myWalkAnim.Play ("Boxer_Idle");
-		}
+		myWalkAnim.Play ("WalkGlove");
 	}
 
 	//increase or decreases the health of the player based on the amount
@@ -467,28 +434,20 @@ public class PlayerHolderController : MonoBehaviour
 	public IEnumerator MakeLyingDeadFalse ()
 	{
 		lyingDead = true;
-		if (OfflineManager.Instance.PlayerHolder1.lyingDead)
-		{
-			Debug.Log ("P1IsLyingDead");
-			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
-		}
-		else if (OfflineManager.Instance.PlayerHolder2.lyingDead)
-		{
-			Debug.Log ("P2IsLyingDead");
-			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_dead");
-		}
+		myWalkAnim.Play ("Dead");
 		yield return new WaitForSeconds (1f);
 		Debug.Log ("waited for 1 sec");
-		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+
+
+		if (hasGlove)
 		{
-			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle");
-			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle1");
+			myWalkAnim.Play ("WalkGlove");
+
 
 		}
-		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
+		if (!hasGlove)
 		{
-			OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("Boxer_Idle");
-			OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("P1Boxer_Idle1");
+			myWalkAnim.Play ("WalkNoGlove");
 		}
 		lyingDead = false; //start moving forward
 		Debug.Log (lyingDead);

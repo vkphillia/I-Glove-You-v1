@@ -214,13 +214,13 @@ public class OfflineManager : MonoBehaviour
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
 		{
 			PlayerHolder1.roundWins++;
-			PlayerHolder2.myWalkAnim.Play ("Boxer_dead");
+			PlayerHolder2.myWalkAnim.Play ("Dead");
 			TrophyP1.gameObject.SetActive (true);
 		}
 		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth)
 		{
 			PlayerHolder2.roundWins++;
-			PlayerHolder1.myWalkAnim.Play ("P1Boxer_dead");
+			PlayerHolder1.myWalkAnim.Play ("Dead");
 			TrophyP2.gameObject.SetActive (true);
 
 		}

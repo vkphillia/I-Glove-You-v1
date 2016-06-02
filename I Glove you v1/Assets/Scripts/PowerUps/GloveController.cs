@@ -18,13 +18,13 @@ public class GloveController : PowerUp
 
 	public override void Player1Picked ()
 	{
-//		flyingGloves.gameObject.SetActive (true);
-//		if (OnGlovePick != null)
-//		{
-//			OnGlovePick (OfflineManager.Instance.PlayerHolder2, OfflineManager.Instance.PlayerHolder1);
-//		}
+
 		OfflineManager.Instance.PlayerHolder1.AddGlove ();
-		OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+
+		if (OfflineManager.Instance.PlayerHolder2.hasGlove)
+		{
+			OfflineManager.Instance.PlayerHolder2.LoseGlove ();
+		}
 		OfflineManager.Instance.glovePicked = true;
 		
 		base.DeactivatePU ();
@@ -33,11 +33,10 @@ public class GloveController : PowerUp
 	public override void Player2Picked ()
 	{
 	
-//		if (OnGlovePick != null)
-//		{
-//			OnGlovePick (OfflineManager.Instance.PlayerHolder1, OfflineManager.Instance.PlayerHolder2);
-//		}
-		OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+		if (OfflineManager.Instance.PlayerHolder1.hasGlove)
+		{
+			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
+		}
 		OfflineManager.Instance.PlayerHolder2.AddGlove ();
 		OfflineManager.Instance.glovePicked = true;
 		
