@@ -19,7 +19,7 @@ public class Strike : MonoBehaviour
 
 	IEnumerator ActivateBlast ()
 	{
-		myController.SpawnAnything (this.gameObject);
+		myController.SpawnStrikes (this.gameObject);
 		yield return new WaitForSeconds (0.75f);
 		GetComponent<SpriteRenderer> ().enabled = true;
 		yield return new WaitForSeconds (0.25f);
@@ -29,4 +29,7 @@ public class Strike : MonoBehaviour
 		GetComponent<SpriteRenderer> ().enabled = false;
 
 	}
+
+
+
 }

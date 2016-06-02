@@ -97,9 +97,6 @@ public class OfflineManager : MonoBehaviour
 
 	//for testing only
 	public bool test_speedChange;
-	public bool test_PUOn;
-	public bool test_GloveOn;
-
 
 	void Awake ()
 	{
@@ -132,10 +129,10 @@ public class OfflineManager : MonoBehaviour
 
 
 		//really need it? never used anywhere else
-		P1StartPos = new Vector3 (0, -3, 0);
+		/*P1StartPos = new Vector3 (0, -3, 0);
 		P2StartPos = new Vector3 (0, 3, 0);
 		PlayerHolder1.transform.position = P1StartPos;
-		PlayerHolder2.transform.position = P2StartPos;
+		PlayerHolder2.transform.position = P2StartPos;*/
 
 		//foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
         
@@ -248,11 +245,11 @@ public class OfflineManager : MonoBehaviour
 		//code for timer
 		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
 		roundNumber++;
-		PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
+		//	PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
 		PlayerHolder1.transform.rotation = Quaternion.identity;
 		PlayerHolder1.ResetPlayer ();
 
-		PlayerHolder2.transform.localPosition = new Vector3 (0, 3, 0);
+		//PlayerHolder2.transform.localPosition = new Vector3 (0, 3, 0);
 		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
 		PlayerHolder2.ResetPlayer ();
 

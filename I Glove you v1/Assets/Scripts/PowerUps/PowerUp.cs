@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate void PUPickedEvent ();
 public class PowerUp : MonoBehaviour
 {
+	public static event PUPickedEvent OnPUPick;
 
 	//This is a base call and all Power ups need to be derived from this class
 
@@ -70,9 +72,19 @@ public class PowerUp : MonoBehaviour
 
 	public virtual void DeactivatePU ()
 	{
-		OfflineManager.Instance.PUPicked = true;
+		if (OnPUPick != null)
+		{
+			OnPUPick ();
+		}
+		transform.position = new Vector3 (-5, -3, 0);
+		active = false;
 		gameObject.SetActive (false);
 	}
 
+	void OnDisable ()
+	{
+		active = false;
+		transform.position = new Vector3 (-5, -3, 0);
+	}
 
 }

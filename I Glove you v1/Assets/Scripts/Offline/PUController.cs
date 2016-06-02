@@ -6,7 +6,7 @@ public class PUController : MonoBehaviour
 {
 	[HideInInspector]
 	public GameObject PU;
-	public GameObject PP;
+
 	public List<GameObject> PUList = new List<GameObject> ();
 	public GameObject glove;
 
@@ -16,61 +16,21 @@ public class PUController : MonoBehaviour
 
 	private float[] PUWeightTable = null;
 
-
-	//for PP
-	private Transform myPooledPP;
-	private PP PP_Obj;
-
-
+	public GameObject Marker;
 
 	void Awake ()
 	{
 		// Table to Store probability of PUS
 		CreateWeightTable ();
 		OfflineManager.SpwanFirstGlove += Spawn;
+		PowerUp.OnPUPick += SpawnPU;
+		OfflineRoundController.OnRoundOver += DestroyPU;
 	}
-
-	void Start ()
-	{
-		//OfflineManager.Instance.PUPicked = true;
-		//OfflineManager.Instance.ppCall = false;
-
-	}
-
-	void Update ()
-	{
-		if (OfflineManager.Instance.currentState == GameState.Playing)
-		{
-			if (OfflineManager.Instance.PUPicked && OfflineManager.Instance.test_PUOn)
-			{
-				OfflineManager.Instance.PUPicked = false;
-				StartCoroutine (SpawnPUCoroutine ());
-			}
-
-			/*if (OfflineManager.Instance.glovePicked && OfflineManager.Instance.test_GloveOn)
-			{
-				StartCoroutine (SpawnGloveCoroutine ());
-			}*/
-			/*if (!OfflineManager.Instance.ppCall)
-			{
-				OfflineManager.Instance.ppCall = true;
-				StartCoroutine (SpawnPowerPointsCoroutine ());
-			}*/
-
-		}
-		else
-		{
-			StopCoroutine (SpawnPUCoroutine ());
-			//StopCoroutine (SpawnGloveCoroutine ());
-		}
-	}
-
 
 
 	//spawn power ups code
 	public IEnumerator SpawnPUCoroutine ()
 	{
-		OfflineManager.Instance.PUPicked = false;
 		int PUIndex = GetPUIndex ();
 		PU = PUList [PUIndex];
 
@@ -132,20 +92,28 @@ public class PUController : MonoBehaviour
 		SpawnAnything (glove);
 	}
 
-	//spawn gloves code
-	public IEnumerator SpawnGloveCoroutine ()
-	{
-		OfflineManager.Instance.glovePicked = false;
-		yield return new WaitForSeconds (15f);
-		SpawnGlove ();
-	}
+
 
 	//for first glove triggered through event
 	void Spawn ()
 	{
 		Invoke ("SpawnGlove", 4f);
-		OfflineManager.Instance.glovePicked = false;
 	}
+
+
+	public void SpawnStrikes (GameObject spawnObj)
+	{
+		if (spawnPointsArrTemp.Count > 0)
+		{
+			StartCoroutine (ReAddSpawnPoint ());
+		}
+		int _randomPos = Random.Range (0, spawnPointsArr.Count);
+		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
+		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
+		spawnPointsArr.RemoveAt (_randomPos);
+
+	}
+
 
 
 	public void SpawnAnything (GameObject spawnObj)
@@ -155,6 +123,17 @@ public class PUController : MonoBehaviour
 			StartCoroutine (ReAddSpawnPoint ());
 		}
 		int _randomPos = Random.Range (0, spawnPointsArr.Count);
+
+		StartCoroutine (spawnHighlight (_randomPos, spawnObj));
+
+	}
+
+	IEnumerator spawnHighlight (int _randomPos, GameObject spawnObj)
+	{
+		Marker.SetActive (true);
+		Marker.transform.position = spawnPointsArr [_randomPos].position;
+		yield return new WaitForSeconds (2f);
+		Marker.SetActive (false);
 		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);
@@ -168,37 +147,28 @@ public class PUController : MonoBehaviour
 		spawnPointsArrTemp.RemoveAt (0);
 	}
 
+	void SpawnPU ()
+	{
+		StartCoroutine (SpawnPUCoroutine ());
+	}
+
+	void DestroyPU ()
+	{
+		PU.SetActive (false);
+		StopCoroutine (SpawnPUCoroutine ());
+	}
 
 	void OnDestroy ()
 	{
 		OfflineManager.SpwanFirstGlove -= Spawn;
+		PowerUp.OnPUPick -= SpawnPU;
+		OfflineRoundController.OnRoundOver -= DestroyPU;
+
 	}
 
-	//spawn power points code
-	public IEnumerator SpawnPowerPointsCoroutine ()
-	{
-		while (OfflineManager.Instance.currentState == GameState.Playing)
-		{
-			yield return new WaitForSeconds (1f);
-			SpawnPP ();
-		}
-	}
 
-	public void SpawnPP ()
-	{
-		
-		if (spawnPointsArrTemp.Count > 0)
-		{
-			StartCoroutine (ReAddSpawnPoint ());
-		}
-		int _randomPos = Random.Range (0, spawnPointsArr.Count);
-		myPooledPP = GameObjectPool.GetPool ("PPPool").GetInstance ();
-		PP_Obj = myPooledPP.GetComponent<PP> ();
-		PP_Obj.transform.position = spawnPointsArr [_randomPos].position;
-		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
-		spawnPointsArr.RemoveAt (_randomPos);
-		PP_Obj.transform.rotation = Quaternion.identity;
-	}
+
+
 		
 	
 

@@ -25,7 +25,6 @@ public class GloveController : PowerUp
 		{
 			OfflineManager.Instance.PlayerHolder2.LoseGlove ();
 		}
-		OfflineManager.Instance.glovePicked = true;
 		
 		base.DeactivatePU ();
 	}
@@ -38,7 +37,6 @@ public class GloveController : PowerUp
 			OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 		}
 		OfflineManager.Instance.PlayerHolder2.AddGlove ();
-		OfflineManager.Instance.glovePicked = true;
 		
 		base.DeactivatePU ();
 	}
@@ -47,14 +45,12 @@ public class GloveController : PowerUp
 	public override void Player1WithGlovePicked ()
 	{
 		OfflineManager.Instance.PlayerHolder1.PunchPUS (this.transform);
-		OfflineManager.Instance.glovePicked = true;
 		base.DeactivatePU ();
 	}
 
 	public override void Player2WithGlovePicked ()
 	{
 		OfflineManager.Instance.PlayerHolder2.PunchPUS (this.transform);
-		OfflineManager.Instance.glovePicked = true;
 		base.DeactivatePU ();
 	}
 

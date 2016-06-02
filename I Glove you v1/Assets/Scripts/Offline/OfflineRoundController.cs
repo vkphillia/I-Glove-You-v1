@@ -3,8 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public delegate void RoundOverEvent ();
 public class OfflineRoundController : MonoBehaviour
 {
+
+	public static event RoundOverEvent OnRoundOver;
+
 	public Text myRoundText;
 	public Text P1Text;
 	public Text P2Text;
@@ -83,6 +87,15 @@ public class OfflineRoundController : MonoBehaviour
 	public IEnumerator HideRoundOverText ()
 	{	
 		myRoundText.text = "";
+
+
+		//destroy PU
+		if (OnRoundOver != null)
+		{
+			OnRoundOver ();
+		}
+
+
 		SoundsController.Instance.PlaySoundFX ("RoundEnd", 1.0f);
 		yield return new WaitForSeconds (.2f);
 		myRoundText.text = "Round Over";

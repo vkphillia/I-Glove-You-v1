@@ -68,22 +68,11 @@ public class PlayerHolderController : MonoBehaviour
 	//new health meter
 	public Image myHealthBar;
 
-	//for speed meter
-	public Image mySpeedBar;
-
-
-	//new punch anim
-	public Sprite myPunchSprite;
-	private Sprite myOriginalSprite;
-
-
-
 
 
 	void Start ()
 	{
 		mySprite = GetComponent<SpriteRenderer> ();
-		myOriginalSprite = mySprite.sprite;
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
@@ -94,8 +83,11 @@ public class PlayerHolderController : MonoBehaviour
 
 	void Update ()
 	{
-		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.7f, 2.7f), Mathf.Clamp (transform.position.y, -3.8f, 3.7f), 0);
-	
+		transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -2.6f, 2.6f), Mathf.Clamp (transform.position.y, -3.4f, 3.4f), 0);
+
+		//transform.position = new Vector3 (Mathf.Clamp (transform.position.x, OfflineManager.Instance.leftBorder.position.x, OfflineManager.Instance.rightBorder.position.x), Mathf.Clamp (transform.position.y, OfflineManager.Instance.botBorder.position.y, OfflineManager.Instance.topBorder.position.y), 0);
+
+
 		//old controls
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
@@ -300,7 +292,6 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		mySpeed = MaxSpeed;
 		hasGlove = false;
-		mySprite.sprite = myOriginalSprite;
 		GloveDisappear ();
 	}
 
@@ -308,6 +299,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		myPunchAnim.gameObject.SetActive (false);
 		myPunchReadyAnim.Play ("Punch_Disappear");
+		myWalkAnim.Play ("WalkNoGlove");
 	}
 
 
@@ -317,7 +309,6 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
 		hasGlove = true;
-		mySprite.sprite = myPunchSprite; 
 		StartCoroutine (GloveAppear ());
 	}
 
@@ -391,10 +382,7 @@ public class PlayerHolderController : MonoBehaviour
 			}
 
 		}
-
 		myHealthText_HUD.text = myHealth.ToString ();
-
-
 	}
 
 
