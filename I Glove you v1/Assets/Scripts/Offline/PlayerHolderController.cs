@@ -29,6 +29,7 @@ public class PlayerHolderController : MonoBehaviour
 	public bool hasGlove;
 
 	public Sprite[] mySprites;
+    public RuntimeAnimatorController[] animationController;
 	public Animator myPunchAnim;
 	public Animator myPunchReadyAnim;
 
