@@ -110,12 +110,12 @@ public class OfflineManager : MonoBehaviour
 		currentState = GameState.RoundStart;
 		//
 		PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
-        PlayerHolder1.GetComponent<Animator>().runtimeAnimatorController = PlayerHolder1.animationController[OfflineMenuController.Player1CharacterID];
-        //Debug.Log (OfflineMenuController.Player1CharacterID);
-        PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
-        PlayerHolder2.GetComponent<Animator>().runtimeAnimatorController = PlayerHolder2.animationController[OfflineMenuController.Player2CharacterID];
-        //Debug.Log (OfflineMenuController.Player2CharacterID);
-    }
+		PlayerHolder1.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder1.animationController [OfflineMenuController.Player1CharacterID];
+		//Debug.Log (OfflineMenuController.Player1CharacterID);
+		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
+		PlayerHolder2.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder2.animationController [OfflineMenuController.Player2CharacterID];
+		//Debug.Log (OfflineMenuController.Player2CharacterID);
+	}
 
 
 
@@ -247,12 +247,13 @@ public class OfflineManager : MonoBehaviour
 		//code for timer
 		//GetComponentInChildren<ProgressBar> ().SetUpdateBar ((int)roundTimer);
 		roundNumber++;
-		//	PlayerHolder1.transform.localPosition = new Vector3 (0, -3, 0);
-		PlayerHolder1.transform.rotation = Quaternion.identity;
+		PlayerHolder1.transform.localPosition = new Vector3 (-1.5f, -2.5f, 0);
+		PlayerHolder1.transform.rotation = Quaternion.Euler (0, 0, -35);
+		//PlayerHolder1.transform.rotation = Quaternion.identity;
 		PlayerHolder1.ResetPlayer ();
 
-		//PlayerHolder2.transform.localPosition = new Vector3 (0, 3, 0);
-		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 180);
+		PlayerHolder2.transform.localPosition = new Vector3 (1.5f, 2.5f, 0);
+		PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, 155);
 		PlayerHolder2.ResetPlayer ();
 
 		//roundText_HUD.text = "Round: " + OfflineManager.Instance.roundNumber;

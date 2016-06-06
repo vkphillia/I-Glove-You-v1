@@ -29,7 +29,7 @@ public class PlayerHolderController : MonoBehaviour
 	public bool hasGlove;
 
 	public Sprite[] mySprites;
-    public RuntimeAnimatorController[] animationController;
+	public RuntimeAnimatorController[] animationController;
 	public Animator myPunchAnim;
 	public Animator myPunchReadyAnim;
 
@@ -68,7 +68,7 @@ public class PlayerHolderController : MonoBehaviour
 	public Transform myFlyingTextSpawnPoint;
 	//new health meter
 	public Image myHealthBar;
-
+	public Animator myHealhBarAnim;
 
 
 	void Start ()
@@ -390,9 +390,13 @@ public class PlayerHolderController : MonoBehaviour
 
 	IEnumerator ChangeHealthBarColor ()
 	{
+
 		myHealthBar.color = Color.red;
+		myHealhBarAnim.Play ("HealthBar_Shake");
 		yield return new WaitForSeconds (.3f);
 		myHealthBar.color = Color.green;
+		myHealhBarAnim.Play ("HealthBar_Idle");
+
 	}
 
 
@@ -424,8 +428,8 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		lyingDead = true;
 		myWalkAnim.Play ("Dead");
-		yield return new WaitForSeconds (1f);
-		Debug.Log ("waited for 1 sec");
+		yield return new WaitForSeconds (1.5f);
+
 
 
 		if (hasGlove)

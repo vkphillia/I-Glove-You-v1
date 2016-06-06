@@ -12,6 +12,8 @@ public class PowerUp : MonoBehaviour
 	public ParticleSystem myPS;
 	public bool active;
 
+	public GameObject myMarker;
+
 	public virtual void OnEnable ()
 	{
 		myPS.gameObject.SetActive (true);

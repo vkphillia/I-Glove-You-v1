@@ -16,7 +16,7 @@ public class PUController : MonoBehaviour
 
 	private float[] PUWeightTable = null;
 
-	public GameObject Marker;
+	private GameObject Marker;
 
 	void Awake ()
 	{
@@ -33,7 +33,6 @@ public class PUController : MonoBehaviour
 	{
 		int PUIndex = GetPUIndex ();
 		PU = PUList [PUIndex];
-
 		yield return new WaitForSeconds (5f);
 		PU.SetActive (true);
 		SpawnAnything (PU);
@@ -130,9 +129,10 @@ public class PUController : MonoBehaviour
 
 	IEnumerator spawnHighlight (int _randomPos, GameObject spawnObj)
 	{
+		Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
 		Marker.SetActive (true);
 		Marker.transform.position = spawnPointsArr [_randomPos].position;
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (.6f);
 		Marker.SetActive (false);
 		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);

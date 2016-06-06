@@ -7,7 +7,7 @@ public class GloveController : PowerUp
 
 	public static event GlovePickEvent OnGlovePick;
 
-	public Transform flyingGloves;
+
 
 
 	void OnEnable ()
