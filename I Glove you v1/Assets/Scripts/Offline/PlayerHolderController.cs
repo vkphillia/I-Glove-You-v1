@@ -240,7 +240,8 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myPunchAnim.gameObject.SetActive (false);
+        myHealthBar.color = Color.green;
+        myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
 		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
@@ -378,8 +379,8 @@ public class PlayerHolderController : MonoBehaviour
 				else
 				{
 					StartCoroutine (ChangeColor (Color.red));
-					StartCoroutine (ChangeHealthBarColor ());
-				}
+					//StartCoroutine (ChangeHealthBarColor ());
+                }
 			}
 
 		}
@@ -387,25 +388,32 @@ public class PlayerHolderController : MonoBehaviour
 	}
 
 
+    //not needed now, merged in changeColor
+	//IEnumerator ChangeHealthBarColor ()
+	//{
+	//	myHealthBar.color = Color.red;
+	//	myHealhBarAnim.Play ("HealthBar_Shake");
+	//	yield return new WaitForSeconds (.3f);
+	//	myHealhBarAnim.Play ("HealthBar_Idle");
+    //}
 
-	IEnumerator ChangeHealthBarColor ()
-	{
-
-		myHealthBar.color = Color.red;
-		myHealhBarAnim.Play ("HealthBar_Shake");
-		yield return new WaitForSeconds (.3f);
-		myHealthBar.color = Color.green;
-		myHealhBarAnim.Play ("HealthBar_Idle");
-
-	}
-
-
+    //merged changeHealthBarColor into this
 	IEnumerator ChangeColor (Color C)
 	{
 		mySprite.color = C;
-		yield return new WaitForSeconds (.5f);
-		mySprite.color = Color.white;
-	}
+        myHealthBar.color = C;
+        myHealhBarAnim.Play("HealthBar_Shake");
+        yield return new WaitForSeconds(.3f);
+        myHealhBarAnim.Play("HealthBar_Idle");
+        //low health
+        if (myHealth < 4)
+            myHealthBar.color = Color.red;
+        else
+            myHealthBar.color = Color.green;
+
+        yield return new WaitForSeconds (.2f);
+        mySprite.color = Color.white;
+    }
 
 	//Spawining from game object pools
 	public void SpawnPunchPU_FX (Transform PU)

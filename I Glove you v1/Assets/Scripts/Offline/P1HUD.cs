@@ -3,6 +3,8 @@ using System.Collections;
 
 public class P1HUD : MonoBehaviour
 {
+    public GameObject[] trophies;
+
 	private Animator myAnim;
 
 	void Awake ()

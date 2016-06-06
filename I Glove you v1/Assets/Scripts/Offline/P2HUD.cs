@@ -3,7 +3,9 @@ using System.Collections;
 
 public class P2HUD : MonoBehaviour
 {
-	private Animator myAnim;
+    public GameObject[] trophies;
+
+    private Animator myAnim;
 
 	void Awake ()
 	{

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class P1Trophy : MonoBehaviour
+public class P1Trophy : P1HUD
 {
 	private Animator myAnim;
 
@@ -23,14 +23,24 @@ public class P1Trophy : MonoBehaviour
 		myAnim.Play ("Trophy_Show");
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1f);
 		yield return new WaitForSeconds (1f);
-		iTween.MoveTo (this.gameObject, iTween.Hash ("position", new Vector3 (-2.3f, -4.3f, -1), "time", 1f, "easetype", "linear", "onComplete", "DestoryGO"));
+		iTween.MoveTo (this.gameObject, iTween.Hash ("position", new Vector3 (0f, -4.3f, -1), "time", 1f, "easetype", "linear", "onComplete", "DestoryGO"));
 
 	}
 
 	void DestoryGO ()
 	{
 		OfflineManager.Instance.PlayerHolder1.myWinText_HUD.text = OfflineManager.Instance.PlayerHolder1.roundWins.ToString ();
-		SoundsController.Instance.PlaySoundFX ("CollectPoint", 1f);
+        if (OfflineManager.Instance.PlayerHolder1.roundWins == 1)
+        {
+            trophies[0].SetActive(true);
+        }
+        else if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
+        {
+            trophies[0].SetActive(true);
+            trophies[1].SetActive(true);
+        }
+
+        SoundsController.Instance.PlaySoundFX ("CollectPoint", 1f);
 		myAnim.Play ("Trophy_Idle");
 
 		gameObject.SetActive (false);
