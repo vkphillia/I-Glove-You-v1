@@ -240,8 +240,8 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-        myHealthBar.color = Color.green;
-        myPunchAnim.gameObject.SetActive (false);
+		myHealthBar.color = Color.green;
+		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
 		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
@@ -364,6 +364,8 @@ public class PlayerHolderController : MonoBehaviour
 
 				//code for checking who wins the round and stops the round
 				OfflineManager.Instance.CheckRoundStatus ();
+				myHealthBar.color = Color.green;
+				myHealhBarAnim.Play ("HealthBar_Idle");
 			}
 			else
 			{
@@ -380,7 +382,7 @@ public class PlayerHolderController : MonoBehaviour
 				{
 					StartCoroutine (ChangeColor (Color.red));
 					//StartCoroutine (ChangeHealthBarColor ());
-                }
+				}
 			}
 
 		}
@@ -388,32 +390,39 @@ public class PlayerHolderController : MonoBehaviour
 	}
 
 
-    //not needed now, merged in changeColor
+	//not needed now, merged in changeColor
 	//IEnumerator ChangeHealthBarColor ()
 	//{
 	//	myHealthBar.color = Color.red;
 	//	myHealhBarAnim.Play ("HealthBar_Shake");
 	//	yield return new WaitForSeconds (.3f);
 	//	myHealhBarAnim.Play ("HealthBar_Idle");
-    //}
+	//}
 
-    //merged changeHealthBarColor into this
+	//merged changeHealthBarColor into this
 	IEnumerator ChangeColor (Color C)
 	{
 		mySprite.color = C;
-        myHealthBar.color = C;
-        myHealhBarAnim.Play("HealthBar_Shake");
-        yield return new WaitForSeconds(.3f);
-        myHealhBarAnim.Play("HealthBar_Idle");
-        //low health
-        if (myHealth < 4)
-            myHealthBar.color = Color.red;
-        else
-            myHealthBar.color = Color.green;
+		myHealthBar.color = C;
+		myHealhBarAnim.Play ("HealthBar_Shake");
+		yield return new WaitForSeconds (.3f);
+		//myHealhBarAnim.Play ("HealthBar_Idle");
+		//low health
+		if (myHealth < 4 && myHealth > 0)
+		{
+			myHealthBar.color = Color.red;
+			myHealhBarAnim.Play ("HealthBar_Low");
+		}
+		else
+		{
+			myHealthBar.color = Color.green;
+			myHealhBarAnim.Play ("HealthBar_Idle");
+		}
+            
 
-        yield return new WaitForSeconds (.2f);
-        mySprite.color = Color.white;
-    }
+		yield return new WaitForSeconds (.2f);
+		mySprite.color = Color.white;
+	}
 
 	//Spawining from game object pools
 	public void SpawnPunchPU_FX (Transform PU)
