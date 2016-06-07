@@ -129,15 +129,18 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
 				StartCoroutine (MakePUHitterFalse ());
 			}
+
 		}
+
 		if (OfflineManager.Instance.currentState == GameState.MatchOver)
 		{
+
+			//play win animation here
 			if (roundWins == 2)
 			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 				transform.Rotate (0, 0, 5);
 			}
-
 		}
 	}
 
@@ -240,11 +243,12 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myHealthBar.color = Color.green;
 		myPunchAnim.gameObject.SetActive (false);
 		//HitEffectSprite.enabled = false;
 		hasGlove = false; 
 		myHealthBar.fillAmount = 1;
+		myHealthBar.color = Color.green;
+		myHealhBarAnim.Play ("HealthBar_Idle");
 	}
 
 	public void getPunched (Transform t)
@@ -381,7 +385,6 @@ public class PlayerHolderController : MonoBehaviour
 				else
 				{
 					StartCoroutine (ChangeColor (Color.red));
-					//StartCoroutine (ChangeHealthBarColor ());
 				}
 			}
 
@@ -390,16 +393,7 @@ public class PlayerHolderController : MonoBehaviour
 	}
 
 
-	//not needed now, merged in changeColor
-	//IEnumerator ChangeHealthBarColor ()
-	//{
-	//	myHealthBar.color = Color.red;
-	//	myHealhBarAnim.Play ("HealthBar_Shake");
-	//	yield return new WaitForSeconds (.3f);
-	//	myHealhBarAnim.Play ("HealthBar_Idle");
-	//}
 
-	//merged changeHealthBarColor into this
 	IEnumerator ChangeColor (Color C)
 	{
 		mySprite.color = C;

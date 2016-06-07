@@ -175,8 +175,8 @@ public class OfflineManager : MonoBehaviour
 		{
 			
 			ZoomOut ();
-			myPUController.glove.SetActive (false);
-			//myPUController.PU.GetComponent<PowerUp> ().DeactivatePU ();
+			//myPUController.glove.gameObject.SetActive (false);
+			myPUController.PU.GetComponent<PowerUp> ().DeactivatePU ();
 			PUPicked = true;
 
 		}
@@ -210,6 +210,12 @@ public class OfflineManager : MonoBehaviour
 	//any call for stoping the game should be sent here
 	public void CheckRoundStatus ()
 	{
+		StartCoroutine (RoundStatusCoroutine ());
+	}
+
+	IEnumerator RoundStatusCoroutine ()
+	{
+		Time.timeScale = 0.2f;
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
 		{
 			PlayerHolder1.roundWins++;
@@ -221,7 +227,6 @@ public class OfflineManager : MonoBehaviour
 			PlayerHolder2.roundWins++;
 			PlayerHolder1.myWalkAnim.Play ("Dead");
 			TrophyP2.gameObject.SetActive (true);
-
 		}
 
 		
@@ -236,6 +241,8 @@ public class OfflineManager : MonoBehaviour
 				currentState = GameState.RoundOver;
 			}
 		}
+		yield return new WaitForSeconds (.3f);
+		Time.timeScale = 1f;
 		
 		RoundPanel.ShowRoundPanel ();
 	}

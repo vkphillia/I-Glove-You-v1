@@ -10,7 +10,7 @@ public class GloveController : PowerUp
 
 
 
-	void OnEnable ()
+	new void OnEnable ()
 	{
 		GetComponent<SpriteRenderer> ().enabled = true;
 		GetComponent<BoxCollider2D> ().enabled = true;

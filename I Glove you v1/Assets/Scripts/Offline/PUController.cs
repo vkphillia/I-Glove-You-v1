@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class PUController : MonoBehaviour
 {
 	[HideInInspector]
-	public GameObject PU;
+	public PowerUp PU;
 
-	public List<GameObject> PUList = new List<GameObject> ();
-	public GameObject glove;
+	public List<PowerUp> PUList = new List<PowerUp> ();
+	public PowerUp glove;
 
 	//PU spawning
 	public List<Transform> spawnPointsArr = new List<Transform> ();
@@ -33,9 +33,18 @@ public class PUController : MonoBehaviour
 	{
 		int PUIndex = GetPUIndex ();
 		PU = PUList [PUIndex];
-		yield return new WaitForSeconds (5f);
-		PU.SetActive (true);
-		SpawnAnything (PU);
+		if (OfflineManager.Instance.currentState == GameState.Playing)
+		{
+			yield return new WaitForSeconds (5f);
+			PU.gameObject.SetActive (true);
+			SpawnAnything (PU.gameObject);
+		}
+		else
+		{
+			yield return new WaitForSeconds (1f);
+		}
+		
+		
 	}
 
 	//Helps pick PU based on it probability
@@ -68,7 +77,7 @@ public class PUController : MonoBehaviour
 
 		for (i = 0; i < noOfPU; i++)
 		{
-			PowerUp PUScript = PUList [i].GetComponent<PowerUp> ();
+			PowerUp PUScript = PUList [i];
 		
 			if (PUList != null)
 			{
@@ -87,8 +96,8 @@ public class PUController : MonoBehaviour
 	//glove
 	void SpawnGlove ()
 	{
-		glove.SetActive (true);
-		SpawnAnything (glove);
+		glove.gameObject.SetActive (true);
+		SpawnAnything (glove.gameObject);
 	}
 
 
@@ -149,13 +158,15 @@ public class PUController : MonoBehaviour
 
 	void SpawnPU ()
 	{
+
 		StartCoroutine (SpawnPUCoroutine ());
 	}
 
 	void DestroyPU ()
 	{
-		PU.SetActive (false);
 		StopCoroutine (SpawnPUCoroutine ());
+		Debug.Log ("Destroy PU");
+		PU.DeactivatePU (); 
 	}
 
 	void OnDestroy ()
