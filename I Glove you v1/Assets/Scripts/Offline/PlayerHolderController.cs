@@ -70,6 +70,8 @@ public class PlayerHolderController : MonoBehaviour
 	public Image myHealthBar;
 	public Animator myHealhBarAnim;
 
+	public GameObject myHealthPS;
+
 
 	void Start ()
 	{
@@ -254,7 +256,6 @@ public class PlayerHolderController : MonoBehaviour
 	public void getPunched (Transform t)
 	{
 		hit = true;
-		SpawnHit_FX ();
 		transform.rotation = t.rotation; 
 	}
 
@@ -346,6 +347,7 @@ public class PlayerHolderController : MonoBehaviour
 				FT_Obj.myGreenText.color = Color.green;
 				FT_Obj.myBlackText.text = "+" + amount.ToString ();
 				FT_Obj.myGreenText.text = "+" + amount.ToString ();
+				StartCoroutine (SpawnHealthPS ());
 			}
 			else
 			{
@@ -364,7 +366,7 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				myHealth = 0;
 				myHealthBar.fillAmount = 0f; 
-
+				SpawnHit_FX ();
 
 				//code for checking who wins the round and stops the round
 				OfflineManager.Instance.CheckRoundStatus ();
@@ -375,7 +377,7 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				myHealth += amount;
 				myHealthBar.fillAmount = (float)(myHealth) / MaxHealth; 
-
+				SpawnHit_FX ();
 				//only play sound when adding health
 				if (amount > 0)
 				{
@@ -392,7 +394,13 @@ public class PlayerHolderController : MonoBehaviour
 		myHealthText_HUD.text = myHealth.ToString ();
 	}
 
+	IEnumerator SpawnHealthPS ()
+	{
+		myHealthPS.SetActive (true);
+		yield return new WaitForSeconds (2f);
+		myHealthPS.SetActive (false);
 
+	}
 
 	IEnumerator ChangeColor (Color C)
 	{
