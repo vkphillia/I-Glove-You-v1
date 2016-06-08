@@ -23,13 +23,16 @@ public class P1Trophy : P1HUD
 		myTrophyAnim.Play ("Trophy_Show");
 		SoundsController.Instance.PlaySoundFX ("GlovePick", 1f);
 		yield return new WaitForSeconds (1f);
-		iTween.MoveTo (this.gameObject, iTween.Hash ("position", new Vector3 (0f, -4.3f, -1), "time", 1f, "easetype", "linear", "onComplete", "DestoryGO"));
+        StartCoroutine(SmoothPositionMovement.Instance.MoveGameObject(this.gameObject, new Vector3(0f, -4.3f, -1),1f));
+        yield return new WaitForSeconds(1f);
+        DestoryGO();
+        //iTween.MoveTo (this.gameObject, iTween.Hash ("position", new Vector3 (0f, -4.3f, -1), "time", 1f, "easetype", "linear", "onComplete", "DestoryGO"));
 
-	}
+    }
 
 	void DestoryGO ()
 	{
-		OfflineManager.Instance.PlayerHolder1.myWinText_HUD.text = OfflineManager.Instance.PlayerHolder1.roundWins.ToString ();
+		//OfflineManager.Instance.PlayerHolder1.myWinText_HUD.text = OfflineManager.Instance.PlayerHolder1.roundWins.ToString ();
 		if (OfflineManager.Instance.PlayerHolder1.roundWins == 1)
 		{
 			trophies [0].SetActive (true);
