@@ -354,6 +354,7 @@ public class PlayerHolderController : MonoBehaviour
 				FT_Obj.myGreenText.color = Color.red;
 				FT_Obj.myBlackText.text = amount.ToString ();
 				FT_Obj.myGreenText.text = amount.ToString ();
+				SpawnHit_FX ();
 			}
 
 			if ((myHealth + amount) > MaxHealth)
@@ -366,7 +367,7 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				myHealth = 0;
 				myHealthBar.fillAmount = 0f; 
-				SpawnHit_FX ();
+
 
 				//code for checking who wins the round and stops the round
 				OfflineManager.Instance.CheckRoundStatus ();
@@ -377,7 +378,7 @@ public class PlayerHolderController : MonoBehaviour
 			{
 				myHealth += amount;
 				myHealthBar.fillAmount = (float)(myHealth) / MaxHealth; 
-				SpawnHit_FX ();
+				//SpawnHit_FX ();
 				//only play sound when adding health
 				if (amount > 0)
 				{
@@ -422,7 +423,7 @@ public class PlayerHolderController : MonoBehaviour
 		}
             
 
-		yield return new WaitForSeconds (.2f);
+		yield return new WaitForSeconds (2f);
 		mySprite.color = Color.white;
 	}
 
