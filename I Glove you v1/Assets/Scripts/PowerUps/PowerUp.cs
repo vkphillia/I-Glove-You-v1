@@ -19,6 +19,11 @@ public class PowerUp : MonoBehaviour
 		myPS.gameObject.SetActive (true);
 	}
 
+	public virtual void Update ()
+	{
+		transform.Rotate (0, 0, 2);
+	}
+
 	public virtual void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.layer == 8 && !OfflineManager.Instance.PlayerHolder1.hasGlove)

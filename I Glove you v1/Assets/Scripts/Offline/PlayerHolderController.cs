@@ -423,7 +423,7 @@ public class PlayerHolderController : MonoBehaviour
 		}
             
 
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (.5f);
 		mySprite.color = Color.white;
 	}
 

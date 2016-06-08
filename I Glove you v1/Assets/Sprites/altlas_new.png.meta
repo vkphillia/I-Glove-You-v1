@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3c87dfde96e8c471f8680bef6b0f72b4
-timeCreated: 1465379515
+timeCreated: 1465389140
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -45,6 +45,9 @@ TextureImporter:
     21300076: Chloe_Idle
     21300078: marker
     21300080: PU_Burger
+    21300082: PU_Bomb
+    21300084: PU_Speed
+    21300086: PU_Glove
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -703,19 +706,82 @@ TextureImporter:
     - name: PU_Burger
       rect:
         serializedVersion: 2
-        x: 1890
-        y: 1906
-        width: 123
-        height: 104
+        x: 1736
+        y: 1911
+        width: 115
+        height: 111
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -61.5, y: 52}
-        - {x: -61.5, y: -52}
-        - {x: 61.5, y: -52}
-        - {x: 61.5, y: 51}
-        - {x: 53.5, y: 52}
+      - - {x: -45.5, y: 55.5}
+        - {x: -57.5, y: 51.5}
+        - {x: -57.5, y: -53.5}
+        - {x: -46.5, y: -55.5}
+        - {x: 40.5, y: -55.5}
+        - {x: 57.5, y: -36.5}
+        - {x: 57.5, y: 29.5}
+        - {x: 43.5, y: 55.5}
+    - name: PU_Bomb
+      rect:
+        serializedVersion: 2
+        x: 1735
+        y: 1776
+        width: 115
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -55.5, y: 55.5}
+        - {x: -56.5, y: 52.5}
+        - {x: -56.5, y: -36.5}
+        - {x: -31.5, y: -55.5}
+        - {x: 57.5, y: -55.5}
+        - {x: 57.5, y: 52.5}
+        - {x: 51.5, y: 55.5}
+    - name: PU_Speed
+      rect:
+        serializedVersion: 2
+        x: 1735
+        y: 1648
+        width: 115
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 27.5, y: 55.5}
+        - {x: -25.5, y: 55.5}
+        - {x: -44.5, y: 49.5}
+        - {x: -56.5, y: 38.5}
+        - {x: -56.5, y: -51.5}
+        - {x: -49.5, y: -55.5}
+        - {x: 55.5, y: -55.5}
+        - {x: 57.5, y: -41.5}
+        - {x: 57.5, y: 28.5}
+        - {x: 46.5, y: 49.5}
+    - name: PU_Glove
+      rect:
+        serializedVersion: 2
+        x: 1735
+        y: 1504
+        width: 115
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 27.5, y: 55.5}
+        - {x: -25.5, y: 55.5}
+        - {x: -44.5, y: 49.5}
+        - {x: -56.5, y: 38.5}
+        - {x: -56.5, y: -51.5}
+        - {x: -49.5, y: -55.5}
+        - {x: 55.5, y: -55.5}
+        - {x: 57.5, y: -41.5}
+        - {x: 57.5, y: 28.5}
+        - {x: 46.5, y: 49.5}
     outline: []
   spritePackingTag: 
   userData: 
