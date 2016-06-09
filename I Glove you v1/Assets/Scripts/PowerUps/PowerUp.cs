@@ -13,6 +13,7 @@ public class PowerUp : MonoBehaviour
 	public bool active;
 
 	public GameObject myMarker;
+    public Color myMarkerColor;
 
 
 	public virtual void OnEnable ()

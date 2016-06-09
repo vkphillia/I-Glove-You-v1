@@ -5,50 +5,51 @@ using UnityEngine.UI;
 
 public class PlayerHolderController : MonoBehaviour
 {
+    #region Variables
+    [Space]
+    public int playerID;
+    public int MaxHealth;
+    public float MaxSpeed;
+    public int myHealth;
+    public float mySpeed;
+    public int myDamage;
+    [Space]
+    [Space]
+    public Sprite[] mySprites;
+    public RuntimeAnimatorController[] animationController;
+    public Animator myPunchAnim;
+    public Animator myPunchReadyAnim;
+    public Animator myWalkAnim;
+    public Text myWinText_HUD;
+    public Text myHealthText_HUD;
+    
+    //for health
+    //public Transform myFlyingTextSpawnPoint;
+    //new health meter
+    public Image myHealthBar;
+    public Animator myHealhBarAnim;
+    public GameObject myHealthPS;
+    
+    //public variables but hidden in inspector below this
 
-	[HideInInspector]	
+    [HideInInspector]	
 	public bool isTurning;
 	[HideInInspector]	
 	public bool hit;
-
 	[HideInInspector]	
 	public bool hitter;
-
 	[HideInInspector]	
 	public bool lyingDead;
+    [HideInInspector]
+    public int roundWins;
+    [HideInInspector]
+    public bool hasGlove;
 
-	private bool justRobbed;
+    //all private varaibles Below this
 
+    private bool justRobbed;
 	private CircleCollider2D myCollider;
-
-
-	[HideInInspector]
-	public int roundWins;
-
-	[HideInInspector]
-	public bool hasGlove;
-
-	public Sprite[] mySprites;
-	public RuntimeAnimatorController[] animationController;
-	public Animator myPunchAnim;
-	public Animator myPunchReadyAnim;
-
-	public Animator myWalkAnim;
-
-	private SpriteRenderer mySprite;
-
-	public Text myWinText_HUD;
-	public Text myHealthText_HUD;
-
-
-
-	public int MaxHealth;
-	public float MaxSpeed;
-
-	public int myHealth;
-	public float mySpeed;
-	public int myDamage;
-
+    private SpriteRenderer mySprite;
 	private Vector3 force;
 	private bool PUHitter;
 
@@ -64,16 +65,9 @@ public class PlayerHolderController : MonoBehaviour
 	private Transform myPooledFT;
 	private FlyingText FT_Obj;
 
-	//for health
-	public Transform myFlyingTextSpawnPoint;
-	//new health meter
-	public Image myHealthBar;
-	public Animator myHealhBarAnim;
+    #endregion
 
-	public GameObject myHealthPS;
-
-
-	void Start ()
+    void Start ()
 	{
 		mySprite = GetComponent<SpriteRenderer> ();
 		myHealth = MaxHealth;
@@ -338,8 +332,17 @@ public class PlayerHolderController : MonoBehaviour
 			myPooledFT = GameObjectPool.GetPool ("FlyingTextPool").GetInstance ();
 			FT_Obj = myPooledFT.GetComponent<FlyingText> ();
 			//FT_Obj.transform.SetParent (this.transform);
-			FT_Obj.transform.position = myFlyingTextSpawnPoint.position;
-			FT_Obj.transform.rotation = myFlyingTextSpawnPoint.rotation;
+            if(playerID==1)
+            {
+                FT_Obj.transform.position = new Vector3(-0.94f,-4.19f,0);
+                FT_Obj.transform.rotation = Quaternion.identity;
+            }
+            else
+            {
+                FT_Obj.transform.position = new Vector3(1.27f, 4.31f, 0);
+                FT_Obj.transform.rotation = Quaternion.Euler(0,0,180);
+            }
+			
 			//new health bar
 
 			if (amount > 0)

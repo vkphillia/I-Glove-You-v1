@@ -37,45 +37,44 @@ public class OfflineManager : MonoBehaviour
 		}	
 	}
 
-	#endregion
+    #endregion
 
-	#region Variables
+    #region Variables
 
-	public bool Mute;
-	
-	//scripts link
-	public PlayerHolderController PlayerHolder1;
+    [Header("Public Variables")]
+    public bool Mute;
+    public bool Pause;
+    public bool glovePicked;
+    public bool PUPicked;
+    public int roundNumber;
+    public int MaxHealth;
+    public float MaxSpeed;
+
+    [Space]
+    [Header("Scripts Link")]
+    //scripts link
+    public PlayerHolderController PlayerHolder1;
 	public PlayerHolderController PlayerHolder2;
 	public OfflineRoundController RoundPanel;
-    
-	public GameObject Player1HUDPanel;
+    public PUController myPUController;
+
+    [Space]
+    [Header("GameObjects Link")]
+    public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
+    public GameObject pauseBtn;
+    public Text PauseText;
+    public PTrophy TrophyP;
+
+    [Space]
+    public GameState currentState;
     
-	public GameState currentState;
-    
-	public bool glovePicked;
-	public bool PUPicked;
-
-	public int roundNumber;
-	public int MaxHealth;
-	public float MaxSpeed;
-    
-	private Vector3 P1StartPos;
-	private Vector3 P2StartPos;
-
-	public bool Pause;
-	public Text PauseText;
-
-	public PTrophy TrophyP;
-
-	public PUController myPUController;
-    
-	public GameObject pauseBtn;
-
 	//for placement
 	[HideInInspector]
 	public Vector3 screenSizeInWord;
-	public Transform leftBorder;
+    [Space]
+    [Header("For Placement-Testing")]
+    public Transform leftBorder;
 	public Transform rightBorder;
 	public Transform topBorder;
 	public Transform botBorder;
@@ -83,10 +82,14 @@ public class OfflineManager : MonoBehaviour
 
 	//for testing only
 	public bool test_speedChange;
+    
+    //Private Variables Below
+    private Vector3 P1StartPos;
+    private Vector3 P2StartPos;
 
-	#endregion
+    #endregion
 
-	void Awake ()
+    void Awake ()
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;

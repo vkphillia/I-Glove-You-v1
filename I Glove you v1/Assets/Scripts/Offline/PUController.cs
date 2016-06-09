@@ -149,9 +149,10 @@ public class PUController : MonoBehaviour
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);*/
 
-		Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
+		Marker = spawnObj.GetComponent<PowerUp>().myMarker;
 		Marker.SetActive (true);
-		Marker.transform.position = _randomPos;
+        Marker.GetComponent<SpriteRenderer>().color = spawnObj.GetComponent<PowerUp>().myMarkerColor;
+        Marker.transform.position = _randomPos;
 		yield return new WaitForSeconds (.6f);
 		Marker.SetActive (false);
 		spawnObj.transform.position = _randomPos;
