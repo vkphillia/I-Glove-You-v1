@@ -20,9 +20,10 @@ public class OfflineManager : MonoBehaviour
 {
 	public static event GloveEvent SpwanFirstGlove;
 
-    #region Instance creation
-    //Static Singleton Instance
-    public static OfflineManager _Instance = null;
+	#region Instance creation
+
+	//Static Singleton Instance
+	public static OfflineManager _Instance = null;
 
 	//property to get instance
 	public static OfflineManager Instance {
@@ -36,10 +37,11 @@ public class OfflineManager : MonoBehaviour
 		}	
 	}
 
-    #endregion
+	#endregion
 
-    #region Variables
-    public bool Mute;
+	#region Variables
+
+	public bool Mute;
 	
 	//scripts link
 	public PlayerHolderController PlayerHolder1;
@@ -77,13 +79,14 @@ public class OfflineManager : MonoBehaviour
 	public Transform rightBorder;
 	public Transform topBorder;
 	public Transform botBorder;
-    
+	public Transform BoxingRingBG;
+
 	//for testing only
 	public bool test_speedChange;
 
-    #endregion
+	#endregion
 
-    void Awake ()
+	void Awake ()
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;
@@ -107,11 +110,13 @@ public class OfflineManager : MonoBehaviour
 	{
 		
 		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
+		//BoxingRingBG.localScale = new Vector3 (screenSizeInWord.x, screenSizeInWord.y - 2, 1);
 		leftBorder.position = new Vector3 (-screenSizeInWord.x + .1f, 0, 0);
 		rightBorder.position = new Vector3 (screenSizeInWord.x - .1f, 0, 0);
 		topBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, topBorder.localScale.y, topBorder.localScale.y);
 		botBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, botBorder.localScale.y, botBorder.localScale.y);
-
+		Debug.Log ("x = " + screenSizeInWord.x);
+		Debug.Log ("y = " + screenSizeInWord.y);
 
 		//really need it? never used anywhere else
 		/*P1StartPos = new Vector3 (0, -3, 0);
@@ -165,9 +170,10 @@ public class OfflineManager : MonoBehaviour
 		}
 	}
 
-    #region Zoom
-    //camera zoom code
-    void ZoomIn ()
+	#region Zoom
+
+	//camera zoom code
+	void ZoomIn ()
 	{
 		Player1HUDPanel.SetActive (true);
 		Player2HUDPanel.SetActive (true);
@@ -189,11 +195,12 @@ public class OfflineManager : MonoBehaviour
 			foreground.transform.localScale -= new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
 		}*/
 	}
-    #endregion
 
-    //checks for the winner and sets the GameState to MatchOver or RoundOver
-    //any call for stoping the game should be sent here
-    public void CheckRoundStatus ()
+	#endregion
+
+	//checks for the winner and sets the GameState to MatchOver or RoundOver
+	//any call for stoping the game should be sent here
+	public void CheckRoundStatus ()
 	{
 		StartCoroutine (RoundStatusCoroutine ());
 	}
@@ -205,16 +212,16 @@ public class OfflineManager : MonoBehaviour
 		{
 			PlayerHolder1.roundWins++;
 			PlayerHolder2.myWalkAnim.Play ("Dead");
-            TrophyP.playerID = 1;
-            TrophyP.gameObject.SetActive (true);
+			TrophyP.playerID = 1;
+			TrophyP.gameObject.SetActive (true);
 		}
 		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth)
 		{
 			PlayerHolder2.roundWins++;
 			PlayerHolder1.myWalkAnim.Play ("Dead");
-            TrophyP.playerID = 2;
-            TrophyP.gameObject.SetActive (true);
-        }
+			TrophyP.playerID = 2;
+			TrophyP.gameObject.SetActive (true);
+		}
 
 		
 		if (PlayerHolder1.roundWins == 2 || PlayerHolder2.roundWins == 2)
@@ -274,7 +281,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SceneManager.LoadScene ("offline menu");
 	}
-    
+
 	public void OnPauseBtn ()
 	{
 		if (!Pause)
