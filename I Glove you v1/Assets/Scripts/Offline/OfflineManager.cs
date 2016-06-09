@@ -19,9 +19,10 @@ public enum GameState
 public class OfflineManager : MonoBehaviour
 {
 	public static event GloveEvent SpwanFirstGlove;
-	
-	//Static Singleton Instance
-	public static OfflineManager _Instance = null;
+
+    #region Instance creation
+    //Static Singleton Instance
+    public static OfflineManager _Instance = null;
 
 	//property to get instance
 	public static OfflineManager Instance {
@@ -35,25 +36,19 @@ public class OfflineManager : MonoBehaviour
 		}	
 	}
 
-	public bool Mute;
-	//public AudioSource source_Punch;
-	//public AudioSource source_RoundStart;
-	//public AudioSource source_Fight;
-	//public AudioSource source_Round;
-	//public AudioSource[] source_RoundNumber;
+    #endregion
+
+    #region Variables
+    public bool Mute;
 	
 	//scripts link
 	public PlayerHolderController PlayerHolder1;
 	public PlayerHolderController PlayerHolder2;
 	public OfflineRoundController RoundPanel;
-
-
-
+    
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
-
-	//public Transform foreground;
-
+    
 	public GameState currentState;
     
 	public bool glovePicked;
@@ -63,26 +58,16 @@ public class OfflineManager : MonoBehaviour
 	public int MaxHealth;
 	public float MaxSpeed;
     
-	//public float MaxRoundTimer;
-
-	//public Text roundText_HUD;
-	//public Text timerText_HUD;
-	
 	private Vector3 P1StartPos;
 	private Vector3 P2StartPos;
-	//private float roundTimer;
 
 	public bool Pause;
 	public Text PauseText;
 
-	public P1Trophy TrophyP1;
-	public P2Trophy TrophyP2;
+	public PTrophy TrophyP;
 
 	public PUController myPUController;
-
-
-
-
+    
 	public GameObject pauseBtn;
 
 	//for placement
@@ -92,13 +77,13 @@ public class OfflineManager : MonoBehaviour
 	public Transform rightBorder;
 	public Transform topBorder;
 	public Transform botBorder;
-
-
-
+    
 	//for testing only
 	public bool test_speedChange;
 
-	void Awake ()
+    #endregion
+
+    void Awake ()
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;
@@ -116,9 +101,7 @@ public class OfflineManager : MonoBehaviour
 		PlayerHolder2.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder2.animationController [OfflineMenuController.Player2CharacterID];
 		//Debug.Log (OfflineMenuController.Player2CharacterID);
 	}
-
-
-
+    
 	//sets the player intital position and calls ShowRoundPanel()
 	void Start ()
 	{
@@ -182,8 +165,9 @@ public class OfflineManager : MonoBehaviour
 		}
 	}
 
-	//camera zoom code
-	void ZoomIn ()
+    #region Zoom
+    //camera zoom code
+    void ZoomIn ()
 	{
 		Player1HUDPanel.SetActive (true);
 		Player2HUDPanel.SetActive (true);
@@ -205,10 +189,11 @@ public class OfflineManager : MonoBehaviour
 			foreground.transform.localScale -= new Vector3 (.2f, 0.2f, 0) * Time.deltaTime;
 		}*/
 	}
+    #endregion
 
-	//checks for the winner and sets the GameState to MatchOver or RoundOver
-	//any call for stoping the game should be sent here
-	public void CheckRoundStatus ()
+    //checks for the winner and sets the GameState to MatchOver or RoundOver
+    //any call for stoping the game should be sent here
+    public void CheckRoundStatus ()
 	{
 		StartCoroutine (RoundStatusCoroutine ());
 	}
@@ -220,14 +205,16 @@ public class OfflineManager : MonoBehaviour
 		{
 			PlayerHolder1.roundWins++;
 			PlayerHolder2.myWalkAnim.Play ("Dead");
-			TrophyP1.gameObject.SetActive (true);
+            TrophyP.playerID = 1;
+            TrophyP.gameObject.SetActive (true);
 		}
 		else if (PlayerHolder2.myHealth > PlayerHolder1.myHealth)
 		{
 			PlayerHolder2.roundWins++;
 			PlayerHolder1.myWalkAnim.Play ("Dead");
-			TrophyP2.gameObject.SetActive (true);
-		}
+            TrophyP.playerID = 2;
+            TrophyP.gameObject.SetActive (true);
+        }
 
 		
 		if (PlayerHolder1.roundWins == 2 || PlayerHolder2.roundWins == 2)
@@ -287,19 +274,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SceneManager.LoadScene ("offline menu");
 	}
-
-
-
-	//plays the sound that is passed in as an argument //Deprecated
-	//public void PlaySound (AudioSource a)
-	//{
-	//	if (!Mute)
-	//	{
-	//		a.Play ();
-	//	}
-	//}
-
-
+    
 	public void OnPauseBtn ()
 	{
 		if (!Pause)

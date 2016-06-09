@@ -14,8 +14,8 @@ public class OfflineRoundController : MonoBehaviour
 	public Text P2Text;
 	public GameObject UI;
 	private Animator myRoundTextAnim;
-	public P1HUD HUDP1;
-	public P2HUD HUDP2;
+	public PHUD[] HUD;
+	//public P2HUD HUDP2;
 
 
 	void OnEnable ()
@@ -153,8 +153,8 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundText.text = "";
 		P1Text.gameObject.SetActive (false);
 		P2Text.gameObject.SetActive (false);
-		StartCoroutine (HUDP1.GoDown ());
-		StartCoroutine (HUDP2.GoDown ());
+		StartCoroutine (HUD[0].GoDown ());
+		StartCoroutine (HUD[1].GoDown ());
 		OfflineManager.Instance.NewMatchStart ();
 		SceneManager.LoadScene ("offline menu");
 		//UI.SetActive (true);
