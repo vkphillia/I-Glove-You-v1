@@ -77,10 +77,15 @@ public class AirStrikePU : PowerUp
 
 	void OnDisable ()
 	{
+
 		for (int i = 0; i < noOfStrikes; i++)
 		{
-			AllStrikesArr [i].myChildBlast.GetComponent<Animator> ().Play ("blast_idle");
-			AllStrikesArr [i].myChildBlast.gameObject.SetActive (false);
+			if (AllStrikesArr [i].BlastActive)
+			{
+
+				AllStrikesArr [i].myChildBlast.myBlastAnim.Play ("blast_idle");
+				AllStrikesArr [i].myChildBlast.gameObject.SetActive (false);
+			}
 			AllStrikesArr [i].gameObject.SetActive (false);
 		}
 	}

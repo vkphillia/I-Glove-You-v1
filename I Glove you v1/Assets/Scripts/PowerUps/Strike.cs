@@ -5,11 +5,14 @@ public class Strike : MonoBehaviour
 {
 
 	public PUController myController;
-	public Transform myChildBlast;
+	public Blast myChildBlast;
+	private SpriteRenderer mySprite;
+	public bool BlastActive;
 
 	void Awake ()
 	{
 		myController = GameObject.FindObjectOfType<PUController> ();
+		mySprite = GetComponent<SpriteRenderer> ();
 	}
 
 	void OnEnable ()
@@ -19,14 +22,17 @@ public class Strike : MonoBehaviour
 
 	IEnumerator ActivateBlast ()
 	{
+		BlastActive = true;
 		myController.SpawnStrikes (this.gameObject);
 		yield return new WaitForSeconds (0.75f);
-		GetComponent<SpriteRenderer> ().enabled = true;
+		mySprite.enabled = true;
 		yield return new WaitForSeconds (0.25f);
 		myChildBlast.gameObject.SetActive (true);
-		myChildBlast.GetComponent<Animator> ().Play ("blast_strike");
+		myChildBlast.myBlastAnim.Play ("blast_strike");
 		SoundsController.Instance.PlaySoundFX ("Blast_Strike", 1.0f);
-		GetComponent<SpriteRenderer> ().enabled = false;
+		mySprite.enabled = false;
+		yield return new WaitForSeconds (.5f);
+		BlastActive = false;
 
 	}
 
