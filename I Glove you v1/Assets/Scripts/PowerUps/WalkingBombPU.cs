@@ -33,7 +33,7 @@ public class WalkingBombPU : PowerUp
 
 	}
 
-	void Update ()
+	public override void Update ()
 	{
 		//find other player and go towards it
 		if (active && !blasted)
@@ -47,6 +47,7 @@ public class WalkingBombPU : PowerUp
 
 			}
 		}
+		base.Update ();
 
 	}
 
@@ -122,19 +123,22 @@ public class WalkingBombPU : PowerUp
 
 	public override void DeactivatePU ()
 	{
-
-		SoundsController.Instance.walkingBomb.Pause (); 
-		transform.rotation = Quaternion.Euler (0, 0, 0);
-		active = false;
+		if (active)
+		{
+			SoundsController.Instance.walkingBomb.Pause (); 
+			transform.rotation = Quaternion.Euler (0, 0, 0);
+			active = false;
+			myBlastCol.myAnim.Play ("WalkingBomb_Idle");
+			myBlastCol.gameObject.SetActive (false);
+			myCol.enabled = true;
+			mySpriteRenderer.enabled = true;
+		}
+		
 		//disable sprite and blast collider before disabling gameobject
 		//myBlastCol.mySpriteRenderer.enabled = false;
 		//myBlastCol.myCol.enabled = false;
-		myBlastCol.myAnim.Play ("WalkingBomb_Idle");
-		myBlastCol.gameObject.SetActive (false);
-
 		//activate its collider and sprite renderer
-		myCol.enabled = true;
-		mySpriteRenderer.enabled = true;
+
 		base.DeactivatePU ();
 	}
 
