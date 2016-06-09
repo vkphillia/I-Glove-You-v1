@@ -2,9 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-
-
 public class PUController : MonoBehaviour
 {
 	
@@ -13,7 +10,7 @@ public class PUController : MonoBehaviour
 	public PowerUp PU;
 
 	public List<PowerUp> PUList = new List<PowerUp> ();
-	public PowerUp glove;
+	//public PowerUp glove;
 
 	//PU spawning
 	public List<Transform> spawnPointsArr = new List<Transform> ();
@@ -101,8 +98,9 @@ public class PUController : MonoBehaviour
 	//glove
 	void SpawnGlove ()
 	{
-		glove.gameObject.SetActive (true);
-		SpawnAnything (glove.gameObject);
+		PUList [4].gameObject.SetActive (true);
+		//glove.gameObject.SetActive (true);
+		SpawnAnything (PUList [4].gameObject);
 	}
 
 
@@ -131,26 +129,34 @@ public class PUController : MonoBehaviour
 
 	public void SpawnAnything (GameObject spawnObj)
 	{
-		if (spawnPointsArrTemp.Count > 0)
+		/*if (spawnPointsArrTemp.Count > 0)
 		{
 			StartCoroutine (ReAddSpawnPoint ());
 		}
-		int _randomPos = Random.Range (0, spawnPointsArr.Count);
-
+		int _randomPos = Random.Range (0, spawnPointsArr.Count);*/
+		Vector3 _randomPos = new Vector3 (Random.Range (-2, 2), Random.Range (-3, 3), 0);
 		StartCoroutine (spawnHighlight (_randomPos, spawnObj));
 	}
 
-	IEnumerator spawnHighlight (int _randomPos, GameObject spawnObj)
+	IEnumerator spawnHighlight (Vector3 _randomPos, GameObject spawnObj)
 	{
-		Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
+		/*Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
 		Marker.SetActive (true);
 		Marker.transform.position = spawnPointsArr [_randomPos].position;
 		yield return new WaitForSeconds (.6f);
 		Marker.SetActive (false);
 		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
-		spawnPointsArr.RemoveAt (_randomPos);
+		spawnPointsArr.RemoveAt (_randomPos);*/
 
+		Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
+		Marker.SetActive (true);
+		Marker.transform.position = _randomPos;
+		yield return new WaitForSeconds (.6f);
+		Marker.SetActive (false);
+		spawnObj.transform.position = _randomPos;
+		//spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
+		//spawnPointsArr.RemoveAt (_randomPos);
 	}
 
 	//resize both spawn point array after every 5 seconds

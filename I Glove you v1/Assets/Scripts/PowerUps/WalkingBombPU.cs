@@ -5,7 +5,7 @@ public class WalkingBombPU : PowerUp
 {
 	public int damageByBlast;
 	public float myTime;
-	public GameObject myBlastCol;
+	public WalkingBombBlastCol myBlastCol;
 	public float mySpeed;
 
 	private Vector3 EnemyPos;
@@ -13,13 +13,22 @@ public class WalkingBombPU : PowerUp
 	private Vector3 relativePos;
 	private float angle;
 	private bool blasted;
+	private SpriteRenderer mySpriteRenderer;
+	private Collider2D myCol;
+
+	public void Awake ()
+	{
+		myCol = GetComponent<Collider2D> ();
+		mySpriteRenderer = GetComponent<SpriteRenderer> ();
+	}
 
 	public override void OnEnable ()
 	{
-		GetComponent<SpriteRenderer> ().enabled = true;
-		GetComponent<CircleCollider2D> ().enabled = true;
-		myBlastCol.GetComponent<SpriteRenderer> ().enabled = false;
-		myBlastCol.GetComponent<CircleCollider2D> ().enabled = false;
+		mySpriteRenderer.enabled = true;
+		myCol.enabled = true;
+		myBlastCol.gameObject.SetActive (false);
+		//myBlastCol.mySpriteRenderer.enabled = false;
+		//myBlastCol.myCol.enabled = false;
 		base.OnEnable ();
 
 	}
@@ -55,7 +64,6 @@ public class WalkingBombPU : PowerUp
 	{
 		if (!active)
 		{
-			myPS.gameObject.SetActive (false);
 			active = true;
 			StartCoroutine (ActivateBomb (OfflineManager.Instance.PlayerHolder2));
 		}
@@ -82,15 +90,15 @@ public class WalkingBombPU : PowerUp
 
 	public IEnumerator ActivateBomb (PlayerHolderController p)
 	{
-		//loop this please until blast
+		myBlastCol.gameObject.SetActive (true);
+		myBlastCol.myAnim.Play ("WalkingBomb_Idle");
 		SoundsController.Instance.walkingBomb.Play (); 
-		//bomb ticking sound goes here
 
-		myBlastCol.GetComponent<CircleCollider2D> ().enabled = true;
-		myBlastCol.GetComponent<CircleCollider2D> ().enabled = true;
-		//deactivate its collider to ensure it doesn't get picked again
-		GetComponent<CircleCollider2D> ().enabled = false;
-
+		mySpriteRenderer.enabled = false;
+		myCol.enabled = false;
+		myPS.gameObject.SetActive (false);
+		//myBlastCol.mySpriteRenderer.enabled = true;
+		//myBlastCol.myCol.enabled = true;
 		yield return new WaitForSeconds (myTime);
 		//blast
 		StartCoroutine (BlastNow (p));
@@ -102,9 +110,10 @@ public class WalkingBombPU : PowerUp
 		blasted = true;
 		SoundsController.Instance.walkingBomb.Pause (); 
 		SoundsController.Instance.PlaySoundFX ("Blast", 1.0f);
-		GetComponent<SpriteRenderer> ().enabled = false;
-		myBlastCol.GetComponent<SpriteRenderer> ().enabled = true;
+		myBlastCol.myAnim.Play ("WalkingBomb_Blast");
+		//myBlastCol.mySpriteRenderer.enabled = false;
 		yield return new WaitForSeconds (.5f);
+		myBlastCol.myAnim.Play ("WalkingBomb_Idle");
 		active = false;
 		blasted = false;
 		DeactivatePU ();
@@ -114,14 +123,18 @@ public class WalkingBombPU : PowerUp
 	public override void DeactivatePU ()
 	{
 
+		SoundsController.Instance.walkingBomb.Pause (); 
 		transform.rotation = Quaternion.Euler (0, 0, 0);
 		active = false;
 		//disable sprite and blast collider before disabling gameobject
-		myBlastCol.GetComponent<SpriteRenderer> ().enabled = false;
-		myBlastCol.GetComponent<CircleCollider2D> ().enabled = false;
+		//myBlastCol.mySpriteRenderer.enabled = false;
+		//myBlastCol.myCol.enabled = false;
+		myBlastCol.myAnim.Play ("WalkingBomb_Idle");
+		myBlastCol.gameObject.SetActive (false);
+
 		//activate its collider and sprite renderer
-		GetComponent<CircleCollider2D> ().enabled = true;
-		GetComponent<SpriteRenderer> ().enabled = true;
+		myCol.enabled = true;
+		mySpriteRenderer.enabled = true;
 		base.DeactivatePU ();
 	}
 
