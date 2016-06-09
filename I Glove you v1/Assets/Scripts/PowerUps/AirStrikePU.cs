@@ -12,9 +12,14 @@ public class AirStrikePU : PowerUp
 
 	private Vector2 EnemyPos;
 
+	private SpriteRenderer mySpriteRenderer;
+	private Collider2D myCol;
+
 
 	void Awake ()
 	{
+		mySpriteRenderer = GetComponent<SpriteRenderer> ();
+		myCol = GetComponent<Collider2D> ();
 
 		AllStrikesArr = new Strike[noOfStrikes]; 
 		for (int i = 0; i < noOfStrikes; i++)
@@ -51,9 +56,9 @@ public class AirStrikePU : PowerUp
 
 	IEnumerator StrikeNow ()
 	{
-		GetComponent<CircleCollider2D> ().enabled = false;
+		myCol.enabled = false;
 		SoundsController.Instance.PlaySoundFX ("AirStrike", 1.0f);
-		GetComponent<SpriteRenderer> ().enabled = false;
+		mySpriteRenderer.enabled = false;
 		for (int i = 0; i < noOfStrikes; i++)
 		{
 			AllStrikesArr [i].gameObject.SetActive (true); 
@@ -69,26 +74,21 @@ public class AirStrikePU : PowerUp
 	public override void DeactivatePU ()
 	{
 		active = false;
-		GetComponent<SpriteRenderer> ().enabled = true;
-		GetComponent<CircleCollider2D> ().enabled = true;
+		mySpriteRenderer.enabled = true;
+		myCol.enabled = true;
 		base.DeactivatePU ();
-
 	}
 
 	void OnDisable ()
 	{
-
 		for (int i = 0; i < noOfStrikes; i++)
 		{
 			if (AllStrikesArr [i].BlastActive)
 			{
-
 				AllStrikesArr [i].myChildBlast.myBlastAnim.Play ("blast_idle");
 				AllStrikesArr [i].myChildBlast.gameObject.SetActive (false);
 			}
 			AllStrikesArr [i].gameObject.SetActive (false);
 		}
 	}
-
-
 }
