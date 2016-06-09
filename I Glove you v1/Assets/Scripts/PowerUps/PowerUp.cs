@@ -14,6 +14,7 @@ public class PowerUp : MonoBehaviour
 
 	public GameObject myMarker;
 
+
 	public virtual void OnEnable ()
 	{
 		myPS.gameObject.SetActive (true);
@@ -21,7 +22,10 @@ public class PowerUp : MonoBehaviour
 
 	public virtual void Update ()
 	{
-		transform.Rotate (0, 0, 2);
+		if (OfflineManager.Instance.currentState == GameState.Playing && !active)
+		{
+			transform.Rotate (0, 0, 2);
+		}
 	}
 
 	public virtual void OnTriggerEnter2D (Collider2D other)
@@ -88,10 +92,14 @@ public class PowerUp : MonoBehaviour
 		gameObject.SetActive (false);
 	}
 
-	void OnDisable ()
+	public virtual void OnDisable ()
 	{
 		active = false;
 		transform.position = new Vector3 (-5, -3, 0);
 	}
+
+
+
+
 
 }

@@ -2,8 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+
+
 public class PUController : MonoBehaviour
 {
+	
+
 	[HideInInspector]
 	public PowerUp PU;
 
@@ -133,7 +138,6 @@ public class PUController : MonoBehaviour
 		int _randomPos = Random.Range (0, spawnPointsArr.Count);
 
 		StartCoroutine (spawnHighlight (_randomPos, spawnObj));
-
 	}
 
 	IEnumerator spawnHighlight (int _randomPos, GameObject spawnObj)
@@ -146,6 +150,7 @@ public class PUController : MonoBehaviour
 		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);
+
 	}
 
 	//resize both spawn point array after every 5 seconds
@@ -158,7 +163,6 @@ public class PUController : MonoBehaviour
 
 	void SpawnPU ()
 	{
-
 		StartCoroutine (SpawnPUCoroutine ());
 	}
 
@@ -176,13 +180,5 @@ public class PUController : MonoBehaviour
 		OfflineRoundController.OnRoundOver -= DestroyPU;
 
 	}
-
-
-
-
-		
-	
-
-
 
 }
