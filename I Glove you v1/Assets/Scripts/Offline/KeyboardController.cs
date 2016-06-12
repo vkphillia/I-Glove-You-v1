@@ -201,6 +201,7 @@ public class KeyboardController : MonoBehaviour
 		}
 		else
 		{
+
 			t.transform.Rotate (0, 0, -6);
 		
 		}

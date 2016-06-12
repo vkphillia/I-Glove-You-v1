@@ -37,44 +37,44 @@ public class OfflineManager : MonoBehaviour
 		}	
 	}
 
-    #endregion
+	#endregion
 
-    #region Variables
+	#region Variables
 
-    [Header("Public Variables")]
-    public bool Mute;
-    public bool Pause;
-    public bool glovePicked;
-    public bool PUPicked;
-    public int roundNumber;
-    public int MaxHealth;
-    public float MaxSpeed;
+	[Header ("Public Variables")]
+	public bool Mute;
+	public bool Pause;
+	public bool glovePicked;
+	public bool PUPicked;
+	public int roundNumber;
+	public int MaxHealth;
+	public float MaxSpeed;
 
-    [Space]
-    [Header("Scripts Link")]
-    //scripts link
+	[Space]
+	[Header ("Scripts Link")]
+	//scripts link
     public PlayerHolderController PlayerHolder1;
 	public PlayerHolderController PlayerHolder2;
 	public OfflineRoundController RoundPanel;
-    public PUController myPUController;
+	public PUController myPUController;
 
-    [Space]
-    [Header("GameObjects Link")]
-    public GameObject Player1HUDPanel;
+	[Space]
+	[Header ("GameObjects Link")]
+	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
-    public GameObject pauseBtn;
-    public Text PauseText;
-    public PTrophy TrophyP;
+	public GameObject pauseBtn;
+	public Text PauseText;
+	public PTrophy TrophyP;
 
-    [Space]
-    public GameState currentState;
+	[Space]
+	public GameState currentState;
     
 	//for placement
 	[HideInInspector]
 	public Vector3 screenSizeInWord;
-    [Space]
-    [Header("For Placement-Testing")]
-    public Transform leftBorder;
+	[Space]
+	[Header ("For Placement-Testing")]
+	public Transform leftBorder;
 	public Transform rightBorder;
 	public Transform topBorder;
 	public Transform botBorder;
@@ -83,13 +83,13 @@ public class OfflineManager : MonoBehaviour
 	//for testing only
 	public bool test_speedChange;
     
-    //Private Variables Below
-    private Vector3 P1StartPos;
-    private Vector3 P2StartPos;
+	//Private Variables Below
+	private Vector3 P1StartPos;
+	private Vector3 P2StartPos;
 
-    #endregion
+	#endregion
 
-    void Awake ()
+	void Awake ()
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;
@@ -100,11 +100,14 @@ public class OfflineManager : MonoBehaviour
 	{
 		currentState = GameState.RoundStart;
 		//
-		PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
+		//PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		PlayerHolder1.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder1.animationController [OfflineMenuController.Player1CharacterID];
+		PlayerHolder1.myFighterImage.sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		//Debug.Log (OfflineMenuController.Player1CharacterID);
-		PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
+		//PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
 		PlayerHolder2.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder2.animationController [OfflineMenuController.Player2CharacterID];
+		PlayerHolder2.myFighterImage.sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
+
 		//Debug.Log (OfflineMenuController.Player2CharacterID);
 	}
     

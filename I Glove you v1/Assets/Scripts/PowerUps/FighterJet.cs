@@ -24,7 +24,7 @@ public class FighterJet : MonoBehaviour
 	public void AIFollow ()
 	{
 		//Find distance to target
-		targetPos = Camera.main.WorldToScreenPoint (OfflineManager.Instance.PlayerHolder1.transform.position);
+		targetPos = Camera.main.WorldToScreenPoint (new Vector3 (0, 0, 0));
 		myPos = Camera.main.WorldToScreenPoint (this.transform.position);
 		relativePos = targetPos - myPos;
 
@@ -35,7 +35,7 @@ public class FighterJet : MonoBehaviour
 
 	IEnumerator Disable ()
 	{
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (3f);
 		gameObject.SetActive (false);
 	}
 

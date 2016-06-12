@@ -67,7 +67,7 @@ public class TouchController : MonoBehaviour
 				p2Touched = true;
 			}
 		}
-		if (!p1Touched)
+		/*if (!p1Touched)
 		{
 			OfflineManager.Instance.PlayerHolder1.isTurning = false;
 		}
@@ -83,35 +83,39 @@ public class TouchController : MonoBehaviour
 		else
 		{
 			OfflineManager.Instance.PlayerHolder2.isTurning = true;
-		}
+		}*/
 		p1Touched = false;
 		p2Touched = false;
 	}
 
 	void MoveClockWise (PlayerHolderController t)
 	{
-		if (t.hasGlove)
+		/*if (t.hasGlove)
 		{
 			t.transform.Rotate (0, 0, 3);
 		}
 		else if (!t.hasGlove && !t.lyingDead)
 		{
 			t.transform.Rotate (0, 0, 6);
-		}
+		}*/
+		if (!t.lyingDead)
+			t.transform.Rotate (0, 0, 6);
 
 
 	}
 
 	void MoveAntiClockWise (PlayerHolderController t)
 	{
-		if (t.hasGlove)
+		/*if (t.hasGlove)
 		{
 			t.transform.Rotate (0, 0, -3);
 		}
 		else if (!t.hasGlove && !t.lyingDead)
 		{
 			t.transform.Rotate (0, 0, -6);
-		}
+		}*/
+		if (!t.lyingDead)
+			t.transform.Rotate (0, 0, -6);
 
 	}
 }
