@@ -25,7 +25,14 @@ public class MainMenuController : MonoBehaviour
 		}
 	}
 
+
 	private AsyncOperation async;
+	public GameObject title;
+
+	void OnEnable ()
+	{
+		title.SetActive (true);
+	}
 
 	public void Offline ()
 	{
@@ -36,12 +43,6 @@ public class MainMenuController : MonoBehaviour
 		StartCoroutine (LoadingScene ("offline menu"));
 	}
 
-	public void Story ()
-	{
-		StartCoroutine (LoadingScene ("story main"));
-		//SceneManager.LoadScene("story main");
-       
-	}
 
 	IEnumerator LoadingScene (string sceneName)
 	{

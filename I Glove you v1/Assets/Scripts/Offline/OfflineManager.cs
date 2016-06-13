@@ -214,6 +214,7 @@ public class OfflineManager : MonoBehaviour
 	IEnumerator RoundStatusCoroutine ()
 	{
 		Time.timeScale = 0.2f;
+		SoundsController.Instance.bgMenuMusic.Stop ();
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
 		{
 			PlayerHolder1.roundWins++;
