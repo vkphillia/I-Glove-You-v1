@@ -28,7 +28,7 @@ public class PHUD : MonoBehaviour
             myAnim.Play("P2HUD_Up");
         }
 		yield return new WaitForSeconds (0.6f);
-		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.8f);
+		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.2f);
 	}
 
 	public IEnumerator GoDown ()

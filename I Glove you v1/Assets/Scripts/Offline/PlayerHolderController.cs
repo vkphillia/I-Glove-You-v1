@@ -266,7 +266,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		hitter = true;
 		StartCoroutine (PlayPunchAnim ());
-		SoundsController.Instance.PlaySoundFX ("Punch", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("Punch", 0.15f);
 
 	}
 
@@ -275,7 +275,7 @@ public class PlayerHolderController : MonoBehaviour
 		PUHitter = true;
 		StartCoroutine (PlayPunchAnim ());
 		SpawnPunchPU_FX (PU);
-		SoundsController.Instance.PlaySoundFX ("BreakPU", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("BreakPU", 0.15f);
 
 	}
 
@@ -315,7 +315,7 @@ public class PlayerHolderController : MonoBehaviour
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
 	{
-		SoundsController.Instance.PlaySoundFX ("GlovePick", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("GlovePick", 0.15f);
 		hasGlove = true;
 		StartCoroutine (GloveAppear ());
 	}
@@ -392,7 +392,7 @@ public class PlayerHolderController : MonoBehaviour
 				//only play sound when adding health
 				if (amount > 0)
 				{
-					SoundsController.Instance.PlaySoundFX ("HealthUp", 1.0f); 
+					SoundsController.Instance.PlaySoundFX ("HealthUp", 0.15f); 
 					StartCoroutine (ChangeColor (Color.green));
 				}
 				else

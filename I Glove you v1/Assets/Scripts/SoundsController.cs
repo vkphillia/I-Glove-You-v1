@@ -3,7 +3,9 @@ using System.Collections;
 
 public class SoundsController : MonoBehaviour
 {
-	public AudioSource bgMusic;
+    public static bool mute;
+
+    public AudioSource bgMusic;
 	public AudioSource bgMenuMusic;
 	public AudioSource walkingBomb;
 
@@ -38,114 +40,117 @@ public class SoundsController : MonoBehaviour
 			DontDestroyOnLoad (gameObject);
 		}
 	}
+
 	//initialization all the sound effects
 	void Start ()
 	{
 		sounds = Resources.LoadAll ("Sounds", typeof(AudioClip));
 		audioSource = GetComponents<AudioSource> ();
 		bgMenuMusic.Play ();
-		//bgMusic.Play ();
-		//for debuggin only
-		//for (int i=0;i<sounds.Length;i++)
-		//{
-		//Debug.Log(sounds[i].name+"\n");
-		//}    
 	}
 
-	void Update ()
+    public void MuteSound()
+    {
+        mute = !mute;
+        if (mute)
+        {
+            bgMenuMusic.Stop();
+        }
+        else
+        {
+            bgMenuMusic.Play();
+        }
+    }
+
+    //call this function with a parameter of the sound name as in resource folder
+    public void PlaySoundFX (string sfxName, float vol)
 	{
-		/*if (OfflineManager.Instance.currentState == GameState.Playing && !bgMusic.isPlaying)
-		{
-			bgMusic.Play ();
-		}
-		else if (OfflineManager.Instance.currentState != GameState.Playing && bgMusic.isPlaying)
-		{
-			bgMusic.Stop ();
-		}*/
-	}
-	//call this function with a parameter of the sound name as in resource folder
-	public void PlaySoundFX (string sfxName, float vol)
-	{
-		for (int i = 0; i < sounds.Length; i++)
-		{
-			if (sfxName == sounds [i].name)
-			{
-				if (!audioSource [0].isPlaying)
-				{
-					audioSource [0].clip = sounds [i] as AudioClip;
-					audioSource [0].volume = vol;
-					audioSource [0].Play ();
-				}
-				else if (!audioSource [1].isPlaying)
-				{
-					audioSource [1].clip = sounds [i] as AudioClip;
-					audioSource [1].volume = vol;
-					audioSource [1].Play ();
-				}
-				else if (!audioSource [2].isPlaying)
-				{
-					audioSource [2].clip = sounds [i] as AudioClip;
-					audioSource [2].volume = vol;
-					audioSource [2].Play ();
-				}
-				else if (!audioSource [3].isPlaying)
-				{
-					audioSource [3].clip = sounds [i] as AudioClip;
-					audioSource [3].volume = vol;
-					audioSource [3].Play ();
-				}
-				else
-				{
-					audioSource [4].clip = sounds [i] as AudioClip;
-					audioSource [4].volume = vol;
-					audioSource [4].Play ();
-				}
-				break;
-			}
-            
-		}
+        if (!mute)
+        {
+            for (int i = 0; i < sounds.Length; i++)
+            {
+                if (sfxName == sounds[i].name)
+                {
+                    if (!audioSource[0].isPlaying)
+                    {
+                        audioSource[0].clip = sounds[i] as AudioClip;
+                        audioSource[0].volume = vol;
+                        audioSource[0].Play();
+                    }
+                    else if (!audioSource[1].isPlaying)
+                    {
+                        audioSource[1].clip = sounds[i] as AudioClip;
+                        audioSource[1].volume = vol;
+                        audioSource[1].Play();
+                    }
+                    else if (!audioSource[2].isPlaying)
+                    {
+                        audioSource[2].clip = sounds[i] as AudioClip;
+                        audioSource[2].volume = vol;
+                        audioSource[2].Play();
+                    }
+                    else if (!audioSource[3].isPlaying)
+                    {
+                        audioSource[3].clip = sounds[i] as AudioClip;
+                        audioSource[3].volume = vol;
+                        audioSource[3].Play();
+                    }
+                    else
+                    {
+                        audioSource[4].clip = sounds[i] as AudioClip;
+                        audioSource[4].volume = vol;
+                        audioSource[4].Play();
+                    }
+                    break;
+                }
+
+            }
+        }
 	}
 
 	public void StopSoundFX (string sfxName, float vol)
 	{
-		for (int i = 0; i < sounds.Length; i++)
-		{
-			if (sfxName == sounds [i].name)
-			{
-				if (!audioSource [0].isPlaying)
-				{
-					audioSource [0].clip = sounds [i] as AudioClip; //why setting clip if we are going to kill this sound
-					audioSource [0].volume = vol;//why setting volume?
-					audioSource [0].Stop ();
-				}
-				else if (!audioSource [1].isPlaying)
-				{
-					audioSource [1].clip = sounds [i] as AudioClip;
-					audioSource [1].volume = vol;
-					audioSource [1].Stop ();
-				}
-				else if (!audioSource [2].isPlaying)
-				{
-					audioSource [2].clip = sounds [i] as AudioClip;
-					audioSource [2].volume = vol;
-					audioSource [2].Stop ();
-				}
-				else if (!audioSource [3].isPlaying)
-				{
-					audioSource [3].clip = sounds [i] as AudioClip;
-					audioSource [3].volume = vol;
-					audioSource [3].Stop ();
-				}
-				else
-				{
-					audioSource [4].clip = sounds [i] as AudioClip;
-					audioSource [4].volume = vol;
-					audioSource [4].Stop ();
-				}
+        if (!mute)
+        {
+            for (int i = 0; i < sounds.Length; i++)
+            {
+                if (sfxName == sounds[i].name)
+                {
+                    if (!audioSource[0].isPlaying)
+                    {
+                        audioSource[0].clip = sounds[i] as AudioClip; //why setting clip if we are going to kill this sound
+                        audioSource[0].volume = vol;//why setting volume?
+                        audioSource[0].Stop();
+                    }
+                    else if (!audioSource[1].isPlaying)
+                    {
+                        audioSource[1].clip = sounds[i] as AudioClip;
+                        audioSource[1].volume = vol;
+                        audioSource[1].Stop();
+                    }
+                    else if (!audioSource[2].isPlaying)
+                    {
+                        audioSource[2].clip = sounds[i] as AudioClip;
+                        audioSource[2].volume = vol;
+                        audioSource[2].Stop();
+                    }
+                    else if (!audioSource[3].isPlaying)
+                    {
+                        audioSource[3].clip = sounds[i] as AudioClip;
+                        audioSource[3].volume = vol;
+                        audioSource[3].Stop();
+                    }
+                    else
+                    {
+                        audioSource[4].clip = sounds[i] as AudioClip;
+                        audioSource[4].volume = vol;
+                        audioSource[4].Stop();
+                    }
 
-				break;
-			}
-            
-		}
+                    break;
+                }
+
+            }
+        }
 	}
 }

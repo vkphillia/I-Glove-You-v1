@@ -57,7 +57,7 @@ public class AirStrikePU : PowerUp
 	IEnumerator StrikeNow ()
 	{
 		myCol.enabled = false;
-		SoundsController.Instance.PlaySoundFX ("AirStrike", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("AirStrike", 0.15f);
 		mySpriteRenderer.enabled = false;
 		for (int i = 0; i < noOfStrikes; i++)
 		{

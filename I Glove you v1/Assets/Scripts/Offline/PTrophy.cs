@@ -25,6 +25,7 @@ public class PTrophy : PHUD
         else
         {
             transform.position = new Vector3(0, 1.6f, -1);
+            transform.rotation = Quaternion.Euler(0, 0, 180);
         }
 		StartCoroutine (MakeItFly ());
 	}
@@ -33,7 +34,7 @@ public class PTrophy : PHUD
 	{
 		yield return new WaitForSeconds (1f);
 		myTrophyAnim.Play ("Trophy_Show");
-		SoundsController.Instance.PlaySoundFX ("GlovePick", 1f);
+		SoundsController.Instance.PlaySoundFX ("GlovePick", 0.15f);
 		yield return new WaitForSeconds (1f);
         if(playerID==1)
         {
@@ -74,7 +75,7 @@ public class PTrophy : PHUD
                 trophies2[1].color = Color.white;
             }
         }
-		SoundsController.Instance.PlaySoundFX ("CollectPoint", 1f);
+		SoundsController.Instance.PlaySoundFX ("CollectPoint", 0.15f);
 		myTrophyAnim.Play ("Trophy_Idle");
 
 		gameObject.SetActive (false);

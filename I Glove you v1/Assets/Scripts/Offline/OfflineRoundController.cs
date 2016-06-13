@@ -70,7 +70,7 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundText.text = "Fight!";
 		OfflineManager.Instance.currentState = GameState.Fight;
 
-		SoundsController.Instance.PlaySoundFX ("Fight", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("Fight", 0.2f);
         
 		yield return new WaitForSeconds (1f);
 		myRoundTextAnim.Play ("Round_Hide");
@@ -96,7 +96,7 @@ public class OfflineRoundController : MonoBehaviour
 		}
 
 
-		SoundsController.Instance.PlaySoundFX ("RoundEnd", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("RoundEnd", 0.2f);
 		yield return new WaitForSeconds (.2f);
 		myRoundText.text = "Round Over";
 		myRoundTextAnim.Play ("Round_Show");
@@ -115,7 +115,7 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundTextAnim.Play ("Round_Show");
 
 		yield return new WaitForSeconds (1f);
-		SoundsController.Instance.PlaySoundFX ("Win", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("Win", 0.2f);
 		P1Text.gameObject.SetActive (true);
 		P2Text.gameObject.SetActive (true);
 		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
@@ -167,15 +167,15 @@ public class OfflineRoundController : MonoBehaviour
 	IEnumerator RoundNumberSFX ()
 	{
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
-		SoundsController.Instance.PlaySoundFX ("Round", 1.0f);
+		SoundsController.Instance.PlaySoundFX ("Round", 0.2f);
         
 		yield return new WaitForSeconds (0.3f);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
 		if (OfflineManager.Instance.roundNumber == 1)
-			SoundsController.Instance.PlaySoundFX ("one", 1.0f);
+			SoundsController.Instance.PlaySoundFX ("one", 0.2f);
 		else if (OfflineManager.Instance.roundNumber == 2)
-			SoundsController.Instance.PlaySoundFX ("two", 1.0f);
+			SoundsController.Instance.PlaySoundFX ("two", 0.2f);
 		else if (OfflineManager.Instance.roundNumber == 3)
-			SoundsController.Instance.PlaySoundFX ("three", 1.0f);
+			SoundsController.Instance.PlaySoundFX ("three", 0.2f);
 	}
 }
