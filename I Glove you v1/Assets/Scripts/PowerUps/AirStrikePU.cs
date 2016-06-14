@@ -73,9 +73,12 @@ public class AirStrikePU : PowerUp
 
 	public override void DeactivatePU ()
 	{
-		active = false;
-		mySpriteRenderer.enabled = true;
-		myCol.enabled = true;
+		if (active)
+		{
+			active = false;
+			mySpriteRenderer.enabled = true;
+			myCol.enabled = true;
+		}
 		base.DeactivatePU ();
 	}
 
