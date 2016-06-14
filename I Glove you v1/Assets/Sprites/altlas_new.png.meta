@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3c87dfde96e8c471f8680bef6b0f72b4
-timeCreated: 1465892447
+timeCreated: 1465894345
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -72,7 +72,7 @@ TextureImporter:
     21300130: Sumo_Idle
     21300132: Princess_WalkingGlove
     21300134: Princess_walk1
-    21300136: Prancess_walk2
+    21300136: Princess_walk2
     21300138: Princess_dead
     21300140: Princess_Idle
   serializedVersion: 2
@@ -1392,7 +1392,7 @@ TextureImporter:
         - {x: 85, y: -111}
         - {x: 110, y: -66}
         - {x: 113, y: 12}
-    - name: Prancess_walk2
+    - name: Princess_walk2
       rect:
         serializedVersion: 2
         x: 553
