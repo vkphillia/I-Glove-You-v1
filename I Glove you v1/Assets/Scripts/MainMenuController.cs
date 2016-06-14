@@ -9,6 +9,11 @@ public class MainMenuController : MonoBehaviour
 	private CanvasGroup canvas;
 	private bool back;
 	public Transform backText;
+	public GameObject PlayButton;
+	public GameObject CreditsBtn;
+	public GameObject MuteBtn;
+	public GameObject HelpBtn;
+
 
 	//Static Singleton Instance
 	public static MainMenuController _Instance = null;
@@ -77,5 +82,7 @@ public class MainMenuController : MonoBehaviour
 		backText.gameObject.SetActive (false);
 
 	}
+
+
     
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Title : MonoBehaviour
+public class MuteBtn : MonoBehaviour
 {
 
 	private Animator myAnim;
@@ -18,10 +18,11 @@ public class Title : MonoBehaviour
 
 	IEnumerator ShowTitle ()
 	{
-		myAnim.Play ("Title_Appear");
-		yield return new WaitForSeconds (.5f);
-		myAnim.Play ("Title_Idle");
-		MainMenuController.Instance.PlayButton.SetActive (true);
+		myAnim.Play ("Appear");
+		yield return new WaitForSeconds (.3f);
+		MainMenuController.Instance.CreditsBtn.SetActive (true);
+		yield return new WaitForSeconds (.2f);
+		myAnim.Play ("Idle");
+		
 	}
-
 }

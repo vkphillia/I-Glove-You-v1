@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Title : MonoBehaviour
+public class CreditsBtn : MonoBehaviour
 {
 
 	private Animator myAnim;
@@ -18,10 +18,9 @@ public class Title : MonoBehaviour
 
 	IEnumerator ShowTitle ()
 	{
-		myAnim.Play ("Title_Appear");
+		myAnim.Play ("Appear");
 		yield return new WaitForSeconds (.5f);
-		myAnim.Play ("Title_Idle");
-		MainMenuController.Instance.PlayButton.SetActive (true);
-	}
+		myAnim.Play ("Idle");
 
+	}
 }
