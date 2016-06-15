@@ -47,6 +47,8 @@ public class PlayerHolderController : MonoBehaviour
 	public int roundWins;
 	[HideInInspector]
 	public bool hasGlove;
+	[HideInInspector]
+	public Color StartingSpriteColor;
 
 
     
@@ -54,7 +56,7 @@ public class PlayerHolderController : MonoBehaviour
 	//all private varaibles Below this
 
 	private bool justRobbed;
-	private CircleCollider2D myCollider;
+	//private CircleCollider2D myCollider;
 	private SpriteRenderer mySprite;
 	private Vector3 force;
 	private bool PUHitter;
@@ -71,7 +73,6 @@ public class PlayerHolderController : MonoBehaviour
 	private Transform myPooledFT;
 	private FlyingText FT_Obj;
 
-
 	#endregion
 
 	void Start ()
@@ -80,10 +81,13 @@ public class PlayerHolderController : MonoBehaviour
 		myHealth = MaxHealth;
 		mySpeed = MaxSpeed;
 		myHealthText_HUD.text = myHealth.ToString ();
-		myCollider = GetComponent<CircleCollider2D> ();
+		//myCollider = GetComponent<CircleCollider2D> ();
 		myWalkAnim = GetComponent<Animator> ();
 
+
 	}
+
+
 
 	void Update ()
 	{
@@ -134,17 +138,37 @@ public class PlayerHolderController : MonoBehaviour
 			}
 
 		}
+		else if (OfflineManager.Instance.currentState == GameState.MatchOver)
+		{
+			StartCoroutine (WinAnimation ());
 
-		if (OfflineManager.Instance.currentState == GameState.MatchOver)
+
+		}
+		else if (OfflineManager.Instance.currentState == GameState.RoundOver)
 		{
 
-			//play win animation here
+			/*//play win animation here
 			if (roundWins == 2)
 			{
 				transform.position += transform.up * Time.deltaTime * mySpeed;
 				transform.Rotate (0, 0, 5);
+			}*/
+
+			if (hitter && !lyingDead)
+			{
+				transform.Rotate (0, 0, 1);
+				transform.position += transform.up * Time.deltaTime * (-mySpeed);
+				StartCoroutine (MakeHitterFalse ());
+			}
+			else if (lyingDead)
+			{
+				transform.position += transform.up * Time.deltaTime * (mySpeed + 1);
+
+				StartCoroutine (MakeLyingDeadFalse ());
 			}
 		}
+
+
 	}
 
 
@@ -434,7 +458,7 @@ public class PlayerHolderController : MonoBehaviour
             
 
 		yield return new WaitForSeconds (.5f);
-		mySprite.color = Color.white;
+		mySprite.color = StartingSpriteColor;
 	}
 
 	//Spawining from game object pools
@@ -461,20 +485,45 @@ public class PlayerHolderController : MonoBehaviour
 		yield return new WaitForSeconds (1.5f);
 
 
-
-		if (hasGlove)
+		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			myWalkAnim.Play ("WalkGlove");
+			if (hasGlove)
+			{
+				myWalkAnim.Play ("WalkGlove");
 
 
-		}
-		if (!hasGlove)
-		{
-			myWalkAnim.Play ("WalkNoGlove");
+			}
+			if (!hasGlove)
+			{
+				myWalkAnim.Play ("WalkNoGlove");
+			}
+
+
 		}
 		lyingDead = false; //start moving forward
-		//Debug.Log (lyingDead);
+
 	}
+
+	IEnumerator WinAnimation ()
+	{
+		yield return new WaitForSeconds (0.5f);
+		OfflineManager.Instance.PlayerHolder1.transform.position = new Vector3 (0, -1.5f, 0);
+		OfflineManager.Instance.PlayerHolder2.transform.position = new Vector3 (0, 1.5f, 0);
+		OfflineManager.Instance.PlayerHolder1.transform.rotation = Quaternion.Euler (0, 0, 0);
+		OfflineManager.Instance.PlayerHolder2.transform.rotation = Quaternion.Euler (0, 0, -180);
+		LoseGlove ();
+
+		myWalkAnim.Play ("Idle");
+		//play win animation here
+		if (roundWins == 2)
+		{
+			Debug.Log ("jump");
+			//transform.position = transform.up * Time.deltaTime * mySpeed;
+			//transform.Rotate (0, 0, 5);
+		}
+	}
+
+
 
 
 

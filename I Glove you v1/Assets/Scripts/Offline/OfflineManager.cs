@@ -103,16 +103,34 @@ public class OfflineManager : MonoBehaviour
 	void OnEnable ()
 	{
 		currentState = GameState.RoundStart;
-		//
+
 		//PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		PlayerHolder1.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder1.animationController [OfflineMenuController.Player1CharacterID];
-		PlayerHolder1.myFighterImage.sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
+		//PlayerHolder1.myFighterImage.sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		//Debug.Log (OfflineMenuController.Player1CharacterID);
 		//PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
 		PlayerHolder2.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder2.animationController [OfflineMenuController.Player2CharacterID];
-		PlayerHolder2.myFighterImage.sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
+		//PlayerHolder2.myFighterImage.sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
 
 		//Debug.Log (OfflineMenuController.Player2CharacterID);
+		if (OfflineMenuController.Player1CharacterID == OfflineMenuController.Player2CharacterID)
+		{
+			//use tint
+			OfflineManager.Instance.PlayerHolder2.StartingSpriteColor = new Color (0, 255, 255, 255);
+			OfflineManager.Instance.PlayerHolder2.GetComponent<SpriteRenderer> ().color = new Color (0, 255, 255, 255);
+
+			OfflineManager.Instance.PlayerHolder1.StartingSpriteColor = new Color (255, 255, 255, 255);
+			OfflineManager.Instance.PlayerHolder1.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+
+		}
+		else
+		{
+			OfflineManager.Instance.PlayerHolder2.StartingSpriteColor = new Color (255, 255, 255, 255);
+			OfflineManager.Instance.PlayerHolder2.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+
+			OfflineManager.Instance.PlayerHolder1.StartingSpriteColor = new Color (255, 255, 255, 255);
+			OfflineManager.Instance.PlayerHolder1.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+		}
 	}
     
 	//sets the player intital position and calls ShowRoundPanel()
@@ -288,7 +306,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SceneManager.LoadScene ("offline menu");
 	}
-    
+
 	void makePlayerFall (PlayerHolderController p)
 	{
 		StartCoroutine (p.MakeLyingDeadFalse ());

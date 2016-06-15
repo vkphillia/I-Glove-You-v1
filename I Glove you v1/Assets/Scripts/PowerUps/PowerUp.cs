@@ -13,12 +13,15 @@ public class PowerUp : MonoBehaviour
 	public bool active;
 
 	public GameObject myMarker;
-    public Color myMarkerColor;
+	public Color myMarkerColor;
+
+	public Animator myAnim;
 
 
 	public virtual void OnEnable ()
 	{
 		myPS.gameObject.SetActive (true);
+		StartCoroutine (AppearPU ());
 	}
 
 	public virtual void Update ()
@@ -100,7 +103,11 @@ public class PowerUp : MonoBehaviour
 	}
 
 
-
+	public virtual IEnumerator AppearPU ()
+	{
+		yield return new WaitForSeconds (.6f);
+		myAnim.Play ("PU_Appear");
+	}
 
 
 }

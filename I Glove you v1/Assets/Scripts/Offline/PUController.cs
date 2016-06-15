@@ -8,6 +8,7 @@ public class PUController : MonoBehaviour
 
 	[HideInInspector]
 	public PowerUp PU;
+	[HideInInspector]
 
 	public List<PowerUp> PUList = new List<PowerUp> ();
 	//public PowerUp glove;
@@ -27,6 +28,11 @@ public class PUController : MonoBehaviour
 		OfflineManager.SpwanFirstGlove += Spawn;
 		PowerUp.OnPUPick += SpawnPU;
 		OfflineRoundController.OnRoundOver += DestroyPU;
+		for (int i = 0; i < PUList.Count; i++)
+		{
+			PUList [i].myAnim = PUList [i].GetComponent<Animator> ();
+		}
+
 	}
 
 
@@ -149,10 +155,10 @@ public class PUController : MonoBehaviour
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);*/
 
-		Marker = spawnObj.GetComponent<PowerUp>().myMarker;
+		Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
 		Marker.SetActive (true);
-        Marker.GetComponent<SpriteRenderer>().color = spawnObj.GetComponent<PowerUp>().myMarkerColor;
-        Marker.transform.position = _randomPos;
+		Marker.GetComponent<SpriteRenderer> ().color = spawnObj.GetComponent<PowerUp> ().myMarkerColor;
+		Marker.transform.position = _randomPos;
 		yield return new WaitForSeconds (.6f);
 		Marker.SetActive (false);
 		spawnObj.transform.position = _randomPos;

@@ -11,33 +11,30 @@ public class OfflineMenuController : MonoBehaviour
 	public Text P1Text;
 	public Text P2Text;
 
+	public Sprite[] SelectedSprites;
+
 	private bool P1Ready;
 	private bool P2Ready;
 
-	//for placement
-	[HideInInspector]
-	public Vector3 screenSizeInWord;
-	public Transform leftBorder;
-	public Transform rightBorder;
 
 
 
-	void Enable ()
+
+
+	void OnEnable ()
 	{
 		Player1CharacterID = 0;
-		Player2CharacterID = 1;
+		Player2CharacterID = 5;
 		P1Text.text = "Fight!";
 		P2Text.text = "Fight!";
-		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
-		SoundsController.Instance.PlayBackgroundMusic (true, 1);//start crowd sound
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
+			SoundsController.Instance.PlayBackgroundMusic (true, 1);//start crowd sound
+		}
+
 	}
 
-	void Start ()
-	{
-		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
-		leftBorder.position = new Vector3 (-screenSizeInWord.x + .2f, 0, 0);
-		rightBorder.position = new Vector3 (screenSizeInWord.x - .2f, 0, 0);
-	}
 
 	void Update ()
 	{
@@ -57,15 +54,17 @@ public class OfflineMenuController : MonoBehaviour
 	{
 		P1Ready = true;
 		P1Text.text = "Ready!";
-        SoundsController.Instance.PlayButtonClick();//for button click sound
-    }
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayButtonClick ();//for button click sound
+	}
 
 	public void P2Fight ()
 	{
 		P2Ready = true;
 		P2Text.text = "Ready!";
-        SoundsController.Instance.PlayButtonClick();//for button click sound
-    }
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayButtonClick ();//for button click sound
+	}
 
 	public void Player1Character (int id)
 	{
@@ -80,5 +79,10 @@ public class OfflineMenuController : MonoBehaviour
 	public void Exit ()
 	{
 		SceneManager.LoadScene ("main menu");
+	}
+
+	public void SelectSprite (int id)
+	{
+
 	}
 }

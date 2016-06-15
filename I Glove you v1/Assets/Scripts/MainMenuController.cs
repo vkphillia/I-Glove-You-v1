@@ -36,6 +36,8 @@ public class MainMenuController : MonoBehaviour
 	void OnEnable ()
 	{
 		title.SetActive (true);
+		SoundsController.Instance.PlayBackgroundMusic (true, 0);//stop BG music
+		SoundsController.Instance.PlayBackgroundMusic (false, 1);//start crowd sound
 	}
 
 	public void Offline ()
@@ -51,6 +53,7 @@ public class MainMenuController : MonoBehaviour
 	IEnumerator LoadingScene (string sceneName)
 	{
 		float speed = 1;
+		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
         
 		while (canvas.alpha > 0)
 		{

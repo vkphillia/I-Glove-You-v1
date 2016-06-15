@@ -175,8 +175,8 @@ public class OfflineRoundController : MonoBehaviour
 
 	void BackToOfflineMenu ()
 	{
-		SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
-		SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG Music after loading next screen
+		SoundsController.Instance.PlayBackgroundMusic (true, 1);//stop crowd sound
+		SoundsController.Instance.PlayBackgroundMusic (false, 0);//start BG Music after loading next screen
 		SceneManager.LoadScene ("offline menu");
 	}
 }

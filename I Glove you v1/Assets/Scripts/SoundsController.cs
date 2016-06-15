@@ -60,21 +60,44 @@ public class SoundsController : MonoBehaviour
 		mute = !mute;
 		if (mute)
 		{
-			PlayBackgroundMusic (false, 0);//0 is for BG music
+			if (OfflineManager.Instance != null)
+			{
+				if (OfflineManager.Instance.currentState == GameState.Paused)
+				{
+					PlayBackgroundMusic (false, 1);
+					PlayBackgroundMusic (false, 0);
+
+				}
+			}
+			else
+			{
+				PlayBackgroundMusic (false, 0);//0 is for BG music
+			}
 		}
 		else
 		{
-            //if (OfflineManager.Instance.currentState == GameState.Playing)
-            //{
-            //	PlayBackgroundMusic (true, 0);//0 is for BG music
-            //}
+			//if (OfflineManager.Instance.currentState == GameState.Playing)
+			//{
+			//	PlayBackgroundMusic (true, 0);//0 is for BG music
+			//}
+			if (OfflineManager.Instance != null)
+			{
+				if (OfflineManager.Instance.currentState == GameState.Paused)
+				{
+					PlayBackgroundMusic (true, 1);
+					PlayBackgroundMusic (true, 0);
+				}
+			}
+			else
+			{
+				PlayBackgroundMusic (true, 0);//0 is for BG music
+			}
 
-            PlayBackgroundMusic (true, 0);//0 is for BG music
 
-        }
-    }
+		}
+	}
 
-    //for any button click sound
+	//for any button click sound
 	public void PlayButtonClick ()
 	{
 		if (!mute)
@@ -155,10 +178,11 @@ public class SoundsController : MonoBehaviour
 		{
 			for (int i = 0; i < audioSource.Length; i++)
 			{
-				if (sfxName == audioSource [i].clip.name)
+				if (audioSource [i].isPlaying)
 				{
-					if (audioSource [i].isPlaying)
+					if (sfxName == audioSource [i].clip.name)
 					{
+					
 						audioSource [i].Stop ();
 						break;
 					}
