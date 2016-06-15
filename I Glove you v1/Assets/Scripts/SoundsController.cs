@@ -3,18 +3,19 @@ using System.Collections;
 
 public class SoundsController : MonoBehaviour
 {
+    #region Variable
     public static bool mute;
-    [Space]
+    
 	public AudioSource[] bgSound;
-    //public AudioSource crowdSound;
-    //public AudioSource walkingBomb;
+    public AudioSource click;
 
-	private Object[] sounds;
+    private Object[] sounds;
 	private AudioSource[] audioSource = new AudioSource[5];
+    #endregion
 
-
-	//Static Singleton Instance
-	public static SoundsController _Instance = null;
+    #region Instance
+    //Static Singleton Instance
+    public static SoundsController _Instance = null;
 
 	//property to get instance
 	public static SoundsController Instance {
@@ -27,8 +28,9 @@ public class SoundsController : MonoBehaviour
 			return _Instance;
 		}
 	}
+    #endregion
 
-	void Awake ()
+    void Awake ()
 	{
 		if (_Instance != null && _Instance != this)
 		{
@@ -59,6 +61,14 @@ public class SoundsController : MonoBehaviour
         else
         {
             PlayBackgroundMusic(true,0);//0 is for BG music
+        }
+    }
+
+    public void PlayButtonClick()
+    {
+        if(!mute)
+        {
+            click.Play();
         }
     }
 
