@@ -20,7 +20,7 @@ public class MuteBtn : MonoBehaviour
 	{
 		myAnim.Play ("Appear");
 		yield return new WaitForSeconds (.3f);
-		MainMenuController.Instance.CreditsBtn.SetActive (true);
+		MainMenuController.Instance.SettingsBtn.SetActive (true);
 		yield return new WaitForSeconds (.2f);
 		myAnim.Play ("Idle");
 		

@@ -10,9 +10,8 @@ public class MainMenuController : MonoBehaviour
 	private bool back;
 	public Transform backText;
 	public GameObject PlayButton;
-	public GameObject CreditsBtn;
-	public GameObject MuteBtn;
-	public GameObject HelpBtn;
+	public GameObject SettingsBtn;
+
 
 
 	//Static Singleton Instance
