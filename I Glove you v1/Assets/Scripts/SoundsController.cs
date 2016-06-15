@@ -61,21 +61,20 @@ public class SoundsController : MonoBehaviour
 		if (mute)
 		{
 			PlayBackgroundMusic (false, 0);//0 is for BG music
-			PlayBackgroundMusic (false, 1);//0 is for BG music
-
 		}
 		else
 		{
-			if (OfflineManager.Instance.currentState == GameState.Playing)
-			{
-				PlayBackgroundMusic (true, 0);//0 is for BG music
-			}
+            //if (OfflineManager.Instance.currentState == GameState.Playing)
+            //{
+            //	PlayBackgroundMusic (true, 0);//0 is for BG music
+            //}
 
-			PlayBackgroundMusic (true, 1);//0 is for BG music
+            PlayBackgroundMusic (true, 0);//0 is for BG music
 
-		}
-	}
+        }
+    }
 
+    //for any button click sound
 	public void PlayButtonClick ()
 	{
 		if (!mute)

@@ -288,45 +288,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SceneManager.LoadScene ("offline menu");
 	}
-
-	public void OnPauseBtn ()
-	{
-		/*if (!Pause)
-		{
-			Pause = true;Playing
-
-			Time.timeScale = 0;
-
-				
-		}
-		else
-		{
-			Pause = false;
-			Time.timeScale = 1;
-
-		}*/
-		if (currentState == GameState.Paused)
-		{
-			
-			currentState = GameState.Playing;
-			OfflineManager.Instance.pauseBtn.SetActive (true);
-			SoundsController.Instance.PlayBackgroundMusic (true, 0);//0 is for BG music
-
-
-		
-		}
-		else if (currentState == GameState.Playing)
-		{
-			currentState = GameState.Paused;
-			SoundsController.Instance.PlayBackgroundMusic (false, 0);//0 is for BG music
-
-
-		}
-
-	}
-
-
-
+    
 	void makePlayerFall (PlayerHolderController p)
 	{
 		StartCoroutine (p.MakeLyingDeadFalse ());

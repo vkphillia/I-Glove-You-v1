@@ -57,14 +57,15 @@ public class OfflineMenuController : MonoBehaviour
 	{
 		P1Ready = true;
 		P1Text.text = "Ready!";
-	}
+        SoundsController.Instance.PlayButtonClick();//for button click sound
+    }
 
 	public void P2Fight ()
 	{
 		P2Ready = true;
 		P2Text.text = "Ready!";
-
-	}
+        SoundsController.Instance.PlayButtonClick();//for button click sound
+    }
 
 	public void Player1Character (int id)
 	{
