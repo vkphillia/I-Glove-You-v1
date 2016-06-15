@@ -50,7 +50,6 @@ public class PlayerHolderController : MonoBehaviour
 	[HideInInspector]
 	public Color StartingSpriteColor;
 
-
     
 
 	//all private varaibles Below this
@@ -72,6 +71,12 @@ public class PlayerHolderController : MonoBehaviour
 	//for flying text
 	private Transform myPooledFT;
 	private FlyingText FT_Obj;
+
+	float upTimer;
+	float downTimer;
+	private int noOfJumps;
+	private bool WinStarted;
+
 
 	#endregion
 
@@ -140,7 +145,11 @@ public class PlayerHolderController : MonoBehaviour
 		}
 		else if (OfflineManager.Instance.currentState == GameState.MatchOver)
 		{
-			StartCoroutine (WinAnimation ());
+			if (!WinStarted)
+			{
+				WinStarted = true;
+				StartCoroutine (WinAnimation ());
+			}
 
 
 		}
@@ -515,11 +524,43 @@ public class PlayerHolderController : MonoBehaviour
 
 		myWalkAnim.Play ("Idle");
 		//play win animation here
+
 		if (roundWins == 2)
 		{
-			Debug.Log ("jump");
-			//transform.position = transform.up * Time.deltaTime * mySpeed;
-			//transform.Rotate (0, 0, 5);
+			/*while (noOfJumps < 5)
+			{
+				if (upTimer >= 0.5f)
+				{
+					//go down
+					if (downTimer < 0.3f)
+					{
+						downTimer -= Time.deltaTime;
+						transform.position = transform.up * Time.deltaTime * -mySpeed;//go down
+					}
+					else
+					{
+						upTimer = 0;
+						downTimer = 0;
+						noOfJumps++;
+					}
+
+				}
+				else
+				{
+					upTimer += Time.deltaTime;
+					transform.position = transform.up * Time.deltaTime * mySpeed;//go up
+				}
+
+
+
+
+
+
+
+				//transform.position = transform.up * Time.deltaTime * mySpeed;
+				//transform.Rotate (0, 0, 5);
+			}*/
+			
 		}
 	}
 
