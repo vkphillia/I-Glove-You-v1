@@ -473,7 +473,7 @@ public class PlayerHolderController : MonoBehaviour
 			myWalkAnim.Play ("WalkNoGlove");
 		}
 		lyingDead = false; //start moving forward
-		Debug.Log (lyingDead);
+		//Debug.Log (lyingDead);
 	}
 
 

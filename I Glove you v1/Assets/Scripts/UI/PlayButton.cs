@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PlayButton : MonoBehaviour
 {
-
-
 	private Animator myAnim;
 
 	void Awake ()

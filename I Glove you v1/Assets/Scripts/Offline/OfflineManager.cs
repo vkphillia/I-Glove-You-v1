@@ -93,7 +93,9 @@ public class OfflineManager : MonoBehaviour
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;
-	}
+        SoundsController.Instance.PlayBackgroundMusic(false, 0);//stop BG music
+        SoundsController.Instance.PlayBackgroundMusic(true, 1);//start crowd sound
+    }
 
 	//sets GameState to RoundStart and sets the sprite for both player
 	void OnEnable ()
@@ -121,22 +123,13 @@ public class OfflineManager : MonoBehaviour
 		rightBorder.position = new Vector3 (screenSizeInWord.x - .1f, 0, 0);
 		topBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, topBorder.localScale.y, topBorder.localScale.y);
 		botBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, botBorder.localScale.y, botBorder.localScale.y);
-		Debug.Log ("x = " + screenSizeInWord.x);
-		Debug.Log ("y = " + screenSizeInWord.y);
-
-		//really need it? never used anywhere else
-		/*P1StartPos = new Vector3 (0, -3, 0);
-		P2StartPos = new Vector3 (0, 3, 0);
-		PlayerHolder1.transform.position = P1StartPos;
-		PlayerHolder2.transform.position = P2StartPos;*/
-
+		//Debug.Log ("x = " + screenSizeInWord.x);
+		//Debug.Log ("y = " + screenSizeInWord.y);
+        
 		//foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
         
 		//RoundPanel.gameObject.SetActive(true);
 		RoundPanel.ShowRoundPanel ();
-
-
-        
 	}
     
 	//check for escape button click, spawn gloves and power ups, controls timer, checks round status
@@ -215,7 +208,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SoundsController.Instance.PlaySoundFX ("SlowMoFX", 1f);
 		Time.timeScale = 0.2f;
-		SoundsController.Instance.bgMenuMusic.Stop ();
+		SoundsController.Instance.PlayBackgroundMusic(false,0);//BG Music
 
 
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)

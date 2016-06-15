@@ -16,12 +16,7 @@ public class OfflineRoundController : MonoBehaviour
 	private Animator myRoundTextAnim;
 	public PHUD[] HUD;
 	//public P2HUD HUDP2;
-
-
-	void OnEnable ()
-	{
-		SoundsController.Instance.bgMenuMusic.Stop ();
-	}
+    
 
 	void Awake ()
 	{
@@ -70,7 +65,7 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundText.text = "Fight!";
 		OfflineManager.Instance.currentState = GameState.Fight;
 
-		SoundsController.Instance.PlaySoundFX ("Fight", 0.2f);
+		SoundsController.Instance.PlaySoundFX ("Fight", 0.5f);
         
 		yield return new WaitForSeconds (1f);
 		myRoundTextAnim.Play ("Round_Hide");
@@ -79,8 +74,8 @@ public class OfflineRoundController : MonoBehaviour
 		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("WalkNoGlove");
 		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("WalkNoGlove");
 
-		SoundsController.Instance.bgMenuMusic.Play ();
-		yield return new WaitForSeconds (1f);
+		SoundsController.Instance.PlayBackgroundMusic(true, 0);//BG Music
+        yield return new WaitForSeconds (1f);
 		gameObject.SetActive (false);
 	}
 
@@ -156,26 +151,31 @@ public class OfflineRoundController : MonoBehaviour
 		StartCoroutine (HUD[0].GoDown ());
 		StartCoroutine (HUD[1].GoDown ());
 		OfflineManager.Instance.NewMatchStart ();
-		SceneManager.LoadScene ("offline menu");
+        BackToOfflineMenu();
 		//UI.SetActive (true);
 
 		//SceneManager.LoadScene ("offline menu");
 	}
-
-
-
+    
 	IEnumerator RoundNumberSFX ()
 	{
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
-		SoundsController.Instance.PlaySoundFX ("Round", 0.2f);
+		SoundsController.Instance.PlaySoundFX ("Round", 0.5f);
         
 		yield return new WaitForSeconds (0.3f);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
 		if (OfflineManager.Instance.roundNumber == 1)
-			SoundsController.Instance.PlaySoundFX ("one", 0.2f);
+			SoundsController.Instance.PlaySoundFX ("one", 0.5f);
 		else if (OfflineManager.Instance.roundNumber == 2)
-			SoundsController.Instance.PlaySoundFX ("two", 0.2f);
+			SoundsController.Instance.PlaySoundFX ("two", 0.5f);
 		else if (OfflineManager.Instance.roundNumber == 3)
-			SoundsController.Instance.PlaySoundFX ("three", 0.2f);
+			SoundsController.Instance.PlaySoundFX ("three", 0.5f);
 	}
+
+    void BackToOfflineMenu()
+    {
+        SoundsController.Instance.PlayBackgroundMusic(false, 1);//stop crowd sound
+        SoundsController.Instance.PlayBackgroundMusic(true, 0);//start BG Music after loading next screen
+        SceneManager.LoadScene("offline menu");
+    }
 }
