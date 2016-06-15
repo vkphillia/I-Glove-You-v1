@@ -70,12 +70,13 @@ public class OfflineRoundController : MonoBehaviour
 		yield return new WaitForSeconds (1f);
 		myRoundTextAnim.Play ("Round_Hide");
 		OfflineManager.Instance.currentState = GameState.Playing;
+		OfflineManager.Instance.pauseBtn.SetActive (true);
 		//make player move
 		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("WalkNoGlove");
 		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("WalkNoGlove");
 
-		SoundsController.Instance.PlayBackgroundMusic(true, 0);//BG Music
-        yield return new WaitForSeconds (1f);
+		SoundsController.Instance.PlayBackgroundMusic (true, 0);//BG Music
+		yield return new WaitForSeconds (1f);
 		gameObject.SetActive (false);
 	}
 
@@ -148,15 +149,15 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundText.text = "";
 		P1Text.gameObject.SetActive (false);
 		P2Text.gameObject.SetActive (false);
-		StartCoroutine (HUD[0].GoDown ());
-		StartCoroutine (HUD[1].GoDown ());
+		StartCoroutine (HUD [0].GoDown ());
+		StartCoroutine (HUD [1].GoDown ());
 		OfflineManager.Instance.NewMatchStart ();
-        BackToOfflineMenu();
+		BackToOfflineMenu ();
 		//UI.SetActive (true);
 
 		//SceneManager.LoadScene ("offline menu");
 	}
-    
+
 	IEnumerator RoundNumberSFX ()
 	{
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
@@ -172,10 +173,10 @@ public class OfflineRoundController : MonoBehaviour
 			SoundsController.Instance.PlaySoundFX ("three", 0.5f);
 	}
 
-    void BackToOfflineMenu()
-    {
-        SoundsController.Instance.PlayBackgroundMusic(false, 1);//stop crowd sound
-        SoundsController.Instance.PlayBackgroundMusic(true, 0);//start BG Music after loading next screen
-        SceneManager.LoadScene("offline menu");
-    }
+	void BackToOfflineMenu ()
+	{
+		SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
+		SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG Music after loading next screen
+		SceneManager.LoadScene ("offline menu");
+	}
 }

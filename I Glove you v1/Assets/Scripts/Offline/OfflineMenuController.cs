@@ -28,6 +28,8 @@ public class OfflineMenuController : MonoBehaviour
 		Player2CharacterID = 1;
 		P1Text.text = "Fight!";
 		P2Text.text = "Fight!";
+		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
+		SoundsController.Instance.PlayBackgroundMusic (true, 1);//start crowd sound
 	}
 
 	void Start ()

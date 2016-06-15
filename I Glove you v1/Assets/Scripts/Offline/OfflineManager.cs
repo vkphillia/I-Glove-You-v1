@@ -43,7 +43,9 @@ public class OfflineManager : MonoBehaviour
 
 	[Header ("Public Variables")]
 	public bool Mute;
-	public bool Pause;
+	public bool P1Resume;
+	public bool P2Resume;
+
 	public bool glovePicked;
 	public bool PUPicked;
 	public int roundNumber;
@@ -93,9 +95,9 @@ public class OfflineManager : MonoBehaviour
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;
-        SoundsController.Instance.PlayBackgroundMusic(false, 0);//stop BG music
-        SoundsController.Instance.PlayBackgroundMusic(true, 1);//start crowd sound
-    }
+		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
+		SoundsController.Instance.PlayBackgroundMusic (true, 1);//start crowd sound
+	}
 
 	//sets GameState to RoundStart and sets the sprite for both player
 	void OnEnable ()
@@ -208,7 +210,7 @@ public class OfflineManager : MonoBehaviour
 	{
 		SoundsController.Instance.PlaySoundFX ("SlowMoFX", 1f);
 		Time.timeScale = 0.2f;
-		SoundsController.Instance.PlayBackgroundMusic(false,0);//BG Music
+		SoundsController.Instance.PlayBackgroundMusic (false, 0);//BG Music
 
 
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
@@ -238,6 +240,8 @@ public class OfflineManager : MonoBehaviour
 				currentState = GameState.RoundOver;
 			}
 		}
+		pauseBtn.SetActive (false);
+
 		yield return new WaitForSeconds (.3f);
 		Time.timeScale = 1f;
 		
@@ -287,21 +291,41 @@ public class OfflineManager : MonoBehaviour
 
 	public void OnPauseBtn ()
 	{
-		if (!Pause)
+		/*if (!Pause)
 		{
-			Pause = true;
+			Pause = true;Playing
 
 			Time.timeScale = 0;
 
-			PauseText.text = "Paused";
+				
 		}
 		else
 		{
 			Pause = false;
 			Time.timeScale = 1;
-			PauseText.text = "II";
+
+		}*/
+		if (currentState == GameState.Paused)
+		{
+			
+			currentState = GameState.Playing;
+			OfflineManager.Instance.pauseBtn.SetActive (true);
+			SoundsController.Instance.PlayBackgroundMusic (true, 0);//0 is for BG music
+
+
+		
 		}
+		else if (currentState == GameState.Playing)
+		{
+			currentState = GameState.Paused;
+			SoundsController.Instance.PlayBackgroundMusic (false, 0);//0 is for BG music
+
+
+		}
+
 	}
+
+
 
 	void makePlayerFall (PlayerHolderController p)
 	{

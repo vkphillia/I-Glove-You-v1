@@ -57,6 +57,8 @@ public class MainMenuController : MonoBehaviour
 			canvas.alpha -= speed * Time.deltaTime;
 			yield return null;
 		}
+
+		yield return new WaitForSeconds (0.5f);
 		SceneManager.LoadScene (sceneName);
 	}
 
