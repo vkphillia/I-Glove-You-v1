@@ -29,6 +29,8 @@ public class TouchController : MonoBehaviour
 	void Update ()
 	{
 		MobileControls ();
+
+
 	}
 
 
@@ -45,6 +47,8 @@ public class TouchController : MonoBehaviour
 				if (touch.position.x < Screen.width / 2)
 				{
 					MoveClockWise (OfflineManager.Instance.PlayerHolder1);
+
+
 				}
 				else if (touch.position.x > Screen.width / 2)
 				{
