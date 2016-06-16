@@ -452,15 +452,9 @@ public class PlayerHolderController : MonoBehaviour
 
 	IEnumerator ChangeColor (Color C)
 	{
-		if (hit)
-		{
-			myWalkAnim.Play ("Hit");
-	
-		}
-		else
-		{
-			mySprite.color = C;
-		}
+		
+		mySprite.color = C;
+		
 		myHealthBar.color = C;
 		myHealhBarAnim.Play ("HealthBar_Shake");
 		yield return new WaitForSeconds (.3f);
@@ -480,16 +474,7 @@ public class PlayerHolderController : MonoBehaviour
 
 		yield return new WaitForSeconds (.3f);
 		mySprite.color = StartingSpriteColor;
-		if (hasGlove)
-		{
-			myWalkAnim.Play ("WalkGlove");
 
-
-		}
-		if (!hasGlove)
-		{
-			myWalkAnim.Play ("WalkNoGlove");
-		}
 
 	}
 

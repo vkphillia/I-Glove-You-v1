@@ -65,7 +65,6 @@ public class OfflineManager : MonoBehaviour
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
 	public GameObject pauseBtn;
-	public Text PauseText;
 	public PTrophy TrophyP;
 
 	[Space]
@@ -160,23 +159,7 @@ public class OfflineManager : MonoBehaviour
 	void Update ()
 	{
 
-		//commenting this coz it gets too frustrating while playing
-		/*if (Input.GetKeyDown (KeyCode.Escape))
-		{
-			if (!Pause)
-			{
-				Pause = true;
-				Time.timeScale = 0;
-
-				PauseText.text = "Paused";
-			}
-			else
-			{
-				Pause = false;
-				Time.timeScale = 1;
-				PauseText.text = "";
-			}
-		}*/
+		
 		
 		if (currentState == GameState.Fight)
 		{
