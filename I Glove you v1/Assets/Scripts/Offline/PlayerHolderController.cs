@@ -21,7 +21,6 @@ public class PlayerHolderController : MonoBehaviour
 	public Animator myPunchAnim;
 	public Animator myPunchReadyAnim;
 	public Animator myWalkAnim;
-	public Text myWinText_HUD;
 	public Text myHealthText_HUD;
 
 	public Image myFighterImage;
@@ -273,7 +272,6 @@ public class PlayerHolderController : MonoBehaviour
 		
 		gameObject.SetActive (true);	
 		myWalkAnim.Play ("Idle");
-		myWinText_HUD.text = roundWins.ToString ();
 		hit = false;
 		hitter = false;
 		myHealth = MaxHealth;

@@ -28,9 +28,10 @@ public class TouchController : MonoBehaviour
 
 	void Update ()
 	{
-		MobileControls ();
-
-
+		if (OfflineManager.Instance.currentState == GameState.Playing)
+		{
+			MobileControls ();
+		}
 	}
 
 
@@ -103,7 +104,7 @@ public class TouchController : MonoBehaviour
 			t.transform.Rotate (0, 0, 6);
 		}*/
 		if (!t.lyingDead)
-			t.transform.Rotate (0, 0, 6);
+			t.transform.Rotate (0, 0, 7);
 
 
 	}
@@ -119,7 +120,7 @@ public class TouchController : MonoBehaviour
 			t.transform.Rotate (0, 0, -6);
 		}*/
 		if (!t.lyingDead)
-			t.transform.Rotate (0, 0, -6);
+			t.transform.Rotate (0, 0, -7);
 
 	}
 }

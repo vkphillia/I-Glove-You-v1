@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3c87dfde96e8c471f8680bef6b0f72b4
-timeCreated: 1466086098
+timeCreated: 1466107020
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -91,6 +91,7 @@ TextureImporter:
     21300168: hit1
     21300170: hit2
     21300172: restart match
+    21300174: TROPH_HOLDER
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -444,21 +445,21 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1515
-        y: 1156
+        y: 1177
         width: 160
-        height: 62
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -75, y: 31}
-        - {x: -80, y: 26}
-        - {x: -80, y: -4}
-        - {x: -75, y: -10}
-        - {x: -73, y: -12}
-        - {x: 80, y: -12}
-        - {x: 80, y: 30}
-        - {x: 77, y: 31}
+      - - {x: -75, y: 20.5}
+        - {x: -80, y: 15.5}
+        - {x: -80, y: -14.5}
+        - {x: -75, y: -20.5}
+        - {x: 76, y: -20.5}
+        - {x: 80, y: -14.5}
+        - {x: 80, y: 15.5}
+        - {x: 76, y: 20.5}
     - name: fill
       rect:
         serializedVersion: 2
@@ -1790,11 +1791,34 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -33, y: 32}
-        - {x: -41, y: 23}
-        - {x: -41, y: -33}
+      - - {x: 14, y: 32}
+        - {x: -19, y: 32}
+        - {x: -28, y: 24}
+        - {x: -41, y: 4}
+        - {x: -41, y: -11}
+        - {x: -34, y: -24}
+        - {x: -21, y: -33}
         - {x: 35, y: -33}
-        - {x: 35, y: 32}
+        - {x: 35, y: 25}
+        - {x: 33, y: 28}
+    - name: TROPH_HOLDER
+      rect:
+        serializedVersion: 2
+        x: 943
+        y: 55
+        width: 46
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 27}
+        - {x: -23, y: -4}
+        - {x: -16, y: -26}
+        - {x: -15, y: -27}
+        - {x: 18, y: -27}
+        - {x: 23, y: -9}
+        - {x: 23, y: 27}
     outline: []
   spritePackingTag: 
   userData: 
