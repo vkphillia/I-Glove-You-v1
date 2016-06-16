@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PHUD : MonoBehaviour
 {
-    public int playerID ;
+	public int playerID;
 
 	private Animator myAnim;
 
@@ -19,28 +19,29 @@ public class PHUD : MonoBehaviour
 
 	public IEnumerator ShowHUD ()
 	{
-        if(playerID==1)
-        {
-            myAnim.Play("P1HUD_Up");
-        }
-        else
-        {
-            myAnim.Play("P2HUD_Up");
-        }
+		if (playerID == 1)
+		{
+			myAnim.Play ("P1HUD_Up");
+		}
+		else
+		{
+			myAnim.Play ("P2HUD_Up");
+		}
 		yield return new WaitForSeconds (0.6f);
-		SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.2f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.2f);
 	}
 
 	public IEnumerator GoDown ()
 	{
-        if(playerID==1)
-        {
-            myAnim.Play("P1HUD_Down");
-        }
+		if (playerID == 1)
+		{
+			myAnim.Play ("P1HUD_Down");
+		}
 		else
-        {
-            myAnim.Play("P2HUD_Down");
-        }
+		{
+			myAnim.Play ("P2HUD_Down");
+		}
 		yield return new WaitForSeconds (0.75f);
 		gameObject.SetActive (false);
 	}

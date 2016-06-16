@@ -9,17 +9,18 @@ public class MainMenuController : MonoBehaviour
 	private CanvasGroup canvas;
 	
 	public Transform backText;
-    public GameObject spinningWheel;
+	public GameObject spinningWheel;
 	public GameObject PlayButton;
 	public GameObject SettingsBtn;
-    public GameObject title;
+	public GameObject title;
 
-    private AsyncOperation async;
-    private bool back;
+	private AsyncOperation async;
+	private bool back;
 
-    #region Instance
-    //Static Singleton Instance
-    public static MainMenuController _Instance = null;
+	#region Instance
+
+	//Static Singleton Instance
+	public static MainMenuController _Instance = null;
 
 	//property to get instance
 	public static MainMenuController Instance {
@@ -32,48 +33,55 @@ public class MainMenuController : MonoBehaviour
 			return _Instance;
 		}
 	}
-    #endregion
-    
+
+	#endregion
+
 	void OnEnable ()
 	{
-		SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
-		SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
+			SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
+		}
+		
 	}
 
-    void Start()
-    {
-        spinningWheel.SetActive(true);
-        Invoke("InitializeTitle", 0.6f);
-    }
+	void Start ()
+	{
+		spinningWheel.SetActive (true);
+		Invoke ("InitializeTitle", 0.6f);
+	}
 
-    void InitializeTitle()
-    {
-        title.SetActive(true);
-        Invoke("InitializeMenu", 0.2f);
-    }
+	void InitializeTitle ()
+	{
+		title.SetActive (true);
+		Invoke ("InitializeMenu", 0.2f);
+	}
 
-    void InitializeMenu()
-    {
-        canvas.gameObject.SetActive(true);
-    }
+	void InitializeMenu ()
+	{
+		canvas.gameObject.SetActive (true);
+	}
 
 	public void PlayClick ()
 	{
-        ButtonClickSound();
-        async = SceneManager.LoadSceneAsync("offline menu");
-        async.allowSceneActivation = false;
-        StartCoroutine (LoadingScene ("offline menu"));
+		ButtonClickSound ();
+		async = SceneManager.LoadSceneAsync ("offline menu");
+		async.allowSceneActivation = false;
+		StartCoroutine (LoadingScene ("offline menu"));
 	}
 
-    public void ButtonClickSound()
-    {
-        SoundsController.Instance.PlayButtonClick();
-    }
+	public void ButtonClickSound ()
+	{
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayButtonClick ();
+	}
 
-    public void MuteClick()
-    {
-        SoundsController.Instance.MuteSound();
-    }
+	public void MuteClick ()
+	{
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.MuteSound ();
+	}
 
 	IEnumerator LoadingScene (string sceneName)
 	{
@@ -87,8 +95,8 @@ public class MainMenuController : MonoBehaviour
 		}
 
 		yield return new WaitForSeconds (0.5f);
-        async.allowSceneActivation = true;
-    }
+		async.allowSceneActivation = true;
+	}
 
 	void Update ()
 	{

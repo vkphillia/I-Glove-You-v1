@@ -50,18 +50,18 @@ public class SoundsController : MonoBehaviour
 	//initialization all the sound effects
 	void Start ()
 	{
-        Invoke("LoadAllSFX", 1f);
+		Invoke ("LoadAllSFX", 1f);
 	}
 
-    void LoadAllSFX()
-    {
-        sounds = Resources.LoadAll ("Sounds", typeof(AudioClip));
-        audioSource = GetComponents<AudioSource> ();
-        Debug.Log(sounds.Length);
-        //PlayBackgroundMusic (true, 0);//0 is for BG music
-    }
+	void LoadAllSFX ()
+	{
+		sounds = Resources.LoadAll ("Sounds", typeof(AudioClip));
+		audioSource = GetComponents<AudioSource> ();
+		Debug.Log (sounds.Length);
+		//PlayBackgroundMusic (true, 0);//0 is for BG music
+	}
 
-    public void MuteSound ()
+	public void MuteSound ()
 	{
 		mute = !mute;
 		if (mute)

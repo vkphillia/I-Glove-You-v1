@@ -7,11 +7,14 @@ public class PauseManager : MonoBehaviour
 
 	void Start ()
 	{
-		if (SoundsController.mute)
+		if (SoundsController.Instance != null)
 		{
-			//change mute object
-			muteButton [0].SetActive (false);
-			muteButton [1].SetActive (true);
+			if (SoundsController.mute)
+			{
+				//change mute object
+				muteButton [0].SetActive (false);
+				muteButton [1].SetActive (true);
+			}
 		}
 	}
 
@@ -35,17 +38,20 @@ public class PauseManager : MonoBehaviour
 		{
 			OfflineManager.Instance.currentState = GameState.Playing;
 			OfflineManager.Instance.pauseBtn.SetActive (true);
-			SoundsController.Instance.PlayBackgroundMusic (true, 0);//1 is for crowd sound
+			if (SoundsController.Instance != null)
+				SoundsController.Instance.PlayBackgroundMusic (true, 0);//1 is for crowd sound
 		}
 		else if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 			OfflineManager.Instance.currentState = GameState.Paused;
-			SoundsController.Instance.PlayBackgroundMusic (false, 0);//1 is for crowd sound
+			if (SoundsController.Instance != null)
+				SoundsController.Instance.PlayBackgroundMusic (false, 0);//1 is for crowd sound
 		}
 	}
 
 	public void OnMuteClick ()
 	{
-		SoundsController.Instance.MuteSound ();
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.MuteSound ();
 	}
 }

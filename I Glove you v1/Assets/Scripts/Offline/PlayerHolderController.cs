@@ -299,7 +299,8 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		hitter = true;
 		StartCoroutine (PlayPunchAnim ());
-		SoundsController.Instance.PlaySoundFX ("Punch", 0.15f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("Punch", 0.15f);
 
 	}
 
@@ -308,7 +309,8 @@ public class PlayerHolderController : MonoBehaviour
 		PUHitter = true;
 		StartCoroutine (PlayPunchAnim ());
 		SpawnPunchPU_FX (PU);
-		SoundsController.Instance.PlaySoundFX ("BreakPU", 0.15f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("BreakPU", 0.15f);
 
 	}
 
@@ -348,7 +350,8 @@ public class PlayerHolderController : MonoBehaviour
 	//adds glove to player when other player loses glove
 	public void AddGlove ()
 	{
-		SoundsController.Instance.PlaySoundFX ("GlovePick", 0.15f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("GlovePick", 0.15f);
 		hasGlove = true;
 		StartCoroutine (GloveAppear ());
 	}
@@ -425,7 +428,8 @@ public class PlayerHolderController : MonoBehaviour
 				//only play sound when adding health
 				if (amount > 0)
 				{
-					SoundsController.Instance.PlaySoundFX ("HealthUp", 0.15f); 
+					if (SoundsController.Instance != null)
+						SoundsController.Instance.PlaySoundFX ("HealthUp", 0.15f); 
 					StartCoroutine (ChangeColor (Color.green));
 				}
 				else
@@ -448,7 +452,15 @@ public class PlayerHolderController : MonoBehaviour
 
 	IEnumerator ChangeColor (Color C)
 	{
-		mySprite.color = C;
+		if (hit)
+		{
+			myWalkAnim.Play ("Hit");
+	
+		}
+		else
+		{
+			mySprite.color = C;
+		}
 		myHealthBar.color = C;
 		myHealhBarAnim.Play ("HealthBar_Shake");
 		yield return new WaitForSeconds (.3f);
@@ -466,8 +478,19 @@ public class PlayerHolderController : MonoBehaviour
 		}
             
 
-		yield return new WaitForSeconds (.5f);
+		yield return new WaitForSeconds (.3f);
 		mySprite.color = StartingSpriteColor;
+		if (hasGlove)
+		{
+			myWalkAnim.Play ("WalkGlove");
+
+
+		}
+		if (!hasGlove)
+		{
+			myWalkAnim.Play ("WalkNoGlove");
+		}
+
 	}
 
 	//Spawining from game object pools

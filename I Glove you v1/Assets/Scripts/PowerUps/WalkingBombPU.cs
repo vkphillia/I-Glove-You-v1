@@ -93,7 +93,8 @@ public class WalkingBombPU : PowerUp
 	{
 		myBlastCol.gameObject.SetActive (true);
 		myBlastCol.myAnim.Play ("WalkingBomb_Idle");
-		SoundsController.Instance.PlaySoundFX ("WalkingBomb", 0.15f); 
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("WalkingBomb", 0.15f); 
 
 		mySpriteRenderer.enabled = false;
 		myCol.enabled = false;
@@ -109,8 +110,11 @@ public class WalkingBombPU : PowerUp
 	public IEnumerator BlastNow (PlayerHolderController p)
 	{
 		blasted = true;
-		SoundsController.Instance.StopSoundFX ("WalkingBomb"); 
-		SoundsController.Instance.PlaySoundFX ("Blast", 0.15f);
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.StopSoundFX ("WalkingBomb"); 
+			SoundsController.Instance.PlaySoundFX ("Blast", 0.15f);
+		}
 		myBlastCol.myAnim.Play ("WalkingBomb_Blast");
 		//myBlastCol.mySpriteRenderer.enabled = false;
 		yield return new WaitForSeconds (.5f);
@@ -125,7 +129,8 @@ public class WalkingBombPU : PowerUp
 	{
 		if (active)
 		{
-			SoundsController.Instance.StopSoundFX ("WalkingBomb");
+			if (SoundsController.Instance != null)
+				SoundsController.Instance.StopSoundFX ("WalkingBomb");
 			transform.rotation = Quaternion.Euler (0, 0, 0);
 			active = false;
 			myBlastCol.myAnim.Play ("WalkingBomb_Idle");

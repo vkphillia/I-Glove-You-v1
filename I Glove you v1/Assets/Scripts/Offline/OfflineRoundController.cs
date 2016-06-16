@@ -64,8 +64,8 @@ public class OfflineRoundController : MonoBehaviour
 		//myRoundTextAnim.Play ("Round_Idle");
 		myRoundText.text = "Fight!";
 		OfflineManager.Instance.currentState = GameState.Fight;
-
-		SoundsController.Instance.PlaySoundFX ("Fight", 0.5f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("Fight", 0.5f);
         
 		yield return new WaitForSeconds (1f);
 		myRoundTextAnim.Play ("Round_Hide");
@@ -74,8 +74,8 @@ public class OfflineRoundController : MonoBehaviour
 		//make player move
 		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("WalkNoGlove");
 		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("WalkNoGlove");
-
-		SoundsController.Instance.PlayBackgroundMusic (true, 0);//BG Music
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayBackgroundMusic (true, 0);//BG Music
 		yield return new WaitForSeconds (1f);
 		gameObject.SetActive (false);
 	}
@@ -91,8 +91,8 @@ public class OfflineRoundController : MonoBehaviour
 			OnRoundOver ();
 		}
 
-
-		SoundsController.Instance.PlaySoundFX ("RoundEnd", 0.2f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("RoundEnd", 0.2f);
 		yield return new WaitForSeconds (.2f);
 		myRoundText.text = "Round Over";
 		myRoundTextAnim.Play ("Round_Show");
@@ -111,7 +111,8 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundTextAnim.Play ("Round_Show");
 
 		yield return new WaitForSeconds (1f);
-		SoundsController.Instance.PlaySoundFX ("Win", 0.2f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("Win", 0.2f);
 		P1Text.gameObject.SetActive (true);
 		P2Text.gameObject.SetActive (true);
 		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)
@@ -161,22 +162,29 @@ public class OfflineRoundController : MonoBehaviour
 	IEnumerator RoundNumberSFX ()
 	{
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_Round);
-		SoundsController.Instance.PlaySoundFX ("Round", 0.5f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("Round", 0.5f);
         
 		yield return new WaitForSeconds (0.3f);
 		//OfflineManager.Instance.PlaySound (OfflineManager.Instance.source_RoundNumber [OfflineManager.Instance.roundNumber - 1]);
-		if (OfflineManager.Instance.roundNumber == 1)
-			SoundsController.Instance.PlaySoundFX ("one", 0.5f);
-		else if (OfflineManager.Instance.roundNumber == 2)
-			SoundsController.Instance.PlaySoundFX ("two", 0.5f);
-		else if (OfflineManager.Instance.roundNumber == 3)
-			SoundsController.Instance.PlaySoundFX ("three", 0.5f);
+		if (SoundsController.Instance != null)
+		{
+			if (OfflineManager.Instance.roundNumber == 1)
+				SoundsController.Instance.PlaySoundFX ("one", 0.5f);
+			else if (OfflineManager.Instance.roundNumber == 2)
+				SoundsController.Instance.PlaySoundFX ("two", 0.5f);
+			else if (OfflineManager.Instance.roundNumber == 3)
+				SoundsController.Instance.PlaySoundFX ("three", 0.5f);
+		}
 	}
 
 	void BackToOfflineMenu ()
 	{
-		SoundsController.Instance.PlayBackgroundMusic (true, 1);//stop crowd sound
-		SoundsController.Instance.PlayBackgroundMusic (false, 0);//start BG Music after loading next screen
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayBackgroundMusic (true, 1);//stop crowd sound
+			SoundsController.Instance.PlayBackgroundMusic (false, 0);//start BG Music after loading next screen
+		}
 		SceneManager.LoadScene ("offline menu");
 	}
 }

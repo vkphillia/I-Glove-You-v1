@@ -95,8 +95,12 @@ public class OfflineManager : MonoBehaviour
 	{
 		Blast.OnHit += makePlayerFall;
 		WalkingBombBlastCol.OnHit += makePlayerFall;
-		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
-		SoundsController.Instance.PlayBackgroundMusic (true, 1);//start crowd sound
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
+			SoundsController.Instance.PlayBackgroundMusic (true, 1);//start crowd sound
+		}
+
 	}
 
 	//sets GameState to RoundStart and sets the sprite for both player
@@ -226,9 +230,11 @@ public class OfflineManager : MonoBehaviour
 
 	IEnumerator RoundStatusCoroutine ()
 	{
-		SoundsController.Instance.PlaySoundFX ("SlowMoFX", 1f);
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlaySoundFX ("SlowMoFX", 1f);
 		Time.timeScale = 0.2f;
-		SoundsController.Instance.PlayBackgroundMusic (false, 0);//BG Music
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayBackgroundMusic (false, 0);//BG Music
 
 
 		if (PlayerHolder1.myHealth > PlayerHolder2.myHealth)
