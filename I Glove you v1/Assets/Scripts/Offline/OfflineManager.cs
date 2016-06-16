@@ -241,6 +241,7 @@ public class OfflineManager : MonoBehaviour
 		{
 			PlayerHolder1.roundWins++;
 			PlayerHolder2.myWalkAnim.Play ("Dead");
+			PlayerHolder2.LoseGlove ();
 			TrophyP.playerID = 1;
 			TrophyP.gameObject.SetActive (true);
 		}
@@ -248,6 +249,7 @@ public class OfflineManager : MonoBehaviour
 		{
 			PlayerHolder2.roundWins++;
 			PlayerHolder1.myWalkAnim.Play ("Dead");
+			PlayerHolder1.LoseGlove ();
 			TrophyP.playerID = 2;
 			TrophyP.gameObject.SetActive (true);
 		}
