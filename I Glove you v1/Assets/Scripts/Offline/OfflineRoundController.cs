@@ -12,7 +12,7 @@ public class OfflineRoundController : MonoBehaviour
 	public Text myRoundText;
 	public Text P1Text;
 	public Text P2Text;
-	public GameObject UI;
+//	public GameObject UI;
 	private Animator myRoundTextAnim;
 	public PHUD[] HUD;
 	//public P2HUD HUDP2;

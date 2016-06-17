@@ -27,7 +27,8 @@ public class AirStrikePU : PowerUp
 			Strike temp = Instantiate (strikePrefab)as Strike;
 			AllStrikesArr [i] = temp;
 			AllStrikesArr [i].transform.SetParent (this.transform);
-		}     
+            //Debug.Log("AS=" + AllStrikesArr[i].transform.position);
+        }     
 	}
 
 	public override void Player1Picked ()

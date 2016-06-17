@@ -126,9 +126,9 @@ public class PUController : MonoBehaviour
 		}
 		int _randomPos = Random.Range (0, spawnPointsArr.Count);
 		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
-		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
+        //Debug.Log("PU=" + spawnObj.transform.position + "St=" + spawnPointsArr[_randomPos].position);
+        spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);
-
 	}
 
 
@@ -182,7 +182,7 @@ public class PUController : MonoBehaviour
 	void DestroyPU ()
 	{
 		StopCoroutine (SpawnPUCoroutine ());
-		Debug.Log ("Destroy PU");
+		//Debug.Log ("Destroy PU");
 		PU.DeactivatePU (); 
 	}
 

@@ -23,7 +23,8 @@ public class PTrophy : PHUD
 		if (playerID == 1)
 		{
 			transform.position = new Vector3 (0, -1.6f, -1);
-		}
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
 		else
 		{
 			transform.position = new Vector3 (0, 1.6f, -1);

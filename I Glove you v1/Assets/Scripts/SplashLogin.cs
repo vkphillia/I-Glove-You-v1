@@ -16,14 +16,9 @@ public class SplashLogin : MonoBehaviour
 
 		//GetComponent<Animator>().enabled = true;
 		Invoke ("LoadMenu", 5f);
-	}
-
-	void Update ()
-	{
-		//just some loading effect //replace this before shipping
-		//GetComponent<SpriteRenderer> ().color = Color.Lerp (tempC, tempo, Mathf.PingPong (Time.time, 1.5f));
-		//SoundsController.Instance.PlaySoundFX ("SlowMoFX", 1f);
-	}
+        //Invoke("PlaySound", 3.5f);
+        GetComponent<AudioSource>().PlayDelayed(0f);
+    }
 
 	void LoadMenu ()
 	{

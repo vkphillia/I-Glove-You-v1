@@ -47,7 +47,7 @@ public class PowerUp : MonoBehaviour
 			if (!active)
 			{
 				Player1WithGlovePicked ();
-				Debug.Log ("boxerHitPU");
+				//Debug.Log ("boxerHitPU");
 			}
 		}
 		else if (other.gameObject.layer == 11 && this.gameObject.layer == 14)
@@ -55,7 +55,7 @@ public class PowerUp : MonoBehaviour
 			if (!active)
 			{
 				Player2WithGlovePicked ();
-				Debug.Log ("boxerHitPU");
+				//Debug.Log ("boxerHitPU");
 
 			}
 		}

@@ -357,7 +357,7 @@ public class PlayerHolderController : MonoBehaviour
 
 	IEnumerator GloveAppear ()
 	{
-		Debug.Log ("playing GloveAppear anim");
+		//Debug.Log ("playing GloveAppear anim");
 		myPunchReadyAnim.Play ("Punch_Appear");
 		yield return new WaitForSeconds (0.5f);
 		myPunchAnim.gameObject.SetActive (true);
