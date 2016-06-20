@@ -91,7 +91,7 @@ public class SoundsController : MonoBehaviour
 				if (OfflineManager.Instance.currentState == GameState.Paused)
 				{
 					PlayBackgroundMusic (true, 1);
-					PlayBackgroundMusic (true, 0);
+					//PlayBackgroundMusic (true, 0);
 				}
 			}
 			else
