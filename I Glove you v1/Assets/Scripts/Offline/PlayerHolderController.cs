@@ -497,9 +497,8 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		lyingDead = true;
 		myWalkAnim.Play ("Dead");
+
 		yield return new WaitForSeconds (1.5f);
-
-
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 			if (hasGlove)
