@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
 	[SerializeField]
-	private CanvasGroup canvas;
+	private CanvasGroup menuPanel;
 	
 	public Transform backText;
 	public GameObject spinningWheel;
@@ -49,26 +49,41 @@ public class MainMenuController : MonoBehaviour
 	void Start ()
 	{
 		spinningWheel.SetActive (true);
-		Invoke ("InitializeTitle", 0.6f);
+        Invoke ("InitializeTitle", 0.6f);
+        StartCoroutine(SpiningWheel());
 	}
+
+    IEnumerator SpiningWheel()
+    {
+        spinningWheel.transform.localScale = new Vector3(0, 0, 0);
+        float t = 0;
+        while (spinningWheel.transform.localScale.x != 0.73f)
+        {
+            spinningWheel.transform.localScale = Vector3.MoveTowards(new Vector3(0, 0, 0), new Vector3(0.73f, 0.73f, 0.73f), t / 0.3f);
+            yield return new WaitForEndOfFrame();
+            t += Time.deltaTime;
+        }
+
+        while(true)
+        {
+            Vector3 temp = spinningWheel.transform.eulerAngles;
+            temp.z++;
+            spinningWheel.transform.eulerAngles = temp;
+            yield return new WaitForEndOfFrame();
+        }
+    }
 
 	void InitializeTitle ()
 	{
 		title.SetActive (true);
-		Invoke ("InitializeMenu", 0.2f);
+		Invoke ("InitializeMenu", 0.5f);
 	}
 
 	void InitializeMenu ()
 	{
-		canvas.gameObject.SetActive (true);
-	}
-
-	public void PlayClick ()
-	{
-		ButtonClickSound ();
-		async = SceneManager.LoadSceneAsync ("offline menu");
-		async.allowSceneActivation = false;
-		StartCoroutine (LoadingScene ("offline menu"));
+		menuPanel.gameObject.SetActive (true);
+        menuPanel.GetComponent<Animator>().Play("Appear");
+        //StartCoroutine(SmoothPositionMovement.Instance.MoveCanvasElement(menuPanel.GetComponent<RectTransform>(), Vector3.zero, 0.2f));
 	}
 
 	public void ButtonClickSound ()
@@ -83,20 +98,30 @@ public class MainMenuController : MonoBehaviour
 			SoundsController.Instance.MuteSound ();
 	}
 
-	IEnumerator LoadingScene (string sceneName)
-	{
-		float speed = 1;
-		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
-        
-		while (canvas.alpha > 0)
-		{
-			canvas.alpha -= speed * Time.deltaTime;
-			yield return null;
-		}
+    public void PlayClick()
+    {
+        ButtonClickSound();
+        //async = SceneManager.LoadSceneAsync ("offline menu");
+        //async.allowSceneActivation = false;
+        StartCoroutine(LoadingScene("offline menu"));
+    }
 
-		yield return new WaitForSeconds (0.5f);
-		async.allowSceneActivation = true;
-	}
+    IEnumerator LoadingScene (string sceneName)
+	{
+        //float speed = 1;
+        //while (canvas.alpha > 0)
+        //{
+        //	canvas.alpha -= speed * Time.deltaTime;
+        //	yield return null;
+        //}
+        menuPanel.GetComponentInChildren<Animator>().Play("Idle");
+        menuPanel.GetComponent<Animator>().Play("Disappear");
+        
+        SoundsController.Instance.PlayBackgroundMusic(false, 0);//stop BG music
+        yield return new WaitForSeconds (0.7f);
+        SceneManager.LoadScene("offline menu");
+        //async.allowSceneActivation = true;
+    }
 
 	void Update ()
 	{

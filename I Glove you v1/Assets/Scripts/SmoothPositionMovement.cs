@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SmoothPositionMovement : MonoBehaviour
 {
+    #region Instance
     //Static Singleton Instance
     public static SmoothPositionMovement _Instance = null;
 
@@ -19,6 +20,7 @@ public class SmoothPositionMovement : MonoBehaviour
             return _Instance;
         }
     }
+    #endregion
 
     //FOR GAMEOBJECTS
     public IEnumerator MoveGameObject(GameObject objectToMove, Vector3 end,float timeTaken)
