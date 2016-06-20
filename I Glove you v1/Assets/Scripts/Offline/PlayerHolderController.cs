@@ -269,7 +269,7 @@ public class PlayerHolderController : MonoBehaviour
 	//Reset on new Round/Match
 	public void ResetPlayer ()
 	{
-		
+		Time.timeScale = 1;
 		gameObject.SetActive (true);	
 		myWalkAnim.Play ("Idle");
 		hit = false;
@@ -501,6 +501,7 @@ public class PlayerHolderController : MonoBehaviour
 		yield return new WaitForSeconds (1.5f);
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
+			Debug.Log ("play this");
 			if (hasGlove)
 			{
 				myWalkAnim.Play ("WalkGlove");

@@ -21,26 +21,28 @@ public class PauseManager : MonoBehaviour
 
 	void OnMouseUp ()
 	{
-		
-		/*pausePanel.SetActive (true);
-		pausePanel.GetComponent<Animator> ().Play ("Appear");
-		gameObject.SetActive (false);
-		OnPauseClick ();*/
-		StartCoroutine (pauseGame ());
+		if (OfflineManager.Instance.currentState != GameState.Paused)
+		{
+			OfflineManager.Instance.currentState = GameState.Paused;
+			StartCoroutine (pauseGame ());
+		}
+
 	}
 
 	IEnumerator pauseGame ()
 	{
+		//gameObject.SetActive (false);
 		pausePanel.SetActive (true);
 		pausePanel.GetComponent<Animator> ().Play ("Appear");
-		OnPauseClick ();
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayBackgroundMusic (false, 0);//1 is for crowd sound
 		yield return new WaitForSeconds (.5f);
+
 		Time.timeScale = 0f;
-		gameObject.SetActive (false);
 
 	}
 
-	public void OnPauseClick ()
+	public void OnResumeClick ()
 	{
 		if (OfflineManager.Instance.currentState == GameState.Paused)
 		{
@@ -51,16 +53,12 @@ public class PauseManager : MonoBehaviour
 				SoundsController.Instance.PlayBackgroundMusic (true, 0);//1 is for crowd sound
 			
 		}
-		else if (OfflineManager.Instance.currentState == GameState.Playing)
-		{
-			OfflineManager.Instance.currentState = GameState.Paused;
-			if (SoundsController.Instance != null)
-				SoundsController.Instance.PlayBackgroundMusic (false, 0);//1 is for crowd sound
-			
-				
-		}
+
 
 	}
+
+
+
 
 	public void OnMuteClick ()
 	{
