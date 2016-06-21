@@ -196,4 +196,32 @@ public class SoundsController : MonoBehaviour
 			}
 		}
 	}
+
+    public IEnumerator FadeInOutBGMusic(int i,float fromVol, float toVol,float duration)
+    {
+        //Debug.Log("fade IN/Out");
+        if(!mute)
+        {
+            bgSound[i].volume = fromVol;
+
+            if (toVol > 0)
+                bgSound[i].Play();
+
+            float temp = Mathf.Abs(fromVol - toVol);
+            float t = 0;
+            //Debug.Log("t=" + t);
+            while (t < duration)
+            {
+                bgSound[i].volume = Mathf.Lerp(fromVol, toVol, (t / duration));
+                t += Time.deltaTime;
+                //Debug.Log(bgSound[i].volume);
+                yield return new WaitForEndOfFrame();
+            }
+            bgSound[i].volume = toVol;
+
+            if (toVol == 0)
+                bgSound[i].Stop();
+        }
+        
+    }
 }

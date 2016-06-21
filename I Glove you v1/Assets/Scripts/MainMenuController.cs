@@ -40,7 +40,8 @@ public class MainMenuController : MonoBehaviour
 	{
 		if (SoundsController.Instance != null)
 		{
-			SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
+			//SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
+            StartCoroutine(SoundsController.Instance.FadeInOutBGMusic(0,0, 0.3f, 1f));//fade IN
 			SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
 		}
 		
@@ -116,8 +117,9 @@ public class MainMenuController : MonoBehaviour
         //}
         menuPanel.GetComponentInChildren<Animator>().Play("Idle");
         menuPanel.GetComponent<Animator>().Play("Disappear");
-        
-        SoundsController.Instance.PlayBackgroundMusic(false, 0);//stop BG music
+
+        //SoundsController.Instance.PlayBackgroundMusic(false, 0);//stop BG music
+        StartCoroutine(SoundsController.Instance.FadeInOutBGMusic(0,0.3f,0,0.8f));//fade Out
         yield return new WaitForSeconds (0.7f);
         SceneManager.LoadScene("offline menu");
         //async.allowSceneActivation = true;

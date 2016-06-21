@@ -499,6 +499,10 @@ public class PlayerHolderController : MonoBehaviour
 		myWalkAnim.Play ("Dead");
 
 		yield return new WaitForSeconds (1.5f);
+        while(OfflineManager.Instance.currentState == GameState.Paused)
+        {
+            yield return null;
+        }
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 			Debug.Log ("play this");
