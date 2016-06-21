@@ -23,8 +23,8 @@ public class PTrophy : PHUD
 		if (playerID == 1)
 		{
 			transform.position = new Vector3 (0, -1.6f, -1);
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+			transform.rotation = Quaternion.Euler (0, 0, 0);
+		}
 		else
 		{
 			transform.position = new Vector3 (0, 1.6f, -1);
@@ -38,7 +38,7 @@ public class PTrophy : PHUD
 		yield return new WaitForSeconds (1f);
 		myTrophyAnim.Play ("Trophy_Show");
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("GlovePick", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("GlovePick", 0.5f);
 		yield return new WaitForSeconds (1f);
 		if (playerID == 1)
 		{
@@ -80,7 +80,7 @@ public class PTrophy : PHUD
 			}
 		}
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("CollectPoint", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("CollectPoint", 0.5f);
 		myTrophyAnim.Play ("Trophy_Idle");
 
 		gameObject.SetActive (false);

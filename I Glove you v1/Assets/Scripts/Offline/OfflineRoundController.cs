@@ -12,7 +12,7 @@ public class OfflineRoundController : MonoBehaviour
 	public Text myRoundText;
 	public Text P1Text;
 	public Text P2Text;
-//	public GameObject UI;
+	//	public GameObject UI;
 	private Animator myRoundTextAnim;
 	public PHUD[] HUD;
 	//public P2HUD HUDP2;
@@ -92,7 +92,7 @@ public class OfflineRoundController : MonoBehaviour
 		}
 
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("RoundEnd", 0.2f);
+			SoundsController.Instance.PlaySoundFX ("RoundEnd", 0.5f);
 		yield return new WaitForSeconds (.2f);
 		myRoundText.text = "Round Over";
 		myRoundTextAnim.Play ("Round_Show");
@@ -112,7 +112,7 @@ public class OfflineRoundController : MonoBehaviour
 
 		yield return new WaitForSeconds (1f);
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("Win", 0.2f);
+			SoundsController.Instance.PlaySoundFX ("Win", 0.5f);
 		P1Text.gameObject.SetActive (true);
 		P2Text.gameObject.SetActive (true);
 		if (OfflineManager.Instance.PlayerHolder1.roundWins == 2)

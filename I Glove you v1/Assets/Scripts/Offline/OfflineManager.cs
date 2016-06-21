@@ -106,6 +106,7 @@ public class OfflineManager : MonoBehaviour
 	void OnEnable ()
 	{
 		currentState = GameState.RoundStart;
+		//StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0, 0.3f, 1f));//fade IN
 
 		//PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		PlayerHolder1.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder1.animationController [OfflineMenuController.Player1CharacterID];

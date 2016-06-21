@@ -25,13 +25,13 @@ public class Strike : MonoBehaviour
 		BlastActive = true;
 		myController.SpawnStrikes (this.gameObject);
 		yield return new WaitForSeconds (1.5f);
-        //Debug.Log("Strike=" + transform.position);
-        mySprite.enabled = true;
+		//Debug.Log("Strike=" + transform.position);
+		mySprite.enabled = true;
 		yield return new WaitForSeconds (1f);
 		myChildBlast.gameObject.SetActive (true);
 		myChildBlast.myBlastAnim.Play ("blast_strike");
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("Blast_Strike", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("Blast_Strike", 0.2f);
 		mySprite.enabled = false;
 		yield return new WaitForSeconds (.5f);
 		BlastActive = false;

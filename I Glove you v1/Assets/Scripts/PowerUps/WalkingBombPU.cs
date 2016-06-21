@@ -94,7 +94,7 @@ public class WalkingBombPU : PowerUp
 		myBlastCol.gameObject.SetActive (true);
 		myBlastCol.myAnim.Play ("WalkingBomb_Idle");
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("WalkingBomb", 0.15f); 
+			SoundsController.Instance.PlaySoundFX ("WalkingBomb", 0.5f); 
 
 		mySpriteRenderer.enabled = false;
 		myCol.enabled = false;
@@ -113,7 +113,7 @@ public class WalkingBombPU : PowerUp
 		if (SoundsController.Instance != null)
 		{
 			SoundsController.Instance.StopSoundFX ("WalkingBomb"); 
-			SoundsController.Instance.PlaySoundFX ("Blast", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("Blast", 0.2f);
 		}
 		myBlastCol.myAnim.Play ("WalkingBomb_Blast");
 		//myBlastCol.mySpriteRenderer.enabled = false;

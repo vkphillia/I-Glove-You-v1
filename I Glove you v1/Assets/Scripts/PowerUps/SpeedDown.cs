@@ -37,7 +37,7 @@ public class SpeedDown : PowerUp
 
 		p.mySpeed -= 2;
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("SpeedDown", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("SpeedDown", 0.5f);
 		yield return new WaitForSeconds (myTime);
 		p.mySpeed = p.MaxSpeed;
 		DeactivatePU ();

@@ -206,6 +206,10 @@ public class PlayerHolderController : MonoBehaviour
 
 					OfflineManager.Instance.PlayerHolder2.LoseGlove ();
 					OfflineManager.Instance.PlayerHolder1.AddGlove ();
+					if (SoundsController.Instance != null)
+					{
+						SoundsController.Instance.PlaySoundFX ("toasty", 1f);
+					}
 					StartCoroutine (OfflineManager.Instance.PlayerHolder2.MakeLyingDeadFalse ());
 
 				}
@@ -228,6 +232,10 @@ public class PlayerHolderController : MonoBehaviour
 				{
 					OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 					OfflineManager.Instance.PlayerHolder2.AddGlove ();
+					if (SoundsController.Instance != null)
+					{
+						SoundsController.Instance.PlaySoundFX ("toasty", 1f);
+					}
 					StartCoroutine (OfflineManager.Instance.PlayerHolder1.MakeLyingDeadFalse ());
 				
 				}
@@ -257,13 +265,7 @@ public class PlayerHolderController : MonoBehaviour
 		PUHitter = false;
 	}
 
-	IEnumerator MakeJustRobbedFalse ()
-	{
-		yield return new WaitForSeconds (1f);
-		lyingDead = false;
-		//myCollider.enabled = true;
 
-	}
 
 
 	//Reset on new Round/Match
@@ -298,7 +300,7 @@ public class PlayerHolderController : MonoBehaviour
 		hitter = true;
 		StartCoroutine (PlayPunchAnim ());
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("Punch", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("Punch", 0.5f);
 
 	}
 
@@ -308,7 +310,7 @@ public class PlayerHolderController : MonoBehaviour
 		StartCoroutine (PlayPunchAnim ());
 		SpawnPunchPU_FX (PU);
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("BreakPU", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("BreakPU", 0.5f);
 
 	}
 
@@ -349,7 +351,7 @@ public class PlayerHolderController : MonoBehaviour
 	public void AddGlove ()
 	{
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("GlovePick", 0.15f);
+			SoundsController.Instance.PlaySoundFX ("GlovePick", 0.5f);
 		hasGlove = true;
 		StartCoroutine (GloveAppear ());
 	}
@@ -427,7 +429,7 @@ public class PlayerHolderController : MonoBehaviour
 				if (amount > 0)
 				{
 					if (SoundsController.Instance != null)
-						SoundsController.Instance.PlaySoundFX ("HealthUp", 0.15f); 
+						SoundsController.Instance.PlaySoundFX ("HealthUp", 0.5f); 
 					StartCoroutine (ChangeColor (Color.green));
 				}
 				else
@@ -497,12 +499,17 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		lyingDead = true;
 		myWalkAnim.Play ("Dead");
+		/*if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlaySoundFX ("fall", 1f);
+
+		}*/
 
 		yield return new WaitForSeconds (1.5f);
-        while(OfflineManager.Instance.currentState == GameState.Paused)
-        {
-            yield return null;
-        }
+		while (OfflineManager.Instance.currentState == GameState.Paused)
+		{
+			yield return null;
+		}
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
 			Debug.Log ("play this");

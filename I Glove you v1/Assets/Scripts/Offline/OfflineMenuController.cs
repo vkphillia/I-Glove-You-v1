@@ -25,8 +25,8 @@ public class OfflineMenuController : MonoBehaviour
 	{
 		Player1CharacterID = 0;
 		Player2CharacterID = 4;
-		P1Text.text = "Fight!";
-		P2Text.text = "Fight!";
+		P1Text.text = "Fight";
+		P2Text.text = "Fight";
 		if (SoundsController.Instance != null)
 		{
 			SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
@@ -81,8 +81,9 @@ public class OfflineMenuController : MonoBehaviour
 		SceneManager.LoadScene ("main menu");
 	}
 
-	public void SelectSprite (int id)
+	public void PlayBtnClick ()
 	{
-
+		if (SoundsController.Instance != null)
+			SoundsController.Instance.PlayButtonClick ();//for button click sound
 	}
 }

@@ -29,7 +29,7 @@ public class PHUD : MonoBehaviour
 		}
 		yield return new WaitForSeconds (0.6f);
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.2f);
+			SoundsController.Instance.PlaySoundFX ("BoxingBell", 0.3f);
 	}
 
 	public IEnumerator GoDown ()
