@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3c87dfde96e8c471f8680bef6b0f72b4
-timeCreated: 1466107020
+timeCreated: 1466618789
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -88,10 +88,11 @@ TextureImporter:
     21300162: Sumo_Selected
     21300164: Princess_Selected
     21300166: smallMenuBtn_pressed
-    21300168: hit1
-    21300170: hit2
+    21300168: uiFrame
+    21300170: paused
     21300172: restart match
     21300174: TROPH_HOLDER
+    21300176: vs
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1031,26 +1032,26 @@ TextureImporter:
     - name: Pause_BTn
       rect:
         serializedVersion: 2
-        x: 1373
-        y: 1576
-        width: 117
-        height: 130
+        x: 1376
+        y: 1584
+        width: 103
+        height: 118
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -56.5, y: 64}
-        - {x: -56.5, y: -47}
-        - {x: -44.5, y: -58}
-        - {x: -8.5, y: -58}
-        - {x: -8.5, y: 57}
-        - {x: -15.5, y: 64}
-      - - {x: 2.5, y: 64}
-        - {x: 2.5, y: -47}
-        - {x: 10.5, y: -58}
-        - {x: 50.5, y: -58}
-        - {x: 50.5, y: 52}
-        - {x: 43.5, y: 64}
+      - - {x: -51.5, y: 59}
+        - {x: -51.5, y: -52}
+        - {x: -44.5, y: -59}
+        - {x: -4.5, y: -59}
+        - {x: -4.5, y: 55}
+        - {x: -10.5, y: 59}
+      - - {x: 6.5, y: 59}
+        - {x: 6.5, y: -48}
+        - {x: 17.5, y: -59}
+        - {x: 51.5, y: -59}
+        - {x: 51.5, y: 52}
+        - {x: 44.5, y: 59}
     - name: Help_btn
       rect:
         serializedVersion: 2
@@ -1062,26 +1063,18 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -5, y: -13}
-        - {x: -7, y: -15}
-        - {x: -7, y: -26}
-        - {x: -5, y: -28}
-        - {x: 6, y: -28}
-        - {x: 8, y: -26}
-        - {x: 8, y: -15}
-        - {x: 6, y: -13}
-      - - {x: -17, y: 30}
-        - {x: -23, y: 22}
-        - {x: -23, y: 6}
-        - {x: -21, y: 4}
-        - {x: -10, y: 4}
-        - {x: -8, y: 6}
-        - {x: -10, y: 3}
-        - {x: -7, y: -12}
-        - {x: 16, y: -12}
-        - {x: 18, y: -6}
-        - {x: 18, y: 29}
-        - {x: 14, y: 30}
+      - - {x: -23, y: 30}
+        - {x: -26, y: 25}
+        - {x: -27, y: 22}
+        - {x: -27, y: 3}
+        - {x: -21, y: -1}
+        - {x: -12, y: -30}
+        - {x: -8, y: -33}
+        - {x: 9, y: -33}
+        - {x: 12, y: -32}
+        - {x: 21, y: -16}
+        - {x: 21, y: 25}
+        - {x: 20, y: 30}
     - name: Mute_btn
       rect:
         serializedVersion: 2
@@ -1093,13 +1086,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -42.5, y: 16.5}
-        - {x: -42.5, y: -14.5}
-        - {x: -14.5, y: -28.5}
-        - {x: 12.5, y: -28.5}
-        - {x: 12.5, y: 32.5}
-        - {x: -21.5, y: 32.5}
-        - {x: -30.5, y: 30.5}
+      - - {x: -29.5, y: 23.5}
+        - {x: -33.5, y: 21.5}
+        - {x: -33.5, y: -26.5}
+        - {x: -32.5, y: -30.5}
+        - {x: 8.5, y: -30.5}
+        - {x: 8.5, y: 22.5}
+        - {x: 5.5, y: 23.5}
     - name: Unmute_btn
       rect:
         serializedVersion: 2
@@ -1111,20 +1104,17 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -45.5, y: -17.5}
-        - {x: -18.5, y: -34.5}
-        - {x: 9.5, y: -34.5}
-        - {x: 9.5, y: 26.5}
-        - {x: -25.5, y: 26.5}
-        - {x: -45.5, y: 13.5}
-      - - {x: 18.5, y: 27.5}
-        - {x: 10.5, y: 13.5}
-        - {x: 10.5, y: -25.5}
+      - - {x: 30.5, y: -8.5}
+        - {x: 32.5, y: -6.5}
+        - {x: 32.5, y: 24.5}
+        - {x: -22.5, y: 24.5}
+        - {x: -37.5, y: 20.5}
+        - {x: -37.5, y: -21.5}
+        - {x: -18.5, y: -30.5}
         - {x: 20.5, y: -30.5}
-        - {x: 47.5, y: -30.5}
-        - {x: 48.5, y: -25.5}
-        - {x: 48.5, y: 18.5}
-        - {x: 38.5, y: 27.5}
+        - {x: 25.5, y: -26.5}
+        - {x: 24.5, y: -20.5}
+        - {x: 22.5, y: -14.5}
     - name: Sumo_walkingGlove
       rect:
         serializedVersion: 2
@@ -1402,43 +1392,42 @@ TextureImporter:
     - name: Back_btn
       rect:
         serializedVersion: 2
-        x: 1457
+        x: 1467
         y: 1879
-        width: 67
-        height: 62
+        width: 60
+        height: 55
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 12.5, y: 24}
-        - {x: -7.5, y: 24}
-        - {x: -25.5, y: 5}
-        - {x: -25.5, y: -9}
-        - {x: -6.5, y: -27}
-        - {x: 9.5, y: -27}
-        - {x: 12.5, y: -26}
-        - {x: 12.5, y: -14}
-        - {x: 33.5, y: -10}
-        - {x: 33.5, y: 9}
+      - - {x: -21, y: 27.5}
+        - {x: -26, y: 25.5}
+        - {x: -30, y: 11.5}
+        - {x: -30, y: -7.5}
+        - {x: -19, y: -26.5}
+        - {x: 21, y: -26.5}
+        - {x: 30, y: -22.5}
+        - {x: 30, y: 8.5}
+        - {x: 13, y: 27.5}
     - name: smallMenuBtn
       rect:
         serializedVersion: 2
-        x: 1542
+        x: 1558
         y: 1401
-        width: 159
-        height: 116
+        width: 120
+        height: 120
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -50.5, y: 58}
-        - {x: -75.5, y: 39}
-        - {x: -75.5, y: -47}
-        - {x: -67.5, y: -57}
-        - {x: 58.5, y: -57}
-        - {x: 79.5, y: -33}
-        - {x: 79.5, y: 47}
-        - {x: 70.5, y: 58}
+      - - {x: -35, y: 58}
+        - {x: -58, y: 53}
+        - {x: -60, y: 32}
+        - {x: -60, y: -26}
+        - {x: -53, y: -47}
+        - {x: -40, y: -60}
+        - {x: 60, y: -60}
+        - {x: 60, y: 58}
     - name: settings
       rect:
         serializedVersion: 2
@@ -1450,66 +1439,64 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16.5, y: 29}
-        - {x: -20.5, y: -3}
-        - {x: -20.5, y: -30}
-        - {x: -19.5, y: -31}
-        - {x: 0.5, y: -31}
-        - {x: 0.5, y: 29}
-      - - {x: 0.5, y: 29}
-        - {x: 0.5, y: 0}
-        - {x: 6.5, y: -31}
-        - {x: 20.5, y: -31}
-        - {x: 24.5, y: -30}
-        - {x: 27.5, y: 7}
-        - {x: 27.5, y: 29}
+      - - {x: -30.5, y: 7}
+        - {x: -30.5, y: -11}
+        - {x: -28.5, y: -15}
+        - {x: -8.5, y: -15}
+        - {x: -8.5, y: 4}
+        - {x: -10.5, y: 7}
+      - - {x: -8.5, y: 7}
+        - {x: -8.5, y: -11}
+        - {x: -6.5, y: -15}
+        - {x: 13.5, y: -15}
+        - {x: 13.5, y: 4}
+        - {x: 11.5, y: 7}
+      - - {x: 15.5, y: 7}
+        - {x: 13.5, y: 5}
+        - {x: 13.5, y: -11}
+        - {x: 17.5, y: -15}
+        - {x: 33.5, y: -15}
+        - {x: 33.5, y: 5}
+        - {x: 30.5, y: 7}
     - name: emptyBtn_PlayerSel
       rect:
         serializedVersion: 2
-        x: 1346
-        y: 1250
-        width: 369
-        height: 138
+        x: 1358
+        y: 1249
+        width: 354
+        height: 132
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 184.5, y: -36}
-        - {x: 184.5, y: 55}
-        - {x: 171.5, y: 54}
-        - {x: 171.5, y: 69}
-        - {x: -144.5, y: 69}
-        - {x: -162.5, y: 59}
-        - {x: -167.5, y: 55}
-        - {x: -181.5, y: 41}
-        - {x: -182.5, y: 38}
-        - {x: -182.5, y: -49}
-        - {x: -179.5, y: -52}
-        - {x: -167.5, y: -52}
-        - {x: -167.5, y: -66}
-        - {x: -164.5, y: -69}
-        - {x: 149.5, y: -69}
-        - {x: 154.5, y: -65}
-        - {x: 171.5, y: -52}
-        - {x: 177.5, y: -42}
+      - - {x: 161, y: 66}
+        - {x: -177, y: 66}
+        - {x: -177, y: -47}
+        - {x: -160, y: -47}
+        - {x: -160, y: -66}
+        - {x: 177, y: -66}
+        - {x: 177, y: 46}
+        - {x: 161, y: 46}
     - name: arrow
       rect:
         serializedVersion: 2
-        x: 1347
-        y: 1742
-        width: 111
-        height: 90
+        x: 1357
+        y: 1743
+        width: 93
+        height: 93
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -53.5, y: -37}
-        - {x: -50.5, y: -42}
-        - {x: 35.5, y: -42}
-        - {x: 52.5, y: -33}
-        - {x: 52.5, y: 45}
-        - {x: -50.5, y: 45}
-        - {x: -53.5, y: 32}
+      - - {x: -39.5, y: 46.5}
+        - {x: -41.5, y: 45.5}
+        - {x: -46.5, y: 29.5}
+        - {x: -46.5, y: -26.5}
+        - {x: -29.5, y: -44.5}
+        - {x: 27.5, y: -44.5}
+        - {x: 46.5, y: -40.5}
+        - {x: 46.5, y: 29.5}
+        - {x: 32.5, y: 46.5}
     - name: credits title
       rect:
         serializedVersion: 2
@@ -1590,21 +1577,22 @@ TextureImporter:
     - name: play
       rect:
         serializedVersion: 2
-        x: 1512
-        y: 1622
+        x: 1517
+        y: 1614
         width: 61
-        height: 61
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -26.5, y: 30.5}
-        - {x: -26.5, y: -30.5}
-        - {x: 3.5, y: -30.5}
-        - {x: 10.5, y: -28.5}
-        - {x: 29.5, y: -10.5}
-        - {x: 29.5, y: 11.5}
-        - {x: -5.5, y: 30.5}
+      - - {x: -6.5, y: 33}
+        - {x: -30.5, y: 33}
+        - {x: -30.5, y: -32}
+        - {x: -29.5, y: -33}
+        - {x: 9.5, y: -33}
+        - {x: 30.5, y: -17}
+        - {x: 30.5, y: 10}
+        - {x: 29.5, y: 17}
     - name: Boxer_Ninja_Selected
       rect:
         serializedVersion: 2
@@ -1664,9 +1652,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 107, y: 70}
-        - {x: 71, y: 108}
-        - {x: 52, y: 146}
+      - - {x: 107, y: -15}
+        - {x: 107, y: 55}
+        - {x: 105, y: 64}
+        - {x: 54, y: 146}
         - {x: -4, y: 146}
         - {x: -12, y: 144}
         - {x: -17, y: 146}
@@ -1677,12 +1666,13 @@ TextureImporter:
         - {x: -115, y: -8}
         - {x: -108, y: -39}
         - {x: -85, y: -65}
-        - {x: -44, y: -134}
-        - {x: -24, y: -146}
-        - {x: 29, y: -146}
-        - {x: 49, y: -98}
-        - {x: 82, y: -68}
-        - {x: 107, y: -25}
+        - {x: -50, y: -91}
+        - {x: -46, y: -139}
+        - {x: -22, y: -146}
+        - {x: 26, y: -146}
+        - {x: 40, y: -133}
+        - {x: 46, y: -96}
+        - {x: 104, y: -43}
     - name: Sumo_Selected
       rect:
         serializedVersion: 2
@@ -1748,59 +1738,64 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: uiFrame
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 886
+        width: 249
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -56.5, y: 58}
-        - {x: -69.5, y: 42}
-        - {x: -69.5, y: -40}
-        - {x: -59.5, y: -52}
-        - {x: -54.5, y: -53}
-        - {x: 59.5, y: -53}
-        - {x: 79.5, y: -32}
-        - {x: 79.5, y: 45}
-        - {x: 68.5, y: 58}
-    - name: hit1
+      - - {x: -118.5, y: 119}
+        - {x: -118.5, y: -115}
+        - {x: -115.5, y: -118}
+        - {x: 119.5, y: -118}
+        - {x: 122.5, y: -115}
+        - {x: 122.5, y: 119}
+    - name: paused
       rect:
         serializedVersion: 2
-        x: 1350
+        x: 1691
         y: 850
-        width: 232
-        height: 296
+        width: 302
+        height: 74
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: hit2
-      rect:
-        serializedVersion: 2
-        x: 1651
-        y: 850
-        width: 225
-        height: 296
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -137, y: 31}
+        - {x: -137, y: -22}
+        - {x: 143, y: -22}
+        - {x: 143, y: 27}
+        - {x: 135, y: 31}
     - name: restart match
       rect:
         serializedVersion: 2
-        x: 1608
-        y: 1614
-        width: 84
-        height: 84
+        x: 1611
+        y: 1619
+        width: 77
+        height: 69
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 14, y: 32}
-        - {x: -19, y: 32}
-        - {x: -28, y: 24}
-        - {x: -41, y: 4}
-        - {x: -41, y: -11}
-        - {x: -34, y: -24}
-        - {x: -21, y: -33}
-        - {x: 35, y: -33}
-        - {x: 35, y: 25}
-        - {x: 33, y: 28}
+      - - {x: 13.5, y: 34.5}
+        - {x: -19.5, y: 34.5}
+        - {x: -30.5, y: 28.5}
+        - {x: -38.5, y: 5.5}
+        - {x: -38.5, y: -14.5}
+        - {x: -26.5, y: -24.5}
+        - {x: -13.5, y: -23.5}
+        - {x: -4.5, y: -14.5}
+        - {x: -5.5, y: -18.5}
+        - {x: -2.5, y: -34.5}
+        - {x: 38.5, y: -34.5}
+        - {x: 38.5, y: 28.5}
+        - {x: 28.5, y: 31.5}
     - name: TROPH_HOLDER
       rect:
         serializedVersion: 2
@@ -1819,6 +1814,29 @@ TextureImporter:
         - {x: 18, y: -27}
         - {x: 23, y: -9}
         - {x: 23, y: 27}
+    - name: vs
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 952
+        width: 184
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 50, y: 15.5}
+        - {x: 65, y: 17.5}
+        - {x: 67, y: 19.5}
+        - {x: 69, y: 32.5}
+        - {x: 60, y: 45.5}
+        - {x: -92, y: 45.5}
+        - {x: -92, y: -14.5}
+        - {x: -75, y: -36.5}
+        - {x: 72, y: -36.5}
+        - {x: 77, y: -23.5}
+        - {x: 77, y: 2.5}
+        - {x: 69, y: 11.5}
     outline: []
   spritePackingTag: 
   userData: 
