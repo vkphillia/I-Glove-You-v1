@@ -17,13 +17,13 @@ public class Strike : MonoBehaviour
 
 	void OnEnable ()
 	{
+		myController.SpawnStrikes (this.gameObject);
 		StartCoroutine (ActivateBlast ());
 	}
 
 	IEnumerator ActivateBlast ()
 	{
 		BlastActive = true;
-		myController.SpawnStrikes (this.gameObject);
 
 		yield return new WaitForSeconds (1.5f);
 		mySprite.enabled = true;

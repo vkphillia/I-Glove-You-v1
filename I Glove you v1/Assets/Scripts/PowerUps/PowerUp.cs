@@ -30,16 +30,19 @@ public class PowerUp : MonoBehaviour
 		{
 			transform.Rotate (0, 0, 2);
 		}
+
 	}
 
 	public virtual void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.layer == 8 && !OfflineManager.Instance.PlayerHolder1.hasGlove)
 		{
+		
 			Player1Picked ();
 		}
 		else if (other.gameObject.layer == 10 && !OfflineManager.Instance.PlayerHolder2.hasGlove)
 		{
+			
 			Player2Picked ();
 		}
 		else if (other.gameObject.layer == 9 && this.gameObject.layer == 14)
@@ -65,11 +68,13 @@ public class PowerUp : MonoBehaviour
 
 	public virtual void Player1Picked ()
 	{
+	
 		Debug.Log ("Player1Health++");
 	}
 
 	public virtual void Player2Picked ()
 	{
+	
 		Debug.Log ("Player2Health++");
 	}
 

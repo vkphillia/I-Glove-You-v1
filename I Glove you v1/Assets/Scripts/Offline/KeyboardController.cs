@@ -179,7 +179,7 @@ public class KeyboardController : MonoBehaviour
 		}
 		else
 		{
-			t.transform.Rotate (0, 0, 6);
+			t.transform.Rotate (0, 0, 7);
 		
 		}
 
@@ -202,7 +202,7 @@ public class KeyboardController : MonoBehaviour
 		else
 		{
 
-			t.transform.Rotate (0, 0, -6);
+			t.transform.Rotate (0, 0, -7);
 		
 		}
 	}

@@ -26,8 +26,7 @@ public class AirStrikePU : PowerUp
 		{
 			Strike temp = Instantiate (strikePrefab)as Strike;
 			AllStrikesArr [i] = temp;
-			AllStrikesArr [i].transform.SetParent (this.transform);
-			//Debug.Log("AS=" + AllStrikesArr[i].transform.position);
+			//AllStrikesArr [i].transform.SetParent (this.transform);
 		}     
 	}
 
@@ -35,6 +34,8 @@ public class AirStrikePU : PowerUp
 	{
 		if (!active)
 		{
+			myAnim.Play ("PU_Idle");
+		
 			myPS.gameObject.SetActive (false);
 
 			active = true;
@@ -46,6 +47,8 @@ public class AirStrikePU : PowerUp
 	{
 		if (!active)
 		{
+			myAnim.Play ("PU_Idle");
+		
 			myPS.gameObject.SetActive (false);
 
 			active = true;
@@ -65,6 +68,7 @@ public class AirStrikePU : PowerUp
 		for (int i = 0; i < noOfStrikes; i++)
 		{
 			AllStrikesArr [i].gameObject.SetActive (true); 
+			Debug.Log ("SpawnStrike " + i);
 			AllStrikesArr [i].gameObject.layer = 15;
 		}
 		fighterJet.gameObject.SetActive (true);
