@@ -75,7 +75,12 @@ public class OfflineRoundController : MonoBehaviour
 		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("WalkNoGlove");
 		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("WalkNoGlove");
 		if (SoundsController.Instance != null)
+		{
 			SoundsController.Instance.PlayBackgroundMusic (true, 0);//BG Music
+			StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0f, .3f, 0.1f));//fade in
+		}
+			
+			
 		yield return new WaitForSeconds (1f);
 		gameObject.SetActive (false);
 	}

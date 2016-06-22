@@ -120,15 +120,18 @@ public class PUController : MonoBehaviour
 
 	public void SpawnStrikes (GameObject spawnObj)
 	{
+		
+		int _randomPos = Random.Range (0, spawnPointsArr.Count);
+		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
+		Debug.Log ("Strike=" + spawnPointsArr [_randomPos]);
+
+		//Debug.Log("PU=" + spawnObj.transform.position + "St=" + spawnPointsArr[_randomPos].position);
+		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
+		spawnPointsArr.RemoveAt (_randomPos);
 		if (spawnPointsArrTemp.Count > 0)
 		{
 			StartCoroutine (ReAddSpawnPoint ());
 		}
-		int _randomPos = Random.Range (0, spawnPointsArr.Count);
-		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
-        //Debug.Log("PU=" + spawnObj.transform.position + "St=" + spawnPointsArr[_randomPos].position);
-        spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
-		spawnPointsArr.RemoveAt (_randomPos);
 	}
 
 
@@ -169,7 +172,7 @@ public class PUController : MonoBehaviour
 	//resize both spawn point array after every 5 seconds
 	public IEnumerator ReAddSpawnPoint ()
 	{
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (2f);
 		spawnPointsArr.Add (spawnPointsArrTemp [0]);
 		spawnPointsArrTemp.RemoveAt (0);
 	}

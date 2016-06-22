@@ -118,8 +118,8 @@ public class MainMenuController : MonoBehaviour
 		menuPanel.GetComponentInChildren<Animator> ().Play ("Idle");
 		menuPanel.GetComponent<Animator> ().Play ("Disappear");
 
-		SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
-		//StartCoroutine(SoundsController.Instance.FadeInOutBGMusic(0,0.3f,0,0.8f));//fade Out
+		//SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
+		StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0.3f, 0, 0.8f));//fade Out
 		yield return new WaitForSeconds (0.7f);
 		SceneManager.LoadScene ("offline menu");
 		//async.allowSceneActivation = true;

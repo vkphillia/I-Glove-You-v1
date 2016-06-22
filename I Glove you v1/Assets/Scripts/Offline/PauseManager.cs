@@ -5,6 +5,12 @@ public class PauseManager : MonoBehaviour
 {
 	public GameObject[] muteButton;
 	public GameObject pausePanel;
+	public Collider2D myCol;
+
+	void Awake ()
+	{
+		myCol = GetComponent<Collider2D> ();
+	}
 
 	void Start ()
 	{
@@ -23,6 +29,7 @@ public class PauseManager : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState != GameState.Paused)
 		{
+			myCol.enabled = false;
 			OfflineManager.Instance.currentState = GameState.Paused;
 			StartCoroutine (pauseGame ());
 		}
@@ -46,6 +53,7 @@ public class PauseManager : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Paused)
 		{
+			myCol.enabled = true;
 			Time.timeScale = 1f;
 			OfflineManager.Instance.currentState = GameState.Playing;
 			OfflineManager.Instance.pauseBtn.SetActive (true);
