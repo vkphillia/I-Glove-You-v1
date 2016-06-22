@@ -16,6 +16,8 @@ public class AirStrikePU : PowerUp
 	private Collider2D myCol;
 
 
+
+
 	void Awake ()
 	{
 		mySpriteRenderer = GetComponent<SpriteRenderer> ();

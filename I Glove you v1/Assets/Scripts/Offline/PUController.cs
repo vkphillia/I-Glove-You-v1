@@ -13,9 +13,12 @@ public class PUController : MonoBehaviour
 	public List<PowerUp> PUList = new List<PowerUp> ();
 	//public PowerUp glove;
 
-	//PU spawning
-	public List<Transform> spawnPointsArr = new List<Transform> ();
-	public List<Transform> spawnPointsArrTemp = new List<Transform> ();
+	//Strike spawning
+	//public List<Transform> spawnPointsArr = new List<Transform> ();
+	//public List<Transform> spawnPointsArrTemp = new List<Transform> ();
+
+	private List<Vector3> spawnPointsArr = new List<Vector3> ();
+	private List<Vector3> spawnPointsArrTemp = new List<Vector3> ();
 
 	private float[] PUWeightTable = null;
 
@@ -32,6 +35,16 @@ public class PUController : MonoBehaviour
 		{
 			PUList [i].myAnim = PUList [i].GetComponent<Animator> ();
 		}
+		spawnPointsArr.Add (new Vector3 (-1.71f, 2f, 0));
+		spawnPointsArr.Add (new Vector3 (-0.69f, -1.32f, 0));
+		spawnPointsArr.Add (new Vector3 (-2.12f, -.21f, 0));
+		spawnPointsArr.Add (new Vector3 (0f, 0, 0));
+		spawnPointsArr.Add (new Vector3 (-0.3f, 1.05f, 0));
+		spawnPointsArr.Add (new Vector3 (1.94f, 1.76f, 0));
+		spawnPointsArr.Add (new Vector3 (0.72f, -2.44f, 0));
+		spawnPointsArr.Add (new Vector3 (1.55f, -1.1f, 0));
+		spawnPointsArr.Add (new Vector3 (-1.99f, -2.66f, 0));
+		spawnPointsArr.Add (new Vector3 (0.4f, 2.84f, 0));
 
 	}
 
@@ -121,11 +134,22 @@ public class PUController : MonoBehaviour
 	public void SpawnStrikes (GameObject spawnObj)
 	{
 		
-		int _randomPos = Random.Range (0, spawnPointsArr.Count);
+		/*int _randomPos = Random.Range (0, spawnPointsArr.Count);
 		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
 		Debug.Log ("Strike=" + spawnPointsArr [_randomPos]);
 
 		//Debug.Log("PU=" + spawnObj.transform.position + "St=" + spawnPointsArr[_randomPos].position);
+		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
+		spawnPointsArr.RemoveAt (_randomPos);
+		if (spawnPointsArrTemp.Count > 0)
+		{
+			StartCoroutine (ReAddSpawnPoint ());
+		}*/
+
+		int _randomPos = Random.Range (0, spawnPointsArr.Count);
+		spawnObj.transform.position = spawnPointsArr [_randomPos];
+		Debug.Log ("Strike=" + spawnPointsArr [_randomPos]);
+
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);
 		if (spawnPointsArrTemp.Count > 0)
