@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+
+	public enum MenuState
+	{
+		Menu,
+		Help,
+		Credits,
+	}
+;
+
 	[SerializeField]
 	private CanvasGroup menuPanel;
 	
@@ -13,6 +22,14 @@ public class MainMenuController : MonoBehaviour
 	public GameObject PlayButton;
 	public GameObject SettingsBtn;
 	public GameObject title;
+
+	//manually closing panels
+	public Animator menuPanelAnim;
+	public Animator creditsPanelAnim;
+	public Animator helpPanelAnim;
+
+
+	public MenuState currentState;
 
 	private AsyncOperation async;
 	private bool back;
@@ -38,6 +55,7 @@ public class MainMenuController : MonoBehaviour
 
 	void OnEnable ()
 	{
+		currentState = MenuState.Menu;
 		if (SoundsController.Instance != null)
 		{
 			//SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
@@ -127,26 +145,82 @@ public class MainMenuController : MonoBehaviour
 
 	void Update ()
 	{
+		if (currentState == MenuState.Menu)
+		{
+			if (Input.GetKeyDown (KeyCode.Escape) && back)
+			{
+				Application.Quit ();
+				Debug.Log ("quit");
+			}
+		}
+
+
 		if (Input.GetKeyDown (KeyCode.Escape))
 		{
-			back = true;
-			backText.gameObject.SetActive (true);
-			StartCoroutine (ChkForDoubleBack ());
+			if (currentState == MenuState.Menu)
+			{
+				back = true;
+				backText.gameObject.SetActive (true);
+				StartCoroutine (CloseBack ());
+
+
+			}
+			else if (currentState == MenuState.Help)
+			{
+				closeHelpPanel ();
+			}
+			else if (currentState == MenuState.Credits)
+			{
+				closeCreditsPanel ();
+			}
+
 		}
 	}
 
-	IEnumerator ChkForDoubleBack ()
+	IEnumerator CloseBack ()
 	{
-		if (Input.GetKeyDown (KeyCode.Escape) && back)
-		{
-			Application.Quit ();
-		}
-		yield return new WaitForSeconds (.5f);
+		
+		yield return new WaitForSeconds (1f);
 		back = false;
 		backText.gameObject.SetActive (false);
 
 	}
 
+
+	public void ChangeState (int stateNum)
+	{
+		if (stateNum == 0)
+			currentState = MenuState.Menu;
+
+		if (stateNum == 1)
+			currentState = MenuState.Help;
+
+		if (stateNum == 2)
+			currentState = MenuState.Credits;
+	}
+
+
+	public void closeCreditsPanel ()
+	{
+		menuPanelAnim.Play ("Appear");
+		creditsPanelAnim.Play ("SlideOut");
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayButtonClick ();
+		}
+		currentState = MenuState.Menu;
+	}
+
+	public void closeHelpPanel ()
+	{
+		menuPanelAnim.Play ("Appear");
+		helpPanelAnim.Play ("SlideOut");
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayButtonClick ();
+		}
+		currentState = MenuState.Menu;
+	}
 
     
 }
