@@ -12,7 +12,8 @@ public class SwipePlayer : MonoBehaviour
     void Start()
     {
         windows[0].GetComponent<SpriteRenderer>().sprite = players[0];
-        windows[1].GetComponent<SpriteRenderer>().sprite = playersHighlighted[1];
+        //windows[1].GetComponent<SpriteRenderer>().sprite = playersHighlighted[1];
+        windows[1].GetComponent<SpriteRenderer>().sprite = players[1];
         windows[2].GetComponent<SpriteRenderer>().sprite = players[2];
         selectedID[0] = 0;
         selectedID[1] = 1;
@@ -41,7 +42,8 @@ public class SwipePlayer : MonoBehaviour
         }
 
         windows[0].GetComponent<SpriteRenderer>().sprite = players[selectedID[0]];
-        windows[1].GetComponent<SpriteRenderer>().sprite = playersHighlighted[selectedID[1]];
+        //windows[1].GetComponent<SpriteRenderer>().sprite = playersHighlighted[selectedID[1]];
+        windows[1].GetComponent<SpriteRenderer>().sprite = players[selectedID[1]];
         windows[2].GetComponent<SpriteRenderer>().sprite = players[selectedID[2]];
     }
 
@@ -57,7 +59,8 @@ public class SwipePlayer : MonoBehaviour
         }
 
         windows[0].GetComponent<SpriteRenderer>().sprite = players[selectedID[0]];
-        windows[1].GetComponent<SpriteRenderer>().sprite = playersHighlighted[selectedID[1]];
+        //windows[1].GetComponent<SpriteRenderer>().sprite = playersHighlighted[selectedID[1]];
+        windows[1].GetComponent<SpriteRenderer>().sprite = players[selectedID[1]];
         windows[2].GetComponent<SpriteRenderer>().sprite = players[selectedID[2]];
     }
 }

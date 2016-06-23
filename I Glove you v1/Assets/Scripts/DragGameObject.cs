@@ -9,20 +9,18 @@ public class DragGameObject : MonoBehaviour
     void OnMouseDrag()
     {
         dragging = true;
-
-        if (!threshold)
-        {
-            Vector3 objectPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            objectPosition.z = 0f;
-            objectPosition.y = transform.position.y;
-            transform.position = objectPosition;
-        }
+        Vector3 objectPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        objectPosition.z = 0f;
+        objectPosition.y = transform.position.y;
+        if(objectPosition.x >1 || objectPosition.x < -1)
+            objectPosition.x = transform.position.x;
+        transform.position = objectPosition;
     }
 
     void OnMouseUp()
     {
         dragging = false;
-        
+        Dragged();
         //Invoke("Reset", 0.5f);
         
     }
@@ -30,39 +28,37 @@ public class DragGameObject : MonoBehaviour
     IEnumerator Reset()
     {
         transform.position = new Vector3(0, transform.position.y, 0);
-        Debug.Log("reset started");
-        while (dragging)
-        {
-            yield return null;
-        }
-        Debug.Log("reset done");
-        threshold = false;
+        yield return null;
+        //Debug.Log("reset started");
+        //while (dragging)
+        //{
+        //    yield return null;
+        //}
+        //Debug.Log("reset done");
+        //threshold = false;
     }
 
-    void Update()
+    void Dragged()
     {
-        if(dragging&&!threshold)
+        if (transform.position.x > 0.3)
         {
-            if (transform.position.x > 0.3)
-            {
-                Debug.Log("Right");
-                threshold = true;
-                StartCoroutine(Reset());
-                //OnMouseUp();
-                //Invoke("OnMouseUp",0.2f);
-                gameObject.GetComponentInParent<SwipePlayer>().MoveRight();
-            }
-            else if (transform.position.x < -0.3)
-            {
-                Debug.Log("Left");
-                threshold = true;
-                StartCoroutine(Reset());
-                //OnMouseUp();
-                //Invoke("OnMouseUp", 0.2f);
-                gameObject.GetComponentInParent<SwipePlayer>().MoveLeft();
-            }
+            //Debug.Log("Right");
+            //threshold = true;
+            StartCoroutine(Reset());
+            //OnMouseUp();
+            //Invoke("OnMouseUp",0.2f);
+            gameObject.GetComponentInParent<SwipePlayer>().MoveRight();
+        }
+        else if (transform.position.x < -0.3)
+        {
+            //Debug.Log("Left");
+            //threshold = true;
+            StartCoroutine(Reset());
+            //OnMouseUp();
+            //Invoke("OnMouseUp", 0.2f);
+            gameObject.GetComponentInParent<SwipePlayer>().MoveLeft();
         }
     }
-
+    
 
 }
