@@ -11,11 +11,6 @@ public class PUController : MonoBehaviour
 	[HideInInspector]
 
 	public List<PowerUp> PUList = new List<PowerUp> ();
-	//public PowerUp glove;
-
-	//Strike spawning
-	//public List<Transform> spawnPointsArr = new List<Transform> ();
-	//public List<Transform> spawnPointsArrTemp = new List<Transform> ();
 
 	private List<Vector3> spawnPointsArr = new List<Vector3> ();
 	private List<Vector3> spawnPointsArrTemp = new List<Vector3> ();
@@ -37,14 +32,14 @@ public class PUController : MonoBehaviour
 		}
 		spawnPointsArr.Add (new Vector3 (-1.71f, 2f, 0));
 		spawnPointsArr.Add (new Vector3 (-0.69f, -1.32f, 0));
-		spawnPointsArr.Add (new Vector3 (-2.12f, -.21f, 0));
+		spawnPointsArr.Add (new Vector3 (-1.77f, -.21f, 0));
 		spawnPointsArr.Add (new Vector3 (0f, 0, 0));
 		spawnPointsArr.Add (new Vector3 (-0.3f, 1.05f, 0));
 		spawnPointsArr.Add (new Vector3 (1.94f, 1.76f, 0));
 		spawnPointsArr.Add (new Vector3 (0.72f, -2.44f, 0));
 		spawnPointsArr.Add (new Vector3 (1.55f, -1.1f, 0));
-		spawnPointsArr.Add (new Vector3 (-1.99f, -2.66f, 0));
-		spawnPointsArr.Add (new Vector3 (0.4f, 2.84f, 0));
+		spawnPointsArr.Add (new Vector3 (-1.99f, -2.4f, 0));
+		spawnPointsArr.Add (new Vector3 (0.4f, 2.4f, 0));
 
 	}
 
@@ -118,7 +113,6 @@ public class PUController : MonoBehaviour
 	void SpawnGlove ()
 	{
 		PUList [4].gameObject.SetActive (true);
-		//glove.gameObject.SetActive (true);
 		SpawnAnything (PUList [4].gameObject);
 	}
 
@@ -134,17 +128,7 @@ public class PUController : MonoBehaviour
 	public void SpawnStrikes (GameObject spawnObj)
 	{
 		
-		/*int _randomPos = Random.Range (0, spawnPointsArr.Count);
-		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
-		Debug.Log ("Strike=" + spawnPointsArr [_randomPos]);
 
-		//Debug.Log("PU=" + spawnObj.transform.position + "St=" + spawnPointsArr[_randomPos].position);
-		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
-		spawnPointsArr.RemoveAt (_randomPos);
-		if (spawnPointsArrTemp.Count > 0)
-		{
-			StartCoroutine (ReAddSpawnPoint ());
-		}*/
 
 		int _randomPos = Random.Range (0, spawnPointsArr.Count);
 		spawnObj.transform.position = spawnPointsArr [_randomPos];
@@ -162,25 +146,13 @@ public class PUController : MonoBehaviour
 
 	public void SpawnAnything (GameObject spawnObj)
 	{
-		/*if (spawnPointsArrTemp.Count > 0)
-		{
-			StartCoroutine (ReAddSpawnPoint ());
-		}
-		int _randomPos = Random.Range (0, spawnPointsArr.Count);*/
-		Vector3 _randomPos = new Vector3 (Random.Range (-2, 2), Random.Range (-3, 3), 0);
+		Vector3 _randomPos = new Vector3 (Random.Range (-1.7f, 1.7f), Random.Range (-2.4f, 2.4f), 0);
 		StartCoroutine (spawnHighlight (_randomPos, spawnObj));
 	}
 
 	IEnumerator spawnHighlight (Vector3 _randomPos, GameObject spawnObj)
 	{
-		/*Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
-		Marker.SetActive (true);
-		Marker.transform.position = spawnPointsArr [_randomPos].position;
-		yield return new WaitForSeconds (.6f);
-		Marker.SetActive (false);
-		spawnObj.transform.position = spawnPointsArr [_randomPos].position;
-		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
-		spawnPointsArr.RemoveAt (_randomPos);*/
+
 
 		Marker = spawnObj.GetComponent<PowerUp> ().myMarker;
 		Marker.SetActive (true);
@@ -209,7 +181,6 @@ public class PUController : MonoBehaviour
 	void DestroyPU ()
 	{
 		StopCoroutine (SpawnPUCoroutine ());
-		//Debug.Log ("Destroy PU");
 		PU.DeactivatePU (); 
 	}
 

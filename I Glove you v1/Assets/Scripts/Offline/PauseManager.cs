@@ -39,6 +39,10 @@ public class PauseManager : MonoBehaviour
 	IEnumerator pauseGame ()
 	{
 		//gameObject.SetActive (false);
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayButtonClick ();
+		}
 		pausePanel.SetActive (true);
 		pausePanel.GetComponent<Animator> ().Play ("Appear");
 		if (SoundsController.Instance != null)
