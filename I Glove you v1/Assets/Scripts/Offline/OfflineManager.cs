@@ -296,6 +296,7 @@ public class OfflineManager : MonoBehaviour
 
 	public void OnMenuClick ()
 	{
+		Time.timeScale = 1f;
 		SceneManager.LoadScene ("offline menu");
 	}
 

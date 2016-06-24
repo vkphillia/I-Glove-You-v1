@@ -4,7 +4,7 @@ using System.Collections;
 public class TouchController : MonoBehaviour
 {
 
-	public GameObject P1ArrowClock;
+	/*public GameObject P1ArrowClock;
 	public GameObject P1ArrowAntiClock;
 	public GameObject P2ArrowClock;
 	public GameObject P2ArrowAntiClock;
@@ -17,13 +17,13 @@ public class TouchController : MonoBehaviour
 	private float P1ClockTime = 2f;
 	private float P1AntiClockTime = 2f;
 	private float P2ClockTime = 2f;
-	private float P2AntiClockTime = 2f;
-
-	private int staminaKeYPresscounter;
+	private float P2AntiClockTime = 2f;*/
 
 
-	private bool p1Touched;
-	private bool p2Touched;
+
+
+	//private bool p1Touched;
+	//private bool p2Touched;
 
 
 	void Update ()
@@ -55,7 +55,7 @@ public class TouchController : MonoBehaviour
 				{
 					MoveAntiClockWise (OfflineManager.Instance.PlayerHolder1);
 				}
-				p1Touched = true;
+				//	p1Touched = true;
 			}
 
 			if (touch.position.y > Screen.height / 2)
@@ -69,7 +69,7 @@ public class TouchController : MonoBehaviour
 				{
 					MoveClockWise (OfflineManager.Instance.PlayerHolder2);
 				}
-				p2Touched = true;
+				//p2Touched = true;
 			}
 		}
 		/*if (!p1Touched)
@@ -89,8 +89,8 @@ public class TouchController : MonoBehaviour
 		{
 			OfflineManager.Instance.PlayerHolder2.isTurning = true;
 		}*/
-		p1Touched = false;
-		p2Touched = false;
+		//p1Touched = false;
+		//p2Touched = false;
 	}
 
 	void MoveClockWise (PlayerHolderController t)

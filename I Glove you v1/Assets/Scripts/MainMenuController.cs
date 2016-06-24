@@ -59,21 +59,23 @@ public class MainMenuController : MonoBehaviour
 		if (SoundsController.Instance != null)
 		{
 			//SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
-			StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0, 0.3f, 1f));//fade IN
+			StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0, 0.3f, .4f));//fade IN
 			SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
 		}
+		spinningWheel.SetActive (true);
+		Invoke ("InitializeTitle", 0.6f);
+		StartCoroutine (SpiningWheel ());
 		
 	}
 
 	void Start ()
 	{
-		spinningWheel.SetActive (true);
-		Invoke ("InitializeTitle", 0.6f);
-		StartCoroutine (SpiningWheel ());
+		
 	}
 
 	IEnumerator SpiningWheel ()
 	{
+	
 		spinningWheel.transform.localScale = new Vector3 (0, 0, 0);
 		float t = 0;
 		while (spinningWheel.transform.localScale.x != 0.73f)
@@ -94,6 +96,7 @@ public class MainMenuController : MonoBehaviour
 
 	void InitializeTitle ()
 	{
+	
 		title.SetActive (true);
 		Invoke ("InitializeMenu", 0.5f);
 	}
@@ -137,7 +140,7 @@ public class MainMenuController : MonoBehaviour
 		menuPanel.GetComponent<Animator> ().Play ("Disappear");
 
 		//SoundsController.Instance.PlayBackgroundMusic (false, 0);//stop BG music
-		StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0.3f, 0, 0.8f));//fade Out
+		StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0.3f, 0, 0.4f));//fade Out
 		yield return new WaitForSeconds (0.7f);
 		SceneManager.LoadScene ("offline menu");
 		//async.allowSceneActivation = true;
