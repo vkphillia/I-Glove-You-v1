@@ -9,6 +9,7 @@ public class OfflineMenuController : MonoBehaviour
 	public static int Player1CharacterID = 0;
 	public static int Player2CharacterID = 4;
     public SwipePlayer[] playerSelectionHolder;
+    public GameObject[] selectedPlayers;
 
     public Text P1Text;
 	public Text P2Text;
@@ -50,6 +51,9 @@ public class OfflineMenuController : MonoBehaviour
 	public void P1Fight ()
 	{
         Player1CharacterID = playerSelectionHolder[0].selectedID[1];// setting player ID
+        playerSelectionHolder[0].gameObject.SetActive(false);
+        selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[0].windows[1].GetComponent<SpriteRenderer>().sprite;
+        selectedPlayers[0].SetActive(true);
 
         P1Ready = true;
 		P1Text.text = "Ready!";
@@ -60,6 +64,9 @@ public class OfflineMenuController : MonoBehaviour
 	public void P2Fight ()
 	{
         Player2CharacterID = playerSelectionHolder[1].selectedID[1];// setting player ID
+        playerSelectionHolder[1].gameObject.SetActive(false);
+        selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[1].windows[1].GetComponent<SpriteRenderer>().sprite;
+        selectedPlayers[1].SetActive(true);
 
         P2Ready = true;
 		P2Text.text = "Ready!";
