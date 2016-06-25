@@ -65,6 +65,7 @@ public class OfflineManager : MonoBehaviour
 	public GameObject Player1HUDPanel;
 	public GameObject Player2HUDPanel;
 	public GameObject pauseBtn;
+	public Button pauseBtnCollider;
 	public PTrophy TrophyP;
 
 	[Space]
@@ -251,6 +252,7 @@ public class OfflineManager : MonoBehaviour
 			}
 		}
 		pauseBtn.SetActive (false);
+		pauseBtnCollider.gameObject.SetActive (false);
 
 		yield return new WaitForSeconds (.3f);
 		Time.timeScale = 1f;

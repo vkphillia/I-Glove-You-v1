@@ -139,6 +139,11 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
 				StartCoroutine (MakePUHitterFalse ());
 			}
+			else if (lyingDead)
+			{
+				transform.position += transform.up * Time.deltaTime * (mySpeed);
+				StartCoroutine (MakeLyingDeadFalse ());
+			}
 
 		}
 		else if (OfflineManager.Instance.currentState == GameState.MatchOver)
@@ -167,12 +172,7 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * (-mySpeed);
 				StartCoroutine (MakeHitterFalse ());
 			}
-			else if (lyingDead)
-			{
-				transform.position += transform.up * Time.deltaTime * (mySpeed + 1);
 
-				StartCoroutine (MakeLyingDeadFalse ());
-			}
 		}
 
 
@@ -580,7 +580,13 @@ public class PlayerHolderController : MonoBehaviour
 		}
 	}
 
+	/*IEnumerator slipWhileFalling ()
+	{
 
+		transform.position += transform.up * Time.deltaTime * (mySpeed);
+		yield return new WaitForSeconds (.4f);
+
+	}*/
 
 
 

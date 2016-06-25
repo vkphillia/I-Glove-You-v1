@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public delegate void GlovePickEvent (PlayerHolderController giver, PlayerHolderController taker);
 public class GloveController : PowerUp
 {
 
-	public static event GlovePickEvent OnGlovePick;
 
 
 
@@ -54,7 +52,7 @@ public class GloveController : PowerUp
 		base.DeactivatePU ();
 	}
 
-	void OnDisable ()
+	new void OnDisable ()
 	{
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<BoxCollider2D> ().enabled = false;

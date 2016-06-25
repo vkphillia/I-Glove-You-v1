@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -25,11 +26,12 @@ public class PauseManager : MonoBehaviour
 		}
 	}
 
-	void OnMouseUp ()
+	public void OnPauseClick ()
 	{
 		if (OfflineManager.Instance.currentState != GameState.Paused)
 		{
-			myCol.enabled = false;
+			//myCol.enabled = false;
+			GetComponent<Button> ().interactable = false;
 			OfflineManager.Instance.currentState = GameState.Paused;
 			StartCoroutine (pauseGame ());
 		}
@@ -57,10 +59,11 @@ public class PauseManager : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState == GameState.Paused)
 		{
-			myCol.enabled = true;
+			//myCol.enabled = true;
+			GetComponent<Button> ().interactable = true;
 			Time.timeScale = 1f;
 			OfflineManager.Instance.currentState = GameState.Playing;
-			OfflineManager.Instance.pauseBtn.SetActive (true);
+			//OfflineManager.Instance.pauseBtn.SetActive (true);
 			if (SoundsController.Instance != null)
 				SoundsController.Instance.PlayBackgroundMusic (true, 0);//1 is for crowd sound
 			

@@ -91,7 +91,7 @@ public class AirStrikePU : PowerUp
 		base.DeactivatePU ();
 	}
 
-	void OnDisable ()
+	new void  OnDisable ()
 	{
 		for (int i = 0; i < noOfStrikes; i++)
 		{

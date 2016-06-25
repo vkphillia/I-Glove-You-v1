@@ -71,6 +71,7 @@ public class OfflineRoundController : MonoBehaviour
 		myRoundTextAnim.Play ("Round_Hide");
 		OfflineManager.Instance.currentState = GameState.Playing;
 		OfflineManager.Instance.pauseBtn.SetActive (true);
+		OfflineManager.Instance.pauseBtnCollider.gameObject.SetActive (true);
 		//make player move
 		OfflineManager.Instance.PlayerHolder1.myWalkAnim.Play ("WalkNoGlove");
 		OfflineManager.Instance.PlayerHolder2.myWalkAnim.Play ("WalkNoGlove");
