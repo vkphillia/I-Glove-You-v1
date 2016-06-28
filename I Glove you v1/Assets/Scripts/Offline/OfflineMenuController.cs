@@ -7,13 +7,13 @@ public class OfflineMenuController : MonoBehaviour
 {
 
 	public static int Player1CharacterID = 0;
-	public static int Player2CharacterID = 4;
-    //public SwipePlayer[] playerSelectionHolder;
-    public GameObject[] playerSelectionHolders;
-    public GameObject[] selectedPlayers;
-    public Sprite[] players;
+	public static int Player2CharacterID = 3;
+	//public SwipePlayer[] playerSelectionHolder;
+	public GameObject[] playerSelectionHolders;
+	public GameObject[] selectedPlayers;
+	public Sprite[] players;
 
-    public Text P1Text;
+	public Text P1Text;
 	public Text P2Text;
 
 	private bool P1Ready;
@@ -52,14 +52,14 @@ public class OfflineMenuController : MonoBehaviour
 
 	public void P1Fight ()
 	{
-        //Player1CharacterID = playerSelectionHolder[0].selectedID[1];// setting player ID
-        //playerSelectionHolder[0].gameObject.SetActive(false);
-        //selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[0].windows[1].GetComponent<SpriteRenderer>().sprite;
-        playerSelectionHolders[0].SetActive(false);
-        selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = players[Player1CharacterID];
-        selectedPlayers[0].SetActive(true);
+		//Player1CharacterID = playerSelectionHolder[0].selectedID[1];// setting player ID
+		//playerSelectionHolder[0].gameObject.SetActive(false);
+		//selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[0].windows[1].GetComponent<SpriteRenderer>().sprite;
+		playerSelectionHolders [0].SetActive (false);
+		selectedPlayers [0].GetComponent<SpriteRenderer> ().sprite = players [Player1CharacterID];
+		selectedPlayers [0].SetActive (true);
 
-        P1Ready = true;
+		P1Ready = true;
 		P1Text.text = "Ready!";
 		if (SoundsController.Instance != null)
 			SoundsController.Instance.PlayButtonClick ();//for button click sound
@@ -67,14 +67,14 @@ public class OfflineMenuController : MonoBehaviour
 
 	public void P2Fight ()
 	{
-        //Player2CharacterID = playerSelectionHolder[1].selectedID[1];// setting player ID
-        //playerSelectionHolder[1].gameObject.SetActive(false);
-        //selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[1].windows[1].GetComponent<SpriteRenderer>().sprite;
-        playerSelectionHolders[1].SetActive(false);
-        selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = players[Player2CharacterID];
-        selectedPlayers[1].SetActive(true);
+		//Player2CharacterID = playerSelectionHolder[1].selectedID[1];// setting player ID
+		//playerSelectionHolder[1].gameObject.SetActive(false);
+		//selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[1].windows[1].GetComponent<SpriteRenderer>().sprite;
+		playerSelectionHolders [1].SetActive (false);
+		selectedPlayers [1].GetComponent<SpriteRenderer> ().sprite = players [Player2CharacterID];
+		selectedPlayers [1].SetActive (true);
 
-        P2Ready = true;
+		P2Ready = true;
 		P2Text.text = "Ready!";
 		if (SoundsController.Instance != null)
 			SoundsController.Instance.PlayButtonClick ();//for button click sound
@@ -101,8 +101,8 @@ public class OfflineMenuController : MonoBehaviour
 			SoundsController.Instance.PlayButtonClick ();//for button click sound
 	}
 
-    public void Selected(RectTransform gameobject)
-    {
-        gameobject.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-    }
+	public void Selected (RectTransform gameobject)
+	{
+		gameobject.transform.localScale = new Vector3 (0.9f, 0.9f, 0.9f);
+	}
 }

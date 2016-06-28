@@ -4,28 +4,29 @@ using System.Collections;
 public class payPanel : MonoBehaviour
 {
 
-	int paySteps;
-	int currentPayStep;
+	//int paySteps;
+	public int currentPayStep;
 
 	void Start ()
 	{
-		paySteps = 3;
+		//paySteps = 3;
 		currentPayStep = 0;
 	}
 
-	public void OnLeftBtnClick ()
+
+
+	public void getCurrentPayStep (int paystep)
 	{
-		if (currentPayStep != 0)
-		{
-			currentPayStep--;
-		}
+		currentPayStep = paystep;
 	}
 
-	public void OnRightBtnClick ()
+	public void rate ()
 	{
-		if (currentPayStep != paySteps)
-		{
-			currentPayStep++;
-		}
+		#if UNITY_ANDROID
+		//Application.OpenURL ("https://play.google.com/store/apps/details?id=com.TheGoodSideGames.Wordifly");
+		#elif UNITY_IPHONE
+		Application.OpenURL ("https://itunes.apple.com/us/app/i-glove-you/id1108847464?ls=1&mt=8");
+		#endif
+
 	}
 }
