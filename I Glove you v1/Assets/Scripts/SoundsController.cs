@@ -50,6 +50,13 @@ public class SoundsController : MonoBehaviour
 	//initialization all the sound effects
 	void Start ()
 	{
+        if(PlayerPrefs.HasKey("mute"))
+        {
+            if (PlayerPrefs.GetInt("mute") == 1)
+                mute = true;
+        }
+        
+
 		Invoke ("LoadAllSFX", 1f);
 	}
 
@@ -101,6 +108,16 @@ public class SoundsController : MonoBehaviour
 
 
 		}
+
+        if(mute)
+        {
+            PlayerPrefs.SetInt("mute", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("mute", 0);
+        }
+        
 	}
 
 	//for any button click sound

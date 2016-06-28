@@ -8,8 +8,10 @@ public class OfflineMenuController : MonoBehaviour
 
 	public static int Player1CharacterID = 0;
 	public static int Player2CharacterID = 4;
-    public SwipePlayer[] playerSelectionHolder;
+    //public SwipePlayer[] playerSelectionHolder;
+    public GameObject[] playerSelectionHolders;
     public GameObject[] selectedPlayers;
+    public Sprite[] players;
 
     public Text P1Text;
 	public Text P2Text;
@@ -50,9 +52,11 @@ public class OfflineMenuController : MonoBehaviour
 
 	public void P1Fight ()
 	{
-        Player1CharacterID = playerSelectionHolder[0].selectedID[1];// setting player ID
-        playerSelectionHolder[0].gameObject.SetActive(false);
-        selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[0].windows[1].GetComponent<SpriteRenderer>().sprite;
+        //Player1CharacterID = playerSelectionHolder[0].selectedID[1];// setting player ID
+        //playerSelectionHolder[0].gameObject.SetActive(false);
+        //selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[0].windows[1].GetComponent<SpriteRenderer>().sprite;
+        playerSelectionHolders[0].SetActive(false);
+        selectedPlayers[0].GetComponent<SpriteRenderer>().sprite = players[Player1CharacterID];
         selectedPlayers[0].SetActive(true);
 
         P1Ready = true;
@@ -63,9 +67,11 @@ public class OfflineMenuController : MonoBehaviour
 
 	public void P2Fight ()
 	{
-        Player2CharacterID = playerSelectionHolder[1].selectedID[1];// setting player ID
-        playerSelectionHolder[1].gameObject.SetActive(false);
-        selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[1].windows[1].GetComponent<SpriteRenderer>().sprite;
+        //Player2CharacterID = playerSelectionHolder[1].selectedID[1];// setting player ID
+        //playerSelectionHolder[1].gameObject.SetActive(false);
+        //selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = playerSelectionHolder[1].windows[1].GetComponent<SpriteRenderer>().sprite;
+        playerSelectionHolders[1].SetActive(false);
+        selectedPlayers[1].GetComponent<SpriteRenderer>().sprite = players[Player2CharacterID];
         selectedPlayers[1].SetActive(true);
 
         P2Ready = true;
