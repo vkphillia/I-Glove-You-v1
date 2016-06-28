@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
 		Menu,
 		Help,
 		Credits,
+		Pay,
 	}
 ;
 
@@ -27,6 +28,7 @@ public class MainMenuController : MonoBehaviour
 	public Animator menuPanelAnim;
 	public Animator creditsPanelAnim;
 	public Animator helpPanelAnim;
+	public Animator payPanelAnim;
 
 
 	public MenuState currentState;
@@ -176,6 +178,10 @@ public class MainMenuController : MonoBehaviour
 			{
 				closeCreditsPanel ();
 			}
+			else if (currentState == MenuState.Pay)
+			{
+				closePayPanel ();
+			}
 
 		}
 	}
@@ -194,12 +200,12 @@ public class MainMenuController : MonoBehaviour
 	{
 		if (stateNum == 0)
 			currentState = MenuState.Menu;
-
-		if (stateNum == 1)
+		else if (stateNum == 1)
 			currentState = MenuState.Help;
-
-		if (stateNum == 2)
+		else if (stateNum == 2)
 			currentState = MenuState.Credits;
+		else if (stateNum == 3)
+			currentState = MenuState.Pay;
 	}
 
 
@@ -218,6 +224,17 @@ public class MainMenuController : MonoBehaviour
 	{
 		menuPanelAnim.Play ("Appear");
 		helpPanelAnim.Play ("SlideOut");
+		if (SoundsController.Instance != null)
+		{
+			SoundsController.Instance.PlayButtonClick ();
+		}
+		currentState = MenuState.Menu;
+	}
+
+	public void closePayPanel ()
+	{
+		menuPanelAnim.Play ("Appear");
+		payPanelAnim.Play ("SlideOut");
 		if (SoundsController.Instance != null)
 		{
 			SoundsController.Instance.PlayButtonClick ();

@@ -139,11 +139,7 @@ public class PlayerHolderController : MonoBehaviour
 				transform.position += transform.up * Time.deltaTime * (mySpeed + .5f);
 				StartCoroutine (MakePUHitterFalse ());
 			}
-			else if (lyingDead)
-			{
-				transform.position += transform.up * Time.deltaTime * (mySpeed);
-				StartCoroutine (MakeLyingDeadFalse ());
-			}
+
 
 		}
 		else if (OfflineManager.Instance.currentState == GameState.MatchOver)
@@ -498,11 +494,7 @@ public class PlayerHolderController : MonoBehaviour
 	{
 		lyingDead = true;
 		myWalkAnim.Play ("Dead");
-		/*if (SoundsController.Instance != null)
-		{
-			SoundsController.Instance.PlaySoundFX ("fall", 1f);
 
-		}*/
 
 		yield return new WaitForSeconds (1.5f);
 		while (OfflineManager.Instance.currentState == GameState.Paused)
