@@ -23,8 +23,8 @@ public class OfflineMenuController : MonoBehaviour
 
 	void OnEnable ()
 	{
-		Player1CharacterID = 0;
-		Player2CharacterID = 4;
+		Player1CharacterID = 1;
+		Player2CharacterID = 3;
 		P1Text.text = "Fight";
 		P2Text.text = "Fight";
 		if (SoundsController.Instance != null)
