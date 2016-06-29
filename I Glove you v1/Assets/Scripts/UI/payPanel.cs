@@ -5,25 +5,26 @@ public class payPanel : MonoBehaviour
 {
 
 	//int paySteps;
-	public int currentPayStep;
+
 
 	void Start ()
 	{
 		//paySteps = 3;
-		currentPayStep = 0;
+		MainMenuController.Instance.currentPayStep = 0;
 	}
 
 
 
 	public void getCurrentPayStep (int paystep)
 	{
-		currentPayStep = paystep;
+		MainMenuController.Instance.currentPayStep = paystep;
+		Debug.Log (MainMenuController.Instance.currentPayStep);
 	}
 
 	public void rate ()
 	{
 		#if UNITY_ANDROID
-		//Application.OpenURL ("https://play.google.com/store/apps/details?id=com.TheGoodSideGames.Wordifly");
+		Application.OpenURL ("https://play.google.com/store/apps/details?id=com.TheGoodSideGames.IGloveYou");
 		#elif UNITY_IPHONE
 		Application.OpenURL ("https://itunes.apple.com/us/app/i-glove-you/id1108847464?ls=1&mt=8");
 		#endif

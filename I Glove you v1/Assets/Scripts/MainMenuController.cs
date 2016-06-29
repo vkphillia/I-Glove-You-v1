@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
 	public GameObject PlayButton;
 	public GameObject SettingsBtn;
 	public GameObject title;
-    public GameObject soundBtn;
+	public GameObject soundBtn;
 
 	//manually closing panels
 	public Animator menuPanelAnim;
@@ -36,6 +36,9 @@ public class MainMenuController : MonoBehaviour
 
 	private AsyncOperation async;
 	private bool back;
+
+	//iap
+	public int currentPayStep;
 
 	#region Instance
 
@@ -64,13 +67,13 @@ public class MainMenuController : MonoBehaviour
 			//SoundsController.Instance.PlayBackgroundMusic (true, 0);//start BG music
 			StartCoroutine (SoundsController.Instance.FadeInOutBGMusic (0, 0, 0.3f, .4f));//fade IN
 			SoundsController.Instance.PlayBackgroundMusic (false, 1);//stop crowd sound
-            if (SoundsController.mute)
-            {
-                soundBtn.transform.GetChild(1).gameObject.SetActive(false);
-                soundBtn.transform.GetChild(0).gameObject.SetActive(true);
-            }
+			if (SoundsController.mute)
+			{
+				soundBtn.transform.GetChild (1).gameObject.SetActive (false);
+				soundBtn.transform.GetChild (0).gameObject.SetActive (true);
+			}
 
-        }
+		}
 		spinningWheel.SetActive (true);
 		Invoke ("InitializeTitle", 0.6f);
 		StartCoroutine (SpiningWheel ());

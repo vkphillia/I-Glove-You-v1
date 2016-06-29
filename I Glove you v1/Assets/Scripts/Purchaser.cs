@@ -42,6 +42,7 @@ namespace CompleteProject
 			{
 				// Begin to configure our connection to Purchasing
 				InitializePurchasing ();
+				Debug.Log ("initializing iap");
 			}
 		}
 
@@ -59,9 +60,14 @@ namespace CompleteProject
             
 			// Add a product to sell / restore by way of its identifier, associating the general identifier
 			// with its store-specific identifiers.
-			builder.AddProduct (kProductIDConsumable, ProductType.Consumable);
+			builder.AddProduct ("igu_iap1", ProductType.NonConsumable);
 			// Continue adding the non-consumable product.
-			builder.AddProduct (kProductIDNonConsumable, ProductType.NonConsumable);
+			//builder.AddProduct ("igu_iap2", ProductType.NonConsumable);
+
+			//builder.AddProduct ("igu_iap3", ProductType.NonConsumable);
+
+
+
 			// And finish adding the subscription product. Notice this uses store-specific IDs, illustrating
 			// if the Product ID was configured differently between Apple and Google stores. Also note that
 			// one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
@@ -69,8 +75,7 @@ namespace CompleteProject
 			builder.AddProduct (kProductIDSubscription, ProductType.Subscription, new IDs () { {
 					kProductNameAppleSubscription,
 					AppleAppStore.Name
-				},
-				 {
+				}, {
 					kProductNameGooglePlaySubscription,
 					GooglePlay.Name
 				},
@@ -101,7 +106,23 @@ namespace CompleteProject
 		{
 			// Buy the non-consumable product using its general identifier. Expect a response either 
 			// through ProcessPurchase or OnPurchaseFailed asynchronously.
-			BuyProductID (kProductIDNonConsumable);
+			BuyProductID ("igu_ipa1");
+
+			/*if (MainMenuController.Instance.currentPayStep == 1)
+			{
+				BuyProductID ("igu_ipa1");
+			
+			}
+			else if (MainMenuController.Instance.currentPayStep == 2)
+			{
+				BuyProductID ("igu_ipa2");
+			
+			}
+			else if (MainMenuController.Instance.currentPayStep == 3)
+			{
+				BuyProductID ("igu_ipa3");
+			
+			}*/
 		}
 
         
@@ -162,7 +183,7 @@ namespace CompleteProject
             
 			// If we are running on an Apple device ... 
 			if (Application.platform == RuntimePlatform.IPhonePlayer ||
-			             Application.platform == RuntimePlatform.OSXPlayer)
+			    Application.platform == RuntimePlatform.OSXPlayer)
 			{
 				// ... begin restoring purchases
 				Debug.Log ("RestorePurchases started ...");
@@ -216,7 +237,7 @@ namespace CompleteProject
 			if (String.Equals (args.purchasedProduct.definition.id, kProductIDConsumable, StringComparison.Ordinal))
 			{
 				Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
-			//	ScoreManager.score += 100;
+				//	ScoreManager.score += 100;
 			}
             // Or ... a non-consumable product has been purchased by this user.
             else if (String.Equals (args.purchasedProduct.definition.id, kProductIDNonConsumable, StringComparison.Ordinal))
