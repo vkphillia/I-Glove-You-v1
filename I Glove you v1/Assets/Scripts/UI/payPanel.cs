@@ -19,6 +19,11 @@ public class payPanel : MonoBehaviour
 	{
 		MainMenuController.Instance.currentPayStep = paystep;
 		Debug.Log (MainMenuController.Instance.currentPayStep);
+		for (int i = 0; i < 3; i++)
+		{
+			MainMenuController.Instance.IapTexts [i].color = new Color (255f, 204f, 0f);
+		}
+		MainMenuController.Instance.IapTexts [paystep - 1].color = Color.white;
 	}
 
 	public void rate ()

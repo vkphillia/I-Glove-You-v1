@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
-
+using UnityEngine.UI;
 
 // Deriving the Purchaser class from IStoreListener enables it to receive messages from Unity Purchasing.
 public class Purchaser : MonoBehaviour, IStoreListener
 {
+
+	private string purchasedTempText;
+
+	public Text purchasedText;
+	public GameObject purchasedPanel;
+	public GameObject thanksPanel;
+
+
 	private static IStoreController m_StoreController;
 	// The Unity Purchasing system.
 	private static IExtensionProvider m_StoreExtensionProvider;
@@ -42,14 +50,19 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
 	void Start ()
 	{
+
 		// If we haven't set up the Unity Purchasing reference
 		if (m_StoreController == null)
 		{
 			// Begin to configure our connection to Purchasing
 			InitializePurchasing ();
 			Debug.Log ("initializing iap");
+
 		}
+
 	}
+
+
 
 	public void InitializePurchasing ()
 	{
@@ -223,6 +236,18 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		m_StoreController = controller;
 		// Store specific subsystem, for accessing device-specific store features.
 		m_StoreExtensionProvider = extensions;
+
+
+		int i = 0;
+		foreach (var product in controller.products.all)
+		{
+			
+			MainMenuController.Instance.IapTexts [i].text = product.metadata.localizedPriceString;
+			i++;
+			Debug.Log (product.metadata.localizedPriceString);
+		}
+
+
 	}
 
         
@@ -239,14 +264,28 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		if (String.Equals (args.purchasedProduct.definition.id, kProductIDNonConsumable, StringComparison.Ordinal))
 		{
 			Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// TODO: The non-consumable item has been successfully purchased, grant this item to the player.
+			purchasedTempText = MainMenuController.Instance.IapTexts [0].text;
+			thanksPanel.SetActive (true);
+			purchasedText.text = purchasedTempText;
+			purchasedPanel.SetActive (false);
 		}
 		else if (String.Equals (args.purchasedProduct.definition.id, kProductIDNonConsumable2, StringComparison.Ordinal))
 		{
 			Debug.Log ("item2 purchased");// TODO: The non-consumable item has been successfully purchased, grant this item to the player.
+			purchasedTempText = MainMenuController.Instance.IapTexts [1].text;
+			thanksPanel.SetActive (true);
+			purchasedText.text = purchasedTempText;
+			purchasedPanel.SetActive (false);
+
 		}
 		else if (String.Equals (args.purchasedProduct.definition.id, kProductIDNonConsumable3, StringComparison.Ordinal))
 		{
 			Debug.Log ("item3 purchased");
+			purchasedTempText = MainMenuController.Instance.IapTexts [2].text;
+			thanksPanel.SetActive (true);
+			purchasedText.text = purchasedTempText;
+			purchasedPanel.SetActive (false);
+
 		}
            
             // Or ... an unknown product has been purchased by this user. Fill in additional products here....

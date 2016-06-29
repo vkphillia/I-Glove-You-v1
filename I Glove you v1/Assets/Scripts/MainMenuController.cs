@@ -31,6 +31,11 @@ public class MainMenuController : MonoBehaviour
 	public Animator helpPanelAnim;
 	public Animator payPanelAnim;
 
+	//post purchase
+	public GameObject InsertTxt;
+	public GameObject Thanks;
+
+
 
 	public MenuState currentState;
 
@@ -39,6 +44,8 @@ public class MainMenuController : MonoBehaviour
 
 	//iap
 	public int currentPayStep;
+	public Text[] IapTexts;
+
 
 	#region Instance
 
