@@ -111,11 +111,11 @@ public class OfflineManager : MonoBehaviour
 
 		//PlayerHolder1.GetComponent<SpriteRenderer> ().sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		PlayerHolder1.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder1.animationController [OfflineMenuController.Player1CharacterID];
-		//PlayerHolder1.myFighterImage.sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
+		PlayerHolder1.myFighterImage.sprite = PlayerHolder1.mySprites [OfflineMenuController.Player1CharacterID];
 		//Debug.Log (OfflineMenuController.Player1CharacterID);
 		//PlayerHolder2.GetComponent<SpriteRenderer> ().sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
 		PlayerHolder2.GetComponent<Animator> ().runtimeAnimatorController = PlayerHolder2.animationController [OfflineMenuController.Player2CharacterID];
-		//PlayerHolder2.myFighterImage.sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
+		PlayerHolder2.myFighterImage.sprite = PlayerHolder2.mySprites [OfflineMenuController.Player2CharacterID];
 
 		//Debug.Log (OfflineMenuController.Player2CharacterID);
 		if (OfflineMenuController.Player1CharacterID == OfflineMenuController.Player2CharacterID)
