@@ -111,11 +111,6 @@ public class MainMenuController : MonoBehaviour
 		}
 	}
 
-
-	void Start ()
-	{
-	}
-
 	IEnumerator SpiningWheel ()
 	{
 	
