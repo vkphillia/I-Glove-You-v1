@@ -169,27 +169,9 @@ public class MainMenuController : MonoBehaviour
 
 	IEnumerator LoadingScene (string sceneName)
 	{
-        //scaling OUT
-        //spinningWheel.transform.localScale = new Vector3(0, 0, 0);
-        float t = 0;
-        while (spinningWheel.transform.localScale.x != 0f)
-        {
-            spinningWheel.transform.localScale = Vector3.MoveTowards(new Vector3(0.73f, 0.73f, 0.73f),new Vector3(0, 0, 0), t / 0.3f);
-            yield return new WaitForEndOfFrame();
-            t += Time.deltaTime;
-        }
+        StartCoroutine(SpinningWheelScaleOut());
+        StartCoroutine(TitleScaleOut());
 
-        //scaling out title
-        title.GetComponent<Animator>().enabled=false;
-        t = 0;
-        while (title.transform.localScale.x != 0f)
-        {
-            title.transform.localScale = Vector3.MoveTowards(new Vector3(1f, 1f, 1f), new Vector3(0, 0, 0), t / 0.3f);
-            yield return new WaitForEndOfFrame();
-            t += Time.deltaTime;
-        }
-        title.SetActive(false);
-        
         menuPanel.GetComponentInChildren<Animator> ().Play ("Idle");
 		menuPanel.GetComponent<Animator> ().Play ("Disappear");
 
@@ -199,6 +181,33 @@ public class MainMenuController : MonoBehaviour
 		SceneManager.LoadScene ("offline menu");
 		//async.allowSceneActivation = true;
 	}
+
+    IEnumerator SpinningWheelScaleOut()
+    {
+        //scaling OUT
+        //spinningWheel.transform.localScale = new Vector3(0, 0, 0);
+        float t = 0;
+        while (spinningWheel.transform.localScale.x != 0f)
+        {
+            spinningWheel.transform.localScale = Vector3.MoveTowards(new Vector3(0.73f, 0.73f, 0.73f), new Vector3(0, 0, 0), t / 0.3f);
+            yield return new WaitForEndOfFrame();
+            t += Time.deltaTime;
+        }
+
+    }
+    IEnumerator TitleScaleOut()
+    {
+        //scaling out title
+        title.GetComponent<Animator>().enabled = false;
+        float t = 0;
+        while (title.transform.localScale.x != 0f)
+        {
+            title.transform.localScale = Vector3.MoveTowards(new Vector3(1f, 1f, 1f), new Vector3(0, 0, 0), t / 0.3f);
+            yield return new WaitForEndOfFrame();
+            t += Time.deltaTime;
+        }
+        title.SetActive(false);
+    }
 
 	void Update ()
 	{

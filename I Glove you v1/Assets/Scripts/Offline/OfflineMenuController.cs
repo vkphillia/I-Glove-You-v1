@@ -8,11 +8,12 @@ public class OfflineMenuController : MonoBehaviour
 
 	public static int Player1CharacterID;
 	public static int Player2CharacterID;
-	
+
+    public CanvasGroup mainCanvas;
 	public Button[] players1;
 	public Button[] players2;
 	public GameObject[] playerScrollViews;
-    public SpriteRenderer [] selectedPlayers;
+    public GameObject[] selectedPlayers;
 
     public Text P1Text;
 	public Text P2Text;
@@ -24,6 +25,8 @@ public class OfflineMenuController : MonoBehaviour
 
 	void OnEnable ()
 	{
+        StartCoroutine(FadeCanvasElements(mainCanvas,0,1,0.3f));
+
 		Player1CharacterID = 0;
 		Player2CharacterID = 4;
 		P1Text.text = "Fight";
@@ -36,27 +39,26 @@ public class OfflineMenuController : MonoBehaviour
 
 	}
 
-
-	void Update ()
-	{
-		if (P1Ready && P2Ready)
-		{
-            P1Ready = false;
-			P2Ready = false;
-            Invoke("LoadGameScene", 1f);
-            this.enabled = false;
-		}
-		if (Input.GetKeyDown (KeyCode.Escape))
-		{
-			Exit ();
-		}
-	}
-
+    //this function works both as fade in and fade out for canvas elements with canvas group
+    public IEnumerator FadeCanvasElements(CanvasGroup objectToFade, float fromAlpha, float toAlpha, float duration)
+    {
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            objectToFade.alpha = Mathf.Lerp(fromAlpha, toAlpha, t / duration);
+            yield return null;
+        }
+        if (objectToFade.alpha != toAlpha)
+        {
+            objectToFade.alpha = toAlpha;
+        }
+    }
+    
 	public void P1Fight ()
 	{
         playerScrollViews[0].SetActive(false);
-        selectedPlayers [0].sprite = players1 [Player1CharacterID].image.sprite;
-		selectedPlayers [0].gameObject.SetActive (true);
+        selectedPlayers[0].GetComponent<Image>().sprite = players1[Player1CharacterID].image.sprite;
+        selectedPlayers[0].SetActive(true);
+        
 
 		P1Ready = true;
 		P1Text.text = "Ready!";
@@ -67,8 +69,8 @@ public class OfflineMenuController : MonoBehaviour
 	public void P2Fight ()
 	{
         playerScrollViews[1].SetActive(false);
-        selectedPlayers[1].sprite = players2[Player2CharacterID].image.sprite;
-        selectedPlayers[1].gameObject.SetActive(true);
+        selectedPlayers[1].GetComponent<Image>().sprite = players2[Player2CharacterID].image.sprite;
+        selectedPlayers[1].SetActive(true);
 
         P2Ready = true;
 		P2Text.text = "Ready!";
@@ -111,12 +113,29 @@ public class OfflineMenuController : MonoBehaviour
 			SoundsController.Instance.PlayButtonClick ();//for button click sound
 	}
 
+    void Update()
+    {
+        if (P1Ready && P2Ready)
+        {
+            P1Ready = false;
+            P2Ready = false;
+            Invoke("FadeOutElements", 0.6f);
+            this.enabled = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Exit();
+        }
+    }
+
+    void FadeOutElements()
+    {
+        StartCoroutine(FadeCanvasElements(mainCanvas, 1, 0, 0.3f));
+        Invoke("LoadGameScene", 0.3f);
+    }
+
     void LoadGameScene()
     {
         SceneManager.LoadSceneAsync("offline game");
     }
-	//public void Selected (RectTransform gameobject)
-	//{
-	//	gameobject.transform.localScale = new Vector3 (0.9f, 0.9f, 0.9f);
-	//}
 }

@@ -54,7 +54,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		{
 			// Begin to configure our connection to Purchasing
 			InitializePurchasing ();
-			Debug.Log ("initializing iap");
+			//Debug.Log ("initializing iap");
 
 		}
 		ChangeToLocalCurrency ();
@@ -237,7 +237,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 	public void OnInitialized (IStoreController controller, IExtensionProvider extensions)
 	{
 		// Purchasing has succeeded initializing. Collect our Purchasing references.
-		Debug.Log ("OnInitialized: PASS");
+		//Debug.Log ("OnInitialized: PASS");
             
 		// Overall Purchasing system, configured with products for this application.
 		m_StoreController = controller;
@@ -324,7 +324,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 			
 			MainMenuController.Instance.IapTexts [i].text = product.metadata.localizedPriceString;
 			i++;
-			Debug.Log (product.metadata.localizedPriceString);
+			//Debug.Log (product.metadata.localizedPriceString);
 		}
 	}
 

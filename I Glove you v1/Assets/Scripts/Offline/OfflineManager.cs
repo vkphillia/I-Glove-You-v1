@@ -150,8 +150,8 @@ public class OfflineManager : MonoBehaviour
 		rightBorder.position = new Vector3 (screenSizeInWord.x - .3f, 0, 0);
 		//topBorder.localScale = new Vector3 (topBorder.localScale.x, (screenSizeInWord.y - .2f) * .2f, topBorder.localScale.z);
 		//botBorder.localScale = new Vector3 (botBorder.localScale.x, screenSizeInWord.y - .2f, botBorder.localScale.z);
-		Debug.Log ("x = " + screenSizeInWord.x);
-		Debug.Log ("y = " + screenSizeInWord.y);
+		//Debug.Log ("x = " + screenSizeInWord.x);
+		//Debug.Log ("y = " + screenSizeInWord.y);
         
 		//foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
         

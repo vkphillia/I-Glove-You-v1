@@ -178,7 +178,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         _lerp = true;
         _currentPage = aPageIndex;
         //my code
-        Debug.Log(_currentPage);
+        //Debug.Log(_currentPage);
         _container.GetChild(_currentPage).GetComponent<Button>().onClick.Invoke();
         SoundsController.Instance.PlayButtonClick();
 
