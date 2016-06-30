@@ -1,13 +1,17 @@
 fileFormatVersion: 2
 guid: 3173dde50fea54731b55a81aa6459b72
-timeCreated: 1467186887
+timeCreated: 1467273365
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: help_0
+    21300002: help_5
+    21300004: help_6
+    21300006: help_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -38,18 +42,99 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 213, z: 0, w: 96}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: help_0
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 1103
+        width: 527
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -96.5, y: 24}
+        - {x: -99.5, y: 28}
+        - {x: -263.5, y: 28}
+        - {x: -263.5, y: -22}
+        - {x: -256.5, y: -28}
+        - {x: -96.5, y: -28}
+      - - {x: 33.5, y: 18}
+        - {x: 16.5, y: 28}
+        - {x: -86.5, y: 28}
+        - {x: -86.5, y: -20}
+        - {x: -82.5, y: -27}
+        - {x: -78.5, y: -28}
+        - {x: 30.5, y: -28}
+        - {x: 33.5, y: -27}
+      - - {x: 122.5, y: 28}
+        - {x: 47.5, y: 28}
+        - {x: 47.5, y: -28}
+        - {x: 152.5, y: -28}
+        - {x: 152.5, y: -16}
+      - - {x: 154.5, y: 28}
+        - {x: 152.5, y: 27}
+        - {x: 152.5, y: -28}
+        - {x: 261.5, y: -28}
+        - {x: 263.5, y: -20}
+        - {x: 263.5, y: 28}
+    - name: help_5
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 790
+        width: 746
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -373, y: 103}
+        - {x: -373, y: -103}
+        - {x: 373, y: -103}
+        - {x: 373, y: 103}
+    - name: help_6
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 514
+        width: 746
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -373, y: 103}
+        - {x: -373, y: -103}
+        - {x: 373, y: -103}
+        - {x: 373, y: 103}
+    - name: help_7
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 238
+        width: 746
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -373, y: 103}
+        - {x: -373, y: -103}
+        - {x: 373, y: -103}
+        - {x: 373, y: 103}
     outline: []
   spritePackingTag: 
   userData: 

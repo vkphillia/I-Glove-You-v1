@@ -64,7 +64,7 @@ public class SoundsController : MonoBehaviour
 	{
 		sounds = Resources.LoadAll ("Sounds", typeof(AudioClip));
 		audioSource = GetComponents<AudioSource> ();
-		Debug.Log (sounds.Length);
+		//Debug.Log (sounds.Length);
 		//PlayBackgroundMusic (true, 0);//0 is for BG music
 	}
 
