@@ -31,9 +31,7 @@ public class MainMenuController : MonoBehaviour
 	public Animator helpPanelAnim;
 	public Animator payPanelAnim;
 
-	//post purchase
-	public GameObject InsertTxt;
-	public GameObject Thanks;
+
 
 
 
@@ -45,7 +43,11 @@ public class MainMenuController : MonoBehaviour
 	//iap
 	public int currentPayStep;
 	public Text[] IapTexts;
+	public Text purchasedText;
+	public GameObject purchasedPanel;
+	public GameObject thanksPanel;
 
+	public bool reset;
 
 	#region Instance
 
@@ -80,12 +82,35 @@ public class MainMenuController : MonoBehaviour
 				soundBtn.transform.GetChild (0).gameObject.SetActive (true);
 			}
 
+
 		}
+
 		spinningWheel.SetActive (true);
 		Invoke ("InitializeTitle", 0.6f);
 		StartCoroutine (SpiningWheel ());
-		
+		payPanelAnim.gameObject.SetActive (true);
+		//get info for paidForApp bool here
+		if (reset)
+		{
+			PlayerPrefs.SetInt ("paidForApp", 0);
+		}
+
+		if (PlayerPrefs.GetInt ("paidForApp") == 1)
+		{
+			thanksPanel.SetActive (true);
+			purchasedPanel.SetActive (false);
+			if (PlayerPrefs.HasKey ("purchasedAmount"))
+			{
+				MainMenuController.Instance.purchasedText.text = PlayerPrefs.GetString ("purchasedAmount");
+			}
+		}
+		else
+		{
+			purchasedPanel.SetActive (true);
+			thanksPanel.SetActive (false);
+		}
 	}
+
 
 	void Start ()
 	{

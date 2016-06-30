@@ -10,9 +10,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
 	private string purchasedTempText;
 
-	public Text purchasedText;
-	public GameObject purchasedPanel;
-	public GameObject thanksPanel;
+
 
 
 	private static IStoreController m_StoreController;
@@ -265,26 +263,20 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		{
 			Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// TODO: The non-consumable item has been successfully purchased, grant this item to the player.
 			purchasedTempText = MainMenuController.Instance.IapTexts [0].text;
-			thanksPanel.SetActive (true);
-			purchasedText.text = purchasedTempText;
-			purchasedPanel.SetActive (false);
+			OnPurchaseSuccess ();
 		}
 		else if (String.Equals (args.purchasedProduct.definition.id, kProductIDNonConsumable2, StringComparison.Ordinal))
 		{
 			Debug.Log ("item2 purchased");// TODO: The non-consumable item has been successfully purchased, grant this item to the player.
 			purchasedTempText = MainMenuController.Instance.IapTexts [1].text;
-			thanksPanel.SetActive (true);
-			purchasedText.text = purchasedTempText;
-			purchasedPanel.SetActive (false);
+			OnPurchaseSuccess ();
 
 		}
 		else if (String.Equals (args.purchasedProduct.definition.id, kProductIDNonConsumable3, StringComparison.Ordinal))
 		{
 			Debug.Log ("item3 purchased");
 			purchasedTempText = MainMenuController.Instance.IapTexts [2].text;
-			thanksPanel.SetActive (true);
-			purchasedText.text = purchasedTempText;
-			purchasedPanel.SetActive (false);
+			OnPurchaseSuccess ();
 
 		}
            
@@ -306,6 +298,19 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		// A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
 		// this reason with the user to guide their troubleshooting actions.
 		Debug.Log (string.Format ("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+	}
+
+	void OnPurchaseSuccess ()
+	{
+		
+		//add to paidForApp playerprefs
+		PlayerPrefs.SetInt ("paidForApp", 1);
+		//MainMenuController.Instance.paidForApp = true;
+		MainMenuController.Instance.thanksPanel.SetActive (true);
+		MainMenuController.Instance.purchasedText.text = purchasedTempText;
+		//also add purchasedText.text to a string and remember it in playerprefs
+		PlayerPrefs.SetString ("purchasedAmount", purchasedTempText);
+		MainMenuController.Instance.purchasedPanel.SetActive (false);
 	}
 }
 
