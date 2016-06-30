@@ -89,6 +89,8 @@ public class OfflineManager : MonoBehaviour
 	private Vector3 P1StartPos;
 	private Vector3 P2StartPos;
 
+
+
 	#endregion
 
 	void Awake ()
@@ -144,12 +146,12 @@ public class OfflineManager : MonoBehaviour
 		
 		screenSizeInWord = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
 		//BoxingRingBG.localScale = new Vector3 (screenSizeInWord.x, screenSizeInWord.y - 2, 1);
-		leftBorder.position = new Vector3 (-screenSizeInWord.x + .1f, 0, 0);
-		rightBorder.position = new Vector3 (screenSizeInWord.x - .1f, 0, 0);
-		topBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, topBorder.localScale.y, topBorder.localScale.y);
-		botBorder.localScale = new Vector3 (screenSizeInWord.x - .2f, botBorder.localScale.y, botBorder.localScale.y);
-		//Debug.Log ("x = " + screenSizeInWord.x);
-		//Debug.Log ("y = " + screenSizeInWord.y);
+		leftBorder.position = new Vector3 (-screenSizeInWord.x + .3f, 0, 0);
+		rightBorder.position = new Vector3 (screenSizeInWord.x - .3f, 0, 0);
+		//topBorder.localScale = new Vector3 (topBorder.localScale.x, (screenSizeInWord.y - .2f) * .2f, topBorder.localScale.z);
+		//botBorder.localScale = new Vector3 (botBorder.localScale.x, screenSizeInWord.y - .2f, botBorder.localScale.z);
+		Debug.Log ("x = " + screenSizeInWord.x);
+		Debug.Log ("y = " + screenSizeInWord.y);
         
 		//foreground.transform.localScale = new Vector3 (.8f, 0.8f, 1);
         

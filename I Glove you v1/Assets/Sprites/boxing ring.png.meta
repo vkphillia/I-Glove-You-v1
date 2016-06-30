@@ -1,0 +1,131 @@
+fileFormatVersion: 2
+guid: 5bfa4df08c38e44999724146bd4c600c
+timeCreated: 1467261345
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ringBorder
+    21300002: ringCorner
+    21300004: ringBase
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: ringBorder
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 22
+        width: 280
+        height: 878
+      alignment: 9
+      pivot: {x: 0.31648943, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22.617043, y: -390}
+        - {x: -20.617043, y: -388}
+        - {x: -7.6170425, y: -388}
+        - {x: -5.6170425, y: -391}
+        - {x: 4.3829575, y: -390}
+        - {x: 6.3829575, y: -388}
+        - {x: 25.382957, y: -388}
+        - {x: 27.382957, y: -386}
+        - {x: 27.382957, y: -366}
+        - {x: 191.38297, y: -366}
+        - {x: 191.38297, y: 375}
+        - {x: 27.382957, y: 375}
+        - {x: 27.382957, y: 394}
+        - {x: 25.382957, y: 396}
+        - {x: 6.3829575, y: 396}
+        - {x: 6.3829575, y: 397}
+        - {x: 5.3829575, y: 399}
+        - {x: -5.6170425, y: 400}
+        - {x: -8.617043, y: 396}
+        - {x: -20.617043, y: 396}
+        - {x: -21.617043, y: 399}
+        - {x: -28.617043, y: 399}
+        - {x: -28.617043, y: 439}
+        - {x: -88.61704, y: 439}
+        - {x: -88.61704, y: -439}
+        - {x: -29.617043, y: -439}
+        - {x: -28.617043, y: -438}
+        - {x: -28.617043, y: -390}
+    - name: ringCorner
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 94
+        width: 87
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 2.5, y: -46}
+        - {x: 43.5, y: -46}
+        - {x: 43.5, y: -16}
+        - {x: 14.5, y: 46}
+        - {x: -43.5, y: 46}
+        - {x: -43.5, y: -16}
+    - name: ringBase
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 72
+        width: 616
+        height: 771
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -308, y: 385.5}
+        - {x: -308, y: -385.5}
+        - {x: 308, y: -385.5}
+        - {x: 308, y: 385.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
