@@ -57,7 +57,16 @@ public class Purchaser : MonoBehaviour, IStoreListener
 			Debug.Log ("initializing iap");
 
 		}
+		ChangeToLocalCurrency ();
 
+	}
+
+	void OnEnable ()
+	{
+		if (m_StoreController != null)
+		{
+			ChangeToLocalCurrency ();
+		}
 	}
 
 
@@ -236,14 +245,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		m_StoreExtensionProvider = extensions;
 
 
-		int i = 0;
-		foreach (var product in controller.products.all)
-		{
-			
-			MainMenuController.Instance.IapTexts [i].text = product.metadata.localizedPriceString;
-			i++;
-			Debug.Log (product.metadata.localizedPriceString);
-		}
+
 
 
 	}
@@ -312,5 +314,19 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		PlayerPrefs.SetString ("purchasedAmount", purchasedTempText);
 		MainMenuController.Instance.purchasedPanel.SetActive (false);
 	}
+
+	void ChangeToLocalCurrency ()
+	{
+		int i = 0;
+	
+		foreach (var product in m_StoreController.products.all)
+		{
+			
+			MainMenuController.Instance.IapTexts [i].text = product.metadata.localizedPriceString;
+			i++;
+			Debug.Log (product.metadata.localizedPriceString);
+		}
+	}
+
 }
 

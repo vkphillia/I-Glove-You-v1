@@ -27,6 +27,8 @@ public class WalkingBombPU : PowerUp
 		mySpriteRenderer.enabled = true;
 		myCol.enabled = true;
 		myBlastCol.gameObject.SetActive (false);
+		active = false;
+		blasted = false;
 		//myBlastCol.mySpriteRenderer.enabled = false;
 		//myBlastCol.myCol.enabled = false;
 		base.OnEnable ();
