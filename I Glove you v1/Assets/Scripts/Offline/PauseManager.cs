@@ -6,11 +6,11 @@ public class PauseManager : MonoBehaviour
 {
 	public GameObject[] muteButton;
 	public GameObject pausePanel;
-	public Collider2D myCol;
+	//public Collider2D myCol;
 
 	void Awake ()
 	{
-		myCol = GetComponent<Collider2D> ();
+		//myCol = GetComponent<Collider2D> ();
 	}
 
 	void Start ()
@@ -30,8 +30,8 @@ public class PauseManager : MonoBehaviour
 	{
 		if (OfflineManager.Instance.currentState != GameState.Paused)
 		{
-			//myCol.enabled = false;
-			GetComponent<Button> ().interactable = false;
+            //myCol.enabled = false;
+            GetComponent<Button> ().interactable = false;
 			OfflineManager.Instance.currentState = GameState.Paused;
 			StartCoroutine (pauseGame ());
 		}
@@ -41,10 +41,7 @@ public class PauseManager : MonoBehaviour
 	IEnumerator pauseGame ()
 	{
 		//gameObject.SetActive (false);
-		if (SoundsController.Instance != null)
-		{
-			SoundsController.Instance.PlayButtonClick ();
-		}
+		
 		pausePanel.SetActive (true);
 		pausePanel.GetComponent<Animator> ().Play ("Appear");
 		if (SoundsController.Instance != null)

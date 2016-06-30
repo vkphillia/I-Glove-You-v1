@@ -315,4 +315,10 @@ public class OfflineManager : MonoBehaviour
 		WalkingBombBlastCol.OnHit -= makePlayerFall;
 
 	}
+
+    public void ButtonClickSound()
+    {
+        if (SoundsController.Instance != null)
+            SoundsController.Instance.PlayButtonClick();
+    }
 }
