@@ -70,7 +70,7 @@ public class AirStrikePU : PowerUp
 		for (int i = 0; i < noOfStrikes; i++)
 		{
 			AllStrikesArr [i].gameObject.SetActive (true); 
-			Debug.Log ("SpawnStrike " + i);
+			//Debug.Log ("SpawnStrike " + i);
 			AllStrikesArr [i].gameObject.layer = 15;
 		}
 		fighterJet.gameObject.SetActive (true);

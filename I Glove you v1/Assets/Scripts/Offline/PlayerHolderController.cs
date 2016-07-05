@@ -201,10 +201,10 @@ public class PlayerHolderController : MonoBehaviour
 
 					OfflineManager.Instance.PlayerHolder2.LoseGlove ();
 					OfflineManager.Instance.PlayerHolder1.AddGlove ();
-					if (SoundsController.Instance != null)
-					{
-						SoundsController.Instance.PlaySoundFX ("toasty", 1f);
-					}
+					//if (SoundsController.Instance != null)
+					//{
+					//	SoundsController.Instance.PlaySoundFX ("toasty", 1f);
+					//}
 					StartCoroutine (OfflineManager.Instance.PlayerHolder2.MakeLyingDeadFalse ());
 
 				}
@@ -227,10 +227,10 @@ public class PlayerHolderController : MonoBehaviour
 				{
 					OfflineManager.Instance.PlayerHolder1.LoseGlove ();
 					OfflineManager.Instance.PlayerHolder2.AddGlove ();
-					if (SoundsController.Instance != null)
-					{
-						SoundsController.Instance.PlaySoundFX ("toasty", 1f);
-					}
+					//if (SoundsController.Instance != null)
+					//{
+					//	SoundsController.Instance.PlaySoundFX ("toasty", 1f);
+					//}
 					StartCoroutine (OfflineManager.Instance.PlayerHolder1.MakeLyingDeadFalse ());
 				
 				}
@@ -346,8 +346,8 @@ public class PlayerHolderController : MonoBehaviour
 	public void AddGlove ()
 	{
 		if (SoundsController.Instance != null)
-			SoundsController.Instance.PlaySoundFX ("GlovePick", 0.5f);
-		hasGlove = true;
+            SoundsController.Instance.PlaySoundFX("toasty", 0.5f);
+        hasGlove = true;
 		StartCoroutine (GloveAppear ());
 	}
 

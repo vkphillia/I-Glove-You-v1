@@ -132,7 +132,7 @@ public class PUController : MonoBehaviour
 
 		int _randomPos = Random.Range (0, spawnPointsArr.Count);
 		spawnObj.transform.position = spawnPointsArr [_randomPos];
-		Debug.Log ("Strike=" + spawnPointsArr [_randomPos]);
+		//Debug.Log ("Strike=" + spawnPointsArr [_randomPos]);
 
 		spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		spawnPointsArr.RemoveAt (_randomPos);
