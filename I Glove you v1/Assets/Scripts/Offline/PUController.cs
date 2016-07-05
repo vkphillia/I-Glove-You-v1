@@ -51,7 +51,7 @@ public class PUController : MonoBehaviour
 		PU = PUList [PUIndex];
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			yield return new WaitForSeconds (5f);
+			yield return new WaitForSeconds (3f);
 			PU.gameObject.SetActive (true);
 			SpawnAnything (PU.gameObject);
 		}
@@ -160,7 +160,9 @@ public class PUController : MonoBehaviour
 		Marker.transform.position = _randomPos;
 		yield return new WaitForSeconds (.6f);
 		Marker.SetActive (false);
-		spawnObj.transform.position = _randomPos;
+        if (SoundsController.Instance != null)
+            SoundsController.Instance.PlaySoundFX("PUSpawn", 0.5f);
+        spawnObj.transform.position = _randomPos;
 		//spawnPointsArrTemp.Add (spawnPointsArr [_randomPos]);
 		//spawnPointsArr.RemoveAt (_randomPos);
 	}

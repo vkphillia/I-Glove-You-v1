@@ -35,7 +35,7 @@ public class SpeedDown : PowerUp
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
 
-		p.mySpeed -= 2;
+		p.mySpeed -= SpeedReduction;
 		if (SoundsController.Instance != null)
 			SoundsController.Instance.PlaySoundFX ("SpeedDown", 0.5f);
 		yield return new WaitForSeconds (myTime);

@@ -503,7 +503,7 @@ public class PlayerHolderController : MonoBehaviour
 		}
 		if (OfflineManager.Instance.currentState == GameState.Playing)
 		{
-			Debug.Log ("play this");
+			//Debug.Log ("play this");
 			if (hasGlove)
 			{
 				myWalkAnim.Play ("WalkGlove");
